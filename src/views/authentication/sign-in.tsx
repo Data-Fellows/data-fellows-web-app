@@ -121,7 +121,7 @@ const SignIn = () => {
           </div>
           <Link
             className="text-primary flex self-end justify-end hover:underline text-sm"
-            href="/forgot-password"
+            href="/auth/forgot-password"
           >
             Forgot Password?
           </Link>
@@ -135,7 +135,7 @@ const SignIn = () => {
           </button>
           <div className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link className="text-primary hover:underline" href="/sign-up">
+            <Link className="text-primary hover:underline" href="/auth/sign-up">
               Sign Up
             </Link>
           </div>

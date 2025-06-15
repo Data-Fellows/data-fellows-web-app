@@ -115,7 +115,7 @@
 
 body {
   font-family: "Noto Sans", sans-serif;
-
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
 }

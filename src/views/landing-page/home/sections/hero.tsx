@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FiBriefcase, FiUser } from "react-icons/fi";
 
 const containerVariants = {
@@ -29,8 +30,11 @@ const fadeIn = {
   },
 };
 
-export default function Hero() {
+export function Hero() {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<
+    "data-professional" | "business-owner"
+  >("data-professional");
 
   return (
     <div className="relative min-h-screen">
@@ -89,15 +93,25 @@ export default function Hero() {
               className="flex w-full flex-col items-center justify-center gap-6 sm:flex-row max-sm:w-[80%] max-sm:mx-auto"
             >
               <button
-                className="w-full flex items-center justify-center gap-2 rounded cursor-pointer bg-primary px-6 py-3 text-primary-foreground font-semibold shadow hover:bg-primary/80 transition sm:w-auto"
-                onClick={() => router.push("/sign-up?type=data-professional")}
+                className={`w-full flex items-center justify-center gap-2 rounded cursor-pointer bg-primary px-6 py-3 text-primary-foreground font-semibold shadow hover:bg-primary/80 transition sm:w-auto ${
+                  activeTab === "data-professional" ? "ring-2 ring-primary" : ""
+                }`}
+                onClick={() => {
+                  setActiveTab("data-professional");
+                  router.push("/auth/sign-up?type=data-professional");
+                }}
               >
                 <FiUser className="w-5 h-5" />
                 Data Professional
               </button>
               <button
-                className="w-full flex items-center justify-center gap-2 rounded cursor-pointer bg-primary px-6 py-3 text-primary-foreground font-semibold shadow hover:bg-primary/80 transition sm:w-auto"
-                onClick={() => router.push("/sign-up?type=business-owner")}
+                className={`w-full flex items-center justify-center gap-2 rounded cursor-pointer bg-primary px-6 py-3 text-primary-foreground font-semibold shadow hover:bg-primary/80 transition sm:w-auto ${
+                  activeTab === "business-owner" ? "ring-2 ring-primary" : ""
+                }`}
+                onClick={() => {
+                  setActiveTab("business-owner");
+                  router.push("/auth/sign-up?type=business-owner");
+                }}
               >
                 <FiBriefcase className="w-5 h-5" />
                 Business Owner
@@ -109,3 +123,5 @@ export default function Hero() {
     </div>
   );
 }
+
+export default Hero;

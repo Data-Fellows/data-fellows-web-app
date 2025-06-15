@@ -1,12 +1,21 @@
 import { motion } from "framer-motion";
 import React, { ReactNode } from "react";
+import { ImHome } from "react-icons/im";
 
 interface AuthLayoutProps {
   children: ReactNode;
 }
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => (
-  <div className="min-h-screen flex flex-col md:flex-row bg-background">
+  <div className="min-h-screen flex flex-col md:flex-row bg-background relative">
+    <a
+      href="/"
+      className="fixed top-6 left-6 z-50 flex items-center justify-center rounded-full bg-muted p-3 shadow-lg hover:bg-primary/10 transition text-foreground"
+      aria-label="Back to Landing Page"
+    >
+      <ImHome size={22} />
+    </a>
+
     <motion.div
       className="hidden md:flex md:w-1/2 lg:w-2/5 items-center justify-center bg-primary/10 relative overflow-hidden"
       initial={{ opacity: 0, x: -60 }}
@@ -45,9 +54,8 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => (
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7 }}
     >
-      <div className="w-full max-w-md mx-auto">{children}</div>
+      <div className="w-full md:w-[60%] mx-auto">{children}</div>
     </motion.main>
   </div>
 );
-
 export default AuthLayout;
