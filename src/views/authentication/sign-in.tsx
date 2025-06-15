@@ -1,31 +1,41 @@
 import { GoogleLoginButton } from "@/components";
 import { useToast } from "@/context/ToastContext";
+import { setToken } from "@/helpers";
 import AuthLayout from "@/layouts/auth";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FiEye, FiEyeOff, FiLogIn } from "react-icons/fi";
+import { signInApi } from "./api";
 
 const SignIn = () => {
-  const [pending, setPending] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { showToast } = useToast();
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: signInApi,
+    onSuccess: (data) => {
+      setToken(data.token);
+      showToast("Signed in successfully!", "success");
+    },
+    onError: (error: any) => {
+      showToast(
+        error?.response?.data?.message || "Invalid email or password.",
+        "error"
+      );
+    },
+  });
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setPending(true);
-
-    setTimeout(() => {
-      setPending(false);
-
-      if (!email || !password) {
-        showToast("Email and password are required.", "error");
-      } else {
-        showToast("Signed in successfully!", "success");
-      }
-    }, 1000);
+    if (!email || !password) {
+      showToast("Email and password are required.", "error");
+      return;
+    }
+    mutate({ email, password });
   };
 
   return (
@@ -60,7 +70,7 @@ const SignIn = () => {
             <input
               id="email"
               type="email"
-              disabled={pending}
+              disabled={isPending}
               placeholder="Enter your email address"
               className="w-full rounded-md border border-input bg-background text-foreground p-4 focus:border-primary focus:ring-2 focus:ring-primary/30 transition"
               value={email}
@@ -90,7 +100,7 @@ const SignIn = () => {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                disabled={pending}
+                disabled={isPending}
                 placeholder="Enter your password"
                 className="w-full rounded-md border border-input bg-background text-foreground p-4 pr-12 focus:border-primary focus:ring-2 focus:ring-primary/30 transition"
                 value={password}
@@ -128,10 +138,10 @@ const SignIn = () => {
           <button
             type="submit"
             className="w-full rounded-md bg-primary text-primary-foreground py-3 font-semibold text-lg transition hover:bg-primary/90 flex items-center justify-center gap-2"
-            disabled={pending}
+            disabled={isPending}
           >
             <FiLogIn className="w-5 h-5" />
-            {pending ? "Signing In..." : "Submit"}
+            {isPending ? "Signing In..." : "Submit"}
           </button>
           <div className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
