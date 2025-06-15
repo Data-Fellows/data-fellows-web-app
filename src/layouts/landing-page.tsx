@@ -3,11 +3,13 @@ import "@/styles/globals.css";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { ReactNode, useState } from "react";
 import { FiLogIn, FiMenu, FiUserPlus, FiX } from "react-icons/fi";
 
 function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const getNavLinkClass = (path: string) => {
@@ -52,13 +54,25 @@ function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button className="flex items-center gap-2 rounded-md bg-primary cursor-pointer px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition">
+          <button
+            onClick={() => {
+              router.push("/auth/sign-up");
+              setIsOpen(false);
+            }}
+            className="flex items-center gap-2 rounded-md bg-primary cursor-pointer px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition"
+          >
             <FiUserPlus className="w-5 h-5" />
             Get Started
           </button>
-          <button className="flex items-center gap-2 rounded-md border border-primary cursor-pointer px-5 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition">
+          <button
+            onClick={() => {
+              router.push("/auth/sign-in");
+              setIsOpen(false);
+            }}
+            className="flex items-center gap-2 rounded-md border border-primary cursor-pointer px-5 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition"
+          >
             <FiLogIn className="w-5 h-5" />
-            Login
+            Sign In
           </button>
         </div>
 
@@ -113,11 +127,23 @@ function Navbar() {
           ))}
 
           <div className="pt-6 space-y-3">
-            <button className="flex items-center gap-2 w-full cursor-pointer rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition">
+            <button
+              onClick={() => {
+                router.push("/auth/sign-up");
+                setIsOpen(false);
+              }}
+              className="flex items-center gap-2 w-full cursor-pointer rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition"
+            >
               <FiUserPlus className="w-5 h-5" />
               Get Started
             </button>
-            <button className="flex items-center gap-2 w-full cursor-pointer rounded-md border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition">
+            <button
+              onClick={() => {
+                router.push("/auth/sign-in");
+                setIsOpen(false);
+              }}
+              className="flex items-center gap-2 w-full cursor-pointer rounded-md border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition"
+            >
               <FiLogIn className="w-5 h-5" />
               Login
             </button>
