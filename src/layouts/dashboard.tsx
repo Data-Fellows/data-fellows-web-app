@@ -46,9 +46,9 @@ function SidebarMenuItem({ href, icon: Icon, title, isActive, onClick }: any) {
       <Link href={href} passHref legacyBehavior>
         <a
           className={cn(
-            "flex items-center gap-3 px-4 py-3 rounded-lg transition font-medium group",
+            "flex items-center gap-3 px-4 py-2 rounded-lg transition font-medium group",
             isActive
-              ? "bg-primary text-white"
+              ? "bg-primary/30 text-white"
               : "hover:bg-muted hover:text-primary dark:hover:bg-primary/20 dark:hover:text-primary"
           )}
           onClick={onClick}
@@ -57,13 +57,19 @@ function SidebarMenuItem({ href, icon: Icon, title, isActive, onClick }: any) {
             className={cn(
               "flex h-8 w-8 items-center justify-center rounded-full transition",
               isActive
-                ? "bg-primary text-white"
+                ? "bg-primary text-foreground"
                 : "bg-primary/10 text-primary group-hover:bg-primary/20 group-hover:text-primary"
             )}
           >
             <Icon className={cn("h-5 w-5", isActive && "text-white")} />
           </span>
-          <span className={isActive ? "text-white" : ""}>{title}</span>
+          <span
+            className={
+              isActive ? "text-foreground font-bold text-sm" : "text-sm"
+            }
+          >
+            {title}
+          </span>
         </a>
       </Link>
     </li>
@@ -74,7 +80,7 @@ function Sidebar({ items, onLogout, activePath, onClose }: any) {
   return (
     <aside className="hidden md:flex flex-col min-h-screen w-64 bg-sidebar text-sidebar-foreground border-r border-primary/10 dark:bg-sidebar dark:text-sidebar-foreground">
       <div className="flex flex-col items-center py-6">
-        <Image src="/svgs/data-fellow.svg" height={80} width={80} alt="logo" />
+        <Image src="/svgs/data-fellow.svg" height={50} width={50} alt="logo" />
       </div>
       <nav className="flex-1">
         <ul className="space-y-3 px-2 mx-2">

@@ -1,12 +1,27 @@
-import { GoogleLoginButton } from "@/components";
+import { GoogleLoginButton, Spinner } from "@/components";
 import { useToast } from "@/context/ToastContext";
 import AuthLayout from "@/layouts/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiEye, FiEyeOff, FiUserPlus } from "react-icons/fi";
 
+import { useMutation } from "@tanstack/react-query";
+import { SignUpPayload, SignUpResponse, signUpApi } from "./api";
+
+function useSignUpMutation(options?: {
+  onSuccess?: (data: SignUpResponse) => void;
+  onError?: (error: any) => void;
+}) {
+  return useMutation<SignUpResponse, any, SignUpPayload>({
+    mutationFn: signUpApi,
+    ...options,
+  });
+}
+
 const SignUp = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     "data-professional" | "business-owner"
   >(
@@ -17,14 +32,12 @@ const SignUp = () => {
   );
   const [pending, setPending] = useState(false);
 
-  // Data Professional
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dpEmail, setDpEmail] = useState("");
   const [dpPassword, setDpPassword] = useState("");
   const [dpShowPassword, setDpShowPassword] = useState(false);
 
-  // Business Owner
   const [fullName, setFullName] = useState("");
   const [boEmail, setBoEmail] = useState("");
   const [boPassword, setBoPassword] = useState("");
@@ -43,38 +56,91 @@ const SignUp = () => {
     }
   };
 
+  const dpMutation = useSignUpMutation({
+    onSuccess: (data) => {
+      setSuccess("Account created successfully!");
+      showToast("Account created successfully!", "success");
+      const email = dpEmail;
+      if (email) {
+        router.push({
+          pathname: "/auth/verify",
+          query: { email },
+        });
+      } else {
+        showToast("Could not get email for verification.", "error");
+      }
+    },
+    onError: (err: any) => {
+      setError(err.response.data.message || "Registration failed.");
+      showToast(err.response.data.message || "Registration failed.", "error");
+    },
+  });
+
+  const boMutation = useSignUpMutation({
+    onSuccess: (data) => {
+      setSuccess("Account created successfully!");
+      showToast("Account created successfully!", "success");
+      const email = boEmail;
+      if (email) {
+        router.push({
+          pathname: "/auth/verify",
+          query: { email },
+        });
+      } else {
+        showToast("Could not get email for verification.", "error");
+      }
+    },
+    onError: (err: any) => {
+      setError(err.response.data.message || "Registration failed.");
+      showToast(err.response.data.message || "Registration failed.", "error");
+    },
+  });
+
   const onSubmitDP = (e: React.FormEvent) => {
     e.preventDefault();
+    setError(undefined);
+    setSuccess(undefined);
+    if (!firstName || !lastName || !dpEmail || !dpPassword) {
+      setError("All fields are required.");
+      showToast("All fields are required.", "error");
+      return;
+    }
     setPending(true);
-    setTimeout(() => {
-      setPending(false);
-      if (!firstName || !lastName || !dpEmail || !dpPassword) {
-        setError("All fields are required.");
-        setSuccess(undefined);
-        showToast("All fields are required.", "error");
-      } else {
-        setSuccess("Account created successfully!");
-        setError(undefined);
-        showToast("Account created successfully!", "success");
+    dpMutation.mutate(
+      {
+        firstName,
+        lastName,
+        email: dpEmail,
+        password: dpPassword,
+        userType: "user",
+      },
+      {
+        onSettled: () => setPending(false),
       }
-    }, 1000);
+    );
   };
 
   const onSubmitBO = (e: React.FormEvent) => {
     e.preventDefault();
+    setError(undefined);
+    setSuccess(undefined);
+    if (!fullName || !boEmail || !boPassword) {
+      setError("All fields are required.");
+      showToast("All fields are required.", "error");
+      return;
+    }
     setPending(true);
-    setTimeout(() => {
-      setPending(false);
-      if (!fullName || !boEmail || !boPassword) {
-        setError("All fields are required.");
-        setSuccess(undefined);
-        showToast("All fields are required.", "error");
-      } else {
-        setSuccess("Account created successfully!");
-        setError(undefined);
-        showToast("Account created successfully!", "success");
+    boMutation.mutate(
+      {
+        fullName,
+        email: boEmail,
+        password: boPassword,
+        userType: "employer",
+      },
+      {
+        onSettled: () => setPending(false),
       }
-    }, 1000);
+    );
   };
 
   return (
@@ -129,6 +195,7 @@ const SignUp = () => {
               }`}
               style={{ height: "100%" }}
             >
+              {/* Data Professional Form */}
               <div className="w-1/2 px-2">
                 <form className="space-y-4" onSubmit={onSubmitDP}>
                   <div className="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
@@ -142,7 +209,7 @@ const SignUp = () => {
                       <input
                         id="firstName"
                         type="text"
-                        disabled={pending}
+                        disabled={pending || dpMutation.isPending}
                         placeholder="Enter your first name"
                         className="w-full rounded-md border border-input bg-background text-foreground p-4"
                         value={firstName}
@@ -159,7 +226,7 @@ const SignUp = () => {
                       <input
                         id="lastName"
                         type="text"
-                        disabled={pending}
+                        disabled={pending || dpMutation.isPending}
                         placeholder="Enter your last name"
                         className="w-full rounded-md border border-input bg-background text-foreground p-4"
                         value={lastName}
@@ -177,7 +244,7 @@ const SignUp = () => {
                     <input
                       id="dpEmail"
                       type="email"
-                      disabled={pending}
+                      disabled={pending || dpMutation.isPending}
                       placeholder="Enter your email address"
                       className="w-full rounded-md border border-input bg-background text-foreground p-4"
                       value={dpEmail}
@@ -195,7 +262,7 @@ const SignUp = () => {
                       <input
                         id="dpPassword"
                         type={dpShowPassword ? "text" : "password"}
-                        disabled={pending}
+                        disabled={pending || dpMutation.isPending}
                         placeholder="Enter your password"
                         className="w-full rounded-md border border-input bg-background text-foreground p-4 pr-12"
                         value={dpPassword}
@@ -221,10 +288,16 @@ const SignUp = () => {
                   <button
                     type="submit"
                     className="w-full rounded-md bg-primary text-primary-foreground py-3 font-semibold text-lg transition hover:bg-primary/90 flex items-center justify-center gap-2"
-                    disabled={pending}
+                    disabled={pending || dpMutation.isPending}
                   >
-                    <FiUserPlus className="w-5 h-5" />
-                    {pending ? "Submitting..." : "Submit"}
+                    {pending || dpMutation.isPending ? (
+                      <Spinner />
+                    ) : (
+                      <FiUserPlus className="w-5 h-5" />
+                    )}
+                    {pending || dpMutation.isPending
+                      ? "Submitting..."
+                      : "Submit"}
                   </button>
                   <div className="relative flex items-center before:h-[0.5px] before:flex-1 before:bg-input after:h-[0.5px] after:flex-1 after:bg-input">
                     <span className="mx-3 inline-block text-muted-foreground">
@@ -243,6 +316,7 @@ const SignUp = () => {
                   </div>
                 </form>
               </div>
+              {/* Business Owner Form */}
               <div className="w-1/2 px-2">
                 <form className="space-y-4" onSubmit={onSubmitBO}>
                   <div>
@@ -255,7 +329,7 @@ const SignUp = () => {
                     <input
                       id="fullName"
                       type="text"
-                      disabled={pending}
+                      disabled={pending || boMutation.isPending}
                       placeholder="Enter your full name"
                       className="w-full rounded-md border border-input bg-background text-foreground p-4"
                       value={fullName}
@@ -272,7 +346,7 @@ const SignUp = () => {
                     <input
                       id="boEmail"
                       type="email"
-                      disabled={pending}
+                      disabled={pending || boMutation.isPending}
                       placeholder="Enter your email address"
                       className="w-full rounded-md border border-input bg-background text-foreground p-4"
                       value={boEmail}
@@ -290,7 +364,7 @@ const SignUp = () => {
                       <input
                         id="boPassword"
                         type={boShowPassword ? "text" : "password"}
-                        disabled={pending}
+                        disabled={pending || boMutation.isPending}
                         placeholder="Enter your password"
                         className="w-full rounded-md border border-input bg-background text-foreground p-4 pr-12"
                         value={boPassword}
@@ -316,10 +390,16 @@ const SignUp = () => {
                   <button
                     type="submit"
                     className="w-full rounded-md bg-primary text-primary-foreground py-3 font-semibold text-lg transition hover:bg-primary/90 flex items-center justify-center gap-2"
-                    disabled={pending}
+                    disabled={pending || boMutation.isPending}
                   >
-                    <FiUserPlus className="w-5 h-5" />
-                    {pending ? "Submitting..." : "Submit"}
+                    {pending || boMutation.isPending ? (
+                      <Spinner />
+                    ) : (
+                      <FiUserPlus className="w-5 h-5" />
+                    )}
+                    {pending || boMutation.isPending
+                      ? "Submitting..."
+                      : "Submit"}
                   </button>
                   <div className="relative flex items-center before:h-[0.5px] before:flex-1 before:bg-input after:h-[0.5px] after:flex-1 after:bg-input">
                     <span className="mx-3 inline-block text-muted-foreground">

@@ -1,4 +1,4 @@
-import { GoogleLoginButton } from "@/components";
+import { GoogleLoginButton, Spinner } from "@/components";
 import { useToast } from "@/context/ToastContext";
 import { setToken, setUser } from "@/helpers";
 import AuthLayout from "@/layouts/auth";
@@ -144,7 +144,7 @@ const SignIn = () => {
             className="w-full rounded-md bg-primary text-primary-foreground py-3 font-semibold text-lg transition hover:bg-primary/90 flex items-center justify-center gap-2"
             disabled={isPending}
           >
-            <FiLogIn className="w-5 h-5" />
+            {isPending ? <Spinner /> : <FiLogIn className="w-5 h-5" />}
             {isPending ? "Signing In..." : "Submit"}
           </button>
           <div className="text-center text-muted-foreground">
