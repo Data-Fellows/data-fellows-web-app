@@ -114,7 +114,7 @@ export default function ContactUs() {
 
           <div className="bg-background text-foreground">
             <div
-              className="mx-4 mt-16 max-w-full rounded-3xl text-white md:mx-auto md:max-w-[80vw] md:rounded-[40px]"
+              className="mx-4 mt-16 max-w-full rounded-3xl text-white md:mx-auto md:max-w-[80vw] "
               style={{
                 backgroundImage:
                   "linear-gradient(to right, #2C6E8F, #1B3A4B), url('/svgs/landing-page/baseline.svg')",

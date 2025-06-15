@@ -2,8 +2,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaLinkedin } from "react-icons/fa";
 import { FiBriefcase, FiUser } from "react-icons/fi";
+import { MdOutlineConnectWithoutContact } from "react-icons/md";
 
-export default function OurTeamSection() {
+export default function OurTeam() {
   const teamMembers = [
     {
       id: 1,
@@ -44,16 +45,8 @@ export default function OurTeamSection() {
   return (
     <div className="bg-gradient-to-b from-background/80 to-primary/10 pb-20 backdrop-blur-md text-foreground">
       <div className="min-h-screen overflow-hidden relative py-16">
-        <div className="absolute left-0 top-1/2 z-0 hidden h-[90%] w-screen -translate-y-1/4 transform md:block pointer-events-none">
-          <img
-            src="/svgs/landing-page/team-spiral.svg"
-            className="h-full w-full object-cover opacity-20 dark:opacity-10"
-            alt="Background wave pattern"
-          />
-        </div>
-
         <div className="relative z-10 mx-auto max-w-[80%] px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
+          <div className="mb-12 text-center justify-center flex flex-col items-center">
             <span className="mb-10 inline-block h-6 bg-muted-foreground/5 px-2 py-1 text-sm text-primary rounded shadow-none">
               <Image
                 src="/svgs/landing-page/people.svg"
@@ -92,16 +85,16 @@ export default function OurTeamSection() {
             >
               <a
                 href="/contact"
-                className="mt-4 inline-block h-10 rounded-xl bg-primary text-primary-foreground px-6 py-2 font-semibold transition hover:bg-primary/90"
+                className="mt-4 md:h-14 w-[200px] rounded-md bg-primary text-primary-foreground flex px-6 items-center justify-center font-semibold transition hover:bg-primary/90 space-x-2 text-center"
               >
-                Contact Us
+                <span>Contact Us</span>
+                <MdOutlineConnectWithoutContact className=" h-5 w-5 text-white" />
               </a>
             </motion.div>
           </div>
         </div>
 
-        {/* Team Members Grid */}
-        <div className="mx-auto grid grid-cols-1 gap-20 W-[80%] px-4 md:grid-cols-2 lg:grid-cols-4 lg:px-0">
+        <div className="mx-auto grid grid-cols-1 gap-20 w-[80%] px-4 md:grid-cols-2 lg:grid-cols-4 lg:px-0">
           {teamMembers.map((member, i) => (
             <motion.div
               key={member.id}
@@ -145,9 +138,8 @@ export default function OurTeamSection() {
             </motion.div>
           ))}
         </div>
-        {/* CTA Section */}
         <motion.div
-          className="mx-4 mt-16 max-w-full rounded-3xl text-white md:mx-auto md:max-w-[80vw] md:rounded-[40px]"
+          className="mx-4 mt-16 max-w-full rounded-3xl text-white md:mx-auto md:max-w-[80vw] "
           style={{
             backgroundImage:
               "linear-gradient(to right, #2C6E8F, #1B3A4B), url('/svgs/landing-page/baseline.svg')",
