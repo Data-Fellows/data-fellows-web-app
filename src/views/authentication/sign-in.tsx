@@ -1,13 +1,16 @@
+import { GoogleLoginButton } from "@/components";
 import { useToast } from "@/context/ToastContext";
 import AuthLayout from "@/layouts/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { FiEye, FiEyeOff, FiLogIn } from "react-icons/fi";
 
 const SignIn = () => {
   const [pending, setPending] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { showToast } = useToast();
 
   const onSubmit = (e: React.FormEvent) => {
@@ -40,6 +43,9 @@ const SignIn = () => {
             Welcome back, you&apos;ve been missed!
           </p>
         </div>
+        <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-3 sm:space-y-0">
+          <GoogleLoginButton />
+        </div>
         <div className="relative flex items-center before:h-[0.5px] before:flex-1 before:bg-border after:h-[0.5px] after:flex-1 after:bg-border">
           <span className="mx-3 inline-block text-muted-foreground">OR</span>
         </div>
@@ -56,9 +62,21 @@ const SignIn = () => {
               type="email"
               disabled={pending}
               placeholder="Enter your email address"
-              className="w-full rounded-md border p-4 bg-background text-foreground"
+              className="w-full rounded-md border border-input bg-background text-foreground p-4 focus:border-primary focus:ring-2 focus:ring-primary/30 transition"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{
+                border:
+                  typeof window !== "undefined" &&
+                  document.documentElement.classList.contains("dark")
+                    ? "none"
+                    : undefined,
+                background:
+                  typeof window !== "undefined" &&
+                  document.documentElement.classList.contains("dark")
+                    ? "rgba(30,41,59,0.7)"
+                    : undefined,
+              }}
             />
           </div>
           <div>
@@ -68,15 +86,38 @@ const SignIn = () => {
             >
               Password
             </label>
-            <input
-              id="password"
-              type="password"
-              disabled={pending}
-              placeholder="Enter your password"
-              className="w-full rounded-md border p-4 bg-background text-foreground"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                disabled={pending}
+                placeholder="Enter your password"
+                className="w-full rounded-md border border-input bg-background text-foreground p-4 pr-12 focus:border-primary focus:ring-2 focus:ring-primary/30 transition"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{
+                  border:
+                    typeof window !== "undefined" &&
+                    document.documentElement.classList.contains("dark")
+                      ? "none"
+                      : undefined,
+                  background:
+                    typeof window !== "undefined" &&
+                    document.documentElement.classList.contains("dark")
+                      ? "rgba(30,41,59,0.7)"
+                      : undefined,
+                }}
+              />
+              <button
+                type="button"
+                tabIndex={-1}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
+            </div>
           </div>
           <Link
             className="text-primary flex self-end justify-end hover:underline text-sm"
@@ -86,9 +127,10 @@ const SignIn = () => {
           </Link>
           <button
             type="submit"
-            className="w-full rounded-md bg-primary text-primary-foreground py-3 font-semibold text-lg transition hover:bg-primary/90"
+            className="w-full rounded-md bg-primary text-primary-foreground py-3 font-semibold text-lg transition hover:bg-primary/90 flex items-center justify-center gap-2"
             disabled={pending}
           >
+            <FiLogIn className="w-5 h-5" />
             {pending ? "Signing In..." : "Submit"}
           </button>
           <div className="text-center text-muted-foreground">
