@@ -85,7 +85,7 @@ export default function OurTeam() {
             >
               <a
                 href="/contact"
-                className="mt-4 md:h-14 w-[200px] rounded-md bg-primary text-primary-foreground flex px-6 items-center justify-center font-semibold transition hover:bg-primary/90 space-x-2 text-center"
+                className="mt-4 h-14 w-[200px] rounded-md bg-primary text-primary-foreground flex px-6 items-center justify-center font-semibold transition hover:bg-primary/90 space-x-2 text-center"
               >
                 <span>Contact Us</span>
                 <MdOutlineConnectWithoutContact className=" h-5 w-5 text-white" />
@@ -165,7 +165,7 @@ export default function OurTeam() {
             </div>
             <a
               href="/"
-              className="h-auto w-[250px] whitespace-nowrap rounded-md bg-primary px-8 py-3 text-lg font-medium text-primary-foreground md:py-4 text-center transition hover:bg-primary/90"
+              className="h-auto w-[200px] whitespace-nowrap rounded-md bg-primary px-8 py-3 text-lg font-medium text-primary-foreground md:py-4 text-center transition hover:bg-primary/90"
             >
               Get started
             </a>

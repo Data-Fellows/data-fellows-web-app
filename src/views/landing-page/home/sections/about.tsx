@@ -96,7 +96,7 @@ export default function About() {
                     boxShadow: "0 4px 24px 0 rgba(64, 144, 111, 0.15)",
                   }}
                   whileTap={{ scale: 0.97 }}
-                  className="w-[250px] cursor-pointer md:h-14 text-lg font-bold rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition px-6 py-3 shadow"
+                  className="w-[200px] cursor-pointer md:h-14 text-lg font-bold rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition px-6 py-3 shadow"
                 >
                   Our Team
                 </MotionButton>
