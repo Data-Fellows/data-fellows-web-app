@@ -1,18 +1,16 @@
 import apiClient from "@/api";
+import { BasicUserData } from "@/helpers";
 
-interface SignInPayload {
+export interface SignInPayload {
   email: string;
   password: string;
 }
 
-interface SignInResponse {
+export interface SignInResponse {
+  status: string;
+  message: string;
   token: string;
-  user: {
-    id: string;
-    email: string;
-    // Add other user fields as needed
-  };
-  message?: string;
+  user: BasicUserData;
 }
 
 export async function signInApi(

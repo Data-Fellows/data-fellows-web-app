@@ -1,15 +1,17 @@
 import { GoogleLoginButton } from "@/components";
 import { useToast } from "@/context/ToastContext";
-import { setToken } from "@/helpers";
+import { setToken, setUser } from "@/helpers";
 import AuthLayout from "@/layouts/auth";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiEye, FiEyeOff, FiLogIn } from "react-icons/fi";
 import { signInApi } from "./api";
 
 const SignIn = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +21,9 @@ const SignIn = () => {
     mutationFn: signInApi,
     onSuccess: (data) => {
       setToken(data.token);
+      setUser(data.user);
       showToast("Signed in successfully!", "success");
+      router.replace("/dashboard");
     },
     onError: (error: any) => {
       showToast(

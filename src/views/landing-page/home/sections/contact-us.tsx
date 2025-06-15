@@ -8,7 +8,7 @@ export default function ContactUs() {
       <div className="min-h-screen py-4 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="flex flex-col items-center justify-center px-2 py-8 pt-20">
           <motion.div
-            className="flex w-full max-w-[80%] flex-col rounded-3xl bg-background/80 shadow-xl ring-1 ring-primary/10 backdrop-blur-lg md:flex-row"
+            className="flex w-full md:w-[80%] flex-col rounded-3xl bg-background/80 shadow-xl ring-1 ring-primary/10 backdrop-blur-lg md:flex-row"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
