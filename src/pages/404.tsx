@@ -9,7 +9,11 @@ export default function NotFound() {
 
   const Content = (
     <div className="flex flex-col items-center justify-center min-h-[90vh] bg-background text-foreground">
-      <div className="w-full md:-ml-64 flex flex-col items-center text-center">
+      <div
+        className={`w-full ${
+          isDashboard ? "md:-ml-64" : "`"
+        } flex flex-col items-center text-center`}
+      >
         <div className="mb-[-40px] sm:mb-0 flex justify-center w-full">
           <Image
             src="/svgs/landing-page/not-found.svg"

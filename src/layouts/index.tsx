@@ -1,4 +1,5 @@
 import { useTheme } from "@/context/ThemeContext";
+import { useRouteGuard } from "@/hooks/useRouteGuard";
 import DashboardLayout from "@/layouts/dashboard";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
@@ -29,6 +30,7 @@ const ThemeToggleButton = () => {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { theme } = useTheme();
+  useRouteGuard();
   const router = useRouter();
 
   if (router.pathname.startsWith("/dashboard")) {
