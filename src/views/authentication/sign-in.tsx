@@ -23,7 +23,7 @@ const SignIn = () => {
       setToken(data.token);
       setUser(data.user);
       showToast("Signed in successfully!", "success");
-      router.replace("/dashboard");
+      router.replace("/dashboard/home");
     },
     onError: (error: any) => {
       showToast(

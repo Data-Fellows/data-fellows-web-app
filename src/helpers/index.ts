@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 const THEME_COOKIE_KEY = "theme";
 const TOKEN_COOKIE_KEY = "token";
 const USER_COOKIE_KEY = "user";
+const USER_ROLE_KEY = "userRole";
 
 export type Theme = "light" | "dark";
 
@@ -56,4 +57,23 @@ export function getUser(): BasicUserData | undefined {
 
 export function removeUser() {
   Cookies.remove(USER_COOKIE_KEY);
+}
+
+export function setUserRole(role: string) {
+  Cookies.set(USER_ROLE_KEY, role, { expires: 365 });
+}
+
+export function getUserRole(): string | undefined {
+  return Cookies.get(USER_ROLE_KEY);
+}
+
+export function removeUserRole() {
+  Cookies.remove(USER_ROLE_KEY);
+}
+
+export function clearCookies() {
+  Cookies.remove(THEME_COOKIE_KEY);
+  Cookies.remove(TOKEN_COOKIE_KEY);
+  Cookies.remove(USER_COOKIE_KEY);
+  Cookies.remove(USER_ROLE_KEY);
 }

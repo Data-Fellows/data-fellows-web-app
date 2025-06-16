@@ -123,3 +123,28 @@ body {
 button {
   cursor: pointer;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
+}
+
+.rdp > div {
+  justify-content: center;
+}
+
+.rdp-dropdown_year > div,
+.rdp-dropdown_month > div {
+  display: none;
+}
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

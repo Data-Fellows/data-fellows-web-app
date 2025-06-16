@@ -1,4 +1,4 @@
-import { getUser, removeToken, removeUser } from "@/helpers";
+import { clearCookies, getUser } from "@/helpers";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -18,24 +18,23 @@ function cn(...classes: (string | boolean | undefined)[]) {
 }
 
 const userItems = [
-  { title: "Dashboard", href: "/", icon: FiHome },
-  { title: "Problems", href: "/user/problems", icon: FiBriefcase },
-  { title: "Matched", href: "/user/matched", icon: FiMessageSquare },
-  { title: "Payments", href: "/user/payments", icon: FiDollarSign },
-  { title: "Profile", href: "/user/profile", icon: FiUser },
-  { title: "Settings", href: "/user/settings", icon: FiSettings },
+  { title: "Dashboard", href: "/dashboard/home", icon: FiHome },
+  { title: "Problems", href: "/dashboard/problems", icon: FiBriefcase },
+  { title: "Matched", href: "/dashboard/matched", icon: FiMessageSquare },
+  { title: "Payments", href: "/dashboard/payments", icon: FiDollarSign },
+  { title: "Profile", href: "/dashboard/profile", icon: FiUser },
+  { title: "Settings", href: "/dashboard/settings", icon: FiSettings },
 ];
 
 const employerItems = [
-  { title: "Dashboard", href: "/", icon: FiHome },
-  { title: "Problems", href: "/employer/problems", icon: FiBriefcase },
-  { title: "Matched", href: "/employer/matched", icon: FiMessageSquare },
-  { title: "Payments", href: "/employer/payments", icon: FiDollarSign },
-  { title: "Profile", href: "/employer/profile", icon: FiUser },
-  { title: "Settings", href: "/employer/settings", icon: FiSettings },
+  { title: "Dashboard", href: "/dashboard/home", icon: FiHome },
+  { title: "Problems", href: "/dashboard/problems", icon: FiBriefcase },
+  { title: "Matched", href: "/dashboard/matched", icon: FiMessageSquare },
+  { title: "Payments", href: "/dashboard/payments", icon: FiDollarSign },
+  { title: "Profile", href: "/dashboard/profile", icon: FiUser },
+  { title: "Settings", href: "/dashboard/settings", icon: FiSettings },
 ];
 
-// Filter out settings for mobile nav
 function getMobileItems(items: any[]) {
   return items.filter((item) => item.title !== "Settings").slice(0, 5);
 }
@@ -116,7 +115,7 @@ function Sidebar({ items, onLogout, activePath, onClose }: any) {
 function MobileTabBar({ items, activePath }: any) {
   const mobileItems = getMobileItems(items);
   return (
-    <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 flex md:hidden bg-primary/10 dark:bg-sidebar dark:border-border rounded-full px-2 py-1 w-[95%] max-w-xl mx-auto">
+    <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 flex md:hidden bg-card  rounded-full px-2 py-1 w-[95%] max-w-xl mx-auto shadow-lg">
       {mobileItems.map((item: any) => {
         const isActive =
           activePath === item.href || activePath.startsWith(item.href);
@@ -163,13 +162,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const items = role === "employer" ? employerItems : userItems;
 
   const handleLogout = () => {
-    removeToken();
-    removeUser();
+    clearCookies();
     router.replace("/auth/sign-in");
   };
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground">
+    <div className="flex h-screen overflow-y-scroll scrollbar-hide bg-background text-foreground">
       <Sidebar
         items={items}
         onLogout={handleLogout}
@@ -177,7 +175,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         onClose={() => {}}
       />
 
-      <main className="flex-1 pb-24 md:pb-4 md:ml-64">{children}</main>
+      <main className="flex-1 pb-24 md:pb-4">{children}</main>
 
       <MobileTabBar items={items} activePath={router.asPath} />
     </div>

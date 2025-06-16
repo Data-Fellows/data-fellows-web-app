@@ -59,7 +59,7 @@ export default function Verify() {
         setToken(response.token);
         setUser(response.user);
         showToast("Account verified!", "success");
-        router.replace("/dashboard");
+        router.replace("/dashboard/home");
       } else {
         showToast(response.message || "Verification failed", "error");
       }
