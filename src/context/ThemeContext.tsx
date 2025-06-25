@@ -7,6 +7,7 @@ export interface ThemeContextProps {
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
 }
+console.log("ThemeContext loaded");
 
 export const ThemeContext = createContext<ThemeContextProps | undefined>(
   undefined
