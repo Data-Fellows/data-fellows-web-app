@@ -1,9 +1,13 @@
+import { useToast } from "@/context/ToastContext";
+import { setUser } from "@/helpers";
 import { Dialog } from "@headlessui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import Cropper from "react-easy-crop";
 import "react-international-phone/style.css";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { addProfileDetailsApi, AddProfileDetailsPayload } from "../../api";
 
 const formSchema = {
   dateOfBirth: { required: true, message: "Date of birth is required" },
@@ -91,6 +95,9 @@ const ProfileDetailsPage = ({
   const [zoom, setZoom] = React.useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = React.useState<any>(null);
   const [cropModalOpen, setCropModalOpen] = React.useState(false);
+  const [showSuccessModal, setShowSuccessModal] = React.useState(false);
+  const { showToast } = useToast();
+  const router = useRouter();
 
   const [fields, setFields] = React.useState({
     dateOfBirth: { day: "", month: "", year: "" },
@@ -120,6 +127,8 @@ const ProfileDetailsPage = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
+    setError(null); // Clear errors when user makes changes
+
     if (name === "day" || name === "month" || name === "year") {
       setFields((prev) => ({
         ...prev,
@@ -169,6 +178,33 @@ const ProfileDetailsPage = ({
     setCropModalOpen(false);
   }
 
+  // Helper function to convert cropped image to File
+  async function dataURLtoFile(
+    dataURL: string,
+    filename: string
+  ): Promise<File> {
+    return new Promise((resolve) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const img = new Image();
+
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx?.drawImage(img, 0, 0);
+
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const file = new File([blob], filename, { type: "image/png" });
+            resolve(file);
+          }
+        }, "image/png");
+      };
+
+      img.src = dataURL;
+    });
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const err = validate();
@@ -176,13 +212,61 @@ const ProfileDetailsPage = ({
       setError(err);
       return;
     }
+
     setLoading(true);
     setError(null);
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      // Format date as YYYY-MM-DD
+      const dateOfBirth = `${fields.dateOfBirth.year}-${String(
+        months.indexOf(fields.dateOfBirth.month) + 1
+      ).padStart(2, "0")}-${String(fields.dateOfBirth.day).padStart(2, "0")}`;
+
+      // Prepare photo file
+      let photoFileToUpload: File | undefined;
+      if (photoPreview && photoFile) {
+        if (photoPreview.startsWith("data:")) {
+          // If it's a cropped image (base64), convert to File
+          photoFileToUpload = await dataURLtoFile(
+            photoPreview,
+            `profile_photo_${Date.now()}.png`
+          );
+        } else {
+          // Use original file
+          photoFileToUpload = photoFile;
+        }
+      }
+
+      // Create API payload
+      const payload: AddProfileDetailsPayload = {
+        dateOfBirth,
+        phone: fields.phone,
+        address: fields.address,
+        city: fields.city,
+        state: fields.stateProvince,
+        country: fields.country,
+        photo: photoFileToUpload,
+      };
+
+      const response = await addProfileDetailsApi(payload);
+
+      if (response.user) {
+        setUser(response.user);
+      }
+
+      showToast("Profile completed successfully!", "success");
+
+      setShowSuccessModal(true);
+    } catch (err: any) {
+      console.error("Error completing profile:", err);
+      const errorMessage =
+        err?.response?.data?.message ||
+        "Failed to complete profile. Please try again.";
+      setError(errorMessage);
+      showToast(errorMessage, "error");
+    } finally {
       setLoading(false);
-      setPage((page) => page + 1);
-    }, 1000);
+    }
   }
 
   return (
@@ -380,9 +464,10 @@ const ProfileDetailsPage = ({
                   <PhoneInput
                     country={"ng"}
                     value={fields.phone}
-                    onChange={(phone) =>
-                      setFields((prev) => ({ ...prev, phone }))
-                    }
+                    onChange={(phone) => {
+                      setError(null); // Clear errors when user changes phone
+                      setFields((prev) => ({ ...prev, phone }));
+                    }}
                     inputClass="!h-12 !border !border-border !rounded-lg !px-3 !py-2 !w-full !text-base !bg-background dark:!bg-zinc-900 dark:!text-foreground !pl-16"
                     buttonClass="!bg-background dark:!bg-zinc-900 !border-border"
                     dropdownClass="!bg-background dark:!bg-zinc-900 !text-foreground !scrollbar-hide !border-border"
@@ -437,8 +522,10 @@ const ProfileDetailsPage = ({
               </div>
             </div>
             {error && (
-              <div className="mt-4 text-sm font-medium text-red-600 sm:text-base">
-                {error}
+              <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm font-medium text-red-600 dark:text-red-400">
+                  {error}
+                </p>
               </div>
             )}
             <div className="flex flex-row justify-between mt-8 gap-4 w-full">
@@ -452,10 +539,10 @@ const ProfileDetailsPage = ({
               </button>
               <button
                 type="submit"
-                className="w-1/2 sm:w-1/4 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 font-semibold transition"
+                className="w-1/2 sm:w-1/4 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
-                {loading ? "Loading..." : "Submit"}
+                {loading ? "Completing..." : "Complete Profile"}
               </button>
             </div>
           </form>
@@ -494,6 +581,48 @@ const ProfileDetailsPage = ({
           </div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onClose={() => {}}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <Dialog.Panel className="bg-white dark:bg-zinc-900 rounded-lg p-8 max-w-md w-full mx-4">
+            <div className="text-center">
+              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900/20 mb-4">
+                <svg
+                  className="h-8 w-8 text-green-600 dark:text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <Dialog.Title className="text-xl font-semibold text-foreground mb-2">
+                Profile Completed! 🎉
+              </Dialog.Title>
+              <p className="text-muted-foreground mb-6">
+                Congratulations! Your Data Fellow profile is now complete.
+                You're ready to start applying for jobs and connecting with
+                employers.
+              </p>
+              <button
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  router.push("/dashboard/home");
+                }}
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-6 py-3 font-semibold transition"
+              >
+                Go to Dashboard
+              </button>
+            </div>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
     </div>
   );
 };

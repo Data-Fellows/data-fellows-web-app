@@ -1,10 +1,14 @@
+import { useToast } from "@/context/ToastContext";
+import { setUser } from "@/helpers";
 import React from "react";
+import { addBioApi, AddBioPayload } from "../../api";
 
 const formSchema = {
   bio: {
     required: true,
     minLength: 100,
-    message: "Bio must be at least 100 characters",
+    maxLength: 2000,
+    message: "Bio must be between 100 and 2000 characters",
   },
 };
 
@@ -17,12 +21,16 @@ const BioForm = ({
   const [error, setError] = React.useState<string | null>(null);
   const [bio, setBio] = React.useState("");
   const [touched, setTouched] = React.useState(false);
+  const { showToast } = useToast();
 
   const bioLength = bio.length;
 
   function validate() {
-    if (!bio || bio.length < 100) {
-      return formSchema.bio.message;
+    if (!bio || bio.trim().length < 100) {
+      return "Bio must be at least 100 characters";
+    }
+    if (bio.trim().length > 2000) {
+      return "Bio must not exceed 2000 characters";
     }
     return null;
   }
@@ -35,15 +43,35 @@ const BioForm = ({
       setError(err);
       return;
     }
+
     setLoading(true);
     setError(null);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      const payload: AddBioPayload = {
+        bio: bio.trim(),
+      };
+
+      const response = await addBioApi(payload);
+
+      if (response.user) {
+        setUser(response.user);
+      }
+
+      showToast("Bio added successfully!", "success");
+
       setBio("");
       setTouched(false);
       setPage((page) => page + 1);
-    }, 1000);
+    } catch (err: any) {
+      console.error("Error adding bio:", err);
+      const errorMessage =
+        err?.response?.data?.message || "Failed to add bio. Please try again.";
+      setError(errorMessage);
+      showToast(errorMessage, "error");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -70,24 +98,39 @@ const BioForm = ({
               </label>
               <textarea
                 value={bio}
-                onChange={(e) => setBio(e.target.value)}
+                onChange={(e) => {
+                  setBio(e.target.value);
+                  setError(null); // Clear errors when typing
+                }}
                 onBlur={() => setTouched(true)}
                 placeholder="Enter your top skills, experiences, and interests. This is one of the first things clients will see on your profile."
                 className="h-32 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
                 disabled={loading}
+                maxLength={2000}
               />
               {touched && validate() && (
-                <div className="text-red-500 text-xs mt-1">
-                  {formSchema.bio.message}
-                </div>
+                <div className="text-red-500 text-xs mt-1">{validate()}</div>
               )}
             </div>
-            <div className="flex justify-end text-sm text-gray-600 sm:text-base">
-              {bioLength}/100 characters
+            <div
+              className={`flex justify-end text-sm sm:text-base ${
+                bioLength < 100
+                  ? "text-red-600"
+                  : bioLength < 150
+                  ? "text-amber-600"
+                  : bioLength > 2000
+                  ? "text-red-600"
+                  : "text-green-600"
+              }`}
+            >
+              {bioLength}/2000 characters{" "}
+              {bioLength >= 100 && bioLength <= 2000 ? "✓" : ""}
             </div>
             {error && (
-              <div className="text-sm font-medium text-red-600 sm:text-base">
-                {error}
+              <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm font-medium text-red-600 dark:text-red-400">
+                  {error}
+                </p>
               </div>
             )}
             <div className="flex flex-row justify-between mt-8 gap-4 w-full">
@@ -101,10 +144,10 @@ const BioForm = ({
               </button>
               <button
                 type="submit"
-                className="w-1/2 sm:w-1/4 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 font-semibold transition"
-                disabled={loading}
+                className="w-1/2 sm:w-1/4 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading || !!validate()}
               >
-                {loading ? "Loading..." : "Next"}
+                {loading ? "Saving..." : "Next"}
               </button>
             </div>
           </form>

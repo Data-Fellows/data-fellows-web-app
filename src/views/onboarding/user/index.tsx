@@ -1,5 +1,6 @@
+import { getNextIncompleteOnboardingStep, getUser } from "@/helpers";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BioForm from "./steps/five";
 import EducationExperienceForm from "./steps/four";
 import DataFellowIntro from "./steps/one";
@@ -18,6 +19,28 @@ const steps = [
 
 export default function OnboardingSteps() {
   const [page, setPage] = useState(0);
+  const [initializing, setInitializing] = useState(true);
+
+  useEffect(() => {
+    const user = getUser();
+    if (user) {
+      const nextStep = getNextIncompleteOnboardingStep(user);
+      setPage(nextStep);
+    }
+    setInitializing(false);
+  }, []);
+
+  if (initializing) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-2 text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   const StepComponent = steps[page];
 
   return (

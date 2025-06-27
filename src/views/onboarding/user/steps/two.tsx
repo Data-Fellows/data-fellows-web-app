@@ -1,37 +1,43 @@
-import apiClient from "@/api";
 import { SkeletonBox } from "@/components";
+import { useToast } from "@/context/ToastContext";
 import { setUser } from "@/helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { addSkillsApi, getAvailableSkillsApi } from "../../api";
 
 const formSchema = z.object({
   skills: z.array(z.string()).min(1, "Please select at least one skill"),
 });
+
+interface Skill {
+  _id: string;
+  name: string;
+}
 
 const SkillsSelector = ({
   setPage,
 }: {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  const [skillsList, setSkillsList] = useState<{ _id: string; name: string }[]>(
-    []
-  );
+  const [skillsList, setSkillsList] = useState<Skill[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchSkills = async () => {
       try {
         setLoading(true);
-        const response = await apiClient.get("/skills");
-        setSkillsList(response.data.skills || []);
+        const response = await getAvailableSkillsApi();
+        setSkillsList(response.skills || []);
       } catch (err) {
+        console.error("Error fetching skills:", err);
         setError("Failed to load skills. Please try again later.");
       } finally {
         setLoading(false);
@@ -45,40 +51,60 @@ const SkillsSelector = ({
     defaultValues: { skills: [] },
   });
 
-  const updateFormValues = (newSkills: string[]) => {
-    form.setValue("skills", newSkills);
+  const updateFormValues = (newSkills: Skill[]) => {
+    const skillNames = newSkills.map((skill) => skill.name);
+    form.setValue("skills", skillNames);
     setSelectedSkills(newSkills);
   };
 
-  const addSkill = (skillName: string) => {
-    if (selectedSkills.length < 15 && !selectedSkills.includes(skillName)) {
-      const newSkills = [...selectedSkills, skillName];
+  const addSkill = (skill: Skill) => {
+    if (
+      selectedSkills.length < 15 &&
+      !selectedSkills.find((s) => s._id === skill._id)
+    ) {
+      const newSkills = [...selectedSkills, skill];
       updateFormValues(newSkills);
     }
     setSearch("");
   };
 
-  const removeSkill = (skill: string) => {
-    const newSkills = selectedSkills.filter((s) => s !== skill);
+  const removeSkill = (skillToRemove: Skill) => {
+    const newSkills = selectedSkills.filter((s) => s._id !== skillToRemove._id);
     updateFormValues(newSkills);
   };
 
   const filteredSkills = skillsList.filter(
     (skill) =>
       skill.name.toLowerCase().includes(search.toLowerCase()) &&
-      !selectedSkills.includes(skill.name)
+      !selectedSkills.find((s) => s._id === skill._id)
   );
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsUpdating(true);
-      await apiClient.put("/profile/skills", { skillNames: selectedSkills });
-      const user = await apiClient.get("/profile");
-      setUser(user.data.user);
+      setError(null);
+
+      const skillIds = selectedSkills.map((skill) => skill._id);
+
+      const response = await addSkillsApi({ skillIds });
+
+      if (response.user) {
+        setUser(response.user);
+      }
+
+      showToast("Skills updated successfully!", "success");
+
       sessionStorage.setItem("selectedSkills", JSON.stringify(values.skills));
+
       form.reset();
       setPage((page) => page + 1);
-    } catch {
+    } catch (error: any) {
+      console.error("Error updating skills:", error);
+      const errorMessage =
+        error?.response?.data?.message ||
+        "Failed to update skills. Please try again.";
+      setError(errorMessage);
+      showToast(errorMessage, "error");
       setIsUpdating(false);
     }
   }
@@ -123,7 +149,6 @@ const SkillsSelector = ({
         className="w-full bg-card rounded-xl shadow-lg flex flex-col md:flex-row items-center md:items-stretch justify-center md:justify-between gap-8 md:gap-0"
         style={{ maxWidth: "1200px", minHeight: "70vh" }}
       >
-        {/* Main Content */}
         <div className="w-full md:w-[70%] px-2 sm:px-8 py-6 md:py-10 flex flex-col justify-center">
           <h2 className="text-md mb-4 text-border font-semibold">2/6</h2>
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">
@@ -140,7 +165,7 @@ const SkillsSelector = ({
             <div className="flex flex-wrap items-center gap-2 border border-border rounded-lg px-2 py-1 bg-background ">
               {selectedSkills.map((skill) => (
                 <div
-                  key={skill}
+                  key={skill._id}
                   onClick={() => removeSkill(skill)}
                   className="bg-card text-primary border border-primary px-3 py-1 rounded-lg flex items-center cursor-pointer"
                 >
@@ -151,7 +176,7 @@ const SkillsSelector = ({
                   >
                     ✕
                   </button>
-                  <span className="text-primary text-sm">{skill}</span>
+                  <span className="text-primary text-sm">{skill.name}</span>
                 </div>
               ))}
               <input
@@ -169,7 +194,7 @@ const SkillsSelector = ({
                     key={skill._id}
                     type="button"
                     className="border border-primary m-1 text-sm text-primary text-left px-3 py-2 rounded-lg"
-                    onClick={() => addSkill(skill.name)}
+                    onClick={() => addSkill(skill)}
                   >
                     + {skill.name}
                   </button>
@@ -180,17 +205,24 @@ const SkillsSelector = ({
           <div className="text-right text-muted-foreground text-sm mb-8">
             Max 15 skills
           </div>
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-lg">
+              {error}
+            </div>
+          )}
           <h3 className="text-lg font-semibold mb-3">Suggested skills</h3>
           <div className="mt-2 flex flex-wrap gap-2">
             {skillsList
-              .filter((skill) => !selectedSkills.includes(skill.name))
+              .filter(
+                (skill) => !selectedSkills.find((s) => s._id === skill._id)
+              )
               .slice(0, 10)
               .map((skill) => (
                 <button
                   key={skill._id}
                   type="button"
                   className="border border-primary m-1 text-sm text-primary text-left px-3 py-2 rounded-lg"
-                  onClick={() => addSkill(skill.name)}
+                  onClick={() => addSkill(skill)}
                 >
                   + {skill.name}
                 </button>

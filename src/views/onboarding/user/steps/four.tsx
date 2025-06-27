@@ -1,5 +1,8 @@
+import { useToast } from "@/context/ToastContext";
+import { setUser } from "@/helpers";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { addEducationApi, AddEducationPayload } from "../../api";
 
 type EducationSchemaFormInputType = {
   school: string;
@@ -10,6 +13,16 @@ type EducationSchemaFormInputType = {
   startYear?: string;
   endYear?: string;
 };
+
+interface EducationEntry {
+  school: string;
+  degree: string;
+  fieldOfStudy: string;
+  description: string;
+  currentlyInSchool: boolean;
+  startYear?: string;
+  endYear?: string;
+}
 
 const defaultValues: EducationSchemaFormInputType = {
   school: "",
@@ -27,7 +40,9 @@ const EducationExperienceForm = ({
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [experiences, setExperiences] = useState<number>(0);
+  const [educationEntries, setEducationEntries] = useState<EducationEntry[]>(
+    []
+  );
   const [imported, setImported] = useState<{
     state: boolean;
     msg: string | null;
@@ -37,6 +52,7 @@ const EducationExperienceForm = ({
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   const { register, handleSubmit, reset, watch, setValue, formState } =
     useForm<EducationSchemaFormInputType>({
@@ -44,19 +60,45 @@ const EducationExperienceForm = ({
       mode: "onChange",
     });
 
-  function onSubmit(values: EducationSchemaFormInputType) {
+  async function onSubmit(values: EducationSchemaFormInputType) {
     setLoading(true);
     setError(null);
-    setTimeout(() => {
-      setExperiences((prev) => prev + 1);
+
+    try {
+      const payload: AddEducationPayload = {
+        school: values.school,
+        degree: values.degree,
+        fieldOfStudy: values.fieldOfStudy,
+        startDate: values.startYear || "",
+        endDate: values.currentlyInSchool ? null : values.endYear || null,
+        description: values.description || "",
+      };
+
+      const response = await addEducationApi(payload);
+
+      if (response.user) {
+        setUser(response.user);
+      }
+
+      setEducationEntries((prev) => [...prev, values]);
+
+      showToast("Education history added successfully!", "success");
+
       setIsOpen(false);
       reset();
-      setLoading(false);
       setImported({ state: false, msg: null });
-    }, 1000);
+    } catch (err: any) {
+      console.error("Error adding education:", err);
+      const errorMessage =
+        err?.response?.data?.message ||
+        "Failed to add education history. Please try again.";
+      setError(errorMessage);
+      showToast(errorMessage, "error");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // Modal overlay
   const ModalOverlay = () => (
     <div className="fixed inset-0 z-40 bg-black/80 transition-opacity" />
   );
@@ -150,10 +192,12 @@ const EducationExperienceForm = ({
           </p>
           <div className="border-t border-border pt-6 mb-4"></div>
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-8">
+            {" "}
             <div
               className="flex h-48 w-full cursor-pointer flex-col justify-center rounded-xl border border-amber-500 bg-amber-50/10 text-left text-slate-700 transition-colors sm:h-64 sm:w-96"
               onClick={() => {
                 setIsOpen(true);
+                setError(null); // Clear any previous errors
               }}
             >
               <div className="ml-4 sm:ml-6">
@@ -167,8 +211,10 @@ const EducationExperienceForm = ({
             </div>
           </div>
           {error && (
-            <div className="mt-4 text-sm font-medium text-red-600 sm:text-base">
-              {error}
+            <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="text-sm font-medium text-red-600 dark:text-red-400">
+                {error}
+              </p>
             </div>
           )}
           {imported.state && imported.msg && (
@@ -176,10 +222,40 @@ const EducationExperienceForm = ({
               {imported.msg}
             </p>
           )}
-          {!imported.state && experiences > 0 && (
-            <p className="mt-4 text-sm font-medium text-amber-600 sm:text-base">
-              ({experiences}) added history
-            </p>
+          {!imported.state && educationEntries.length > 0 && (
+            <div className="mt-6 space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                Added Education History ({educationEntries.length})
+              </h3>
+              <div className="space-y-2">
+                {educationEntries.map((education, index) => (
+                  <div
+                    key={index}
+                    className="border border-border rounded-lg p-3 bg-card"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-foreground text-sm">
+                          {education.degree} in {education.fieldOfStudy}
+                        </h4>
+                        <p className="text-primary text-sm">
+                          {education.school}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {education.startYear} -{" "}
+                          {education.currentlyInSchool
+                            ? "Present"
+                            : education.endYear}
+                        </p>
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {education.currentlyInSchool ? "Current" : "Completed"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
           <div className="flex flex-row justify-between mt-8 gap-4 w-full">
             <button
@@ -242,7 +318,10 @@ const EducationExperienceForm = ({
 
       {isOpen && (
         <Modal
-          onClose={() => setIsOpen(false)}
+          onClose={() => {
+            setIsOpen(false);
+            setError(null); // Clear errors when closing modal
+          }}
           title="Add Education History"
           icon={
             <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
@@ -268,7 +347,10 @@ const EducationExperienceForm = ({
             <>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  setError(null); // Clear errors when closing
+                }}
                 disabled={loading}
                 className="h-12 px-6 text-base rounded-lg border border-border bg-background hover:bg-gray-100 dark:bg-zinc-800 font-semibold transition"
               >
@@ -293,7 +375,13 @@ const EducationExperienceForm = ({
             <div>
               <label className="block mb-1 text-sm font-medium">School</label>
               <input
-                {...register("school", { required: true })}
+                {...register("school", {
+                  required: "School name is required",
+                  minLength: {
+                    value: 2,
+                    message: "School name must be at least 2 characters",
+                  },
+                })}
                 placeholder="Ex. Oxford University"
                 className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
               />
@@ -306,7 +394,13 @@ const EducationExperienceForm = ({
             <div>
               <label className="block mb-1 text-sm font-medium">Degree</label>
               <input
-                {...register("degree", { required: true })}
+                {...register("degree", {
+                  required: "Degree is required",
+                  minLength: {
+                    value: 2,
+                    message: "Degree must be at least 2 characters",
+                  },
+                })}
                 placeholder="Ex. Bachelors"
                 className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
               />
@@ -321,7 +415,13 @@ const EducationExperienceForm = ({
                 Field of Study
               </label>
               <input
-                {...register("fieldOfStudy", { required: true })}
+                {...register("fieldOfStudy", {
+                  required: "Field of study is required",
+                  minLength: {
+                    value: 2,
+                    message: "Field of study must be at least 2 characters",
+                  },
+                })}
                 placeholder="Ex. Computer Science"
                 className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
               />
@@ -348,7 +448,9 @@ const EducationExperienceForm = ({
                   Start Year
                 </label>
                 <select
-                  {...register("startYear", { required: true })}
+                  {...register("startYear", {
+                    required: "Start year is required",
+                  })}
                   className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
                   disabled={loading}
                 >
@@ -374,7 +476,11 @@ const EducationExperienceForm = ({
                     End Year
                   </label>
                   <select
-                    {...register("endYear", { required: true })}
+                    {...register("endYear", {
+                      required: !watch("currentlyInSchool")
+                        ? "End year is required"
+                        : false,
+                    })}
                     className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
                     disabled={loading}
                   >

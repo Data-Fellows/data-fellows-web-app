@@ -1,6 +1,35 @@
+import { useToast } from "@/context/ToastContext";
+import { setUser } from "@/helpers";
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import {
+  addWorkExperienceApi,
+  ExtractedWorkExperience,
+  parseCVApi,
+} from "../../api";
+
+const formatDate = (dateString: string): string => {
+  if (!dateString) return "";
+
+  if (/present|current/i.test(dateString)) {
+    return "Present";
+  }
+
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return dateString;
+    }
+
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
+  } catch {
+    return dateString;
+  }
+};
 
 type WorkSchemaFormInputType = {
   title: string;
@@ -31,7 +60,10 @@ const WorkExperienceForm = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCVOpen, setIsCVOpen] = useState(false);
-  const [experiences, setExperiences] = useState<number>(0);
+  const [experiences, setExperiences] = useState<ExtractedWorkExperience[]>([]);
+  const [extractedExperiences, setExtractedExperiences] = useState<
+    ExtractedWorkExperience[]
+  >([]);
   const [imported, setImported] = useState<{
     state: boolean;
     msg: string | null;
@@ -41,6 +73,7 @@ const WorkExperienceForm = ({
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -50,16 +83,46 @@ const WorkExperienceForm = ({
       mode: "onChange",
     });
 
-  function onSubmit(values: WorkSchemaFormInputType) {
-    setLoading(true);
-    setError(null);
-    setTimeout(() => {
-      setExperiences((prev) => prev + 1);
+  async function onSubmit(values: WorkSchemaFormInputType) {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const payload = {
+        title: values.title,
+        company: values.company,
+        location: values.location,
+        startDate: values.startDate ? values.startDate.toISOString() : "",
+        endDate: values.currentlyWorking
+          ? null
+          : values.endDate?.toISOString() || null,
+        description: values.description,
+      };
+
+      const response = await addWorkExperienceApi(payload);
+
+      if (response.user) {
+        setUser(response.user);
+      }
+
+      showToast("Work experience added successfully!", "success");
+      setExperiences((prev) => [
+        ...prev,
+        { ...payload, currentlyWorking: values.currentlyWorking },
+      ]);
       setIsOpen(false);
       reset();
-      setLoading(false);
       setImported({ state: false, msg: null });
-    }, 1000);
+    } catch (error: any) {
+      console.error("Error adding work experience:", error);
+      const errorMessage =
+        error?.response?.data?.message ||
+        "Failed to add work experience. Please try again.";
+      setError(errorMessage);
+      showToast(errorMessage, "error");
+    } finally {
+      setLoading(false);
+    }
   }
 
   function DatePicker({
@@ -115,27 +178,142 @@ const WorkExperienceForm = ({
     );
   }
 
-  // CV Import Handler
-  const handleCVImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCVImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setLoading(true);
-    setImported({ state: false, msg: null });
 
-    // Simulate parsing and importing
-    setTimeout(() => {
+    const allowedTypes = [
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
+    const allowedExtensions = [".pdf", ".docx"];
+    const fileName = file.name.toLowerCase();
+    const isValidType =
+      allowedTypes.includes(file.type) ||
+      allowedExtensions.some((ext) => fileName.endsWith(ext));
+
+    if (!isValidType) {
+      setError("Please upload a PDF or DOCX file.");
+      showToast("Please upload a PDF or DOCX file.", "error");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
+
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size > maxSize) {
+      setError("File size too large. Maximum size is 10MB.");
+      showToast("File size too large. Maximum size is 10MB.", "error");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setImported({ state: false, msg: null });
+      setError(null);
+
+      const response = await parseCVApi(file);
+
+      if (
+        response.data?.workExperience &&
+        response.data.workExperience.length > 0
+      ) {
+        const convertedExperiences: ExtractedWorkExperience[] =
+          response.data.workExperience;
+
+        setExtractedExperiences(convertedExperiences);
+        setImported({
+          state: true,
+          msg: `Found ${convertedExperiences.length} work experience(s) from "${file.name}". Review and add them below.`,
+        });
+        showToast(
+          `Successfully extracted work experience from ${file.name}!`,
+          "success"
+        );
+        console.log("Extracted Work Experiences:", convertedExperiences);
+      } else {
+        setImported({
+          state: false,
+          msg: `No work experience found in "${file.name}". You can add experience manually.`,
+        });
+        showToast("No work experience found in the CV", "info");
+      }
+    } catch (error: any) {
+      console.error("Error parsing CV:", error);
+      const errorMessage =
+        error?.response?.data?.message ||
+        error.message ||
+        "Failed to parse CV. Please try adding experience manually.";
+      setError(errorMessage);
+      showToast(errorMessage, "error");
+    } finally {
       setLoading(false);
       setIsCVOpen(false);
-      setImported({
-        state: true,
-        msg: `Imported experience from "${file.name}" successfully!`,
-      });
-      setExperiences((prev) => prev + 1);
       if (fileInputRef.current) fileInputRef.current.value = "";
-    }, 1200);
+    }
   };
 
-  // Modal overlay
+  const addExtractedExperience = async (
+    experience: ExtractedWorkExperience
+  ) => {
+    try {
+      setLoading(true);
+
+      let startDate = "";
+      let endDate = null;
+
+      if (experience.startDate) {
+        try {
+          const parsedStartDate = new Date(experience.startDate);
+          if (!isNaN(parsedStartDate.getTime())) {
+            startDate = parsedStartDate.toISOString();
+          }
+        } catch (error) {
+          console.warn("Could not parse start date:", experience.startDate);
+        }
+      }
+
+      if (experience.endDate && !experience.currentlyWorking) {
+        try {
+          const parsedEndDate = new Date(experience.endDate);
+          if (!isNaN(parsedEndDate.getTime())) {
+            endDate = parsedEndDate.toISOString();
+          }
+        } catch (error) {
+          console.warn("Could not parse end date:", experience.endDate);
+        }
+      }
+
+      const payload = {
+        title: experience.title,
+        company: experience.company,
+        location: experience.location || "",
+        startDate,
+        endDate,
+        description: experience.description,
+      };
+
+      const response = await addWorkExperienceApi(payload);
+
+      if (response.user) {
+        setUser(response.user);
+      }
+
+      setExperiences((prev) => [...prev, experience]);
+      setExtractedExperiences((prev) =>
+        prev.filter((exp) => exp !== experience)
+      );
+      showToast("Work experience added successfully!", "success");
+    } catch (error: any) {
+      console.error("Error adding extracted experience:", error);
+      const errorMessage =
+        error?.response?.data?.message || "Failed to add work experience.";
+      showToast(errorMessage, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const ModalOverlay = () => (
     <div className="fixed inset-0 z-40 bg-black/80 transition-opacity" />
   );
@@ -210,7 +388,6 @@ const WorkExperienceForm = ({
         className="w-full bg-card rounded-xl shadow-lg flex flex-col md:flex-row items-center md:items-stretch justify-center md:justify-between gap-8 md:gap-0"
         style={{ maxWidth: "1200px", minHeight: "70vh" }}
       >
-        {/* Main Content */}
         <div className="w-full md:w-[70%] px-2 sm:px-8 py-6 md:py-10 flex flex-col justify-center">
           <h2 className="text-md mb-4 text-border font-semibold">3/6</h2>
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">
@@ -291,11 +468,94 @@ const WorkExperienceForm = ({
               {imported.msg}
             </p>
           )}
-          {!imported.state && experiences > 0 && (
-            <p className="mt-4 text-sm font-medium text-amber-600 sm:text-base">
-              ({experiences}) added experiences
-            </p>
+          {!imported.state && experiences.length > 0 && (
+            <div className="mt-6 space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                Added Work Experience ({experiences.length})
+              </h3>
+              <div className="space-y-2">
+                {experiences.map((experience, index) => (
+                  <div
+                    key={index}
+                    className="border border-border rounded-lg p-3 bg-card"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-foreground text-sm">
+                          {experience.title}
+                        </h4>
+                        <p className="text-primary text-sm">
+                          {experience.company}
+                        </p>
+                        {experience.location && (
+                          <p className="text-xs text-muted-foreground">
+                            {experience.location}
+                          </p>
+                        )}
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {experience.currentlyWorking ? "Current" : "Past"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
+
+          {/* Display Extracted Experiences for Review */}
+          {extractedExperiences.length > 0 && (
+            <div className="mt-6 space-y-4">
+              <h3 className="text-lg font-semibold text-foreground">
+                Extracted Work Experience
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Review and add the experiences found in your CV:
+              </p>
+              {extractedExperiences.map((experience, index) => (
+                <div
+                  key={index}
+                  className="border border-border rounded-lg p-4 bg-card"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground">
+                        {experience.title}
+                      </h4>
+                      <p className="text-primary">{experience.company}</p>
+                      {experience.location && (
+                        <p className="text-sm text-muted-foreground">
+                          {experience.location}
+                        </p>
+                      )}
+                      <p className="text-sm text-muted-foreground">
+                        {experience.startDate
+                          ? formatDate(experience.startDate)
+                          : "N/A"}{" "}
+                        -{" "}
+                        {experience.endDate
+                          ? formatDate(experience.endDate)
+                          : "Present"}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => addExtractedExperience(experience)}
+                      disabled={loading}
+                      className="ml-4 px-3 py-1 bg-primary text-primary-foreground rounded-md text-sm hover:bg-primary/90 disabled:opacity-50"
+                    >
+                      Add
+                    </button>
+                  </div>
+                  {experience.description && (
+                    <p className="text-sm text-muted-foreground mt-2">
+                      {experience.description}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="flex flex-row justify-between mt-8 gap-4 w-full">
             <button
               className="w-1/2 sm:w-1/4 border border-primary bg-background text-primary hover:bg-primary/10 rounded-md px-4 py-2 font-semibold transition"
@@ -553,13 +813,13 @@ const WorkExperienceForm = ({
           }
         >
           <p className="mb-4 text-sm">
-            Upload your resume in PDF or DOCX format. We'll extract your work
-            experience automatically.
+            Upload your resume in PDF or DOCX format (max 10MB). We'll extract
+            your work experience automatically.
           </p>
           <input
             ref={fileInputRef}
             type="file"
-            accept=".pdf,.doc,.docx"
+            accept=".pdf,.docx"
             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 mb-4"
             onChange={handleCVImport}
             disabled={loading}
@@ -567,6 +827,61 @@ const WorkExperienceForm = ({
           {loading && (
             <div className="mt-4 text-sm text-primary font-semibold">
               Importing...
+            </div>
+          )}
+          {imported.state && extractedExperiences.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-md font-semibold mb-2">
+                Extracted Work Experiences:
+              </h3>
+              <div className="space-y-4">
+                {extractedExperiences.map((experience, index) => (
+                  <div
+                    key={index}
+                    className="p-4 rounded-lg border border-border bg-background dark:bg-zinc-900"
+                  >
+                    <h4 className="text-lg font-bold">
+                      {experience.title} - {experience.company}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {experience.location}, {experience.country}
+                    </p>
+                    <p className="text-sm my-2">
+                      {experience.startDate
+                        ? formatDate(experience.startDate)
+                        : "N/A"}{" "}
+                      -{" "}
+                      {experience.currentlyWorking
+                        ? "Present"
+                        : experience.endDate
+                        ? formatDate(experience.endDate)
+                        : "N/A"}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {experience.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <button
+                        onClick={() => addExtractedExperience(experience)}
+                        className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition"
+                      >
+                        Add Experience
+                      </button>
+                      <button
+                        onClick={() => {
+                          setExtractedExperiences((prev) =>
+                            prev.filter((_, i) => i !== index)
+                          );
+                          showToast("Experience discarded.", "info");
+                        }}
+                        className="px-4 py-2 text-sm rounded-lg border border-border bg-background text-foreground hover:bg-primary/10 transition"
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </Modal>

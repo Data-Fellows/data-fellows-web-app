@@ -1,4 +1,4 @@
-import { getToken, removeToken } from "@/helpers";
+import { getToken } from "@/helpers";
 import axios, { AxiosResponse } from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -48,10 +48,6 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      if (error.response.status === 401 || error.response.status === 403) {
-        removeToken();
-        window.location.href = "/auth/sign-in";
-      }
       if (process.env.NODE_ENV === "development") {
         console.error("API Error:", {
           url: error.config?.url,

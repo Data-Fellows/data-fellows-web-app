@@ -1,5 +1,5 @@
 import { useToast } from "@/context/ToastContext";
-import { setToken, setUser } from "@/helpers";
+import { isUserFullyOnboarded, setToken, setUser } from "@/helpers";
 import AuthLayout from "@/layouts/auth";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -59,7 +59,13 @@ export default function Verify() {
         setToken(response.token);
         setUser(response.user);
         showToast("Account verified!", "success");
-        router.replace("/dashboard/home");
+
+        // Check if user is fully onboarded
+        if (isUserFullyOnboarded(response.user)) {
+          router.replace("/dashboard/home");
+        } else {
+          router.replace("/onboarding/user");
+        }
       } else {
         showToast(response.message || "Verification failed", "error");
       }

@@ -38,6 +38,12 @@ export interface BasicUserData {
   photoUrl?: string;
   companyLogo?: string;
   companyName?: string;
+  onboarded?: boolean;
+  skillsAdded?: boolean;
+  workExperienceAdded?: boolean;
+  educationHistoryAdded?: boolean;
+  bioAdded?: boolean;
+  categoriesAndSpecialitiesAdded?: boolean;
   [key: string]: any;
 }
 
@@ -76,4 +82,79 @@ export function clearCookies() {
   Cookies.remove(TOKEN_COOKIE_KEY);
   Cookies.remove(USER_COOKIE_KEY);
   Cookies.remove(USER_ROLE_KEY);
+}
+
+export function isUserFullyOnboarded(user: BasicUserData | undefined): boolean {
+  if (!user) return false;
+
+  if (user.userType === "user") {
+    return !!(
+      user.onboarded &&
+      user.skillsAdded &&
+      user.workExperienceAdded &&
+      user.educationHistoryAdded &&
+      user.bioAdded &&
+      user.onboarded
+    );
+  } else if (user.userType === "employer") {
+    return !!user.onboarded;
+  }
+
+  return false;
+}
+
+export function getNextIncompleteOnboardingStep(
+  user: BasicUserData | undefined
+): number {
+  if (!user || user.userType !== "user") return 0;
+
+  return 0;
+}
+
+export function getActualNextStep(user: BasicUserData | undefined): number {
+  if (!user || user.userType !== "user") return 1;
+
+  if (!user.skillsAdded) return 1;
+
+  if (!user.workExperienceAdded) return 2;
+
+  if (!user.educationHistoryAdded) return 3;
+
+  if (!user.bioAdded) return 4;
+
+  if (!user.onboarded) return 5;
+
+  return 5;
+}
+
+export function getOnboardingProgress(user: BasicUserData | undefined): {
+  percentage: number;
+  completedSteps: number;
+  totalSteps: number;
+} {
+  if (!user || user.userType !== "user") {
+    return { percentage: 0, completedSteps: 0, totalSteps: 5 };
+  }
+
+  const steps = [
+    user.skillsAdded,
+    user.workExperienceAdded,
+    user.educationHistoryAdded,
+    user.bioAdded,
+    user.categoriesAndSpecialitiesAdded,
+  ];
+
+  const completedSteps = steps.filter(Boolean).length;
+  const totalSteps = steps.length;
+  const percentage = Math.round((completedSteps / totalSteps) * 100);
+
+  return { percentage, completedSteps, totalSteps };
+}
+
+export function shouldRedirectToOnboarding(
+  user: BasicUserData | undefined
+): boolean {
+  if (!user) return false;
+
+  return user.userType === "user" && !isUserFullyOnboarded(user);
 }

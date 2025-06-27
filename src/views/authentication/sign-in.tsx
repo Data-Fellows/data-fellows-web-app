@@ -1,12 +1,12 @@
 import { GoogleLoginButton, Spinner } from "@/components";
 import { useToast } from "@/context/ToastContext";
-import { setToken, setUser } from "@/helpers";
+import { isUserFullyOnboarded, setToken, setUser } from "@/helpers";
 import AuthLayout from "@/layouts/auth";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FiEye, FiEyeOff, FiLogIn } from "react-icons/fi";
 import { signInApi } from "./api";
 
@@ -20,27 +20,55 @@ const SignIn = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: signInApi,
     onSuccess: (data) => {
-      setToken(data.token);
-      setUser(data.user);
-      showToast("Signed in successfully!", "success");
-      router.replace("/dashboard/home");
+      try {
+        setToken(data.token);
+        setUser(data.user);
+        showToast("Signed in successfully!", "success");
+
+        if (isUserFullyOnboarded(data.user)) {
+          router.replace("/dashboard/home");
+        } else {
+          router.replace("/onboarding/user");
+        }
+      } catch (error) {
+        console.error("Success handler error:", error);
+        showToast(
+          "Login successful, but there was an issue. Please refresh the page.",
+          "info"
+        );
+      }
     },
     onError: (error: any) => {
-      showToast(
-        error?.response?.data?.message || "Invalid email or password.",
-        "error"
-      );
+      console.error("Authentication error:", error);
+      try {
+        const errorMessage =
+          error?.response?.data?.message ||
+          error?.message ||
+          "Invalid email or password.";
+        showToast(errorMessage, "error");
+      } catch (toastError) {
+        console.error("Toast error:", toastError);
+        alert("Invalid email or password.");
+      }
     },
+    retry: false,
+    throwOnError: false,
   });
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) {
-      showToast("Email and password are required.", "error");
-      return;
-    }
-    mutate({ email, password });
-  };
+  const onSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (!email || !password) {
+        showToast("Email and password are required.", "error");
+        return;
+      }
+
+      mutate({ email, password });
+    },
+    [email, password, mutate, showToast]
+  );
 
   return (
     <AuthLayout>
