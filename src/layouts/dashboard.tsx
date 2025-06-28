@@ -175,7 +175,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         onClose={() => {}}
       />
 
-      <main className="flex-1 pb-24 md:pb-4">{children}</main>
+      <main className="flex-1 pb-24 md:pb-4 overflow-y-scroll scrollbar-hide">
+        {children}
+      </main>
 
       <MobileTabBar items={items} activePath={router.asPath} />
     </div>
