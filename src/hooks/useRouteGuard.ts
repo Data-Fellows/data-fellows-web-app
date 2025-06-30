@@ -9,6 +9,7 @@ export function useRouteGuard() {
     if (!router.pathname.startsWith("/dashboard")) return;
 
     const user = getUser();
+    console.log("Route guard check for user:", user);
     if (!user) return;
 
     if (

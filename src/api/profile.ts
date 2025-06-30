@@ -6,7 +6,9 @@ export interface Skill {
   _id: string;
   name: string;
 }
-
+export type DeleteSkillPayload = {
+  skillName: string;
+};
 export interface WorkExperience {
   company: ReactNode;
   endDate: any;
@@ -32,9 +34,12 @@ export interface Education {
   completionDate: string;
   grade?: string;
   isCompleted?: boolean;
+  description?: string;
 }
 
 export interface UserProfile {
+  data: any;
+  user: any;
   educationHistory: any;
   _id: string;
   firstName: string;
@@ -78,16 +83,16 @@ export interface UpdateProfilePayload {
 }
 
 export interface UpdateSkillsPayload {
-  skills: string[]; // Array of skill IDs
+  skillNames: string[];
 }
 
 export interface AddWorkExperiencePayload {
-  companyName: string;
-  roleHeld: string;
-  dateStarted: string;
-  dateEnded?: string;
-  responsibilities?: string;
-  isCurrentRole?: boolean;
+  title: string;
+  company: string;
+  location?: string;
+  startDate: string;
+  endDate?: string | null;
+  description?: string;
 }
 
 export interface UpdateWorkExperiencePayload extends AddWorkExperiencePayload {
@@ -95,13 +100,12 @@ export interface UpdateWorkExperiencePayload extends AddWorkExperiencePayload {
 }
 
 export interface AddEducationPayload {
-  institutionName: string;
-  course: string;
+  school: string;
   degree: string;
-  entryPeriod: string;
-  completionDate?: string;
-  grade?: string;
-  isCompleted?: boolean;
+  fieldOfStudy: string;
+  startDate: string;
+  endDate?: string | null;
+  description?: string;
 }
 
 export interface UpdateEducationPayload extends AddEducationPayload {
@@ -135,7 +139,7 @@ export async function updateSkills(
 export async function addWorkExperience(
   payload: AddWorkExperiencePayload
 ): Promise<UserProfile> {
-  const { data } = await apiClient.post("/profile/work-experience", payload);
+  const { data } = await apiClient.put("/profile/work-experience", payload);
   return data.user || data;
 }
 
@@ -161,7 +165,7 @@ export async function deleteWorkExperience(
 export async function addEducation(
   payload: AddEducationPayload
 ): Promise<UserProfile> {
-  const { data } = await apiClient.post("/profile/education-history", payload);
+  const { data } = await apiClient.put("/profile/education-history", payload);
   return data.user || data;
 }
 
@@ -190,10 +194,17 @@ export async function uploadProfilePhoto(
   const formData = new FormData();
   formData.append("photo", payload.photo);
 
-  const { data } = await apiClient.post("/upload-photo", formData, {
+  const { data } = await apiClient.put("/profile", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
   return data.user || data;
 }
+
+export const deleteSkill = async (payload: DeleteSkillPayload) => {
+  const response = await apiClient.delete("/profile/skills", {
+    data: payload,
+  });
+  return response.data;
+};

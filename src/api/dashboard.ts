@@ -87,7 +87,7 @@ export interface UserProfile {
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
-  const { data } = await apiClient.get("/dashboard/stats");
+  const { data } = await apiClient.get("/profile/application-stats");
   return data.data || data;
 }
 
@@ -109,6 +109,13 @@ export async function getSuggestedMatches(): Promise<JobMatch[]> {
 }
 
 export async function getUserApplications(): Promise<Application[]> {
-  const { data } = await apiClient.get("/applications/my-applications");
+  const { data } = await apiClient.get("/jobs/applied", {
+    params: {
+      page: 1,
+      limit: 10,
+      status: "",
+      search: "",
+    },
+  });
   return data.data || data;
 }

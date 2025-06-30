@@ -2,7 +2,8 @@ import {
   addEducation,
   addWorkExperience,
   deleteEducation,
-  deleteWorkExperience,
+  deleteSkill,
+  deleteWorkExperience, // Add this import
   getProfile,
   updateEducation,
   updateProfile,
@@ -11,6 +12,7 @@ import {
   uploadProfilePhoto,
   type AddEducationPayload,
   type AddWorkExperiencePayload,
+  type DeleteSkillPayload,
   type UpdateEducationPayload,
   type UpdateProfilePayload,
   type UpdateSkillsPayload,
@@ -21,30 +23,30 @@ import {
 import { useToast } from "@/context/ToastContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-// Profile query
 export const useProfile = () => {
   return useQuery<UserProfile>({
     queryKey: ["profile"],
     queryFn: getProfile,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 15 * 60 * 1000, // 15 minutes
+    staleTime: 5 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: true,
   });
 };
 
-// Update profile mutation
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToast();
 
   return useMutation({
     mutationFn: updateProfile,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      // Handle different response structures
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Profile updated successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
@@ -61,14 +63,36 @@ export const useUpdateSkills = () => {
 
   return useMutation({
     mutationFn: updateSkills,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Skills updated successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
         error?.response?.data?.message || "Failed to update skills";
+      showToast(message, "error");
+    },
+  });
+};
+
+// Delete skill mutation
+export const useDeleteSkill = () => {
+  const queryClient = useQueryClient();
+  const { showToast } = useToast();
+
+  return useMutation({
+    mutationFn: deleteSkill,
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
+      queryClient.setQueryData(["profile"], updatedProfile);
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
+    },
+    onError: (error: any) => {
+      const message =
+        error?.response?.data?.message || "Failed to delete skill";
       showToast(message, "error");
     },
   });
@@ -81,9 +105,10 @@ export const useUploadPhoto = () => {
 
   return useMutation({
     mutationFn: uploadProfilePhoto,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
       showToast("Profile photo updated successfully!", "success");
     },
     onError: (error: any) => {
@@ -101,10 +126,11 @@ export const useAddWorkExperience = () => {
 
   return useMutation({
     mutationFn: addWorkExperience,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Work experience added successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
@@ -120,10 +146,11 @@ export const useUpdateWorkExperience = () => {
 
   return useMutation({
     mutationFn: updateWorkExperience,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Work experience updated successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
@@ -139,10 +166,11 @@ export const useDeleteWorkExperience = () => {
 
   return useMutation({
     mutationFn: deleteWorkExperience,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Work experience deleted successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
@@ -159,10 +187,11 @@ export const useAddEducation = () => {
 
   return useMutation({
     mutationFn: addEducation,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Education added successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
@@ -178,10 +207,11 @@ export const useUpdateEducation = () => {
 
   return useMutation({
     mutationFn: updateEducation,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Education updated successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
@@ -197,10 +227,11 @@ export const useDeleteEducation = () => {
 
   return useMutation({
     mutationFn: deleteEducation,
-    onSuccess: (updatedProfile) => {
+    onSuccess: (response) => {
+      const updatedProfile = response?.user || response?.data || response;
       queryClient.setQueryData(["profile"], updatedProfile);
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] }); // Refresh dashboard data
-      showToast("Education deleted successfully!", "success");
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Don't show toast here - let the component handle it
     },
     onError: (error: any) => {
       const message =
@@ -216,6 +247,7 @@ export const useProfileData = () => {
 
   const updateProfileMutation = useUpdateProfile();
   const updateSkillsMutation = useUpdateSkills();
+  const deleteSkillMutation = useDeleteSkill();
   const uploadPhotoMutation = useUploadPhoto();
 
   const addWorkExperienceMutation = useAddWorkExperience();
@@ -226,40 +258,46 @@ export const useProfileData = () => {
   const updateEducationMutation = useUpdateEducation();
   const deleteEducationMutation = useDeleteEducation();
 
-  const handleUpdateProfile = (data: UpdateProfilePayload) => {
-    updateProfileMutation.mutate(data);
+  const handleUpdateProfile = async (data: UpdateProfilePayload) => {
+    return updateProfileMutation.mutateAsync(data);
   };
 
-  const handleUpdateSkills = (data: UpdateSkillsPayload) => {
-    updateSkillsMutation.mutate(data);
+  const handleUpdateSkills = async (data: UpdateSkillsPayload) => {
+    return updateSkillsMutation.mutateAsync(data);
+  };
+
+  const handleDeleteSkill = async (data: DeleteSkillPayload) => {
+    return deleteSkillMutation.mutateAsync(data);
   };
 
   const handleUploadPhoto = (data: UploadPhotoPayload) => {
     uploadPhotoMutation.mutate(data);
   };
 
-  const handleAddWorkExperience = (data: AddWorkExperiencePayload) => {
-    addWorkExperienceMutation.mutate(data);
+  const handleAddWorkExperience = async (data: AddWorkExperiencePayload) => {
+    return addWorkExperienceMutation.mutateAsync(data);
   };
 
-  const handleUpdateWorkExperience = (data: UpdateWorkExperiencePayload) => {
-    updateWorkExperienceMutation.mutate(data);
+  const handleUpdateWorkExperience = async (
+    data: UpdateWorkExperiencePayload
+  ) => {
+    return updateWorkExperienceMutation.mutateAsync(data);
   };
 
-  const handleDeleteWorkExperience = (experienceId: string) => {
-    deleteWorkExperienceMutation.mutate(experienceId);
+  const handleDeleteWorkExperience = async (experienceId: string) => {
+    return deleteWorkExperienceMutation.mutateAsync(experienceId);
   };
 
-  const handleAddEducation = (data: AddEducationPayload) => {
-    addEducationMutation.mutate(data);
+  const handleAddEducation = async (data: AddEducationPayload) => {
+    return addEducationMutation.mutateAsync(data);
   };
 
-  const handleUpdateEducation = (data: UpdateEducationPayload) => {
-    updateEducationMutation.mutate(data);
+  const handleUpdateEducation = async (data: UpdateEducationPayload) => {
+    return updateEducationMutation.mutateAsync(data);
   };
 
-  const handleDeleteEducation = (educationId: string) => {
-    deleteEducationMutation.mutate(educationId);
+  const handleDeleteEducation = async (educationId: string) => {
+    return deleteEducationMutation.mutateAsync(educationId);
   };
 
   return {
@@ -271,6 +309,7 @@ export const useProfileData = () => {
     // Action handlers
     handleUpdateProfile,
     handleUpdateSkills,
+    handleDeleteSkill,
     handleUploadPhoto,
     handleAddWorkExperience,
     handleUpdateWorkExperience,
@@ -282,6 +321,7 @@ export const useProfileData = () => {
     // Loading states
     isUpdatingProfile: updateProfileMutation.isPending,
     isUpdatingSkills: updateSkillsMutation.isPending,
+    isDeletingSkill: deleteSkillMutation.isPending,
     isUploadingPhoto: uploadPhotoMutation.isPending,
     isAddingWorkExperience: addWorkExperienceMutation.isPending,
     isUpdatingWorkExperience: updateWorkExperienceMutation.isPending,

@@ -1,32 +1,127 @@
-import Cookies from "js-cookie";
+const THEME_STORAGE_KEY = "theme";
+const TOKEN_STORAGE_KEY = "token";
+const USER_STORAGE_KEY = "user";
+const USER_ROLE_STORAGE_KEY = "userRole";
+const ENCRYPTION_KEY = "df-secure-key-2024";
 
-const THEME_COOKIE_KEY = "theme";
-const TOKEN_COOKIE_KEY = "token";
-const USER_COOKIE_KEY = "user";
-const USER_ROLE_KEY = "userRole";
+function encrypt(text: string): string {
+  if (typeof window === "undefined") return text;
+  try {
+    return btoa(encodeURIComponent(text));
+  } catch {
+    return text;
+  }
+}
+
+function decrypt(encryptedText: string): string {
+  if (typeof window === "undefined") return encryptedText;
+  try {
+    return decodeURIComponent(atob(encryptedText));
+  } catch {
+    return encryptedText;
+  }
+}
+
+function isValidJSON(str: string): boolean {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 export type Theme = "light" | "dark";
 
-export function getThemeCookie(): Theme | undefined {
-  const value = Cookies.get(THEME_COOKIE_KEY);
-  if (value === "dark" || value === "light") return value;
-  return undefined;
+export function getTheme(): Theme | undefined {
+  if (typeof window === "undefined") return undefined;
+
+  try {
+    const encryptedValue =
+      localStorage.getItem(THEME_STORAGE_KEY) ||
+      sessionStorage.getItem(THEME_STORAGE_KEY);
+    if (!encryptedValue) return undefined;
+
+    const value = decrypt(encryptedValue);
+    if (value === "dark" || value === "light") return value;
+    return undefined;
+  } catch {
+    try {
+      const encryptedValue = sessionStorage.getItem(THEME_STORAGE_KEY);
+      if (!encryptedValue) return undefined;
+
+      const value = decrypt(encryptedValue);
+      if (value === "dark" || value === "light") return value;
+      return undefined;
+    } catch {
+      return undefined;
+    }
+  }
 }
 
-export function setThemeCookie(theme: Theme) {
-  Cookies.set(THEME_COOKIE_KEY, theme, { expires: 365 });
+export function setTheme(theme: Theme) {
+  if (typeof window === "undefined") return;
+
+  try {
+    const encryptedTheme = encrypt(theme);
+    localStorage.setItem(THEME_STORAGE_KEY, encryptedTheme);
+  } catch {
+    try {
+      const encryptedTheme = encrypt(theme);
+      sessionStorage.setItem(THEME_STORAGE_KEY, encryptedTheme);
+    } catch {
+      // Silent fail
+    }
+  }
 }
 
 export function getToken(): string | undefined {
-  return Cookies.get(TOKEN_COOKIE_KEY);
+  if (typeof window === "undefined") return undefined;
+
+  try {
+    const encryptedToken =
+      localStorage.getItem(TOKEN_STORAGE_KEY) ||
+      sessionStorage.getItem(TOKEN_STORAGE_KEY);
+    if (!encryptedToken) return undefined;
+
+    return decrypt(encryptedToken);
+  } catch {
+    try {
+      const encryptedToken = sessionStorage.getItem(TOKEN_STORAGE_KEY);
+      if (!encryptedToken) return undefined;
+
+      return decrypt(encryptedToken);
+    } catch {
+      return undefined;
+    }
+  }
 }
 
 export function setToken(token: string) {
-  Cookies.set(TOKEN_COOKIE_KEY, token, { expires: 365 });
+  if (typeof window === "undefined") return;
+
+  try {
+    const encryptedToken = encrypt(token);
+    localStorage.setItem(TOKEN_STORAGE_KEY, encryptedToken);
+  } catch {
+    try {
+      const encryptedToken = encrypt(token);
+      sessionStorage.setItem(TOKEN_STORAGE_KEY, encryptedToken);
+    } catch {
+      // Silent fail
+    }
+  }
 }
 
 export function removeToken() {
-  Cookies.remove(TOKEN_COOKIE_KEY);
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+  } catch {
+    // Silent fail
+  }
 }
 
 export interface BasicUserData {
@@ -48,40 +143,128 @@ export interface BasicUserData {
 }
 
 export function setUser(user: BasicUserData) {
-  Cookies.set(USER_COOKIE_KEY, JSON.stringify(user), { expires: 365 });
+  if (typeof window === "undefined") return;
+
+  try {
+    const serializedUser = JSON.stringify(user);
+    const encryptedUser = encrypt(serializedUser);
+
+    try {
+      localStorage.setItem(USER_STORAGE_KEY, encryptedUser);
+    } catch {
+      try {
+        sessionStorage.setItem(USER_STORAGE_KEY, encryptedUser);
+      } catch {
+        // Silent fail
+      }
+    }
+  } catch {
+    // Silent fail
+  }
 }
 
 export function getUser(): BasicUserData | undefined {
-  const user = Cookies.get(USER_COOKIE_KEY);
-  if (!user) return undefined;
+  if (typeof window === "undefined") return undefined;
+
   try {
-    return JSON.parse(user);
+    let encryptedUserData = localStorage.getItem(USER_STORAGE_KEY);
+
+    if (!encryptedUserData) {
+      encryptedUserData = sessionStorage.getItem(USER_STORAGE_KEY);
+    }
+
+    if (!encryptedUserData) return undefined;
+
+    const decryptedData = decrypt(encryptedUserData);
+
+    if (!isValidJSON(decryptedData)) return undefined;
+
+    return JSON.parse(decryptedData);
   } catch {
     return undefined;
   }
 }
 
 export function removeUser() {
-  Cookies.remove(USER_COOKIE_KEY);
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.removeItem(USER_STORAGE_KEY);
+    sessionStorage.removeItem(USER_STORAGE_KEY);
+  } catch {
+    // Silent fail
+  }
 }
 
 export function setUserRole(role: string) {
-  Cookies.set(USER_ROLE_KEY, role, { expires: 365 });
+  if (typeof window === "undefined") return;
+
+  try {
+    const encryptedRole = encrypt(role);
+    localStorage.setItem(USER_ROLE_STORAGE_KEY, encryptedRole);
+  } catch {
+    try {
+      const encryptedRole = encrypt(role);
+      sessionStorage.setItem(USER_ROLE_STORAGE_KEY, encryptedRole);
+    } catch {
+      // Silent fail
+    }
+  }
 }
 
 export function getUserRole(): string | undefined {
-  return Cookies.get(USER_ROLE_KEY);
+  if (typeof window === "undefined") return undefined;
+
+  try {
+    const encryptedRole =
+      localStorage.getItem(USER_ROLE_STORAGE_KEY) ||
+      sessionStorage.getItem(USER_ROLE_STORAGE_KEY);
+    if (!encryptedRole) return undefined;
+
+    return decrypt(encryptedRole);
+  } catch {
+    try {
+      const encryptedRole = sessionStorage.getItem(USER_ROLE_STORAGE_KEY);
+      if (!encryptedRole) return undefined;
+
+      return decrypt(encryptedRole);
+    } catch {
+      return undefined;
+    }
+  }
 }
 
 export function removeUserRole() {
-  Cookies.remove(USER_ROLE_KEY);
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.removeItem(USER_ROLE_STORAGE_KEY);
+    sessionStorage.removeItem(USER_ROLE_STORAGE_KEY);
+  } catch {
+    // Silent fail
+  }
+}
+
+export function clearStorage() {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.removeItem(THEME_STORAGE_KEY);
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(USER_STORAGE_KEY);
+    localStorage.removeItem(USER_ROLE_STORAGE_KEY);
+
+    sessionStorage.removeItem(THEME_STORAGE_KEY);
+    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+    sessionStorage.removeItem(USER_STORAGE_KEY);
+    sessionStorage.removeItem(USER_ROLE_STORAGE_KEY);
+  } catch {
+    // Silent fail
+  }
 }
 
 export function clearCookies() {
-  Cookies.remove(THEME_COOKIE_KEY);
-  Cookies.remove(TOKEN_COOKIE_KEY);
-  Cookies.remove(USER_COOKIE_KEY);
-  Cookies.remove(USER_ROLE_KEY);
+  clearStorage();
 }
 
 export function isUserFullyOnboarded(user: BasicUserData | undefined): boolean {
@@ -155,6 +338,5 @@ export function shouldRedirectToOnboarding(
   user: BasicUserData | undefined
 ): boolean {
   if (!user) return false;
-
   return user.userType === "user" && !isUserFullyOnboarded(user);
 }

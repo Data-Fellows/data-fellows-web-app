@@ -60,7 +60,6 @@ export default function Verify() {
         setUser(response.user);
         showToast("Account verified!", "success");
 
-        // Check if user is fully onboarded
         if (isUserFullyOnboarded(response.user)) {
           router.replace("/dashboard/home");
         } else {

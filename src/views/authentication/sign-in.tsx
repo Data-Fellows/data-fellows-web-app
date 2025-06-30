@@ -22,6 +22,7 @@ const SignIn = () => {
     onSuccess: (data) => {
       try {
         setToken(data.token);
+        console.log("User data from sign-in:", data.user);
         setUser(data.user);
         showToast("Signed in successfully!", "success");
 

@@ -1,12 +1,12 @@
-import { Education, Skill, UserProfile, WorkExperience } from "@/api/profile";
+import { Education, UserProfile, WorkExperience } from "@/api/profile";
+import { getAvailableSkillsApi } from "@/views/onboarding/api";
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   FiAlertTriangle,
   FiBook,
   FiBriefcase,
-  FiEdit,
   FiUser,
   FiX,
 } from "react-icons/fi";
@@ -25,30 +25,37 @@ type ProfileFormData = {
 };
 
 type WorkExperienceFormData = {
-  companyName: string;
-  roleHeld: string;
+  title: string;
+  company: string;
   location: string;
-  responsibilities: string;
-  currentRole: boolean;
-  dateStarted?: Date;
-  dateEnded?: Date;
+  description: string;
+  currentlyWorking: boolean;
+  startDate?: Date;
+  endDate?: Date;
 };
 
 type EducationFormData = {
-  institutionName: string;
+  school: string;
   degree: string;
-  course: string;
-  grade: string;
-  isCompleted: boolean;
-  entryPeriod?: Date;
-  completionDate?: Date;
+  fieldOfStudy: string;
+  description: string;
+  currentlyInSchool: boolean;
+  startYear?: string;
+  endYear?: string;
 };
 
-type SkillFormData = {
+interface Skill {
+  _id: string;
   name: string;
-  level?: string;
-};
+}
 
+interface SkillsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  currentSkills: Skill[];
+  onSave: (skills: Skill[]) => void;
+  isLoading: boolean;
+}
 // Modal Overlay
 const ModalOverlay = ({ onClick }: { onClick: () => void }) => (
   <div
@@ -149,8 +156,19 @@ function DatePicker({
           min={min}
           max={max}
           disabled={disabled}
-          className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
+          className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground pr-10 focus:ring-2 focus:ring-primary focus:border-primary transition"
         />
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+            <path
+              d="M7 10l5 5 5-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
       </div>
     </div>
   );
@@ -219,7 +237,7 @@ export function ProfileEditModal({
       footer={
         <>
           <button
-            className="h-10 px-6 text-base rounded-lg border border-border bg-gray-100 dark:bg-zinc-800 font-semibold hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+            className="h-12 px-6 text-base rounded-lg border border-border bg-background hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-semibold transition"
             onClick={onClose}
             type="button"
             disabled={isLoading}
@@ -227,7 +245,7 @@ export function ProfileEditModal({
             Cancel
           </button>
           <button
-            className="h-10 px-6 text-base rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-12 px-6 text-base text-white bg-primary rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleSubmit(onSubmit)}
             disabled={isLoading}
           >
@@ -349,7 +367,6 @@ export function ProfileEditModal({
   );
 }
 
-// Work Experience Modal
 export function WorkExperienceModal({
   isOpen,
   onClose,
@@ -366,13 +383,13 @@ export function WorkExperienceModal({
   const { register, handleSubmit, reset, setValue, watch, formState } =
     useForm<WorkExperienceFormData>({
       defaultValues: {
-        companyName: "",
-        roleHeld: "",
+        title: "",
+        company: "",
         location: "",
-        responsibilities: "",
-        currentRole: false,
-        dateStarted: undefined,
-        dateEnded: undefined,
+        description: "",
+        currentlyWorking: false,
+        startDate: undefined,
+        endDate: undefined,
       },
     });
 
@@ -381,28 +398,37 @@ export function WorkExperienceModal({
   useEffect(() => {
     if (isOpen) {
       if (workExperience) {
+        // Map the actual data structure from your profile - use 'as any' to handle type flexibility
+        const workExp = workExperience as any;
         reset({
-          companyName: workExperience.companyName || "",
-          roleHeld: workExperience.roleHeld || "",
-          location: workExperience.location || "",
-          responsibilities: workExperience.responsibilities || "",
-          currentRole: workExperience.isCurrentRole || false,
-          dateStarted: workExperience.dateStarted
-            ? new Date(workExperience.dateStarted)
+          title: workExp.title || workExp.roleHeld || "",
+          company: workExp.company || workExp.companyName || "",
+          location: workExp.location || "",
+          description: workExp.description || workExp.responsibilities || "",
+          currentlyWorking:
+            !workExp.endDate && !workExp.dateEnded
+              ? workExp.isCurrentRole || false
+              : false,
+          startDate: workExp.startDate
+            ? new Date(workExp.startDate)
+            : workExp.dateStarted
+            ? new Date(workExp.dateStarted)
             : undefined,
-          dateEnded: workExperience.dateEnded
-            ? new Date(workExperience.dateEnded)
+          endDate: workExp.endDate
+            ? new Date(workExp.endDate)
+            : workExp.dateEnded
+            ? new Date(workExp.dateEnded)
             : undefined,
         });
       } else {
         reset({
-          companyName: "",
-          roleHeld: "",
+          title: "",
+          company: "",
           location: "",
-          responsibilities: "",
-          currentRole: false,
-          dateStarted: undefined,
-          dateEnded: undefined,
+          description: "",
+          currentlyWorking: false,
+          startDate: undefined,
+          endDate: undefined,
         });
       }
     }
@@ -422,7 +448,7 @@ export function WorkExperienceModal({
       footer={
         <>
           <button
-            className="h-10 px-6 text-base rounded-lg border border-border bg-gray-100 dark:bg-zinc-800 font-semibold hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+            className="h-12 px-6 text-base rounded-lg border border-border bg-background hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-semibold transition"
             onClick={onClose}
             type="button"
             disabled={isLoading}
@@ -430,11 +456,11 @@ export function WorkExperienceModal({
             Cancel
           </button>
           <button
-            className="h-10 px-6 text-base rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-12 px-6 text-base text-white bg-primary rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleSubmit(onSubmit)}
             disabled={isLoading}
           >
-            {isLoading ? "Saving..." : isEditing ? "Update" : "Add"}
+            {isLoading ? "Saving..." : isEditing ? "Update" : "Save"}
           </button>
         </>
       }
@@ -443,13 +469,19 @@ export function WorkExperienceModal({
         <div>
           <label className="block mb-1 text-sm font-medium">Job Title *</label>
           <input
-            {...register("roleHeld", { required: "Job title is required" })}
+            {...register("title", {
+              required: "Job title is required",
+              minLength: {
+                value: 2,
+                message: "Job title must be at least 2 characters",
+              },
+            })}
             className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="Software Engineer"
+            placeholder="Ex. Software Engineer"
           />
-          {formState.errors.roleHeld && (
+          {formState.errors.title && (
             <div className="text-red-500 text-xs mt-1">
-              {formState.errors.roleHeld.message}
+              {formState.errors.title.message}
             </div>
           )}
         </div>
@@ -457,13 +489,19 @@ export function WorkExperienceModal({
         <div>
           <label className="block mb-1 text-sm font-medium">Company *</label>
           <input
-            {...register("companyName", { required: "Company is required" })}
+            {...register("company", {
+              required: "Company is required",
+              minLength: {
+                value: 2,
+                message: "Company must be at least 2 characters",
+              },
+            })}
             className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="Tech Corp"
+            placeholder="Ex. Google"
           />
-          {formState.errors.companyName && (
+          {formState.errors.company && (
             <div className="text-red-500 text-xs mt-1">
-              {formState.errors.companyName.message}
+              {formState.errors.company.message}
             </div>
           )}
         </div>
@@ -473,44 +511,44 @@ export function WorkExperienceModal({
           <input
             {...register("location")}
             className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="San Francisco, CA"
+            placeholder="Ex. London"
           />
         </div>
 
         <div className="flex items-center space-x-2">
           <input
             type="checkbox"
-            {...register("currentRole")}
+            {...register("currentlyWorking")}
             className="h-5 w-5 accent-primary rounded"
-            id="currentRole"
+            id="currentlyWorking"
           />
-          <label htmlFor="currentRole" className="text-sm">
-            I currently work here
+          <label htmlFor="currentlyWorking" className="text-sm">
+            I am currently working in this role
           </label>
         </div>
 
         <div className="flex w-full space-x-4">
           <DatePicker
-            value={watch("dateStarted")}
-            onChange={(date) => setValue("dateStarted", date)}
+            value={watch("startDate")}
+            onChange={(date) => setValue("startDate", date)}
             label="Start Date"
             max={
-              watch("currentRole")
+              watch("currentlyWorking")
                 ? undefined
-                : watch("dateEnded")
-                ? dayjs(watch("dateEnded")).format("YYYY-MM")
+                : watch("endDate")
+                ? dayjs(watch("endDate")).format("YYYY-MM")
                 : undefined
             }
             disabled={isLoading}
           />
-          {!watch("currentRole") && (
+          {!watch("currentlyWorking") && (
             <DatePicker
-              value={watch("dateEnded")}
-              onChange={(date) => setValue("dateEnded", date)}
+              value={watch("endDate")}
+              onChange={(date) => setValue("endDate", date)}
               label="End Date"
               min={
-                watch("dateStarted")
-                  ? dayjs(watch("dateStarted")).format("YYYY-MM")
+                watch("startDate")
+                  ? dayjs(watch("startDate")).format("YYYY-MM")
                   : undefined
               }
               max={dayjs().format("YYYY-MM")}
@@ -522,9 +560,9 @@ export function WorkExperienceModal({
         <div>
           <label className="block mb-1 text-sm font-medium">Description</label>
           <textarea
-            {...register("responsibilities")}
+            {...register("description")}
             className="h-24 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="Describe your role and achievements..."
+            placeholder="Description"
           />
         </div>
       </form>
@@ -549,13 +587,13 @@ export function EducationModal({
   const { register, handleSubmit, reset, setValue, watch, formState } =
     useForm<EducationFormData>({
       defaultValues: {
-        institutionName: "",
+        school: "",
         degree: "",
-        course: "",
-        grade: "",
-        isCompleted: false,
-        entryPeriod: undefined,
-        completionDate: undefined,
+        fieldOfStudy: "",
+        description: "",
+        currentlyInSchool: false,
+        startYear: "",
+        endYear: "",
       },
     });
 
@@ -564,28 +602,43 @@ export function EducationModal({
   useEffect(() => {
     if (isOpen) {
       if (education) {
+        // Map the actual data structure from your profile - use 'as any' to handle type flexibility
+        const edu = education as any;
+        let startYear = "";
+        let endYear = "";
+
+        // Handle different possible date field names and formats
+        if (edu.startDate) {
+          startYear = new Date(edu.startDate).getFullYear().toString();
+        } else if (edu.entryPeriod) {
+          startYear = new Date(edu.entryPeriod).getFullYear().toString();
+        }
+
+        if (edu.endDate) {
+          endYear = new Date(edu.endDate).getFullYear().toString();
+        } else if (edu.completionDate) {
+          endYear = new Date(edu.completionDate).getFullYear().toString();
+        }
+
         reset({
-          institutionName: education.institutionName || "",
-          degree: education.degree || "",
-          course: education.course || "",
-          grade: education.grade || "",
-          isCompleted: education.isCompleted || false,
-          entryPeriod: education.entryPeriod
-            ? new Date(education.entryPeriod)
-            : undefined,
-          completionDate: education.completionDate
-            ? new Date(education.completionDate)
-            : undefined,
+          school: edu.school || edu.institutionName || "",
+          degree: edu.degree || "",
+          fieldOfStudy: edu.fieldOfStudy || edu.course || "",
+          description: edu.description || "",
+          currentlyInSchool:
+            !edu.endDate && !edu.completionDate && !edu.isCompleted,
+          startYear,
+          endYear,
         });
       } else {
         reset({
-          institutionName: "",
+          school: "",
           degree: "",
-          course: "",
-          grade: "",
-          isCompleted: false,
-          entryPeriod: undefined,
-          completionDate: undefined,
+          fieldOfStudy: "",
+          description: "",
+          currentlyInSchool: false,
+          startYear: "",
+          endYear: "",
         });
       }
     }
@@ -600,12 +653,12 @@ export function EducationModal({
   return (
     <BaseModal
       onClose={onClose}
-      title={isEditing ? "Edit Education" : "Add Education"}
+      title={isEditing ? "Edit Education History" : "Add Education History"}
       icon={<FiBook className="w-5 h-5 text-primary" />}
       footer={
         <>
           <button
-            className="h-10 px-6 text-base rounded-lg border border-border bg-gray-100 dark:bg-zinc-800 font-semibold hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+            className="h-12 px-6 text-base rounded-lg border border-border bg-background hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-semibold transition"
             onClick={onClose}
             type="button"
             disabled={isLoading}
@@ -613,110 +666,148 @@ export function EducationModal({
             Cancel
           </button>
           <button
-            className="h-10 px-6 text-base rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-12 px-6 text-base text-white bg-primary rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleSubmit(onSubmit)}
             disabled={isLoading}
           >
-            {isLoading ? "Saving..." : isEditing ? "Update" : "Add"}
+            {isLoading ? "Saving..." : isEditing ? "Update" : "Save"}
           </button>
         </>
       }
     >
       <form className="space-y-4">
         <div>
-          <label className="block mb-1 text-sm font-medium">
-            Institution *
-          </label>
+          <label className="block mb-1 text-sm font-medium">School *</label>
           <input
-            {...register("institutionName", {
-              required: "Institution is required",
+            {...register("school", {
+              required: "School name is required",
+              minLength: {
+                value: 2,
+                message: "School name must be at least 2 characters",
+              },
             })}
             className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="University of California"
+            placeholder="Ex. Oxford University"
           />
-          {formState.errors.institutionName && (
+          {formState.errors.school && (
             <div className="text-red-500 text-xs mt-1">
-              {formState.errors.institutionName.message}
+              {formState.errors.school.message}
             </div>
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block mb-1 text-sm font-medium">Degree *</label>
-            <input
-              {...register("degree", { required: "Degree is required" })}
-              className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-              placeholder="Bachelor's"
-            />
-            {formState.errors.degree && (
-              <div className="text-red-500 text-xs mt-1">
-                {formState.errors.degree.message}
-              </div>
-            )}
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium">Course *</label>
-            <input
-              {...register("course", { required: "Course is required" })}
-              className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-              placeholder="Computer Science"
-            />
-            {formState.errors.course && (
-              <div className="text-red-500 text-xs mt-1">
-                {formState.errors.course.message}
-              </div>
-            )}
-          </div>
+        <div>
+          <label className="block mb-1 text-sm font-medium">Degree *</label>
+          <input
+            {...register("degree", {
+              required: "Degree is required",
+              minLength: {
+                value: 2,
+                message: "Degree must be at least 2 characters",
+              },
+            })}
+            className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
+            placeholder="Ex. Bachelors"
+          />
+          {formState.errors.degree && (
+            <div className="text-red-500 text-xs mt-1">
+              {formState.errors.degree.message}
+            </div>
+          )}
         </div>
 
         <div>
-          <label className="block mb-1 text-sm font-medium">Grade/GPA</label>
+          <label className="block mb-1 text-sm font-medium">
+            Field of Study *
+          </label>
           <input
-            {...register("grade")}
+            {...register("fieldOfStudy", {
+              required: "Field of study is required",
+              minLength: {
+                value: 2,
+                message: "Field of study must be at least 2 characters",
+              },
+            })}
             className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="3.8 GPA or First Class"
+            placeholder="Ex. Computer Science"
           />
+          {formState.errors.fieldOfStudy && (
+            <div className="text-red-500 text-xs mt-1">
+              {formState.errors.fieldOfStudy.message}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center space-x-2">
           <input
             type="checkbox"
-            {...register("currentlyStudying")}
+            {...register("currentlyInSchool")}
             className="h-5 w-5 accent-primary rounded"
-            id="currentlyStudying"
+            id="currentlyInSchool"
           />
-          <label htmlFor="currentlyStudying" className="text-sm">
-            I am currently studying here
+          <label htmlFor="currentlyInSchool" className="text-sm">
+            I am currently a student
           </label>
         </div>
 
         <div className="flex w-full space-x-4">
-          <DatePicker
-            value={watch("startDate")}
-            onChange={(date) => setValue("startDate", date)}
-            label="Start Date"
-            max={
-              watch("currentlyStudying")
-                ? undefined
-                : watch("endDate")
-                ? dayjs(watch("endDate")).format("YYYY-MM")
-                : undefined
-            }
-            disabled={isLoading}
-          />
-          {!watch("currentlyStudying") && (
-            <DatePicker
-              value={watch("endDate")}
-              onChange={(date) => setValue("endDate", date)}
-              label="End Date"
-              min={
-                watch("startDate")
-                  ? dayjs(watch("startDate")).format("YYYY-MM")
-                  : undefined
-              }
+          <div className="flex-1">
+            <label className="block mb-1 text-sm font-medium">
+              Start Year *
+            </label>
+            <select
+              {...register("startYear", {
+                required: "Start year is required",
+              })}
+              className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
               disabled={isLoading}
-            />
+            >
+              <option value="">Select Year</option>
+              {[...Array(30)].map((_, i) => {
+                const year = new Date().getFullYear() - i;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+            {formState.errors.startYear && (
+              <div className="text-red-500 text-xs mt-1">
+                {formState.errors.startYear.message}
+              </div>
+            )}
+          </div>
+          {!watch("currentlyInSchool") && (
+            <div className="flex-1">
+              <label className="block mb-1 text-sm font-medium">
+                End Year *
+              </label>
+              <select
+                {...register("endYear", {
+                  required: !watch("currentlyInSchool")
+                    ? "End year is required"
+                    : false,
+                })}
+                className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
+                disabled={isLoading}
+              >
+                <option value="">Select Year</option>
+                {[...Array(30)].map((_, i) => {
+                  const year = new Date().getFullYear() - i;
+                  return (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  );
+                })}
+              </select>
+              {formState.errors.endYear && (
+                <div className="text-red-500 text-xs mt-1">
+                  {formState.errors.endYear.message}
+                </div>
+              )}
+            </div>
           )}
         </div>
 
@@ -725,7 +816,7 @@ export function EducationModal({
           <textarea
             {...register("description")}
             className="h-24 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="Relevant coursework, projects, achievements..."
+            placeholder="Description"
           />
         </div>
       </form>
@@ -733,111 +824,215 @@ export function EducationModal({
   );
 }
 
-// Skills Modal
-export function SkillsModal({
+export const SkillsModal = ({
   isOpen,
   onClose,
-  skill,
+  currentSkills,
   onSave,
   isLoading,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  skill?: Skill;
-  onSave: (data: SkillFormData) => void;
-  isLoading: boolean;
-}) {
-  const { register, handleSubmit, reset, formState } = useForm<SkillFormData>({
-    defaultValues: {
-      name: "",
-      level: "Intermediate",
-    },
-  });
-
-  const isEditing = !!skill;
+}: SkillsModalProps) => {
+  const [selectedSkills, setSelectedSkills] = useState<Skill[]>(currentSkills);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [skillsList, setSkillsList] = useState<Skill[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
-      if (skill) {
-        reset({
-          name: skill.name || "",
-          level: skill.level || "Intermediate",
-        });
-      } else {
-        reset({
-          name: "",
-          level: "Intermediate",
-        });
-      }
+      setSelectedSkills(currentSkills);
+      fetchSkills();
     }
-  }, [isOpen, skill, reset]);
+  }, [isOpen, currentSkills]);
 
-  const onSubmit = (data: SkillFormData) => {
-    onSave(data);
+  const fetchSkills = async () => {
+    try {
+      setLoading(true);
+      const response = await getAvailableSkillsApi();
+      setSkillsList(response.skills || []);
+    } catch (err) {
+      console.error("Error fetching skills:", err);
+      setError("Failed to load skills. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addSkill = (skill: Skill) => {
+    if (
+      selectedSkills.length < 15 &&
+      !selectedSkills.find((s) => s.name === skill.name)
+    ) {
+      const newSkills = [...selectedSkills, skill];
+      setSelectedSkills(newSkills);
+    }
+    setSearch("");
+  };
+
+  const removeSkill = (skillToRemove: Skill) => {
+    const isCurrentSkill = currentSkills.find(
+      (s) => s.name === skillToRemove.name
+    );
+    if (isCurrentSkill) {
+      return;
+    }
+
+    const newSkills = selectedSkills.filter(
+      (s) => s.name !== skillToRemove.name
+    );
+    setSelectedSkills(newSkills);
+  };
+
+  const filteredSkills = skillsList.filter(
+    (skill) =>
+      skill.name.toLowerCase().includes(search.toLowerCase()) &&
+      !selectedSkills.find((s) => s.name === skill.name)
+  );
+
+  const handleSave = () => {
+    onSave(selectedSkills);
   };
 
   if (!isOpen) return null;
 
   return (
-    <BaseModal
-      onClose={onClose}
-      title={isEditing ? "Edit Skill" : "Add Skill"}
-      icon={<FiEdit className="w-5 h-5 text-primary" />}
-      footer={
-        <>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-card rounded-2xl p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-foreground">
+            Manage Skills
+          </h2>
           <button
-            className="h-10 px-6 text-base rounded-lg border border-border bg-gray-100 dark:bg-zinc-800 font-semibold hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
             onClick={onClose}
-            type="button"
-            disabled={isLoading}
+            className="text-muted-foreground hover:text-foreground transition-colors"
           >
-            Cancel
+            ✕
           </button>
-          <button
-            className="h-10 px-6 text-base rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={handleSubmit(onSubmit)}
-            disabled={isLoading}
-          >
-            {isLoading ? "Saving..." : isEditing ? "Update" : "Add"}
-          </button>
-        </>
-      }
-    >
-      <form className="space-y-4">
-        <div>
-          <label className="block mb-1 text-sm font-medium">Skill Name *</label>
-          <input
-            {...register("name", { required: "Skill name is required" })}
-            className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="JavaScript, Python, Design..."
-          />
-          {formState.errors.name && (
-            <div className="text-red-500 text-xs mt-1">
-              {formState.errors.name.message}
+        </div>
+
+        {loading ? (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          </div>
+        ) : (
+          <>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-3">Your skills</h3>
+              <div className="w-full mb-1 relative">
+                <div className="flex flex-wrap items-center gap-2 border border-border rounded-lg px-2 py-1 bg-background min-h-[48px]">
+                  {selectedSkills.map((skill) => {
+                    const isCurrentSkill = currentSkills.find(
+                      (s) => s.name === skill.name
+                    );
+                    return (
+                      <div
+                        key={skill._id}
+                        className={`px-3 py-1 rounded-lg flex items-center ${
+                          isCurrentSkill
+                            ? "bg-muted/50 text-muted-foreground border border-muted-foreground/30"
+                            : "bg-card text-primary border border-primary"
+                        }`}
+                      >
+                        {!isCurrentSkill && (
+                          <button
+                            type="button"
+                            onClick={() => removeSkill(skill)}
+                            className="mr-1 text-sm text-primary font-bold hover:text-red-500 transition-colors"
+                          >
+                            ✕
+                          </button>
+                        )}
+                        <span
+                          className={`text-sm ${
+                            isCurrentSkill
+                              ? "text-muted-foreground"
+                              : "text-primary"
+                          }`}
+                        >
+                          {skill.name}
+                        </span>
+                      </div>
+                    );
+                  })}
+                  <input
+                    type="text"
+                    placeholder="Search and add skills..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="flex-1 bg-background text-primary outline-none py-3 min-w-[120px]"
+                  />
+                </div>
+
+                {search && filteredSkills.length > 0 && (
+                  <div className="border border-border rounded-lg p-3 mt-2 bg-card shadow-md flex flex-wrap gap-2 z-10 max-h-40 overflow-y-auto">
+                    {filteredSkills.map((skill) => (
+                      <button
+                        key={skill._id}
+                        type="button"
+                        className="border border-primary m-1 text-sm text-primary text-left px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+                        onClick={() => addSkill(skill)}
+                      >
+                        + {skill.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="text-right text-muted-foreground text-sm">
+                {selectedSkills.length}/15 skills
+              </div>
             </div>
-          )}
-        </div>
 
-        <div>
-          <label className="block mb-1 text-sm font-medium">
-            Proficiency Level
-          </label>
-          <select
-            {...register("level")}
-            className="h-12 border border-border rounded-lg px-3 py-2 w-full text-base bg-background dark:bg-zinc-900 text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition"
-          >
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-            <option value="Expert">Expert</option>
-          </select>
-        </div>
-      </form>
-    </BaseModal>
+            {error && (
+              <div className="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-lg">
+                {error}
+              </div>
+            )}
+
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-3">Suggested skills</h3>
+              <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
+                {skillsList
+                  .filter(
+                    (skill) =>
+                      !selectedSkills.find((s) => s.name === skill.name)
+                  )
+                  .slice(0, 20)
+                  .map((skill) => (
+                    <button
+                      key={skill._id}
+                      type="button"
+                      className="border border-primary text-sm text-primary px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+                      onClick={() => addSkill(skill)}
+                    >
+                      + {skill.name}
+                    </button>
+                  ))}
+              </div>
+            </div>
+
+            <div className="flex gap-4 justify-end">
+              <button
+                onClick={onClose}
+                className="px-6 py-2 border border-border text-muted-foreground rounded-lg hover:bg-muted/10 transition-colors"
+                disabled={isLoading}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                disabled={isLoading}
+              >
+                {isLoading ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
   );
-}
+};
 
-// Delete Confirmation Modal
 export function DeleteConfirmationModal({
   isOpen,
   onClose,
@@ -863,7 +1058,7 @@ export function DeleteConfirmationModal({
       footer={
         <>
           <button
-            className="h-10 px-6 text-base rounded-lg border border-border bg-gray-100 dark:bg-zinc-800 font-semibold hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+            className="h-12 px-6 text-base rounded-lg border border-border bg-background hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-semibold transition"
             onClick={onClose}
             type="button"
             disabled={isLoading}
@@ -871,7 +1066,7 @@ export function DeleteConfirmationModal({
             Cancel
           </button>
           <button
-            className="h-10 px-6 text-base rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-12 px-6 text-base rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={onConfirm}
             disabled={isLoading}
           >
