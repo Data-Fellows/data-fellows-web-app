@@ -259,8 +259,15 @@ export function clearStorage() {
     sessionStorage.removeItem(TOKEN_STORAGE_KEY);
     sessionStorage.removeItem(USER_STORAGE_KEY);
     sessionStorage.removeItem(USER_ROLE_STORAGE_KEY);
-  } catch {
-    // Silent fail
+
+    localStorage.removeItem("bizpilot-conversation");
+    localStorage.removeItem("bizpilot-muted");
+    sessionStorage.removeItem("bizpilot-conversation");
+    sessionStorage.removeItem("bizpilot-muted");
+
+    console.log("All storage cleared successfully");
+  } catch (error) {
+    console.error("Error clearing storage:", error);
   }
 }
 

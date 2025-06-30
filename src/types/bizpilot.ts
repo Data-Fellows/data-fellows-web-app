@@ -3,12 +3,24 @@ export interface Message {
   content: string;
 }
 
+export interface PayRange {
+  min: number;
+  max: number;
+}
+
 export interface Problem {
   id?: string;
-  title: string;
+  title?: string;
   description: string;
-  category: string;
-  priority: "high" | "medium" | "low";
+  fellowField: string;
+  type: string[];
+  skills: string[];
+  candidatesQualification: string;
+  niceToHaves?: string;
+  payRange: PayRange;
+  // Legacy fields for backwards compatibility
+  category?: string;
+  priority?: "high" | "medium" | "low";
   solutions?: string[];
   tags?: string[];
 }

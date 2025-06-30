@@ -132,6 +132,11 @@ export async function getProblemDetails(problemId: string): Promise<Problem> {
   return data.data || data;
 }
 
+export async function getSuggestedProblems(): Promise<SuggestedProblem[]> {
+  const { data } = await apiClient.get("/problems/suggested");
+  return data.suggestions || data;
+}
+
 export async function saveSuggestedProblems(
   payload: SuggestedProblemsPayload
 ): Promise<{ success: boolean; message: string }> {

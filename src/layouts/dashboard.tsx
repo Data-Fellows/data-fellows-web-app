@@ -1,8 +1,8 @@
-import { clearCookies, getUser } from "@/helpers";
+import { clearCookies, getToken, getUser } from "@/helpers";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import {
   FiBriefcase,
   FiDollarSign,
@@ -157,13 +157,39 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const router = useRouter();
 
+  useEffect(() => {
+    const user = getUser();
+    const token = getToken();
+
+    if (!user || !token) {
+      console.log("No user or token found, redirecting to login");
+      window.location.href = "/auth/sign-in";
+      return;
+    }
+  }, [router.pathname]);
+
   const user = getUser();
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
   const role = user?.userType === "employer" ? "employer" : "user";
   const items = role === "employer" ? employerItems : userItems;
 
   const handleLogout = () => {
+    console.log("User logging out:", user);
+
     clearCookies();
-    router.replace("/auth/sign-in");
+
+    setTimeout(() => {
+      console.log("Storage cleared, redirecting to login");
+      window.location.href = "/auth/sign-in";
+    }, 100);
   };
 
   return (

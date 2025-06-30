@@ -1,6 +1,6 @@
-import React from 'react';
-import { Problem } from '@/types/bizpilot';
-import ProblemCard from './ProblemCard';
+import { Problem } from "@/types/bizpilot";
+import React from "react";
+import ProblemCard from "./ProblemCard";
 
 interface ResultsDisplayProps {
   problems: Problem[];
@@ -26,9 +26,12 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ problems }) => {
             />
           </svg>
         </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-2">No Problem Suggestions Yet</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-2">
+          No Problem Suggestions Yet
+        </h3>
         <p className="text-gray-500 max-w-md">
-          Complete the consultation to see tailored problem suggestions for your business.
+          Complete the consultation to see tailored problem suggestions for your
+          business.
         </p>
       </div>
     );
@@ -39,24 +42,40 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ problems }) => {
       <div className="flex flex-col mb-8">
         <div className="flex items-center mb-6">
           <div className="w-12 h-12 bg-[#e8eef2] rounded-full flex items-center justify-center mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#1d3f51]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-[#1d3f51]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">Recommended Solutions</h2>
+          <h2 className="text-2xl font-bold text-gray-800">
+            Recommended Solutions
+          </h2>
         </div>
         <p className="text-gray-600 max-w-3xl">
-          Based on our analysis of your business challenges, we&apos;ve identified the following opportunities. Each card represents a potential solution with the expertise required to address your specific needs.
+          Based on our analysis of your business challenges, we&apos;ve
+          identified the following opportunities. Each card represents a
+          potential solution with the expertise required to address your
+          specific needs.
         </p>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {problems.map((problem) => (
-          <ProblemCard key={problem._id} problem={problem} />
+          <ProblemCard key={problem.id} problem={problem} />
         ))}
       </div>
     </div>
   );
 };
 
-export default ResultsDisplay; 
+export default ResultsDisplay;
