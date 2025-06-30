@@ -56,6 +56,20 @@ export interface ProblemsParams {
   sortBy?: "newest" | "oldest" | "salary_high" | "salary_low" | "applicants";
 }
 
+export interface SuggestedProblem {
+  payRange: PayRange;
+  fellowField: string;
+  type: string[];
+  skills: string[];
+  description: string;
+  candidatesQualification: string;
+  niceToHaves: string;
+}
+
+export interface SuggestedProblemsPayload {
+  suggestions: SuggestedProblem[];
+}
+
 export async function getProblems(
   params: ProblemsParams = {}
 ): Promise<ProblemsResponse> {
@@ -107,11 +121,20 @@ export async function bookmarkProblem(
 export async function unbookmarkProblem(
   problemId: string
 ): Promise<{ success: boolean; message: string }> {
-  const { data } = await apiClient.delete(`/jobs/${problemId}/bookmark`);
+  const { data } = await apiClient.delete(
+    `/profile/bookmarked-jobs/${problemId}`
+  );
   return data;
 }
 
 export async function getProblemDetails(problemId: string): Promise<Problem> {
   const { data } = await apiClient.get(`/jobs/${problemId}`);
   return data.data || data;
+}
+
+export async function saveSuggestedProblems(
+  payload: SuggestedProblemsPayload
+): Promise<{ success: boolean; message: string }> {
+  const { data } = await apiClient.post("/problems/suggested/create", payload);
+  return data;
 }

@@ -134,6 +134,7 @@ export interface BasicUserData {
   companyLogo?: string;
   companyName?: string;
   onboarded?: boolean;
+  companyDetailsAdded?: boolean;
   skillsAdded?: boolean;
   workExperienceAdded?: boolean;
   educationHistoryAdded?: boolean;
@@ -339,4 +340,57 @@ export function shouldRedirectToOnboarding(
 ): boolean {
   if (!user) return false;
   return user.userType === "user" && !isUserFullyOnboarded(user);
+}
+
+export function shouldRedirectToEmployerOnboarding(
+  user: BasicUserData | undefined
+): boolean {
+  if (!user) return false;
+  return user.userType === "employer" && !isUserFullyOnboarded(user);
+}
+
+export function getActualNextEmployerStep(
+  user: BasicUserData | undefined
+): number {
+  if (!user || user.userType !== "employer") return 0;
+
+  // Step 0: Company Services (Company Setup)
+  // Step 1: BizPilot AI Business Consultant
+  // Step 2: Completion
+
+  // If company details not added, start with company services
+  if (!user.companyDetailsAdded) {
+    return 0;
+  }
+
+  // If company details added but not fully onboarded, go to BizPilot
+  if (user.companyDetailsAdded && !user.onboarded) {
+    return 1;
+  }
+
+  // If both are complete, go to completion step
+  return 2;
+}
+
+export function getEmployerOnboardingProgress(
+  user: BasicUserData | undefined
+): {
+  percentage: number;
+  completedSteps: number;
+  totalSteps: number;
+} {
+  if (!user || user.userType !== "employer") {
+    return { percentage: 0, completedSteps: 0, totalSteps: 3 };
+  }
+
+  const steps = [
+    user.companyDetailsAdded || false, // Company Services step
+    user.onboarded || false, // BizPilot and full onboarding completion
+  ];
+
+  const completedSteps = steps.filter(Boolean).length;
+  const totalSteps = 3; // Company Services, BizPilot, Completion
+  const percentage = Math.round((completedSteps / totalSteps) * 100);
+
+  return { percentage, completedSteps, totalSteps };
 }

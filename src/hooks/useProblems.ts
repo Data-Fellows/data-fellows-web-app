@@ -24,21 +24,19 @@ export const useProblems = (params: ProblemsParams) => {
   });
 };
 
-// Problem details query
 export const useProblemDetails = (problemId: string) => {
   return useQuery<Problem>({
     queryKey: ["problems", "details", problemId],
     queryFn: () => getProblemDetails(problemId),
-    staleTime: 10 * 60 * 1000, // 10 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
+    staleTime: 10 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: true,
-    enabled: !!problemId, // Only run if problemId exists
+    enabled: !!problemId,
   });
 };
 
-// Apply to problem mutation
 export const useApplyToProblem = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -46,7 +44,6 @@ export const useApplyToProblem = () => {
   return useMutation({
     mutationFn: applyToProblem,
     onSuccess: (data, problemId) => {
-      // Update the problems cache to mark as applied
       queryClient.setQueriesData(
         { queryKey: ["problems"] },
         (oldData: ProblemsResponse | undefined) => {
@@ -67,7 +64,6 @@ export const useApplyToProblem = () => {
         }
       );
 
-      // Also update problem details cache if it exists
       queryClient.setQueryData(
         ["problems", "details", problemId],
         (oldData: Problem | undefined) => {
@@ -147,7 +143,6 @@ export const useBookmarkProblem = () => {
   });
 };
 
-// Custom hook to get combined problems data with loading and error states
 export const useProblemsData = (params: ProblemsParams) => {
   const { data: problemsData, isLoading, error, refetch } = useProblems(params);
 

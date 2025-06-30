@@ -71,6 +71,20 @@ export interface UploadCVResponse {
   user?: any;
 }
 
+export interface AddCompanyDetailsPayload {
+  companyName: string;
+  companyAbout: string;
+  companyType: string;
+  companyCreatedAt?: string;
+  noOfEmployees: number; // Changed from string to number
+  companyPhone: string;
+  companyAddress: string;
+  companyCountry: string;
+  companyState: string;
+  companyCity: string;
+  photo?: File;
+}
+
 export async function addSkillsApi(
   payload: AddSkillsPayload
 ): Promise<AddSkillsResponse> {
@@ -152,6 +166,38 @@ export async function parseCVApi(file: File): Promise<UploadCVResponse> {
   formData.append("cv", file);
 
   const { data } = await apiClient.post("/profile/upload-cv", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data;
+}
+
+export async function addCompanyDetailsApi(
+  payload: AddCompanyDetailsPayload
+): Promise<any> {
+  const formData = new FormData();
+
+  // Add text fields to FormData
+  formData.append("companyName", payload.companyName);
+  formData.append("companyAbout", payload.companyAbout);
+  formData.append("companyType", payload.companyType);
+  formData.append("noOfEmployees", payload.noOfEmployees.toString());
+  formData.append("companyPhone", payload.companyPhone);
+  formData.append("companyAddress", payload.companyAddress);
+  formData.append("companyCountry", payload.companyCountry);
+  formData.append("companyState", payload.companyState);
+  formData.append("companyCity", payload.companyCity);
+
+  if (payload.companyCreatedAt) {
+    formData.append("companyCreatedAt", payload.companyCreatedAt);
+  }
+
+  if (payload.photo) {
+    formData.append("photo", payload.photo);
+  }
+
+  const { data } = await apiClient.put("/profile/details", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

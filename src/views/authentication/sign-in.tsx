@@ -1,6 +1,11 @@
 import { GoogleLoginButton, Spinner } from "@/components";
 import { useToast } from "@/context/ToastContext";
-import { isUserFullyOnboarded, setToken, setUser } from "@/helpers";
+import {
+  isUserFullyOnboarded,
+  setToken,
+  setUser,
+  shouldRedirectToEmployerOnboarding,
+} from "@/helpers";
 import AuthLayout from "@/layouts/auth";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
@@ -26,10 +31,18 @@ const SignIn = () => {
         setUser(data.user);
         showToast("Signed in successfully!", "success");
 
-        if (isUserFullyOnboarded(data.user)) {
-          router.replace("/dashboard/home");
+        if (data.user.userType === "employer") {
+          if (shouldRedirectToEmployerOnboarding(data.user)) {
+            router.replace("/onboarding/employer");
+          } else {
+            router.replace("/dashboard/home");
+          }
         } else {
-          router.replace("/onboarding/user");
+          if (isUserFullyOnboarded(data.user)) {
+            router.replace("/dashboard/home");
+          } else {
+            router.replace("/onboarding/user");
+          }
         }
       } catch (error) {
         console.error("Success handler error:", error);

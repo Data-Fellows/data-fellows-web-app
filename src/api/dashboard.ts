@@ -7,6 +7,7 @@ export interface DashboardStats {
 }
 
 export interface JobMatch {
+  isApplied: boolean;
   _id: string;
   fellowField: string;
   type: string[];

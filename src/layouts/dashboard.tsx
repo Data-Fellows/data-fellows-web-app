@@ -115,7 +115,7 @@ function Sidebar({ items, onLogout, activePath, onClose }: any) {
 function MobileTabBar({ items, activePath }: any) {
   const mobileItems = getMobileItems(items);
   return (
-    <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 flex md:hidden bg-card  rounded-full px-2 py-1 w-[95%] max-w-xl mx-auto shadow-lg">
+    <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-40 flex md:hidden bg-card  rounded-full px-2 py-1 w-[95%] max-w-xl mx-auto shadow-lg">
       {mobileItems.map((item: any) => {
         const isActive =
           activePath === item.href || activePath.startsWith(item.href);

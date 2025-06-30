@@ -1,6 +1,7 @@
 import { useToast } from "@/context/ToastContext";
 import { getUser } from "@/helpers";
 import { useDashboardData } from "@/hooks/useDashboard";
+import { useProblemsData } from "@/hooks/useProblems";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -8,11 +9,15 @@ import {
   FiBriefcase,
   FiCalendar,
   FiCheckCircle,
+  FiClock,
+  FiDollarSign,
   FiEdit,
   FiMail,
   FiMapPin,
   FiTarget,
   FiUser,
+  FiUsers,
+  FiX,
 } from "react-icons/fi";
 
 const SkeletonCard = () => (
@@ -67,11 +72,34 @@ const SkeletonProfileCard = () => (
 export default function UserDashboard() {
   const router = useRouter();
   const [progressAnimation, setProgressAnimation] = useState(0);
+  const [selectedProblem, setSelectedProblem] = useState<any>(null);
+  const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
   const user = useMemo(() => getUser(), []);
 
   const { stats, profile, suggestedJobs, applications, isLoading, hasError } =
     useDashboardData();
+
+  // Add problems data hook for apply functionality
+  const { handleApply, handleBookmark, isApplying, isBookmarking } =
+    useProblemsData({
+      page: 1,
+      limit: 12,
+    });
+
+  // Declare applyingJobId state before using it in useEffect
+  const [applyingJobId, setApplyingJobId] = useState<string | null>(null);
+
+  // Use effect to reset applying state when mutation completes
+  useEffect(() => {
+    if (!isApplying && applyingJobId) {
+      // Small delay to show the success state
+      const timer = setTimeout(() => {
+        setApplyingJobId(null);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isApplying, applyingJobId]);
 
   const profileCompletion = useMemo(() => {
     return (
@@ -119,6 +147,36 @@ export default function UserDashboard() {
 
   const formatSalary = (min: number, max: number, currency = "USD") => {
     return `$${min} - $${max}`;
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const handleApplyClick = (problemId: string) => {
+    setApplyingJobId(problemId);
+    handleApply(problemId);
+  };
+
+  const handleBookmarkClick = (
+    problemId: string,
+    isCurrentlyBookmarked: boolean
+  ) => {
+    handleBookmark(problemId, isCurrentlyBookmarked);
+  };
+
+  const openProblemModal = (problem: any) => {
+    setSelectedProblem(problem);
+    setShowModal(true);
+  };
+
+  const closeProblemModal = () => {
+    setShowModal(false);
+    setSelectedProblem(null);
   };
 
   const getStatusColor = (status: string) => {
@@ -542,16 +600,32 @@ export default function UserDashboard() {
                       {/* Action buttons */}
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-3 sm:pt-4 border-t border-border gap-3 sm:gap-0">
                         <div className="flex gap-2 sm:gap-3">
-                          <button className="flex-1 sm:flex-none bg-primary hover:bg-primary/90 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105">
-                            Apply Now
+                          <button
+                            onClick={() => handleApplyClick(job._id)}
+                            disabled={
+                              job.isApplied || applyingJobId === job._id
+                            }
+                            className={`flex-1 sm:flex-none px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 ${
+                              job.isApplied
+                                ? "bg-muted/50 text-muted-foreground cursor-not-allowed"
+                                : applyingJobId === job._id
+                                ? "bg-primary/50 text-white cursor-not-allowed"
+                                : "bg-primary hover:bg-primary/90 text-white"
+                            }`}
+                          >
+                            {job.isApplied
+                              ? "Applied"
+                              : applyingJobId === job._id
+                              ? "Applying..."
+                              : "Apply Now"}
                           </button>
-                          <button className="flex-1 sm:flex-none border border-border bg-background hover:bg-muted/50 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 hover:shadow-md">
+                          <button
+                            onClick={() => openProblemModal(job)}
+                            className="flex-1 sm:flex-none border border-border bg-background hover:bg-muted/50 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 hover:shadow-md"
+                          >
                             View Details
                           </button>
                         </div>
-                        {/* <button className="self-end sm:self-auto bg-muted/50 hover:bg-primary/20 border border-border hover:border-primary/30 p-2 sm:p-2.5 rounded-lg transition-all duration-300 hover:scale-110 group-hover:rotate-12">
-                          <FiBookmark className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-                        </button> */}
                       </div>
                     </div>
                   </div>
@@ -684,6 +758,210 @@ export default function UserDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Problem Details Modal */}
+      {showModal && selectedProblem && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4 scrollbar-hide">
+          <div className="bg-card border border-border rounded-xl sm:rounded-2xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto scrollbar-hide ">
+            <div className="sticky top-0 bg-card border-b border-border p-3 sm:p-4 lg:p-6 flex items-center justify-between rounded-t-xl sm:rounded-t-2xl">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
+                Problem Details
+              </h2>
+              <button
+                onClick={closeProblemModal}
+                className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+              >
+                <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
+
+            <div className="p-3 sm:p-4 lg:p-6">
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex flex-col gap-3 sm:gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="bg-gradient-to-br from-primary/20 to-primary/10 p-2 sm:p-3 rounded-lg sm:rounded-xl border border-primary/20 shadow-md flex-shrink-0">
+                      <FiBriefcase className="text-primary w-5 h-5 sm:w-6 sm:h-6" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-1 sm:mb-2">
+                        {selectedProblem.fellowField}
+                      </h3>
+                      <p className="text-base sm:text-lg text-muted-foreground font-medium mb-2">
+                        {selectedProblem.employer.companyName}
+                      </p>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <FiUsers className="w-4 h-4" />
+                          <span>
+                            {selectedProblem.noOfApplicants} applicants
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <FiClock className="w-4 h-4" />
+                          <span>{formatDate(selectedProblem.createdAt)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold self-start ${getStatusColor(
+                        selectedProblem.status
+                      )}`}
+                    >
+                      {selectedProblem.status}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="bg-muted/30 border border-border/50 rounded-lg p-3 sm:p-4">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                      <div className="bg-primary/10 p-1.5 sm:p-2 rounded-lg">
+                        <FiMapPin className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+                      </div>
+                      <span className="font-medium text-foreground text-sm sm:text-base">
+                        Location
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-muted-foreground ml-6 sm:ml-8 lg:ml-11">
+                      {selectedProblem.employer.companyCity},{" "}
+                      {selectedProblem.employer.companyCountry}
+                    </p>
+                  </div>
+
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/30 rounded-lg p-3 sm:p-4">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                      <div className="bg-green-500/20 p-1.5 sm:p-2 rounded-lg">
+                        <FiDollarSign className="w-3 h-3 sm:w-4 sm:h-4 text-green-600 dark:text-green-400" />
+                      </div>
+                      <span className="font-medium text-muted-foreground text-sm sm:text-base">
+                        Salary Range
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-green-600 dark:text-green-400 ml-6 sm:ml-8 lg:ml-11">
+                      {formatSalary(
+                        selectedProblem.payRange.min,
+                        selectedProblem.payRange.max
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3">
+                    Description
+                  </h4>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    {selectedProblem.description}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3">
+                    Qualifications
+                  </h4>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    {selectedProblem.candidatesQualification}
+                  </p>
+                </div>
+
+                {selectedProblem.niceToHaves && (
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3">
+                      Nice to Have
+                    </h4>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      {selectedProblem.niceToHaves}
+                    </p>
+                  </div>
+                )}
+
+                <div>
+                  <h4 className="text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3">
+                    Job Types
+                  </h4>
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
+                    {selectedProblem.type.map((type: string, index: number) => (
+                      <span
+                        key={index}
+                        className="bg-accent/10 border border-accent/20 text-accent-foreground px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
+                      >
+                        {type}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3">
+                    Required Skills
+                  </h4>
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
+                    {selectedProblem.skills.map(
+                      (skill: string, index: number) => (
+                        <span
+                          key={index}
+                          className="bg-primary/10 border border-primary/20 text-primary px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
+                        >
+                          {skill}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3">
+                    Company Information
+                  </h4>
+                  <div className="bg-muted/30 border border-border/50 rounded-lg p-3 sm:p-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div>
+                        <p className="text-xs sm:text-sm font-medium text-foreground mb-1">
+                          Company Size
+                        </p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                          {selectedProblem.employer.companySize}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs sm:text-sm font-medium text-foreground mb-1">
+                          Number of Employees
+                        </p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                          {selectedProblem.employer.noOfEmployees}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-center pt-4 sm:pt-6 border-t border-border">
+                  <button
+                    onClick={() => handleApplyClick(selectedProblem._id)}
+                    disabled={
+                      selectedProblem.isApplied ||
+                      applyingJobId === selectedProblem._id
+                    }
+                    className={`w-full max-w-md px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base ${
+                      selectedProblem.isApplied
+                        ? "bg-muted/50 text-muted-foreground cursor-not-allowed"
+                        : applyingJobId === selectedProblem._id
+                        ? "bg-primary/50 text-white cursor-not-allowed"
+                        : "bg-primary hover:bg-primary/90 text-white"
+                    }`}
+                  >
+                    {selectedProblem.isApplied
+                      ? "Applied"
+                      : applyingJobId === selectedProblem._id
+                      ? "Applying..."
+                      : "Apply Now"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
