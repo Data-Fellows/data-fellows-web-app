@@ -593,17 +593,24 @@ export default function BizPilotStep({ setPage }: BizPilotStepProps) {
 
       console.log("suggestions", data);
 
-      // Optional: Save suggested problems to backend (commented out until endpoint is implemented)
-      /*
+      // Save suggested problems to backend
       try {
-        const { saveSuggestedProblems } = await import('@/api/problems');
-        await saveSuggestedProblems({ suggestions: data.problems });
-        console.log("Suggested problems saved successfully");
+        const { saveSuggestedProblems } = await import("@/api/problems");
+        const saveResult = await saveSuggestedProblems({
+          suggestions: data.problems,
+        });
+        if (saveResult.success) {
+          console.log("Suggested problems saved successfully");
+        } else {
+          console.warn(
+            "Failed to save suggested problems:",
+            saveResult.message
+          );
+        }
       } catch (error) {
         console.error("Failed to save suggested problems:", error);
-        showToast("Failed to save suggested problems", "error");
+        // Don't show error toast as this is not critical for user flow
       }
-      */
 
       // Call structure extraction API after problems are generated
       try {

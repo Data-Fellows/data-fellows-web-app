@@ -1,1 +1,1 @@
-export { default } from "@/views/dashboard/user/problems";
+export { default } from "@/views/dashboard/problems";

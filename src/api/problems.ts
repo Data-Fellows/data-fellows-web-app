@@ -57,6 +57,7 @@ export interface ProblemsParams {
 }
 
 export interface SuggestedProblem {
+  _id?: string;
   payRange: PayRange;
   fellowField: string;
   type: string[];
@@ -68,6 +69,89 @@ export interface SuggestedProblem {
 
 export interface SuggestedProblemsPayload {
   suggestions: SuggestedProblem[];
+}
+
+export interface Applicant {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  profilePicture?: string;
+  city?: string;
+  country?: string;
+  skills: string[];
+  experience?: string;
+  education?: string;
+  cv?: string;
+  appliedAt: string;
+  status: "pending" | "reviewed" | "shortlisted" | "rejected" | "hired";
+}
+
+export interface ApplicantsResponse {
+  status: string;
+  totalApplicants: number;
+  applicants: Applicant[];
+}
+
+// Employer Dashboard Stats and Applications interfaces
+export interface EmployerStats {
+  totalProblems: number;
+  activeProblems: number;
+  solvedProblems: number;
+  inProgressProblems: number;
+  draftProblems: number;
+  totalApplications: number;
+  todaysApplications: number;
+  totalShortlisted: number;
+  totalHired: number;
+  totalRejected: number;
+  totalMatches: number;
+  avgApplicationsPerProblem: number;
+  applicationStats: {
+    applied: number;
+    shortlisted: number;
+    hired: number;
+    rejected: number;
+  };
+}
+
+export interface RecentApplicationApplicant {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  photoUrl?: string;
+}
+
+export interface RecentApplicationProblem {
+  id: string;
+  fellowField: string;
+  description: string;
+  payRange: PayRange;
+  skills: string[];
+}
+
+export interface RecentApplication {
+  applicationId: string;
+  applicant: RecentApplicationApplicant;
+  status: string;
+  applicationDate: string;
+  match: number;
+  problem: RecentApplicationProblem;
+}
+
+export interface RecentApplicationsResponse {
+  status: string;
+  data: {
+    recentApplications: RecentApplication[];
+    totalCount: number;
+  };
+}
+
+export interface EmployerStatsResponse {
+  status: string;
+  data: EmployerStats;
 }
 
 export async function getProblems(
@@ -139,7 +223,96 @@ export async function getSuggestedProblems(): Promise<SuggestedProblem[]> {
 
 export async function saveSuggestedProblems(
   payload: SuggestedProblemsPayload
-): Promise<{ success: boolean; message: string }> {
+): Promise<{ success: boolean; message: string; suggestions?: any[] }> {
   const { data } = await apiClient.post("/problems/suggested/create", payload);
+  return {
+    success: data.status === "CREATED" || data.status === "OK",
+    message: data.message || "Suggested problems saved successfully",
+    suggestions: data.suggestions,
+  };
+}
+
+export async function updateProblem(
+  problemId: string,
+  updates: Partial<Problem>
+): Promise<{ success: boolean; message: string; problem?: Problem }> {
+  const { data } = await apiClient.put(`/problems/${problemId}`, updates);
   return data;
+}
+
+export async function deleteProblem(
+  problemId: string
+): Promise<{ success: boolean; message: string }> {
+  const { data } = await apiClient.delete(`/problems/${problemId}`);
+  return data;
+}
+
+export async function getEmployerProblems(
+  params: ProblemsParams = {}
+): Promise<ProblemsResponse> {
+  const {
+    page = 1,
+    limit = 12,
+    search = "",
+    status = "",
+    fellowField = "",
+    skills = [],
+    type = [],
+    minSalary,
+    maxSalary,
+    sortBy = "newest",
+  } = params;
+
+  const { data } = await apiClient.get("/problems", {
+    params: {
+      page,
+      limit,
+      search,
+      status,
+      fellowField,
+      skills: skills.join(","),
+      type: type.join(","),
+      minSalary,
+      maxSalary,
+      sortBy,
+    },
+  });
+
+  return data;
+}
+
+export async function getProblemApplicants(
+  problemId: string
+): Promise<ApplicantsResponse> {
+  const { data } = await apiClient.get(`/problems/${problemId}/applicants`);
+  return data;
+}
+
+// Employer Dashboard API functions
+export async function getEmployerStats(): Promise<EmployerStats> {
+  const { data } = await apiClient.get("/problems/stats");
+  return data.data;
+}
+
+export async function getRecentApplications(): Promise<RecentApplication[]> {
+  const { data } = await apiClient.get("/problems/recent-applications");
+  return data.data.recentApplications;
+}
+
+export async function createProblem(problemData: {
+  fellowField: string;
+  type: string[];
+  payRange: PayRange;
+  skills: string[];
+  description: string;
+  candidatesQualification: string;
+  niceToHaves: string;
+  suggestedProblemId?: string;
+}): Promise<{ success: boolean; message: string; problem?: Problem }> {
+  const { data } = await apiClient.post("/problems", problemData);
+  return {
+    success: data.status === "Created" || data.status === "OK",
+    message: data.message || "Problem created successfully",
+    problem: data.problem,
+  };
 }

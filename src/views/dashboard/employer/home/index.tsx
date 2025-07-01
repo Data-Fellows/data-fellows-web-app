@@ -1,15 +1,20 @@
 import { useToast } from "@/context/ToastContext";
 import { getUser } from "@/helpers";
+import {
+  useEmployerStats,
+  useRecentApplications,
+} from "@/hooks/useEmployerDashboard";
 import { useEmployerProfile } from "@/hooks/useEmployerProfile";
 import { useSuggestedProblems } from "@/hooks/useSuggestedProblems";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   FiBriefcase,
   FiClock,
   FiEdit,
   FiEye,
   FiHome,
+  FiLoader,
   FiPlus,
   FiTarget,
   FiUser,
@@ -69,8 +74,9 @@ export default function EmployerDashboard() {
   const router = useRouter();
   const { showToast } = useToast();
   const user = useMemo(() => getUser(), []);
+  const [creatingProblem, setCreatingProblem] = useState<number | null>(null);
 
-  // Fetch real profile and suggested problems data
+  // Fetch real data from APIs
   const {
     profile,
     isLoading: profileLoading,
@@ -81,15 +87,25 @@ export default function EmployerDashboard() {
     isLoading: suggestionsLoading,
     error: suggestionsError,
   } = useSuggestedProblems();
+  const {
+    stats,
+    isLoading: statsLoading,
+    error: statsError,
+  } = useEmployerStats();
+  const {
+    applications: recentApplications,
+    isLoading: applicationsLoading,
+    error: applicationsError,
+  } = useRecentApplications();
 
-  // Derive employer stats from user data and mock some analytics
-  const employerStats = {
-    totalProblems: 12, // This would come from API
-    activeProblems: 8,
-    totalApplications: 156,
-    hiredCandidates: 23,
-    viewsThisMonth: 1247,
-    successfulMatches: 18,
+  // Derive employer stats from API data with fallback
+  const employerStats = stats || {
+    totalProblems: 0,
+    activeProblems: 0,
+    totalApplications: 0,
+    totalHired: 0,
+    totalShortlisted: 0,
+    avgApplicationsPerProblem: 0,
   };
 
   // Company information from user object or profile
@@ -115,38 +131,12 @@ export default function EmployerDashboard() {
     type: profile?.companyType || user?.companyType,
   };
 
-  const recentApplications = [
-    {
-      _id: "1",
-      candidateName: "John Doe",
-      problemTitle: "Data Scientist - ML Engineer",
-      appliedAt: "2025-06-29T10:00:00.000Z",
-      status: "pending",
-      experience: "5+ years",
-      skills: ["Python", "TensorFlow", "SQL"],
-    },
-    {
-      _id: "2",
-      candidateName: "Sarah Johnson",
-      problemTitle: "Business Intelligence Analyst",
-      appliedAt: "2025-06-28T14:30:00.000Z",
-      status: "shortlisted",
-      experience: "3+ years",
-      skills: ["Power BI", "SQL", "Excel"],
-    },
-    {
-      _id: "3",
-      candidateName: "Mike Chen",
-      problemTitle: "Data Analytics Specialist",
-      appliedAt: "2025-06-27T09:15:00.000Z",
-      status: "interview",
-      experience: "4+ years",
-      skills: ["Python", "Tableau", "R"],
-    },
-  ];
+  // Recent applications are now fetched from the API
 
-  const isLoading = profileLoading || suggestionsLoading;
-  const hasError = profileError || suggestionsError;
+  const isLoading =
+    profileLoading || suggestionsLoading || statsLoading || applicationsLoading;
+  const hasError =
+    profileError || suggestionsError || statsError || applicationsError;
 
   useEffect(() => {
     if (hasError) {
@@ -167,7 +157,9 @@ export default function EmployerDashboard() {
   };
 
   const getStatusColor = (status: string) => {
-    switch (status) {
+    const statusLower = status.toLowerCase();
+    switch (statusLower) {
+      case "applied":
       case "pending":
         return "bg-yellow-50 text-yellow-700 border border-yellow-200 dark:bg-yellow-900/10 dark:text-yellow-400 dark:border-yellow-800/30";
       case "shortlisted":
@@ -341,7 +333,7 @@ export default function EmployerDashboard() {
                   Hired Candidates
                 </p>
                 <p className="text-xl sm:text-2xl font-bold text-foreground">
-                  {employerStats.hiredCandidates}
+                  {employerStats.totalHired}
                 </p>
               </div>
             </div>
@@ -370,10 +362,10 @@ export default function EmployerDashboard() {
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-muted-foreground font-medium">
-                  Views This Month
+                  Total Shortlisted
                 </p>
                 <p className="text-xl sm:text-2xl font-bold text-foreground">
-                  {employerStats.viewsThisMonth}
+                  {employerStats.totalShortlisted}
                 </p>
               </div>
             </div>
@@ -477,13 +469,74 @@ export default function EmployerDashboard() {
                         )}
                       </div>
                       <button
-                        onClick={() =>
-                          router.push("/dashboard/problems/create")
+                        onClick={async () => {
+                          setCreatingProblem(index);
+                          try {
+                            const { createProblem } = await import(
+                              "@/api/problems"
+                            );
+
+                            const problemData = {
+                              fellowField: suggestion.fellowField,
+                              type: suggestion.type,
+                              payRange: suggestion.payRange,
+                              skills: suggestion.skills,
+                              description: suggestion.description,
+                              candidatesQualification:
+                                suggestion.candidatesQualification,
+                              niceToHaves: suggestion.niceToHaves,
+                              suggestedProblemId: suggestion._id,
+                            };
+
+                            const createResult = await createProblem(
+                              problemData
+                            );
+
+                            console.log("Create Result:", createResult);
+
+                            if (createResult.success) {
+                              showToast(
+                                "Problem created successfully! You can view it in your problems list.",
+                                "success"
+                              );
+                              router.push("/dashboard/problems");
+                            } else {
+                              showToast(
+                                "Failed to create problem. Please try again.",
+                                "error"
+                              );
+                              console.error(
+                                "Failed to create problem:",
+                                createResult.message
+                              );
+                            }
+                          } catch (error) {
+                            console.error("Error creating problem:", error);
+                            showToast(
+                              "Failed to create problem. Please try again.",
+                              "error"
+                            );
+                          } finally {
+                            setCreatingProblem(null);
+                          }
+                        }}
+                        disabled={creatingProblem === index}
+                        className={`self-end sm:self-auto text-white p-2 sm:p-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 ${
+                          creatingProblem === index
+                            ? "bg-primary/70 cursor-not-allowed"
+                            : "bg-primary hover:bg-primary/90"
+                        }`}
+                        title={
+                          creatingProblem === index
+                            ? "Creating problem..."
+                            : "Create problem from this template"
                         }
-                        className="self-end sm:self-auto bg-primary hover:bg-primary/90 text-white p-2 sm:p-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
-                        title="Create problem from this template"
                       >
-                        <FiPlus className="w-4 h-4 sm:w-5 sm:h-5" />
+                        {creatingProblem === index ? (
+                          <FiLoader className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                        ) : (
+                          <FiPlus className="w-4 h-4 sm:w-5 sm:h-5" />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -533,10 +586,10 @@ export default function EmployerDashboard() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-            {recentApplications.length > 0 ? (
+            {recentApplications && recentApplications.length > 0 ? (
               recentApplications.map((application) => (
                 <div
-                  key={application._id}
+                  key={application.applicationId}
                   className="group relative bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-primary/30 overflow-hidden"
                 >
                   <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-primary/5 to-transparent rounded-full -translate-y-12 translate-x-12 sm:-translate-y-16 sm:translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
@@ -546,27 +599,30 @@ export default function EmployerDashboard() {
                     <div className="flex items-start justify-between mb-4 sm:mb-6">
                       <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
                         <div className="bg-gradient-to-br from-primary/20 to-primary/10 p-2 sm:p-3 rounded-xl border border-primary/20 shadow-md group-hover:shadow-lg transition-all duration-300 flex-shrink-0">
-                          <FiUser className="text-primary w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
+                          {application.applicant.photoUrl ? (
+                            <img
+                              src={application.applicant.photoUrl}
+                              alt={`${application.applicant.firstName} ${application.applicant.lastName}`}
+                              className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover"
+                            />
+                          ) : (
+                            <FiUser className="text-primary w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
+                          )}
                         </div>
                         <div className="min-w-0 flex-1">
                           <h3 className="font-bold text-foreground text-sm sm:text-base leading-tight mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
-                            {application.candidateName}
+                            {application.applicant.firstName}{" "}
+                            {application.applicant.lastName}
                           </h3>
                           <p className="text-xs sm:text-sm text-muted-foreground font-medium truncate">
-                            {application.problemTitle}
+                            {application.problem.fellowField}
                           </p>
                         </div>
                       </div>
                       <div
-                        className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-semibold flex-shrink-0 ${
-                          application.status === "pending"
-                            ? "bg-yellow-50 text-yellow-700 border border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800/30"
-                            : application.status === "shortlisted"
-                            ? "bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800/30"
-                            : application.status === "interview"
-                            ? "bg-purple-50 text-purple-700 border border-purple-200 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-800/30"
-                            : "bg-gray-50 text-gray-700 border border-gray-200 dark:bg-gray-900/20 dark:text-gray-400 dark:border-gray-800/30"
-                        }`}
+                        className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-semibold flex-shrink-0 ${getStatusColor(
+                          application.status
+                        )}`}
                       >
                         {application.status}
                       </div>
@@ -576,10 +632,10 @@ export default function EmployerDashboard() {
                       <div className="bg-muted/30 border border-border/50 rounded-lg p-2 sm:p-3 hover:bg-muted/50 transition-all duration-300">
                         <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
                           <div className="bg-primary/10 p-1 sm:p-1.5 rounded-lg">
-                            <FiBriefcase className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+                            <FiTarget className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                           </div>
                           <span className="font-medium text-foreground truncate">
-                            {application.experience}
+                            {application.match}% match
                           </span>
                         </div>
                       </div>
@@ -590,30 +646,31 @@ export default function EmployerDashboard() {
                             <FiClock className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                           </div>
                           <span className="font-medium text-blue-600">
-                            Applied {formatDate(application.appliedAt)}
+                            Applied {formatDate(application.applicationDate)}
                           </span>
                         </div>
                       </div>
 
-                      {application.skills && application.skills.length > 0 && (
-                        <div className="flex flex-wrap gap-1 sm:gap-2">
-                          {application.skills
-                            .slice(0, 2)
-                            .map((skill, index) => (
-                              <span
-                                key={index}
-                                className="bg-accent/10 border border-accent/20 text-accent-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-medium shadow-sm"
-                              >
-                                {skill}
+                      {application.problem.skills &&
+                        application.problem.skills.length > 0 && (
+                          <div className="flex flex-wrap gap-1 sm:gap-2">
+                            {application.problem.skills
+                              .slice(0, 2)
+                              .map((skill, index) => (
+                                <span
+                                  key={index}
+                                  className="bg-accent/10 border border-accent/20 text-accent-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-medium shadow-sm"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+                            {application.problem.skills.length > 2 && (
+                              <span className="bg-muted/50 border border-border text-muted-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-medium">
+                                +{application.problem.skills.length - 2}
                               </span>
-                            ))}
-                          {application.skills.length > 2 && (
-                            <span className="bg-muted/50 border border-border text-muted-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-medium">
-                              +{application.skills.length - 2}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                            )}
+                          </div>
+                        )}
                     </div>
 
                     {/* Action buttons */}
@@ -622,7 +679,7 @@ export default function EmployerDashboard() {
                         <button
                           onClick={() =>
                             router.push(
-                              `/dashboard/applications/${application._id}`
+                              `/dashboard/applications/${application.applicationId}`
                             )
                           }
                           className="flex-1 sm:flex-none px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 bg-primary hover:bg-primary/90 text-white"
@@ -632,7 +689,7 @@ export default function EmployerDashboard() {
                         <button
                           onClick={() =>
                             router.push(
-                              `/dashboard/applications/${application._id}/interview`
+                              `/dashboard/applications/${application.applicationId}/interview`
                             )
                           }
                           className="flex-1 sm:flex-none border border-border bg-background hover:bg-muted/50 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 hover:shadow-md"

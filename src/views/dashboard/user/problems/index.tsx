@@ -861,7 +861,7 @@ export default function ProblemsPage() {
                   </p>
                 </div>
               ) : (
-                <div className="space-y-3 sm:space-y-4 max-h-80 sm:max-h-96 overflow-y-auto scrollbar-hide">
+                <div className="space-y-3 sm:space-y-4 max-h-80 sm:max-h-96 overflow-y-auto">
                   {bookmarkedJobs.map((job) => (
                     <div
                       key={job._id}
