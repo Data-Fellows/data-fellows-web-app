@@ -73,19 +73,67 @@ export interface SuggestedProblemsPayload {
 
 export interface Applicant {
   _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+  user?: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone?: string;
+    photoUrl?: string;
+    city?: string;
+    country?: string;
+    state?: string;
+    skills: Array<{ name: string; _id: string } | string>;
+    workExperience?: Array<{
+      _id: string;
+      title: string;
+      company: string;
+      location?: string;
+      startDate: string;
+      endDate?: string | null;
+      description?: string;
+    }>;
+    educationHistory?: Array<{
+      _id: string;
+      school: string;
+      degree: string;
+      fieldOfStudy: string;
+      startDate: string;
+      endDate?: string | null;
+      description?: string;
+    }>;
+    bio?: string;
+    verified?: boolean;
+    profileCompletion?: number;
+  };
+  // Direct properties for backward compatibility
+  firstName?: string;
+  lastName?: string;
+  email?: string;
   phone?: string;
   profilePicture?: string;
   city?: string;
   country?: string;
-  skills: string[];
+  skills?: string[];
   experience?: string;
   education?: string;
   cv?: string;
-  appliedAt: string;
-  status: "pending" | "reviewed" | "shortlisted" | "rejected" | "hired";
+  appliedAt?: string;
+  applicationDate?: string;
+  status:
+    | "pending"
+    | "Applied"
+    | "reviewed"
+    | "Shortlisted"
+    | "shortlisted"
+    | "Accepted"
+    | "accepted"
+    | "hired"
+    | "Rejected"
+    | "rejected";
+  match?: number;
+  what_matched?: string[];
+  went_against?: string[];
 }
 
 export interface ApplicantsResponse {
@@ -314,5 +362,48 @@ export async function createProblem(problemData: {
     success: data.status === "Created" || data.status === "OK",
     message: data.message || "Problem created successfully",
     problem: data.problem,
+  };
+}
+
+// Applicant Status Update API functions
+export async function shortlistApplicant(
+  problemId: string,
+  applicantId: string
+): Promise<{ success: boolean; message: string }> {
+  const { data } = await apiClient.patch(
+    `/problems/${problemId}/applicants/${applicantId}/status`,
+    { status: "Shortlisted" }
+  );
+  return {
+    success: data.status === "OK" || data.status === "success",
+    message: data.message || "Applicant shortlisted successfully",
+  };
+}
+
+export async function acceptApplicant(
+  problemId: string,
+  applicantId: string
+): Promise<{ success: boolean; message: string }> {
+  const { data } = await apiClient.patch(
+    `/problems/${problemId}/applicants/${applicantId}/status`,
+    { status: "Accepted" }
+  );
+  return {
+    success: data.status === "OK" || data.status === "success",
+    message: data.message || "Applicant accepted successfully",
+  };
+}
+
+export async function rejectApplicant(
+  problemId: string,
+  applicantId: string
+): Promise<{ success: boolean; message: string }> {
+  const { data } = await apiClient.patch(
+    `/problems/${problemId}/applicants/${applicantId}/status`,
+    { status: "Rejected" }
+  );
+  return {
+    success: data.status === "OK" || data.status === "success",
+    message: data.message || "Applicant rejected successfully",
   };
 }

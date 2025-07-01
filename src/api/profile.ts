@@ -150,6 +150,11 @@ export async function getProfile(): Promise<UserProfile> {
   return data.user || data;
 }
 
+export async function getUserProfile(userId: string): Promise<any> {
+  const { data } = await apiClient.get(`/profile/user/${userId}`);
+  return data.data || data;
+}
+
 export async function updateProfile(
   payload: UpdateProfilePayload
 ): Promise<UserProfile> {

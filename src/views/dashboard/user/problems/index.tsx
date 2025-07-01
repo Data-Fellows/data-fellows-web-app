@@ -208,6 +208,8 @@ export default function ProblemsPage() {
     handleBookmark,
     isApplying,
     isBookmarking,
+    applyingProblemId,
+    bookmarkingProblemId,
   } = useProblemsData({
     page: currentPage,
     limit: 12,
@@ -693,18 +695,22 @@ export default function ProblemsPage() {
                               e.stopPropagation();
                               handleApplyClick(problem._id);
                             }}
-                            disabled={problem.isApplied || isApplying}
+                            disabled={
+                              problem.isApplied ||
+                              (isApplying && applyingProblemId === problem._id)
+                            }
                             className={`flex-1 sm:flex-none px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 truncate ${
                               problem.isApplied
                                 ? "bg-muted/50 text-muted-foreground cursor-not-allowed"
-                                : isApplying
+                                : isApplying &&
+                                  applyingProblemId === problem._id
                                 ? "bg-primary/50 text-white cursor-not-allowed"
                                 : "bg-primary hover:bg-primary/90 text-white"
                             }`}
                           >
                             {problem.isApplied
                               ? "Applied"
-                              : isApplying
+                              : isApplying && applyingProblemId === problem._id
                               ? "Applying..."
                               : "Apply Now"}
                           </button>
@@ -726,13 +732,19 @@ export default function ProblemsPage() {
                               problem.isBookmarked
                             );
                           }}
-                          disabled={isBookmarking}
+                          disabled={
+                            isBookmarking &&
+                            bookmarkingProblemId === problem._id
+                          }
                           className={`ml-2 sm:ml-3 border border-border p-2 sm:p-2.5 rounded-lg transition-all duration-300 hover:scale-110 group-hover:rotate-12 flex-shrink-0 ${
                             problem.isBookmarked
                               ? "bg-primary/20 border-primary/30 text-primary"
                               : "bg-muted/50 hover:bg-primary/20 hover:border-primary/30 text-muted-foreground hover:text-primary"
                           } ${
-                            isBookmarking ? "opacity-50 cursor-not-allowed" : ""
+                            isBookmarking &&
+                            bookmarkingProblemId === problem._id
+                              ? "opacity-50 cursor-not-allowed"
+                              : ""
                           }`}
                         >
                           {problem.isBookmarked ? (
@@ -888,7 +900,16 @@ export default function ProblemsPage() {
                                 e.stopPropagation();
                                 handleBookmarkClick(job._id, job.isBookmarked);
                               }}
-                              className="text-primary hover:text-primary/80 transition-colors flex-shrink-0 ml-2"
+                              disabled={
+                                isBookmarking &&
+                                bookmarkingProblemId === job._id
+                              }
+                              className={`text-primary hover:text-primary/80 transition-colors flex-shrink-0 ml-2 ${
+                                isBookmarking &&
+                                bookmarkingProblemId === job._id
+                                  ? "opacity-50 cursor-not-allowed"
+                                  : ""
+                              }`}
                             >
                               <FiHeart className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
                             </button>
@@ -943,7 +964,16 @@ export default function ProblemsPage() {
                                 e.stopPropagation();
                                 handleBookmarkClick(job._id, job.isBookmarked);
                               }}
-                              className="text-primary hover:text-primary/80 transition-colors flex-shrink-0"
+                              disabled={
+                                isBookmarking &&
+                                bookmarkingProblemId === job._id
+                              }
+                              className={`text-primary hover:text-primary/80 transition-colors flex-shrink-0 ${
+                                isBookmarking &&
+                                bookmarkingProblemId === job._id
+                                  ? "opacity-50 cursor-not-allowed"
+                                  : ""
+                              }`}
                             >
                               <FiHeart className="w-4 h-4 fill-current" />
                             </button>
@@ -1151,12 +1181,20 @@ export default function ProblemsPage() {
                         selectedProblem.isBookmarked
                       )
                     }
-                    disabled={isBookmarking}
+                    disabled={
+                      isBookmarking &&
+                      bookmarkingProblemId === selectedProblem._id
+                    }
                     className={`flex-1 flex items-center justify-center gap-2 border border-border px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base font-medium ${
                       selectedProblem.isBookmarked
                         ? "bg-primary/20 border-primary/30 text-primary"
                         : "bg-muted/50 hover:bg-primary/20 hover:border-primary/30 text-muted-foreground hover:text-primary"
-                    } ${isBookmarking ? "opacity-50 cursor-not-allowed" : ""}`}
+                    } ${
+                      isBookmarking &&
+                      bookmarkingProblemId === selectedProblem._id
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                   >
                     {selectedProblem.isBookmarked ? (
                       <>
@@ -1172,18 +1210,22 @@ export default function ProblemsPage() {
                   </button>
                   <button
                     onClick={() => handleApplyClick(selectedProblem._id)}
-                    disabled={selectedProblem.isApplied || isApplying}
+                    disabled={
+                      selectedProblem.isApplied ||
+                      (isApplying && applyingProblemId === selectedProblem._id)
+                    }
                     className={`flex-1 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base ${
                       selectedProblem.isApplied
                         ? "bg-muted/50 text-muted-foreground cursor-not-allowed"
-                        : isApplying
+                        : isApplying &&
+                          applyingProblemId === selectedProblem._id
                         ? "bg-primary/50 text-white cursor-not-allowed"
                         : "bg-primary hover:bg-primary/90 text-white"
                     }`}
                   >
                     {selectedProblem.isApplied
                       ? "Applied"
-                      : isApplying
+                      : isApplying && applyingProblemId === selectedProblem._id
                       ? "Applying..."
                       : "Apply Now"}
                   </button>

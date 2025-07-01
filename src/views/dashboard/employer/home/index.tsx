@@ -8,7 +8,7 @@ import {
 import { useEmployerProfile } from "@/hooks/useEmployerProfile";
 import { useSuggestedProblems } from "@/hooks/useSuggestedProblems";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   FiBriefcase,
   FiClock,
@@ -74,9 +74,12 @@ export default function EmployerDashboard() {
   const router = useRouter();
   const { showToast } = useToast();
   const { openModal } = usePostProblemModal();
+  const [hasInitialized, setHasInitialized] = useState(false);
+
+  // Memoize user to prevent unnecessary re-renders
   const user = useMemo(() => getUser(), []);
 
-  // Fetch real data from APIs
+  // Fetch real data from APIs - only once on mount
   const {
     profile,
     isLoading: profileLoading,
@@ -98,65 +101,110 @@ export default function EmployerDashboard() {
     error: applicationsError,
   } = useRecentApplications();
 
-  // Derive employer stats from API data with fallback
-  const employerStats = stats || {
-    totalProblems: 0,
-    activeProblems: 0,
-    totalApplications: 0,
-    totalHired: 0,
-    totalShortlisted: 0,
-    avgApplicationsPerProblem: 0,
-  };
+  // Derive employer stats from API data with fallback - memoized to prevent re-calculations
+  const employerStats = useMemo(
+    () =>
+      stats || {
+        totalProblems: 0,
+        activeProblems: 0,
+        totalApplications: 0,
+        totalHired: 0,
+        totalShortlisted: 0,
+        avgApplicationsPerProblem: 0,
+      },
+    [stats]
+  );
 
-  // Company information from user object or profile
-  const companyInfo = {
-    name: profile?.companyName || user?.companyName || "Your Company",
-    logo: profile?.companyLogo || user?.companyLogo,
-    email: profile?.email || user?.email,
-    industry: user?.industry || "Technology",
-    size: profile?.noOfEmployees || user?.noOfEmployees || "Not specified",
-    location:
-      profile?.companyCity && profile?.companyCountry
-        ? `${profile.companyCity}, ${profile.companyCountry}`
-        : user?.location || "Not specified",
-    website: user?.website,
-    description:
-      profile?.companyAbout ||
-      user?.companyDescription ||
-      "No description available",
-    established: user?.yearEstablished,
-    phone: profile?.companyPhone || user?.phoneNumber,
-    address: profile?.companyAddress || user?.companyAddress,
-    state: profile?.companyState || user?.companyState,
-    type: profile?.companyType || user?.companyType,
-  };
+  // Company information from user object or profile - memoized
+  const companyInfo = useMemo(
+    () => ({
+      name: profile?.companyName || user?.companyName || "Your Company",
+      logo: profile?.companyLogo || user?.companyLogo,
+      email: profile?.email || user?.email,
+      industry: user?.industry || "Technology",
+      size: profile?.noOfEmployees || user?.noOfEmployees || "Not specified",
+      location:
+        profile?.companyCity && profile?.companyCountry
+          ? `${profile.companyCity}, ${profile.companyCountry}`
+          : user?.location || "Not specified",
+      website: user?.website,
+      description:
+        profile?.companyAbout ||
+        user?.companyDescription ||
+        "No description available",
+      established: user?.yearEstablished,
+      phone: profile?.companyPhone || user?.phoneNumber,
+      address: profile?.companyAddress || user?.companyAddress,
+      state: profile?.companyState || user?.companyState,
+      type: profile?.companyType || user?.companyType,
+    }),
+    [profile, user]
+  );
 
-  // Recent applications are now fetched from the API
+  const isLoading = useMemo(
+    () =>
+      profileLoading ||
+      suggestionsLoading ||
+      statsLoading ||
+      applicationsLoading,
+    [profileLoading, suggestionsLoading, statsLoading, applicationsLoading]
+  );
 
-  const isLoading =
-    profileLoading || suggestionsLoading || statsLoading || applicationsLoading;
-  const hasError =
-    profileError || suggestionsError || statsError || applicationsError;
+  const hasError = useMemo(
+    () => profileError || suggestionsError || statsError || applicationsError,
+    [profileError, suggestionsError, statsError, applicationsError]
+  );
 
+  // Show error only once when initialized
   useEffect(() => {
-    if (hasError) {
+    if (hasError && hasInitialized) {
       showToast("Failed to load some dashboard data", "error");
     }
-  }, [hasError, showToast]);
+  }, [hasError, hasInitialized, showToast]);
 
-  const formatSalary = (min: number, max: number, currency = "USD") => {
-    return `$${min} - $${max}`;
-  };
+  // Mark as initialized once loading is complete
+  useEffect(() => {
+    if (!isLoading && !hasInitialized) {
+      setHasInitialized(true);
+    }
+  }, [isLoading, hasInitialized]);
 
-  const formatDate = (dateString: string) => {
+  // Listen for applicant status updates to refresh dashboard
+  useEffect(() => {
+    const handleApplicantStatusUpdate = () => {
+      // Reset initialized state to trigger data refresh
+      setHasInitialized(false);
+    };
+
+    window.addEventListener(
+      "applicantStatusUpdated",
+      handleApplicantStatusUpdate
+    );
+
+    return () => {
+      window.removeEventListener(
+        "applicantStatusUpdated",
+        handleApplicantStatusUpdate
+      );
+    };
+  }, []);
+
+  const formatSalary = useCallback(
+    (min: number, max: number, currency = "USD") => {
+      return `$${min} - $${max}`;
+    },
+    []
+  );
+
+  const formatDate = useCallback((dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
     });
-  };
+  }, []);
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = useCallback((status: string) => {
     const statusLower = status.toLowerCase();
     switch (statusLower) {
       case "applied":
@@ -173,7 +221,7 @@ export default function EmployerDashboard() {
       default:
         return "bg-gray-50 text-gray-700 border border-gray-200 dark:bg-gray-900/10 dark:text-gray-400 dark:border-gray-800/30";
     }
-  };
+  }, []);
 
   if (isLoading) {
     return (
@@ -516,12 +564,6 @@ export default function EmployerDashboard() {
               </div>
               Recent Applications
             </h2>
-            <button
-              onClick={() => router.push("/dashboard/applications")}
-              className="bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary hover:text-primary/90 text-xs sm:text-sm font-semibold transition-all duration-300 px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-md hover:shadow-lg self-start sm:self-auto"
-            >
-              View All Applications
-            </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
@@ -618,22 +660,16 @@ export default function EmployerDashboard() {
                         <button
                           onClick={() =>
                             router.push(
-                              `/dashboard/applications/${application.applicationId}`
+                              `/dashboard/problems?viewApplicants=${
+                                application.problem.id
+                              }&problemTitle=${encodeURIComponent(
+                                application.problem.fellowField
+                              )}`
                             )
                           }
                           className="flex-1 sm:flex-none px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 bg-primary hover:bg-primary/90 text-white"
                         >
-                          View Details
-                        </button>
-                        <button
-                          onClick={() =>
-                            router.push(
-                              `/dashboard/applications/${application.applicationId}/interview`
-                            )
-                          }
-                          className="flex-1 sm:flex-none border border-border bg-background hover:bg-muted/50 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 hover:shadow-md"
-                        >
-                          Schedule Interview
+                          View Applicant
                         </button>
                       </div>
                     </div>
@@ -655,7 +691,7 @@ export default function EmployerDashboard() {
                     talented data fellows
                   </p>
                   <button
-                    onClick={() => router.push("/dashboard/problems/create")}
+                    onClick={() => openModal()}
                     className="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base"
                   >
                     Post Your First Problem

@@ -163,6 +163,14 @@ export const useProblemsData = (params: ProblemsParams) => {
     });
   };
 
+  // Get the currently applying problem ID from the mutation variables
+  const applyingProblemId = applyMutation.isPending
+    ? applyMutation.variables
+    : null;
+  const bookmarkingData = bookmarkMutation.isPending
+    ? bookmarkMutation.variables
+    : null;
+
   return {
     problems: problemsData?.problems || [],
     totalProblems: problemsData?.totalProblems || 0,
@@ -175,5 +183,7 @@ export const useProblemsData = (params: ProblemsParams) => {
     handleBookmark,
     isApplying: applyMutation.isPending,
     isBookmarking: bookmarkMutation.isPending,
+    applyingProblemId,
+    bookmarkingProblemId: bookmarkingData?.problemId || null,
   };
 };
