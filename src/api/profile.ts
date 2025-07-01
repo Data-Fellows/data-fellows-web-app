@@ -62,6 +62,34 @@ export interface UserProfile {
   userType: "user" | "employer";
   createdAt: string;
   updatedAt: string;
+
+  // Employer-specific fields
+  active?: boolean;
+  companyDetailsAdded?: boolean;
+  companyLogo?: string;
+  comapnyAboutAdded?: boolean;
+  categoryProblemsAdded?: boolean;
+  collectBusinessData?: boolean;
+  businessData?: string[];
+  dataAnalysisTools?: string[];
+  challengesFaced?: string[];
+  expectedOutcome?: string[];
+  neededSkills?: Array<{
+    name: string;
+    _id: string;
+  }>;
+  categoryProblems?: any[];
+  companyAbout?: string;
+  companyAddress?: string;
+  companyCity?: string;
+  companyCountry?: string;
+  companyCreatedAt?: string;
+  companyName?: string;
+  companyPhone?: string;
+  companySize?: string;
+  companyState?: string;
+  companyType?: string;
+  noOfEmployees?: number;
 }
 
 export interface ProfileResponse {

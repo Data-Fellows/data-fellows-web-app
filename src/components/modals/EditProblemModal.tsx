@@ -3,14 +3,10 @@ import { getAllSkills } from "@/api/profile";
 import { useToast } from "@/context/ToastContext";
 import { useEffect, useState } from "react";
 import {
-  FiBriefcase,
   FiChevronLeft,
   FiChevronRight,
   FiDollarSign,
-  FiFileText,
   FiLoader,
-  FiPlus,
-  FiTag,
   FiTarget,
   FiX,
 } from "react-icons/fi";
@@ -480,9 +476,7 @@ export default function EditProblemModal({
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
           <div>
-            <h2 className="text-2xl font-bold text-foreground">
-              Edit Problem
-            </h2>
+            <h2 className="text-2xl font-bold text-foreground">Edit Problem</h2>
             <p className="text-muted-foreground mt-1">
               Step {currentStep} of 4
             </p>

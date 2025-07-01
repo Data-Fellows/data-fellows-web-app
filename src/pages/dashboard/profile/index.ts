@@ -1,1 +1,1 @@
-export { default } from "@/views/dashboard/user/profile";
+export { default } from "@/views/dashboard/profile";
