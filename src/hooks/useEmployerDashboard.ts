@@ -11,25 +11,36 @@ export function useEmployerStats() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchStats = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const data = await getEmployerStats();
+      setStats(data);
+    } catch (err) {
+      console.error("Error fetching employer stats:", err);
+      setError("Failed to load employer statistics");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const data = await getEmployerStats();
-        setStats(data);
-      } catch (err) {
-        console.error("Error fetching employer stats:", err);
-        setError("Failed to load employer statistics");
-      } finally {
-        setIsLoading(false);
-      }
+    fetchStats();
+
+    // Listen for problem posted events to refetch data
+    const handleProblemPosted = () => {
+      fetchStats();
     };
 
-    fetchStats();
+    window.addEventListener("problemPosted", handleProblemPosted);
+
+    return () => {
+      window.removeEventListener("problemPosted", handleProblemPosted);
+    };
   }, []);
 
-  return { stats, isLoading, error, refetch: () => setIsLoading(true) };
+  return { stats, isLoading, error, refetch: fetchStats };
 }
 
 export function useRecentApplications() {
@@ -37,23 +48,34 @@ export function useRecentApplications() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchApplications = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const data = await getRecentApplications();
+      setApplications(data);
+    } catch (err) {
+      console.error("Error fetching recent applications:", err);
+      setError("Failed to load recent applications");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const data = await getRecentApplications();
-        setApplications(data);
-      } catch (err) {
-        console.error("Error fetching recent applications:", err);
-        setError("Failed to load recent applications");
-      } finally {
-        setIsLoading(false);
-      }
+    fetchApplications();
+
+    // Listen for problem posted events to refetch data
+    const handleProblemPosted = () => {
+      fetchApplications();
     };
 
-    fetchApplications();
+    window.addEventListener("problemPosted", handleProblemPosted);
+
+    return () => {
+      window.removeEventListener("problemPosted", handleProblemPosted);
+    };
   }, []);
 
-  return { applications, isLoading, error, refetch: () => setIsLoading(true) };
+  return { applications, isLoading, error, refetch: fetchApplications };
 }

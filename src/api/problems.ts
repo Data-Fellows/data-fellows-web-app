@@ -235,14 +235,14 @@ export async function saveSuggestedProblems(
 export async function updateProblem(
   problemId: string,
   updates: Partial<Problem>
-): Promise<{ success: boolean; message: string; problem?: Problem }> {
+): Promise<{ status: string; message: string; problem?: Problem }> {
   const { data } = await apiClient.put(`/problems/${problemId}`, updates);
   return data;
 }
 
 export async function deleteProblem(
   problemId: string
-): Promise<{ success: boolean; message: string }> {
+): Promise<{ status: string; message: string }> {
   const { data } = await apiClient.delete(`/problems/${problemId}`);
   return data;
 }

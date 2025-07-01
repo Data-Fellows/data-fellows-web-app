@@ -1,12 +1,14 @@
 import {
   Applicant,
-  deleteProblem,
   getEmployerProblems,
   getProblemApplicants,
   Problem,
   ProblemsParams,
   updateProblem,
 } from "@/api/problems";
+import DeleteProblemModal from "@/components/modals/DeleteProblemModal";
+import EditProblemModal from "@/components/modals/EditProblemModal";
+import { usePostProblemModal } from "@/context/PostProblemModalContext";
 import { useToast } from "@/context/ToastContext";
 import { getUser } from "@/helpers";
 import { useRouter } from "next/router";
@@ -129,7 +131,7 @@ const EditModal = ({ problem, isOpen, onClose, onSave }: EditModalProps) => {
     setIsLoading(true);
     try {
       const response = await updateProblem(formData._id, formData);
-      if (response.success) {
+      if (response.status === "OK") {
         const updatedProblem = { ...problem, ...formData } as Problem;
         onSave(updatedProblem);
         showToast("Problem updated successfully!", "success");
@@ -567,10 +569,10 @@ const ViewApplicantsModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+    <div className="fixed inset-0 z-[9999] overflow-y-auto">
       <div className="min-h-screen px-4 text-center">
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 bg-black/60 transition-opacity"
           onClick={onClose}
         />
 
@@ -578,7 +580,7 @@ const ViewApplicantsModal = ({
           &#8203;
         </span>
 
-        <div className="inline-block w-full max-w-6xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-background border border-border rounded-2xl shadow-2xl">
+        <div className="inline-block w-full max-w-6xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-background border border-border rounded-2xl shadow-2xl relative z-10">
           {/* Header */}
           <div className="flex items-center justify-between pb-6 border-b border-border">
             <div>
@@ -791,6 +793,7 @@ const ViewApplicantsModal = ({
 export default function EmployerProblemsPage() {
   const router = useRouter();
   const { showToast } = useToast();
+  const { openModal } = usePostProblemModal();
   const [problems, setProblems] = useState<Problem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -801,6 +804,8 @@ export default function EmployerProblemsPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [editingProblem, setEditingProblem] = useState<Problem | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [deletingProblem, setDeletingProblem] = useState<Problem | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedProblemId, setSelectedProblemId] = useState<string | null>(
     null
   );
@@ -821,6 +826,18 @@ export default function EmployerProblemsPage() {
 
     fetchProblems();
   }, [router, currentPage, searchTerm, statusFilter]);
+
+  // Listen for problem creation/update events
+  useEffect(() => {
+    const handleProblemUpdate = () => {
+      fetchProblems();
+    };
+
+    window.addEventListener("problemPosted", handleProblemUpdate);
+    return () => {
+      window.removeEventListener("problemPosted", handleProblemUpdate);
+    };
+  }, [currentPage, searchTerm, statusFilter]);
 
   const fetchProblems = async () => {
     setIsLoading(true);
@@ -850,31 +867,23 @@ export default function EmployerProblemsPage() {
     setShowEditModal(true);
   };
 
-  const handleSaveProblem = (updatedProblem: Problem) => {
-    setProblems((prev) =>
-      prev.map((p) => (p._id === updatedProblem._id ? updatedProblem : p))
-    );
-    setShowEditModal(false);
-    setEditingProblem(null);
+  const handleEditSuccess = () => {
+    // Refetch problems to get updated data
+    fetchProblems();
+    // Dispatch event for other components
+    window.dispatchEvent(new CustomEvent("problemPosted"));
   };
 
-  const handleDeleteProblem = async (problemId: string) => {
-    if (!confirm("Are you sure you want to delete this problem?")) return;
+  const handleDeleteProblem = (problem: Problem) => {
+    setDeletingProblem(problem);
+    setShowDeleteModal(true);
+  };
 
-    try {
-      const response = await deleteProblem(problemId);
-      if (response.success) {
-        setProblems((prev) => prev.filter((p) => p._id !== problemId));
-        showToast("Problem deleted successfully!", "success");
-      } else {
-        showToast(response.message || "Failed to delete problem", "error");
-      }
-    } catch (error) {
-      console.error("Error deleting problem:", error);
-      // Fallback to local deletion if API fails
-      setProblems((prev) => prev.filter((p) => p._id !== problemId));
-      showToast("Problem deleted locally (API unavailable)", "error");
-    }
+  const handleDeleteSuccess = () => {
+    // Refetch problems to get updated data
+    fetchProblems();
+    // Dispatch event for other components
+    window.dispatchEvent(new CustomEvent("problemPosted"));
   };
 
   const handleViewApplicants = (problemId: string, problemTitle: string) => {
@@ -1082,7 +1091,7 @@ export default function EmployerProblemsPage() {
               <span>Edit</span>
             </button>
             <button
-              onClick={() => handleDeleteProblem(problem._id)}
+              onClick={() => handleDeleteProblem(problem)}
               className="flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 bg-red-100 hover:bg-red-200 text-red-700 rounded-xl transition-colors font-medium text-sm sm:text-base"
               title="Delete Problem"
             >
@@ -1207,7 +1216,7 @@ export default function EmployerProblemsPage() {
               <span>Edit</span>
             </button>
             <button
-              onClick={() => handleDeleteProblem(problem._id)}
+              onClick={() => handleDeleteProblem(problem)}
               className="flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 bg-red-100 hover:bg-red-200 text-red-700 rounded-xl transition-colors font-medium text-sm sm:text-base lg:min-w-[120px]"
               title="Delete Problem"
             >
@@ -1235,7 +1244,7 @@ export default function EmployerProblemsPage() {
               </p>
             </div>
             <button
-              onClick={() => router.push("/dashboard/problems/create")}
+              onClick={() => openModal()}
               className="flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-xl sm:rounded-2xl hover:bg-primary/90 transition-colors shadow-lg text-base sm:text-lg font-semibold"
             >
               <FiPlus className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1396,7 +1405,7 @@ export default function EmployerProblemsPage() {
             </p>
             {!searchTerm && !statusFilter && (
               <button
-                onClick={() => router.push("/dashboard/problems/create")}
+                onClick={() => openModal()}
                 className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors text-base sm:text-lg font-semibold shadow-lg"
               >
                 <FiPlus className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1506,14 +1515,25 @@ export default function EmployerProblemsPage() {
       </div>
 
       {/* Edit Modal */}
-      <EditModal
+      <EditProblemModal
         problem={editingProblem}
         isOpen={showEditModal}
         onClose={() => {
           setShowEditModal(false);
           setEditingProblem(null);
         }}
-        onSave={handleSaveProblem}
+        onSuccess={handleEditSuccess}
+      />
+
+      {/* Delete Modal */}
+      <DeleteProblemModal
+        problem={deletingProblem}
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setDeletingProblem(null);
+        }}
+        onSuccess={handleDeleteSuccess}
       />
 
       {/* View Applicants Modal */}

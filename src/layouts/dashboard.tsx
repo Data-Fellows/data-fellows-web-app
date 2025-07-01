@@ -323,7 +323,7 @@ interface DashboardLayoutProps {
   children: ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+function DashboardContent({ children }: DashboardLayoutProps) {
   const router = useRouter();
 
   useEffect(() => {
@@ -370,16 +370,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           isOpen={false}
         />
       </div>
-
       <div className="flex-1 flex flex-col min-h-screen">
         <Navbar user={user} onLogout={handleLogout} />
 
         <main className="flex-1 overflow-y-auto pb-24 md:pb-4 scrollbar-hide">
           {children}
         </main>
-      </div>
-
+      </div>{" "}
       <MobileTabBar items={items} activePath={router.asPath} />
     </div>
   );
+}
+
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  return <DashboardContent>{children}</DashboardContent>;
 }

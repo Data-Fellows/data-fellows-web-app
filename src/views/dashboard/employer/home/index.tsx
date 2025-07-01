@@ -1,3 +1,4 @@
+import { usePostProblemModal } from "@/context/PostProblemModalContext";
 import { useToast } from "@/context/ToastContext";
 import { getUser } from "@/helpers";
 import {
@@ -7,14 +8,13 @@ import {
 import { useEmployerProfile } from "@/hooks/useEmployerProfile";
 import { useSuggestedProblems } from "@/hooks/useSuggestedProblems";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import {
   FiBriefcase,
   FiClock,
   FiEdit,
   FiEye,
   FiHome,
-  FiLoader,
   FiPlus,
   FiTarget,
   FiUser,
@@ -73,8 +73,8 @@ const SkeletonProfileCard = () => (
 export default function EmployerDashboard() {
   const router = useRouter();
   const { showToast } = useToast();
+  const { openModal } = usePostProblemModal();
   const user = useMemo(() => getUser(), []);
-  const [creatingProblem, setCreatingProblem] = useState<number | null>(null);
 
   // Fetch real data from APIs
   const {
@@ -289,7 +289,7 @@ export default function EmployerDashboard() {
           {/* Quick Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => router.push("/dashboard/problems/create")}
+              onClick={() => openModal()}
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2 text-sm"
             >
               <FiPlus className="w-4 h-4" />
@@ -469,74 +469,13 @@ export default function EmployerDashboard() {
                         )}
                       </div>
                       <button
-                        onClick={async () => {
-                          setCreatingProblem(index);
-                          try {
-                            const { createProblem } = await import(
-                              "@/api/problems"
-                            );
-
-                            const problemData = {
-                              fellowField: suggestion.fellowField,
-                              type: suggestion.type,
-                              payRange: suggestion.payRange,
-                              skills: suggestion.skills,
-                              description: suggestion.description,
-                              candidatesQualification:
-                                suggestion.candidatesQualification,
-                              niceToHaves: suggestion.niceToHaves,
-                              suggestedProblemId: suggestion._id,
-                            };
-
-                            const createResult = await createProblem(
-                              problemData
-                            );
-
-                            console.log("Create Result:", createResult);
-
-                            if (createResult.success) {
-                              showToast(
-                                "Problem created successfully! You can view it in your problems list.",
-                                "success"
-                              );
-                              router.push("/dashboard/problems");
-                            } else {
-                              showToast(
-                                "Failed to create problem. Please try again.",
-                                "error"
-                              );
-                              console.error(
-                                "Failed to create problem:",
-                                createResult.message
-                              );
-                            }
-                          } catch (error) {
-                            console.error("Error creating problem:", error);
-                            showToast(
-                              "Failed to create problem. Please try again.",
-                              "error"
-                            );
-                          } finally {
-                            setCreatingProblem(null);
-                          }
+                        onClick={() => {
+                          openModal(suggestion);
                         }}
-                        disabled={creatingProblem === index}
-                        className={`self-end sm:self-auto text-white p-2 sm:p-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 ${
-                          creatingProblem === index
-                            ? "bg-primary/70 cursor-not-allowed"
-                            : "bg-primary hover:bg-primary/90"
-                        }`}
-                        title={
-                          creatingProblem === index
-                            ? "Creating problem..."
-                            : "Create problem from this template"
-                        }
+                        className="self-end sm:self-auto text-white p-2 sm:p-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 bg-primary hover:bg-primary/90"
+                        title="Create problem from this template"
                       >
-                        {creatingProblem === index ? (
-                          <FiLoader className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-                        ) : (
-                          <FiPlus className="w-4 h-4 sm:w-5 sm:h-5" />
-                        )}
+                        <FiPlus className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
                     </div>
                   </div>

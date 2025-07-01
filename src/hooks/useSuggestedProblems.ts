@@ -6,24 +6,35 @@ export const useSuggestedProblems = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchSuggestions = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
+  const fetchSuggestions = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
 
-        const suggestionsData = await getSuggestedProblems();
-        setSuggestions(suggestionsData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-        console.error("Error fetching suggested problems:", err);
-      } finally {
-        setIsLoading(false);
-      }
+      const suggestionsData = await getSuggestedProblems();
+      setSuggestions(suggestionsData);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+      console.error("Error fetching suggested problems:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSuggestions();
+
+    // Listen for problem posted events to refetch data
+    const handleProblemPosted = () => {
+      fetchSuggestions();
     };
 
-    fetchSuggestions();
+    window.addEventListener("problemPosted", handleProblemPosted);
+
+    return () => {
+      window.removeEventListener("problemPosted", handleProblemPosted);
+    };
   }, []);
 
-  return { suggestions, isLoading, error };
+  return { suggestions, isLoading, error, refetch: fetchSuggestions };
 };

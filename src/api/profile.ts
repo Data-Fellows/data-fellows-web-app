@@ -208,3 +208,24 @@ export const deleteSkill = async (payload: DeleteSkillPayload) => {
   });
   return response.data;
 };
+
+export async function getAllSkills(): Promise<string[]> {
+  try {
+    const { data } = await apiClient.get("/skills");
+    const skillsData = data.data || data.skills || data;
+
+    // Handle different response formats
+    if (Array.isArray(skillsData)) {
+      return skillsData.map((skill: any) =>
+        typeof skill === "string"
+          ? skill
+          : skill.name || skill.skillName || skill.title || String(skill)
+      );
+    }
+
+    return [];
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+    return [];
+  }
+}
