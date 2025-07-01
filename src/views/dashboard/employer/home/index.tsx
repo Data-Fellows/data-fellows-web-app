@@ -344,6 +344,13 @@ export default function EmployerDashboard() {
               Post Problem
             </button>
             <button
+              onClick={() => router.push("/dashboard/matches")}
+              className="bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2 text-sm border border-blue-200 dark:border-blue-800/30"
+            >
+              <FiUsers className="w-4 h-4" />
+              View Matches
+            </button>
+            <button
               onClick={() => router.push("/dashboard/profile")}
               className="bg-muted hover:bg-muted/80 text-foreground px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2 text-sm"
             >

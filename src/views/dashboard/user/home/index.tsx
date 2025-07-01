@@ -517,9 +517,12 @@ export default function UserDashboard() {
                 </div>
                 Suggested Matches
               </h2>
-              {/* <button className="bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary hover:text-primary/90 text-xs sm:text-sm font-semibold transition-all duration-300 px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-md hover:shadow-lg self-start sm:self-auto">
-                See all
-              </button> */}
+              <button
+                onClick={() => router.push("/dashboard/matches")}
+                className="bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary hover:text-primary/90 text-xs sm:text-sm font-semibold transition-all duration-300 px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-md hover:shadow-lg self-start sm:self-auto"
+              >
+                View All Matches
+              </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-8 flex-1">

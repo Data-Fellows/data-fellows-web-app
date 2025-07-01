@@ -23,7 +23,7 @@ function cn(...classes: (string | boolean | undefined)[]) {
 const userItems = [
   { title: "Dashboard", href: "/dashboard/home", icon: FiHome },
   { title: "Problems", href: "/dashboard/problems", icon: FiBriefcase },
-  { title: "Matched", href: "/dashboard/matched", icon: FiMessageSquare },
+  { title: "Matches", href: "/dashboard/matches", icon: FiMessageSquare },
   { title: "Payments", href: "/dashboard/payments", icon: FiDollarSign },
   { title: "Profile", href: "/dashboard/profile", icon: FiUser },
   { title: "Settings", href: "/dashboard/settings", icon: FiSettings },
@@ -32,7 +32,7 @@ const userItems = [
 const employerItems = [
   { title: "Dashboard", href: "/dashboard/home", icon: FiHome },
   { title: "Problems", href: "/dashboard/problems", icon: FiBriefcase },
-  { title: "Matched", href: "/dashboard/matched", icon: FiMessageSquare },
+  { title: "Matches", href: "/dashboard/matches", icon: FiMessageSquare },
   { title: "Payments", href: "/dashboard/payments", icon: FiDollarSign },
   { title: "Profile", href: "/dashboard/profile", icon: FiUser },
   { title: "Settings", href: "/dashboard/settings", icon: FiSettings },
