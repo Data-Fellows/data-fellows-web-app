@@ -1,7 +1,6 @@
 import { getSingleMatch, Match } from "@/api/matches";
 import MessageComponent from "@/components/matches/MessageComponent";
 import MilestoneList from "@/components/matches/MilestoneList";
-import PaymentComponent from "@/components/matches/PaymentComponent";
 import PriceNegotiation from "@/components/matches/PriceNegotiation";
 import { getUser } from "@/helpers";
 import {
@@ -10,8 +9,6 @@ import {
   DollarSign,
   ExternalLink,
   MapPin,
-  MessageCircle,
-  Send,
   Star,
   Users,
 } from "lucide-react";
@@ -235,7 +232,7 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
             <Tabs defaultValue="overview" className="w-full">
               {({ activeTab, setActiveTab }: any) => (
                 <>
-                  <TabsList className="grid w-full grid-cols-3 mb-6 p-1 bg-muted rounded-lg">
+                  <TabsList className="grid w-full grid-cols-4 mb-6 p-1 bg-muted rounded-lg">
                     <TabsTrigger
                       value="overview"
                       activeTab={activeTab}
@@ -253,12 +250,20 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                       Messages
                     </TabsTrigger>
                     <TabsTrigger
-                      value="payment"
+                      value="milestones"
                       activeTab={activeTab}
                       setActiveTab={setActiveTab}
                       className="px-6 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
                     >
-                      Payment
+                      Milestones
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="negotiation"
+                      activeTab={activeTab}
+                      setActiveTab={setActiveTab}
+                      className="px-6 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
+                    >
+                      Negotiation
                     </TabsTrigger>
                   </TabsList>
 
@@ -378,27 +383,19 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                     />
                   </TabsContent>
 
-                  <TabsContent value="payment" activeTab={activeTab}>
-                    <div className="space-y-6">
-                      {/* Price Negotiation */}
-                      <PriceNegotiation
-                        matchId={match._id}
-                        isEmployer={isEmployer}
-                        initialBudget={problem.payRange}
-                      />
+                  <TabsContent value="milestones" activeTab={activeTab}>
+                    <MilestoneList
+                      matchId={match._id}
+                      isEmployer={isEmployer}
+                    />
+                  </TabsContent>
 
-                      {/* Milestone Tracking */}
-                      <MilestoneList
-                        matchId={match._id}
-                        isEmployer={isEmployer}
-                      />
-
-                      {/* Payment Processing */}
-                      <PaymentComponent
-                        matchId={match._id}
-                        isEmployer={isEmployer}
-                      />
-                    </div>
+                  <TabsContent value="negotiation" activeTab={activeTab}>
+                    <PriceNegotiation
+                      matchId={match._id}
+                      isEmployer={isEmployer}
+                      initialBudget={problem.payRange}
+                    />
                   </TabsContent>
                 </>
               )}
@@ -500,16 +497,6 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                 >
                   <ExternalLink className="h-4 w-4" />
                   View Profile
-                </button>
-
-                <button className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-                  <MessageCircle className="h-4 w-4" />
-                  Send Message
-                </button>
-
-                <button className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
-                  <Send className="h-4 w-4" />
-                  {isEmployer ? "Send Offer" : "Apply Now"}
                 </button>
               </div>
             </div>

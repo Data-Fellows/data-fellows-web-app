@@ -3,13 +3,7 @@ import {
   getMatchPayments,
   Payment,
 } from "@/api/match-communication";
-import {
-  CheckCircle,
-  Clock,
-  CreditCard,
-  DollarSign,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle, Clock, CreditCard, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FiLoader } from "react-icons/fi";
 
@@ -55,34 +49,10 @@ export function PaymentComponent({
       setProcessing(true);
 
       // Create payment intent
-      const { clientSecret, paymentId } = await createPaymentIntent(
-        matchId,
-        parseFloat(newPayment.amount)
-      );
+      const { sessionUrl } = await createPaymentIntent(matchId);
 
-      // In a real implementation, you would integrate with Stripe or another payment processor
-      // For now, we'll simulate a successful payment
-      console.log("Payment intent created:", { clientSecret, paymentId });
-
-      // Simulate payment confirmation
-      setTimeout(() => {
-        setPayments((prev) => [
-          ...prev,
-          {
-            _id: paymentId,
-            matchId,
-            amount: parseFloat(newPayment.amount),
-            status: "completed",
-            paymentMethod: "card",
-            createdAt: new Date().toISOString(),
-            completedAt: new Date().toISOString(),
-          },
-        ]);
-
-        setNewPayment({ amount: "", description: "" });
-        setShowPaymentForm(false);
-        setProcessing(false);
-      }, 2000);
+      // Redirect to Stripe Checkout
+      window.location.href = sessionUrl;
     } catch (error) {
       console.error("Error creating payment:", error);
       setProcessing(false);
@@ -105,14 +75,12 @@ export function PaymentComponent({
 
   const getStatusColor = (status: Payment["status"]) => {
     switch (status) {
-      case "completed":
+      case "paid":
         return "text-green-600 bg-green-50 border-green-200";
-      case "processing":
+      case "pending":
         return "text-blue-600 bg-blue-50 border-blue-200";
       case "failed":
         return "text-red-600 bg-red-50 border-red-200";
-      case "refunded":
-        return "text-orange-600 bg-orange-50 border-orange-200";
       default:
         return "text-yellow-600 bg-yellow-50 border-yellow-200";
     }
@@ -120,26 +88,22 @@ export function PaymentComponent({
 
   const getStatusIcon = (status: Payment["status"]) => {
     switch (status) {
-      case "completed":
+      case "paid":
         return <CheckCircle className="h-4 w-4 text-green-600" />;
-      case "processing":
+      case "pending":
         return <Clock className="h-4 w-4 text-blue-600" />;
       case "failed":
         return <XCircle className="h-4 w-4 text-red-600" />;
-      case "refunded":
-        return <DollarSign className="h-4 w-4 text-orange-600" />;
       default:
         return <Clock className="h-4 w-4 text-yellow-600" />;
     }
   };
 
   const totalPaid = payments
-    .filter((p) => p.status === "completed")
-    .reduce((sum, payment) => sum + payment.amount, 0);
+    .filter((p) => p.status === "paid")
+    .reduce((sum, payment) => sum + payment.price, 0);
 
-  const pendingPayments = payments.filter(
-    (p) => p.status === "pending" || p.status === "processing"
-  );
+  const pendingPayments = payments.filter((p) => p.status === "pending");
 
   if (loading) {
     return (
@@ -175,7 +139,7 @@ export function PaymentComponent({
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground">
-              {payments.filter((p) => p.status === "completed").length}
+              {payments.filter((p) => p.status === "paid").length}
             </div>
             <div className="text-sm text-muted-foreground">Completed</div>
           </div>
@@ -333,10 +297,10 @@ export function PaymentComponent({
                   </div>
                   <div>
                     <div className="font-semibold text-foreground">
-                      {formatCurrency(payment.amount)}
+                      {formatCurrency(payment.price)}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      {payment.paymentMethod} • {formatDate(payment.createdAt)}
+                      {formatDate(payment.createdAt)}
                     </div>
                   </div>
                 </div>
@@ -349,11 +313,6 @@ export function PaymentComponent({
                   >
                     {payment.status}
                   </span>
-                  {payment.completedAt && (
-                    <div className="text-xs text-muted-foreground mt-1">
-                      Completed {formatDate(payment.completedAt)}
-                    </div>
-                  )}
                 </div>
               </div>
             ))}

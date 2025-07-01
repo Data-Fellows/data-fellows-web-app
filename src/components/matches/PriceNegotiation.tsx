@@ -42,8 +42,6 @@ export function PriceNegotiation({
     try {
       await createOfferMutation.mutateAsync({
         amount: proposalPrice,
-        description: `Price proposal: $${proposalPrice}`,
-        currency: "USD",
       });
       setProposalPrice(0);
     } catch (error) {
@@ -56,8 +54,7 @@ export function PriceNegotiation({
 
     try {
       await respondToOfferMutation.mutateAsync({
-        offerId: negotiation._id,
-        response,
+        accepted: response === "accept",
       });
     } catch (error) {
       console.error("Error responding to offer:", error);
@@ -105,7 +102,9 @@ export function PriceNegotiation({
             Price Negotiation
           </h3>
           <p className="text-sm text-muted-foreground">
-            Start the price negotiation by making an offer.
+            {isEmployer
+              ? "Waiting for the applicant to make a price proposal."
+              : "Start the price negotiation by making an offer."}
           </p>
         </div>
 
@@ -123,53 +122,59 @@ export function PriceNegotiation({
           </div>
         )}
 
-        {/* Price Proposal Form */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <h4 className="font-semibold text-foreground mb-4">Make an Offer</h4>
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="price"
-                className="block text-sm font-medium text-foreground mb-2"
-              >
-                Proposed Price (USD)
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+        {/* Price Proposal Form - Only for applicants */}
+        {!isEmployer && (
+          <div className="bg-card border border-border rounded-lg p-6">
+            <h4 className="font-semibold text-foreground mb-4">
+              Make an Offer
+            </h4>
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="price"
+                  className="block text-sm font-medium text-foreground mb-2"
+                >
+                  Proposed Price (USD)
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <input
+                    type="number"
+                    id="price"
+                    value={proposalPrice || ""}
+                    onChange={(e) => setProposalPrice(Number(e.target.value))}
+                    placeholder="Enter amount"
+                    className="w-full pl-9 pr-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-background text-foreground"
+                    min="0"
+                    step="0.01"
+                  />
                 </div>
-                <input
-                  type="number"
-                  id="price"
-                  value={proposalPrice || ""}
-                  onChange={(e) => setProposalPrice(Number(e.target.value))}
-                  placeholder="Enter amount"
-                  className="w-full pl-9 pr-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-background text-foreground"
-                  min="0"
-                  step="0.01"
-                />
               </div>
+              <button
+                onClick={createProposal}
+                disabled={proposalPrice <= 0 || createOfferMutation.isPending}
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                {createOfferMutation.isPending ? (
+                  <FiLoader className="h-4 w-4 animate-spin" />
+                ) : (
+                  <DollarSign className="h-4 w-4" />
+                )}
+                Send Proposal
+              </button>
             </div>
-            <button
-              onClick={createProposal}
-              disabled={proposalPrice <= 0 || createOfferMutation.isPending}
-              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
-            >
-              {createOfferMutation.isPending ? (
-                <FiLoader className="h-4 w-4 animate-spin" />
-              ) : (
-                <DollarSign className="h-4 w-4" />
-              )}
-              Send Proposal
-            </button>
           </div>
-        </div>
+        )}
       </div>
     );
   }
 
   // Negotiation exists - show current status
-  const isCurrentUserOffer = negotiation.offeredBy === currentUser?._id;
+  const isCurrentUserOffer = isEmployer
+    ? negotiation.employer === currentUser?._id
+    : negotiation.applicant === currentUser?._id;
   const isAccepted = negotiation.status === "accepted";
   const isPending = negotiation.status === "pending";
   const isRejected = negotiation.status === "rejected";
@@ -228,7 +233,7 @@ export function PriceNegotiation({
           <div className="flex items-center gap-2">
             <DollarSign className="h-5 w-5 text-primary" />
             <span className="text-2xl font-bold text-foreground">
-              ${negotiation.amount.toLocaleString()}
+              ${negotiation.price.toLocaleString()}
             </span>
           </div>
         </div>

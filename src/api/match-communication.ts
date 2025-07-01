@@ -42,40 +42,52 @@ export interface MessageThread {
 // Milestone types
 export interface Milestone {
   _id: string;
-  matchId: string;
+  match: string;
   title: string;
-  description: string;
-  dueDate: string;
-  status: "pending" | "in_progress" | "completed" | "overdue";
-  amount: number;
-  completedAt?: string;
-  completedBy?: string;
-  createdAt: string;
+  date: string; // Backend uses 'date' not 'dueDate'
+  pending: boolean;
+  inProgress: boolean;
+  completed: boolean;
+  createdAt?: string;
 }
 
 // Price negotiation types
 export interface PriceOffer {
   _id: string;
-  matchId: string;
-  offeredBy: string; // user ID
-  amount: number;
-  message?: string;
-  status: "pending" | "accepted" | "rejected" | "countered";
-  parentOfferId?: string; // for counter offers
+  applicant: string; // user ID
+  employer: string; // user ID
+  match: string; // match ID
+  price: number; // Backend uses 'price' not 'amount'
+  status: "pending" | "accepted" | "rejected";
   createdAt: string;
-  respondedAt?: string;
+  updatedAt?: string;
 }
 
 export interface Payment {
   _id: string;
-  matchId: string;
-  amount: number;
-  status: "pending" | "processing" | "completed" | "failed" | "refunded";
-  paymentMethod: string;
-  paymentIntent?: string;
+  match: {
+    _id: string;
+    applicant: {
+      _id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+    employer: {
+      _id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+    problem: {
+      fellowField: string;
+    };
+  };
+  price: number; // Backend uses 'price' not 'amount'
+  status: "paid" | "pending" | "failed";
+  stripeSession: any;
+  transferId?: string;
   createdAt: string;
-  completedAt?: string;
-  milestoneId?: string;
 }
 
 // API Functions
@@ -129,101 +141,116 @@ export const markMessageAsRead = async (messageId: string): Promise<void> => {
 export const getMatchMilestones = async (
   matchId: string
 ): Promise<Milestone[]> => {
-  const response = await apiClient.get(`/matches/${matchId}/milestones`);
+  const response = await apiClient.get(`/matches/get-milestones/${matchId}`);
   return response.data.milestones || [];
 };
 
 export const createMilestone = async (
   matchId: string,
-  milestone: Omit<
-    Milestone,
-    "_id" | "matchId" | "createdAt" | "completedAt" | "completedBy"
-  >
+  milestone: {
+    title: string;
+    description: string;
+    dueDate: string;
+    amount: number;
+  }
 ): Promise<Milestone> => {
   const response = await apiClient.post(
-    `/matches/${matchId}/milestones`,
-    milestone
+    `/matches/matches/create-milestone/${matchId}`,
+    {
+      title: milestone.title,
+      date: milestone.dueDate, // Backend expects 'date' not 'dueDate'
+    }
   );
-  return response.data.milestone;
+  return response.data.problem; // Backend returns 'problem' field
 };
 
 export const updateMilestone = async (
   milestoneId: string,
-  updates: Partial<Milestone>
+  updates: { inProgress?: boolean; completed?: boolean }
 ): Promise<Milestone> => {
-  const response = await apiClient.patch(`/milestones/${milestoneId}`, updates);
-  return response.data.milestone;
+  const response = await apiClient.put(
+    `/matches/update-milestone/${milestoneId}`,
+    updates
+  );
+  return response.data.data;
 };
 
-export const completeMilestone = async (
-  milestoneId: string
-): Promise<Milestone> => {
-  const response = await apiClient.patch(`/milestones/${milestoneId}/complete`);
-  return response.data.milestone;
+export const deleteMilestone = async (milestoneId: string): Promise<void> => {
+  await apiClient.delete(`/matches/delete-milestone/${milestoneId}`);
 };
 
 // Price Offers
 export const getMatchOffers = async (
   matchId: string
 ): Promise<PriceOffer[]> => {
-  const response = await apiClient.get(`/matches/${matchId}/offers`);
-  return response.data.offers || [];
+  try {
+    const response = await apiClient.get(`/payment/get-negotiation/${matchId}`);
+    return response.data.negotiation ? [response.data.negotiation] : [];
+  } catch (error: any) {
+    // If no negotiation exists, return empty array instead of throwing error
+    if (
+      error.response?.status === 400 &&
+      error.response?.data?.message?.includes("No negotiation associated")
+    ) {
+      return [];
+    }
+    // Re-throw other errors
+    throw error;
+  }
 };
 
 export const createPriceOffer = async (
   matchId: string,
   amount: number,
-  message?: string,
-  parentOfferId?: string
+  message?: string
 ): Promise<PriceOffer> => {
-  const response = await apiClient.post(`/matches/${matchId}/offers`, {
-    amount,
-    message,
-    parentOfferId,
+  const response = await apiClient.post(`/payment/negotiate/${matchId}`, {
+    price: amount, // Backend expects 'price' not 'amount'
   });
-  return response.data.offer;
+  return response.data.negotiation;
 };
 
 export const respondToPriceOffer = async (
-  offerId: string,
-  status: "accepted" | "rejected",
-  counterAmount?: number,
-  message?: string
+  matchId: string,
+  accepted: boolean
 ): Promise<PriceOffer> => {
-  const response = await apiClient.patch(`/offers/${offerId}/respond`, {
-    status,
-    counterAmount,
-    message,
-  });
-  return response.data.offer;
+  const response = await apiClient.put(
+    `/payment/update-negotiation/${matchId}`,
+    {
+      accepted,
+    }
+  );
+  return response.data.negotiation;
 };
 
 // Payments
 export const getMatchPayments = async (matchId: string): Promise<Payment[]> => {
-  const response = await apiClient.get(`/matches/${matchId}/payments`);
-  return response.data.payments || [];
+  const response = await apiClient.get(`/payment/get-payments`);
+  // Filter payments by matchId on frontend since backend returns all user payments
+  return (
+    response.data.payments?.filter(
+      (payment: any) => payment.match._id === matchId
+    ) || []
+  );
 };
 
 export const createPaymentIntent = async (
-  matchId: string,
-  amount: number,
-  milestoneId?: string
-): Promise<{ clientSecret: string; paymentId: string }> => {
-  const response = await apiClient.post(`/matches/${matchId}/payments/intent`, {
-    amount,
-    milestoneId,
-  });
-  return response.data;
+  matchId: string
+): Promise<{ sessionUrl: string }> => {
+  const response = await apiClient.post(`/payment/make-payment/${matchId}`);
+  return { sessionUrl: response.data.sessionUrl };
 };
 
-export const confirmPayment = async (
-  paymentId: string,
-  paymentMethodId: string
-): Promise<Payment> => {
-  const response = await apiClient.post(`/payments/${paymentId}/confirm`, {
-    paymentMethodId,
-  });
+export const getPaymentById = async (paymentId: string): Promise<Payment> => {
+  const response = await apiClient.get(`/payment/get-payment/${paymentId}`);
   return response.data.payment;
+};
+
+export const sendMoneyToApplicant = async (
+  paymentId: string
+): Promise<{ payoutId: string }> => {
+  const response = await apiClient.post(`/payment/send-money/${paymentId}`);
+  return { payoutId: response.data.payoutId };
 };
 
 export default {
@@ -236,7 +263,7 @@ export default {
   getMatchMilestones,
   createMilestone,
   updateMilestone,
-  completeMilestone,
+  deleteMilestone,
 
   // Price Offers
   getMatchOffers,
@@ -246,5 +273,6 @@ export default {
   // Payments
   getMatchPayments,
   createPaymentIntent,
-  confirmPayment,
+  getPaymentById,
+  sendMoneyToApplicant,
 };

@@ -1,7 +1,7 @@
 import {
-  completeMilestone,
   createMilestone,
   createPriceOffer,
+  deleteMilestone,
   getMatchMessages,
   getMatchMilestones,
   getMatchOffers,
@@ -76,17 +76,8 @@ export const useCreatePriceOffer = (matchId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (offerData: {
-      amount: number;
-      description?: string;
-      currency?: string;
-    }) =>
-      createPriceOffer(
-        matchId,
-        offerData.amount,
-        offerData.description,
-        offerData.currency
-      ),
+    mutationFn: (offerData: { amount: number }) =>
+      createPriceOffer(matchId, offerData.amount),
     onSuccess: () => {
       // Invalidate and refetch offers and messages after successful creation
       queryClient.invalidateQueries({ queryKey: ["matchOffers", matchId] });
@@ -103,34 +94,8 @@ export const useRespondToPriceOffer = (matchId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      offerId,
-      response,
-      counterOffer,
-    }: {
-      offerId: string;
-      response: "accept" | "reject" | "counter";
-      counterOffer?: {
-        amount: number;
-        description?: string;
-        currency?: string;
-      };
-    }) => {
-      // Map to API expected values
-      let mappedResponse: "accepted" | "rejected";
-      if (response === "accept") mappedResponse = "accepted";
-      else if (response === "reject") mappedResponse = "rejected";
-      else {
-        // For counter offers, we create a new offer instead of responding
-        throw new Error("Counter offers not implemented in this API");
-      }
-      return respondToPriceOffer(
-        offerId,
-        mappedResponse,
-        counterOffer?.amount,
-        counterOffer?.description
-      );
-    },
+    mutationFn: ({ accepted }: { accepted: boolean }) =>
+      respondToPriceOffer(matchId, accepted),
     onSuccess: () => {
       // Invalidate and refetch offers and messages after successful response
       queryClient.invalidateQueries({ queryKey: ["matchOffers", matchId] });
@@ -147,18 +112,12 @@ export const useCreateMilestone = (matchId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (milestoneData: {
-      title: string;
-      description?: string;
-      dueDate?: string;
-      amount?: number;
-    }) =>
+    mutationFn: (milestoneData: { title: string; dueDate: string }) =>
       createMilestone(matchId, {
         title: milestoneData.title,
-        description: milestoneData.description || "",
-        dueDate: milestoneData.dueDate || "",
-        amount: milestoneData.amount || 0,
-        status: "pending" as const,
+        description: "", // Not used in backend
+        dueDate: milestoneData.dueDate,
+        amount: 0, // Not used in backend
       }),
     onSuccess: () => {
       // Invalidate and refetch milestones after successful creation
@@ -181,10 +140,8 @@ export const useUpdateMilestone = (matchId: string) => {
     }: {
       milestoneId: string;
       updates: {
-        title?: string;
-        description?: string;
-        dueDate?: string;
-        amount?: number;
+        inProgress?: boolean;
+        completed?: boolean;
       };
     }) => updateMilestone(milestoneId, updates),
     onSuccess: () => {
@@ -197,18 +154,18 @@ export const useUpdateMilestone = (matchId: string) => {
   });
 };
 
-// Hook for completing milestones
-export const useCompleteMilestone = (matchId: string) => {
+// Hook for deleting milestones
+export const useDeleteMilestone = (matchId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (milestoneId: string) => completeMilestone(milestoneId),
+    mutationFn: (milestoneId: string) => deleteMilestone(milestoneId),
     onSuccess: () => {
-      // Invalidate and refetch milestones after successful completion
+      // Invalidate and refetch milestones after successful deletion
       queryClient.invalidateQueries({ queryKey: ["matchMilestones", matchId] });
     },
     onError: (error) => {
-      console.error("Error completing milestone:", error);
+      console.error("Error deleting milestone:", error);
     },
   });
 };
@@ -219,6 +176,17 @@ export const useMatchMilestones = (matchId: string) => {
     queryKey: ["matchMilestones", matchId],
     queryFn: () => getMatchMilestones(matchId),
     enabled: !!matchId,
+    retry: (failureCount, error: any) => {
+      // Don't retry if it's a "no milestones" error (if backend returns such errors)
+      if (
+        error?.response?.status === 400 &&
+        error?.response?.data?.message?.includes("No milestone")
+      ) {
+        return false;
+      }
+      // Retry other errors up to 3 times
+      return failureCount < 3;
+    },
   });
 
   return {
@@ -235,6 +203,17 @@ export const useMatchOffers = (matchId: string) => {
     queryKey: ["matchOffers", matchId],
     queryFn: () => getMatchOffers(matchId),
     enabled: !!matchId,
+    retry: (failureCount, error: any) => {
+      // Don't retry if it's a "no negotiation" error
+      if (
+        error?.response?.status === 400 &&
+        error?.response?.data?.message?.includes("No negotiation associated")
+      ) {
+        return false;
+      }
+      // Retry other errors up to 3 times
+      return failureCount < 3;
+    },
   });
 
   return {
@@ -284,7 +263,7 @@ export default {
   useRespondToPriceOffer,
   useCreateMilestone,
   useUpdateMilestone,
-  useCompleteMilestone,
+  useDeleteMilestone,
   useMatchMilestones,
   useMatchOffers,
   useMatchCommunication,

@@ -1,9 +1,9 @@
 import { Milestone } from "@/api/match-communication";
 import { getUser } from "@/helpers";
 import {
-  useCompleteMilestone,
   useCreateMilestone,
   useMatchMilestones,
+  useUpdateMilestone,
 } from "@/hooks/useMatchCommunication";
 import {
   Calendar,
@@ -11,7 +11,6 @@ import {
   CheckCircle,
   Circle,
   Clock,
-  DollarSign,
   Plus,
   X,
 } from "lucide-react";
@@ -27,14 +26,12 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
   // React Query hooks
   const { milestones, isLoading: loading, error } = useMatchMilestones(matchId);
   const createMilestoneMutation = useCreateMilestone(matchId);
-  const completeMilestoneMutation = useCompleteMilestone(matchId);
+  const updateMilestoneMutation = useUpdateMilestone(matchId);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newMilestone, setNewMilestone] = useState({
     title: "",
-    description: "",
     dueDate: "",
-    amount: "",
   });
   const [currentUser, setCurrentUser] = useState<any>(null);
 
@@ -45,33 +42,29 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
 
   const handleCreateMilestone = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !newMilestone.title.trim() ||
-      !newMilestone.dueDate ||
-      !newMilestone.amount
-    )
-      return;
+    if (!newMilestone.title.trim() || !newMilestone.dueDate) return;
 
     try {
       await createMilestoneMutation.mutateAsync({
         title: newMilestone.title.trim(),
-        description: newMilestone.description.trim(),
         dueDate: newMilestone.dueDate,
-        amount: parseFloat(newMilestone.amount),
       });
 
-      setNewMilestone({ title: "", description: "", dueDate: "", amount: "" });
+      setNewMilestone({ title: "", dueDate: "" });
       setShowAddForm(false);
     } catch (error) {
       console.error("Error creating milestone:", error);
     }
   };
 
-  const handleCompleteMilestone = async (milestoneId: string) => {
+  const handleUpdateMilestone = async (
+    milestoneId: string,
+    updates: { inProgress?: boolean; completed?: boolean }
+  ) => {
     try {
-      await completeMilestoneMutation.mutateAsync(milestoneId);
+      await updateMilestoneMutation.mutateAsync({ milestoneId, updates });
     } catch (error) {
-      console.error("Error completing milestone:", error);
+      console.error("Error updating milestone:", error);
     }
   };
 
@@ -83,43 +76,43 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
     });
   };
 
-  const formatCurrency = (amount: number) => {
-    return `$${amount.toLocaleString()}`;
+  const getMilestoneStatus = (milestone: Milestone) => {
+    if (milestone.completed) return "completed";
+    if (milestone.inProgress) return "in_progress";
+    if (milestone.pending) return "pending";
+    return "pending";
   };
 
-  const getStatusColor = (status: Milestone["status"]) => {
+  const getStatusColor = (milestone: Milestone) => {
+    const status = getMilestoneStatus(milestone);
     switch (status) {
       case "completed":
         return "text-green-600 bg-green-50 border-green-200";
       case "in_progress":
         return "text-blue-600 bg-blue-50 border-blue-200";
-      case "overdue":
-        return "text-red-600 bg-red-50 border-red-200";
+      case "pending":
+        return "text-gray-600 bg-gray-50 border-gray-200";
       default:
         return "text-gray-600 bg-gray-50 border-gray-200";
     }
   };
 
-  const getStatusIcon = (status: Milestone["status"]) => {
+  const getStatusIcon = (milestone: Milestone) => {
+    const status = getMilestoneStatus(milestone);
     switch (status) {
       case "completed":
         return <CheckCircle className="h-4 w-4 text-green-600" />;
       case "in_progress":
         return <Clock className="h-4 w-4 text-blue-600" />;
-      case "overdue":
-        return <X className="h-4 w-4 text-red-600" />;
+      case "pending":
+        return <Circle className="h-4 w-4 text-gray-600" />;
       default:
         return <Circle className="h-4 w-4 text-gray-600" />;
     }
   };
 
-  const totalAmount = milestones.reduce(
-    (sum, milestone) => sum + milestone.amount,
-    0
-  );
-  const completedAmount = milestones
-    .filter((m) => m.status === "completed")
-    .reduce((sum, milestone) => sum + milestone.amount, 0);
+  const totalMilestones = milestones.length;
+  const completedMilestones = milestones.filter((m) => m.completed).length;
 
   if (loading) {
     return (
@@ -158,7 +151,7 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
           <h3 className="text-lg font-semibold text-foreground">
             Project Progress
           </h3>
-          {isEmployer && (
+          {!isEmployer && (
             <button
               onClick={() => setShowAddForm(true)}
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
@@ -169,26 +162,18 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground">
-              {milestones.filter((m) => m.status === "completed").length}
+              {completedMilestones}
             </div>
             <div className="text-sm text-muted-foreground">Completed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground">
-              {milestones.filter((m) => m.status === "in_progress").length}
+              {milestones.filter((m) => m.inProgress).length}
             </div>
             <div className="text-sm text-muted-foreground">In Progress</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-foreground">
-              {formatCurrency(completedAmount)}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              of {formatCurrency(totalAmount)} earned
-            </div>
           </div>
         </div>
 
@@ -197,12 +182,8 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
           <div className="flex justify-between text-sm text-muted-foreground mb-2">
             <span>Progress</span>
             <span>
-              {milestones.length > 0
-                ? Math.round(
-                    (milestones.filter((m) => m.status === "completed").length /
-                      milestones.length) *
-                      100
-                  )
+              {totalMilestones > 0
+                ? Math.round((completedMilestones / totalMilestones) * 100)
                 : 0}
               %
             </span>
@@ -212,13 +193,8 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
               className="bg-primary h-2 rounded-full transition-all duration-300"
               style={{
                 width:
-                  milestones.length > 0
-                    ? `${
-                        (milestones.filter((m) => m.status === "completed")
-                          .length /
-                          milestones.length) *
-                        100
-                      }%`
+                  totalMilestones > 0
+                    ? `${(completedMilestones / totalMilestones) * 100}%`
                     : "0%",
               }}
             />
@@ -263,61 +239,20 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Description
+                Due Date *
               </label>
-              <textarea
-                value={newMilestone.description}
+              <input
+                type="date"
+                value={newMilestone.dueDate}
                 onChange={(e) =>
                   setNewMilestone((prev) => ({
                     ...prev,
-                    description: e.target.value,
+                    dueDate: e.target.value,
                   }))
                 }
                 className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-background text-foreground"
-                placeholder="Describe what needs to be completed"
-                rows={3}
+                required
               />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Due Date *
-                </label>
-                <input
-                  type="date"
-                  value={newMilestone.dueDate}
-                  onChange={(e) =>
-                    setNewMilestone((prev) => ({
-                      ...prev,
-                      dueDate: e.target.value,
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-background text-foreground"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Amount ($) *
-                </label>
-                <input
-                  type="number"
-                  value={newMilestone.amount}
-                  onChange={(e) =>
-                    setNewMilestone((prev) => ({
-                      ...prev,
-                      amount: e.target.value,
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-background text-foreground"
-                  placeholder="0.00"
-                  step="0.01"
-                  min="0"
-                  required
-                />
-              </div>
             </div>
 
             <div className="flex justify-end gap-3">
@@ -382,56 +317,73 @@ export function MilestoneList({ matchId, isEmployer }: MilestoneListProps) {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    {getStatusIcon(milestone.status)}
+                    {getStatusIcon(milestone)}
                     <h3 className="font-semibold text-foreground">
                       {milestone.title}
                     </h3>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(
-                        milestone.status
+                        milestone
                       )}`}
                     >
-                      {milestone.status.replace("_", " ")}
+                      {getMilestoneStatus(milestone).replace("_", " ")}
                     </span>
                   </div>
-
-                  {milestone.description && (
-                    <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                      {milestone.description}
-                    </p>
-                  )}
 
                   <div className="flex items-center gap-6 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      Due: {formatDate(milestone.dueDate)}
+                      Due: {formatDate(milestone.date)}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4" />
-                      {formatCurrency(milestone.amount)}
-                    </div>
-                    {milestone.completedAt && (
+                    {milestone.completed && milestone.createdAt && (
                       <div className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-600" />
-                        Completed: {formatDate(milestone.completedAt)}
+                        Completed: {formatDate(milestone.createdAt)}
                       </div>
                     )}
                   </div>
                 </div>
 
-                {milestone.status === "pending" && !isEmployer && (
+                {milestone.pending && !isEmployer && (
                   <button
-                    onClick={() => handleCompleteMilestone(milestone._id)}
-                    disabled={completeMilestoneMutation.isPending}
+                    onClick={() =>
+                      handleUpdateMilestone(milestone._id, {
+                        inProgress: false,
+                        completed: true,
+                      })
+                    }
+                    disabled={updateMilestoneMutation.isPending}
                     className="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
                   >
-                    {completeMilestoneMutation.isPending ? (
+                    {updateMilestoneMutation.isPending ? (
                       <>
                         <FiLoader className="h-4 w-4 animate-spin" />
                         Completing...
                       </>
                     ) : (
                       "Mark Complete"
+                    )}
+                  </button>
+                )}
+
+                {milestone.pending && isEmployer && (
+                  <button
+                    onClick={() =>
+                      handleUpdateMilestone(milestone._id, {
+                        inProgress: true,
+                        completed: false,
+                      })
+                    }
+                    disabled={updateMilestoneMutation.isPending}
+                    className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                  >
+                    {updateMilestoneMutation.isPending ? (
+                      <>
+                        <FiLoader className="h-4 w-4 animate-spin" />
+                        Starting...
+                      </>
+                    ) : (
+                      "Start Progress"
                     )}
                   </button>
                 )}
