@@ -265,8 +265,29 @@ export async function getProblemDetails(problemId: string): Promise<Problem> {
 }
 
 export async function getSuggestedProblems(): Promise<SuggestedProblem[]> {
-  const { data } = await apiClient.get("/problems/suggested");
-  return data.suggestions || data;
+  // First check localStorage for problems generated during onboarding
+  if (typeof window !== "undefined") {
+    try {
+      const storedProblems = localStorage.getItem("bizpilot-suggested-problems");
+      if (storedProblems) {
+        const problems = JSON.parse(storedProblems);
+        console.log("Retrieved suggested problems from localStorage");
+        return problems;
+      }
+    } catch (error) {
+      console.error("Error retrieving problems from localStorage:", error);
+    }
+  }
+
+  // If no problems in localStorage, try the backend
+  try {
+    const { data } = await apiClient.get("/problems/suggested");
+    return data.suggestions || data;
+  } catch (error) {
+    console.error("Error fetching suggested problems from backend:", error);
+    // Return empty array instead of throwing to prevent app crash
+    return [];
+  }
 }
 
 export async function saveSuggestedProblems(
