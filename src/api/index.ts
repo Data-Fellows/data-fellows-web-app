@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const LOCAL_BASE_URL = process.env.NEXT_PUBLIC_LOCAL_API_BASE_URL;
 
 const apiClient = axios.create({
-  baseURL: LOCAL_BASE_URL,
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 

@@ -9,7 +9,6 @@ import {
   DollarSign,
   ExternalLink,
   MapPin,
-  Star,
   Users,
 } from "lucide-react";
 import { useRouter } from "next/router";
@@ -269,23 +268,6 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
 
                   <TabsContent value="overview" activeTab={activeTab}>
                     <div className="space-y-6">
-                      {/* Match Score */}
-                      <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
-                        <div className="flex items-center gap-3">
-                          <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
-                            <Star className="h-6 w-6 text-green-600 fill-current" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-green-800">
-                              95% Match
-                            </h3>
-                            <p className="text-sm text-green-700">
-                              Excellent compatibility for this project
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
                       {/* Project Requirements */}
                       <div className="bg-card border border-border rounded-lg p-6">
                         <h3 className="text-lg font-semibold text-foreground mb-4">
