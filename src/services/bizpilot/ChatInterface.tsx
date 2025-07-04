@@ -74,15 +74,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-gray-50 to-white rounded-xl overflow-hidden shadow-2xl border border-gray-100">
-      {/* Chat header */}
-      <div className="py-4 px-6 bg-white border-b border-gray-100 shadow-sm">
+    <div className="flex flex-col h-full bg-gradient-to-b from-background to-muted/20 rounded-xl overflow-hidden shadow-2xl border border-border">
+      {/* Header */}
+      <div className="py-4 px-6 bg-card border-b border-border shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-[#1d3f51] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-white"
+                className="h-5 w-5 text-primary-foreground"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -95,28 +95,21 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               </svg>
             </div>
             <div>
-              <h2 className="font-semibold text-gray-800">
-                BizPilot Assistant
+              <h2 className="font-semibold text-foreground">
+                BizPilot AI Assistant
               </h2>
-              <p className="text-xs text-gray-500">
-                {isPlayingAudio
-                  ? "Speaking..."
-                  : isListening
-                  ? "Listening..."
-                  : isProcessing
-                  ? "Processing..."
-                  : "Online"}
+              <p className="text-xs text-muted-foreground">
+                Discover data solutions for your business
               </p>
             </div>
           </div>
-
           {/* Mute button */}
           <button
             onClick={onToggleMute}
             className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
               isMuted
-                ? "bg-red-100 text-red-600 hover:bg-red-200"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-destructive/10 text-destructive hover:bg-destructive/20"
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
             aria-label={isMuted ? "Unmute AI speech" : "Mute AI speech"}
             title={isMuted ? "Unmute AI speech" : "Mute AI speech"}
@@ -153,7 +146,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-transparent">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 min-h-0">
         {messages.map(
           (message, index) =>
             message.role !== "system" && (
@@ -161,18 +154,29 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 key={index}
                 className={`flex ${
                   message.role === "user" ? "justify-end" : "justify-start"
-                }`}
+                } animate-in fade-in slide-in-from-bottom-2 duration-300`}
               >
                 <div
-                  className={`max-w-[80%] p-4 rounded-2xl ${
+                  className={`max-w-[85%] p-4 rounded-2xl ${
                     message.role === "user"
-                      ? "bg-[#1d3f51] text-white rounded-br-none shadow-md"
-                      : "bg-white border border-gray-100 rounded-bl-none shadow-md"
+                      ? "bg-primary text-primary-foreground rounded-br-sm shadow-md"
+                      : "bg-card border border-border rounded-bl-sm shadow-md"
                   }`}
                 >
+                  {message.role === "assistant" && (
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                          <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-xs font-medium text-muted-foreground">BizPilot</span>
+                    </div>
+                  )}
                   <div
                     className={`${
-                      message.role === "user" ? "text-white" : "text-gray-800"
+                      message.role === "user" ? "text-primary-foreground" : "text-foreground"
                     } text-sm leading-relaxed`}
                   >
                     <ReactMarkdown>{message.content}</ReactMarkdown>
@@ -181,6 +185,22 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
               </div>
             )
         )}
+        
+        {isProcessing && (
+          <div className="flex justify-start animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="bg-card border border-border rounded-2xl rounded-bl-sm p-4 shadow-md">
+              <div className="flex items-center gap-2">
+                <div className="flex space-x-1">
+                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+                <span className="text-xs text-muted-foreground">BizPilot is thinking...</span>
+              </div>
+            </div>
+          </div>
+        )}
+        
         <div ref={messagesEndRef} />
       </div>
 
@@ -193,14 +213,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       {/* Input area */}
       <form
         onSubmit={handleSubmit}
-        className="border-t border-gray-100 bg-white p-4"
+        className="border-t border-border bg-card p-4"
       >
         {showConfirmation ? (
           <div className="flex items-center justify-center space-x-4 py-2">
             <button
               type="button"
               onClick={onConfirmEnd}
-              className="px-6 py-3 bg-[#1d3f51] text-white rounded-lg hover:bg-[#2c5875] transition-all duration-200 font-medium shadow-md"
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 font-medium shadow-md"
               disabled={isProcessing}
             >
               Yes, show me recommendations
@@ -208,19 +228,19 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <button
               type="button"
               onClick={onContinueChat}
-              className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 font-medium"
+              className="px-6 py-3 bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-all duration-200 font-medium"
               disabled={isProcessing}
             >
               I have more to share
             </button>
           </div>
         ) : (
-          <div className="flex items-center space-x-2 rounded-full bg-gray-50 px-4 py-2 border border-gray-200 focus-within:border-[#1d3f51] focus-within:ring-2 focus-within:ring-[#e8eef2] transition-all duration-200">
+          <div className="flex items-center space-x-2 rounded-full bg-background px-4 py-2 border border-border focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all duration-200">
             {isPlayingAudio ? (
               <button
                 type="button"
                 onClick={onStopAudio}
-                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 bg-red-500 text-white shadow-md"
+                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 bg-destructive text-destructive-foreground shadow-md"
                 aria-label="Stop audio"
               >
                 <svg
@@ -242,8 +262,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 onClick={onToggleListen}
                 className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   isListening
-                    ? "bg-red-500 text-white shadow-md animate-pulse"
-                    : "bg-[#1d3f51] text-white hover:bg-[#2c5875] shadow-md"
+                    ? "bg-destructive text-destructive-foreground shadow-md animate-pulse"
+                    : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md"
                 }`}
                 disabled={isProcessing || chatClosed}
                 aria-label={isListening ? "Stop listening" : "Start listening"}
@@ -276,7 +296,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                   ? "Listening..."
                   : "Type your message..."
               }
-              className="flex-1 bg-transparent p-2 focus:outline-none text-gray-700"
+              className="flex-1 bg-transparent p-2 focus:outline-none text-foreground"
               disabled={
                 isProcessing || isListening || isPlayingAudio || chatClosed
               }
@@ -290,8 +310,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 isPlayingAudio ||
                 !input.trim() ||
                 chatClosed
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-[#1d3f51] text-white hover:bg-[#2c5875] shadow-md"
+                  ? "bg-muted text-muted-foreground cursor-not-allowed"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md"
               }`}
               disabled={
                 isProcessing ||

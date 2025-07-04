@@ -22,7 +22,7 @@ export default async function handler(
     }
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
+      model: "gpt-4.1-mini-2025-04-14",
       messages: messages,
       temperature: 0.7,
       max_tokens: 1000,

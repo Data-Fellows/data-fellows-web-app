@@ -594,6 +594,9 @@ export default function BizPilotStep({ setPage }: BizPilotStepProps) {
       console.log("suggestions", data);
 
       // Save suggested problems to backend
+      // Commenting out as we're already storing problems in state
+      // and the backend endpoint is not available
+      /*
       try {
         const { saveSuggestedProblems } = await import("@/api/problems");
         const saveResult = await saveSuggestedProblems({
@@ -611,6 +614,7 @@ export default function BizPilotStep({ setPage }: BizPilotStepProps) {
         console.error("Failed to save suggested problems:", error);
         // Don't show error toast as this is not critical for user flow
       }
+      */
 
       // Call structure extraction API after problems are generated
       try {
@@ -674,6 +678,17 @@ export default function BizPilotStep({ setPage }: BizPilotStepProps) {
         isProcessing: false,
         conversationStage: "results",
       }));
+
+      // Save generated problems to localStorage for later use
+      try {
+        localStorage.setItem(
+          "bizpilot-suggested-problems",
+          JSON.stringify(data.problems)
+        );
+        console.log("Suggested problems saved to localStorage");
+      } catch (e) {
+        console.error("Error saving suggested problems to localStorage:", e);
+      }
 
       // Add a delay to show transition screen for at least 2 seconds before continuing to next step
       setTimeout(() => {
