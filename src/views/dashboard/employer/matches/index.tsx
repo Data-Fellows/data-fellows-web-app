@@ -21,29 +21,32 @@ import {
 
 // Skeleton loader component
 const SkeletonCard = () => (
-  <div className="bg-card border border-border rounded-2xl p-8 shadow-lg animate-pulse">
-    <div className="flex items-start justify-between mb-6">
+  <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg animate-pulse">
+    <div className="flex items-start justify-between mb-4 sm:mb-6 gap-3 sm:gap-6">
       <div className="flex-1 min-w-0">
-        <div className="h-8 bg-muted rounded-lg w-2/3 mb-3"></div>
-        <div className="h-5 bg-muted rounded w-1/3 mb-4"></div>
-        <div className="h-4 bg-muted rounded w-1/4"></div>
+        <div className="h-6 sm:h-8 bg-muted rounded-lg w-2/3 mb-2 sm:mb-3"></div>
+        <div className="h-4 sm:h-5 bg-muted rounded w-1/3 mb-3 sm:mb-4"></div>
+        <div className="h-3 sm:h-4 bg-muted rounded w-1/4"></div>
       </div>
-      <div className="flex-shrink-0 ml-6">
-        <div className="w-16 h-16 bg-muted rounded-full"></div>
+      <div className="flex-shrink-0">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-muted rounded-full"></div>
       </div>
     </div>
-    <div className="space-y-3 mb-6">
-      <div className="h-4 bg-muted rounded w-full"></div>
-      <div className="h-4 bg-muted rounded w-3/4"></div>
+    <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+      <div className="h-3 sm:h-4 bg-muted rounded w-full"></div>
+      <div className="h-3 sm:h-4 bg-muted rounded w-3/4"></div>
     </div>
-    <div className="flex flex-wrap gap-2 mb-6">
+    <div className="flex flex-wrap gap-1 sm:gap-2 mb-4 sm:mb-6">
       {[1, 2, 3].map((i) => (
-        <div key={i} className="h-6 bg-muted rounded-full w-16"></div>
+        <div
+          key={i}
+          className="h-5 sm:h-6 bg-muted rounded-full w-12 sm:w-16"
+        ></div>
       ))}
     </div>
-    <div className="flex items-center justify-between pt-4 border-t border-border">
-      <div className="h-6 bg-muted rounded w-24"></div>
-      <div className="h-6 bg-muted rounded w-20"></div>
+    <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-border">
+      <div className="h-5 sm:h-6 bg-muted rounded w-20 sm:w-24"></div>
+      <div className="h-5 sm:h-6 bg-muted rounded w-16 sm:w-20"></div>
     </div>
   </div>
 );
@@ -56,14 +59,14 @@ const EmptyState = ({
   searchQuery: string;
   hasFilters: boolean;
 }) => (
-  <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-    <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-6">
-      <FiTrendingUp className="w-12 h-12 text-muted-foreground" />
+  <div className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 text-center">
+    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-full flex items-center justify-center mb-4 sm:mb-6">
+      <FiTrendingUp className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground" />
     </div>
-    <h3 className="text-2xl font-bold text-foreground mb-3">
+    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">
       {searchQuery || hasFilters ? "No matches found" : "No talent matches yet"}
     </h3>
-    <p className="text-muted-foreground max-w-md leading-relaxed">
+    <p className="text-sm sm:text-base text-muted-foreground max-w-xs sm:max-w-md leading-relaxed">
       {searchQuery || hasFilters
         ? "Try adjusting your search terms or filters to find more matches."
         : "Talent matches will appear here when candidates apply to your problems and match your requirements."}
@@ -172,122 +175,128 @@ export default function EmployerMatchesPage() {
   };
 
   const MatchCard = ({ match }: { match: Match }) => (
-    <div className="bg-card border border-border rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20">
+    <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20 touch-manipulation">
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-xl font-bold text-foreground truncate">
+      <div className="flex items-start justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
+        <div className="flex-1 min-w-0 overflow-hidden">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 flex-wrap">
+            <h3 className="text-base sm:text-lg lg:text-xl font-bold text-foreground truncate max-w-full">
               {match.applicant.firstName} {match.applicant.lastName}
             </h3>
-            <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+            <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 whitespace-nowrap">
               <FiStar className="w-3 h-3 mr-1" />
               Matched
             </div>
           </div>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-            <div className="flex items-center gap-1">
-              <FiBriefcase className="w-4 h-4" />
-              <span>{match.problem.fellowField}</span>
+          <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-2 flex-wrap">
+            <div className="flex items-center gap-1 min-w-0">
+              <FiBriefcase className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="truncate">{match.problem.fellowField}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <FiCalendar className="w-4 h-4" />
-              <span>Applied: {formatDate(match.createdAt)}</span>
+            <div className="flex items-center gap-1 min-w-0">
+              <FiCalendar className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="truncate">
+                Applied: {formatDate(match.createdAt)}
+              </span>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">Email:</span>
-            <span className="font-medium text-foreground">
+          <div className="flex items-center gap-2 text-xs sm:text-sm flex-wrap">
+            <span className="text-muted-foreground whitespace-nowrap">
+              Email:
+            </span>
+            <span className="font-medium text-foreground truncate">
               {match.applicant.email}
             </span>
           </div>
         </div>
 
-        <div className="flex-shrink-0 ml-6">
+        <div className="flex-shrink-0">
           {match.applicant.profilePicture ? (
             <img
               src={match.applicant.profilePicture}
               alt={`${match.applicant.firstName} ${match.applicant.lastName}`}
-              className="w-16 h-16 rounded-full object-cover border-2 border-border"
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-border"
+              loading="lazy"
             />
           ) : (
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border-2 border-border">
-              <FiUser className="w-8 h-8 text-primary" />
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center border-2 border-border">
+              <FiUser className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
           )}
         </div>
       </div>
 
       {/* Problem Description */}
-      <div className="mb-6">
-        <h4 className="font-medium text-foreground mb-2">Applied for:</h4>
-        <p className="text-muted-foreground line-clamp-2 leading-relaxed">
+      <div className="mb-4 sm:mb-6">
+        <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
+          Applied for:
+        </h4>
+        <p className="text-muted-foreground line-clamp-2 leading-relaxed text-sm sm:text-base">
           {match.problem.description}
         </p>
       </div>
 
       {/* Skills */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-1 sm:gap-2 mb-4 sm:mb-6">
         {match.problem.skills.slice(0, 4).map((skill, index) => (
           <span
             key={index}
-            className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium"
+            className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium"
           >
             {skill}
           </span>
         ))}
         {match.problem.skills.length > 4 && (
-          <span className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm">
+          <span className="px-2 sm:px-3 py-1 bg-muted text-muted-foreground rounded-full text-xs sm:text-sm">
             +{match.problem.skills.length - 4} more
           </span>
         )}
       </div>
 
       {/* Problem Types */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-1 sm:gap-2 mb-4 sm:mb-6">
         {match.problem.type.slice(0, 3).map((type, index) => (
           <span
             key={index}
-            className="px-3 py-1 bg-secondary/50 text-secondary-foreground rounded-full text-sm"
+            className="px-2 sm:px-3 py-1 bg-secondary/50 text-secondary-foreground rounded-full text-xs sm:text-sm"
           >
             {type}
           </span>
         ))}
         {match.problem.type.length > 3 && (
-          <span className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm">
+          <span className="px-2 sm:px-3 py-1 bg-muted text-muted-foreground rounded-full text-xs sm:text-sm">
             +{match.problem.type.length - 3} more
           </span>
         )}
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-6 border-t border-border">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <FiDollarSign className="w-4 h-4" />
-            <span>
-              {formatSalary(match.problem.payRange.min)} -{" "}
-              {formatSalary(match.problem.payRange.max)}
-            </span>
-          </div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-border">
+        <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground">
+          <FiDollarSign className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="truncate">
+            {formatSalary(match.problem.payRange.min)} -{" "}
+            {formatSalary(match.problem.payRange.max)}
+          </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <button
             onClick={() =>
               router.push(`/dashboard/user-profile/${match.applicant._id}`)
             }
-            className="flex items-center gap-2 px-3 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-3 py-2 min-h-[44px] bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors text-xs sm:text-sm font-medium touch-manipulation"
           >
             <FiUser className="w-4 h-4" />
-            Profile
+            <span className="hidden sm:inline">Profile</span>
           </button>
           <button
             onClick={() => router.push(`/dashboard/matches/${match._id}`)}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium touch-manipulation"
           >
             <FiEye className="w-4 h-4" />
-            View Match
+            <span className="hidden sm:inline">View Match</span>
+            <span className="sm:hidden">View</span>
           </button>
         </div>
       </div>
@@ -295,15 +304,16 @@ export default function EmployerMatchesPage() {
   );
 
   const MatchListItem = ({ match }: { match: Match }) => (
-    <div className="bg-card border border-border rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20">
-      <div className="flex items-start gap-6">
+    <div className="bg-card border border-border rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20 touch-manipulation">
+      <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
         {/* Applicant Photo */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 mx-auto sm:mx-0">
           {match.applicant.profilePicture ? (
             <img
               src={match.applicant.profilePicture}
               alt={`${match.applicant.firstName} ${match.applicant.lastName}`}
               className="w-12 h-12 rounded-full object-cover border-2 border-border"
+              loading="lazy"
             />
           ) : (
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border-2 border-border">
@@ -313,47 +323,47 @@ export default function EmployerMatchesPage() {
         </div>
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between mb-3">
+        <div className="flex-1 min-w-0 w-full">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-3">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 mb-1">
-                <h3 className="text-lg font-bold text-foreground truncate">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-1">
+                <h3 className="text-base sm:text-lg font-bold text-foreground truncate">
                   {match.applicant.firstName} {match.applicant.lastName}
                 </h3>
-                <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+                <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 w-fit">
                   <FiStar className="w-3 h-3 mr-1" />
                   Matched
                 </div>
               </div>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
-                  <FiBriefcase className="w-4 h-4" />
+                  <FiBriefcase className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>{match.problem.fellowField}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <FiDollarSign className="w-4 h-4" />
-                  <span>
+                  <FiDollarSign className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="truncate">
                     {formatSalary(match.problem.payRange.min)} -{" "}
                     {formatSalary(match.problem.payRange.max)}
                   </span>
                 </div>
-                <span>{match.applicant.email}</span>
+                <span className="truncate">{match.applicant.email}</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto">
               <button
                 onClick={() =>
                   router.push(`/dashboard/user-profile/${match.applicant._id}`)
                 }
-                className="flex items-center gap-2 px-3 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 px-3 py-2 min-h-[44px] bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors text-xs sm:text-sm font-medium touch-manipulation flex-1 sm:flex-none justify-center"
               >
                 <FiUser className="w-4 h-4" />
                 Profile
               </button>
               <button
                 onClick={() => router.push(`/dashboard/matches/${match._id}`)}
-                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-xs sm:text-sm font-medium touch-manipulation flex-1 sm:flex-none justify-center"
               >
                 <FiEye className="w-4 h-4" />
                 View Match
@@ -361,12 +371,12 @@ export default function EmployerMatchesPage() {
             </div>
           </div>
 
-          <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
+          <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed text-sm sm:text-base">
             Applied for: {match.problem.description}
           </p>
 
-          <div className="flex items-center justify-between">
-            <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               {match.problem.skills.slice(0, 3).map((skill, index) => (
                 <span
                   key={index}
@@ -382,11 +392,9 @@ export default function EmployerMatchesPage() {
               )}
             </div>
 
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <FiCalendar className="w-3 h-3" />
-                <span>Applied: {formatDate(match.createdAt)}</span>
-              </div>
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <FiCalendar className="w-3 h-3" />
+              <span>Applied: {formatDate(match.createdAt)}</span>
             </div>
           </div>
         </div>
@@ -395,14 +403,14 @@ export default function EmployerMatchesPage() {
   );
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
             Talent Matches
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             Discover talented candidates matched to your problems
           </p>
         </div>
@@ -411,7 +419,7 @@ export default function EmployerMatchesPage() {
           <div className="flex items-center bg-muted rounded-lg p-1">
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-2 rounded-md transition-colors ${
+              className={`p-2 rounded-md transition-colors min-h-[44px] min-w-[44px] touch-manipulation ${
                 viewMode === "grid"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -421,7 +429,7 @@ export default function EmployerMatchesPage() {
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`p-2 rounded-md transition-colors ${
+              className={`p-2 rounded-md transition-colors min-h-[44px] min-w-[44px] touch-manipulation ${
                 viewMode === "list"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -437,13 +445,13 @@ export default function EmployerMatchesPage() {
       <div className="space-y-4">
         {/* Search Bar */}
         <div className="relative">
-          <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+          <FiSearch className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search talent matches..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+            className="w-full pl-10 sm:pl-12 pr-4 py-3 min-h-[44px] bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-sm sm:text-base touch-manipulation"
           />
         </div>
 
@@ -451,7 +459,7 @@ export default function EmployerMatchesPage() {
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+            className={`flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-lg border transition-colors text-sm font-medium touch-manipulation ${
               showFilters || hasActiveFilters
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-background text-foreground border-border hover:border-primary/50"
@@ -473,10 +481,11 @@ export default function EmployerMatchesPage() {
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-background text-foreground hover:border-primary/50 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-lg border border-border bg-background text-foreground hover:border-primary/50 transition-colors text-sm font-medium touch-manipulation"
             >
               <FiX className="w-4 h-4" />
-              Clear All
+              <span className="hidden sm:inline">Clear All</span>
+              <span className="sm:hidden">Clear</span>
             </button>
           )}
 
@@ -487,8 +496,8 @@ export default function EmployerMatchesPage() {
 
         {/* Filters Panel */}
         {showFilters && (
-          <div className="bg-card border border-border rounded-xl p-6 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-card border border-border rounded-xl p-4 sm:p-6 space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Fellow Field Filter */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
@@ -502,7 +511,7 @@ export default function EmployerMatchesPage() {
                       fellowField: e.target.value,
                     }))
                   }
-                  className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  className="w-full px-3 py-2 min-h-[44px] bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-sm touch-manipulation"
                 >
                   <option value="">All Fields</option>
                   <option value="Data Science">Data Science</option>
@@ -531,7 +540,7 @@ export default function EmployerMatchesPage() {
                       sortBy: e.target.value as any,
                     }))
                   }
-                  className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  className="w-full px-3 py-2 min-h-[44px] bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-sm touch-manipulation"
                 >
                   <option value="newest">Newest First</option>
                   <option value="oldest">Oldest First</option>
@@ -555,7 +564,7 @@ export default function EmployerMatchesPage() {
                       minSalary: e.target.value,
                     }))
                   }
-                  className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  className="w-full px-3 py-2 min-h-[44px] bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-sm touch-manipulation"
                 />
               </div>
 
@@ -573,7 +582,7 @@ export default function EmployerMatchesPage() {
                       maxSalary: e.target.value,
                     }))
                   }
-                  className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  className="w-full px-3 py-2 min-h-[44px] bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-sm touch-manipulation"
                 />
               </div>
             </div>
@@ -609,7 +618,7 @@ export default function EmployerMatchesPage() {
                   <button
                     key={skill}
                     onClick={() => handleSkillToggle(skill)}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors touch-manipulation ${
                       filters.skills.includes(skill)
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -639,7 +648,7 @@ export default function EmployerMatchesPage() {
                   <button
                     key={type}
                     onClick={() => handleTypeToggle(type)}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors touch-manipulation ${
                       filters.type.includes(type)
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -657,7 +666,7 @@ export default function EmployerMatchesPage() {
       {/* Content */}
       {loading ? (
         <div
-          className={`grid gap-6 ${
+          className={`grid gap-4 sm:gap-6 ${
             viewMode === "grid"
               ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
               : "grid-cols-1"
@@ -668,19 +677,19 @@ export default function EmployerMatchesPage() {
           ))}
         </div>
       ) : error ? (
-        <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-          <div className="w-24 h-24 bg-destructive/10 rounded-full flex items-center justify-center mb-6">
-            <FiX className="w-12 h-12 text-destructive" />
+        <div className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 text-center">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-destructive/10 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+            <FiX className="w-10 h-10 sm:w-12 sm:h-12 text-destructive" />
           </div>
-          <h3 className="text-2xl font-bold text-foreground mb-3">
+          <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">
             Something went wrong
           </h3>
-          <p className="text-muted-foreground max-w-md leading-relaxed mb-6">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-xs sm:max-w-md leading-relaxed mb-4 sm:mb-6">
             {error}
           </p>
           <button
             onClick={refetch}
-            className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+            className="px-6 py-3 min-h-[44px] bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm sm:text-base touch-manipulation"
           >
             Try Again
           </button>
@@ -691,7 +700,7 @@ export default function EmployerMatchesPage() {
         <>
           {/* Matches Grid/List */}
           <div
-            className={`grid gap-6 ${
+            className={`grid gap-4 sm:gap-6 ${
               viewMode === "grid"
                 ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
                 : "grid-cols-1"
@@ -710,8 +719,8 @@ export default function EmployerMatchesPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between pt-8 border-t border-border">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-6 sm:pt-8 border-t border-border">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground order-2 sm:order-1">
                 <span>
                   Showing {(currentPage - 1) * (params.limit || 12) + 1} to{" "}
                   {Math.min(currentPage * (params.limit || 12), totalMatches)}{" "}
@@ -719,60 +728,88 @@ export default function EmployerMatchesPage() {
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => updateParams({ page: currentPage - 1 })}
-                  disabled={currentPage === 1}
-                  className="flex items-center gap-2 px-4 py-2 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
-                >
-                  <FiChevronLeft className="w-4 h-4" />
-                  Previous
-                </button>
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-2 order-1 sm:order-2">
+                {/* Mobile pagination controls */}
+                <div className="flex items-center gap-2 sm:hidden w-full">
+                  <button
+                    onClick={() => updateParams({ page: currentPage - 1 })}
+                    disabled={currentPage === 1}
+                    className="flex items-center gap-2 px-4 py-2 min-h-[44px] bg-background border border-border rounded-lg hover:border-primary/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium touch-manipulation flex-1 justify-center"
+                  >
+                    <FiChevronLeft className="w-4 h-4" />
+                    Previous
+                  </button>
 
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1)
-                    .filter((page) => {
-                      const distance = Math.abs(page - currentPage);
-                      return (
-                        distance === 0 ||
-                        distance === 1 ||
-                        page === 1 ||
-                        page === totalPages
-                      );
-                    })
-                    .map((page, index, array) => {
-                      const showEllipsis =
-                        index > 0 && array[index - 1] !== page - 1;
-                      return (
-                        <div key={page} className="flex items-center gap-1">
-                          {showEllipsis && (
-                            <span className="px-2 py-1 text-muted-foreground">
-                              ...
-                            </span>
-                          )}
-                          <button
-                            onClick={() => updateParams({ page })}
-                            className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
-                              currentPage === page
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-background border border-border hover:border-primary/50"
-                            }`}
-                          >
-                            {page}
-                          </button>
-                        </div>
-                      );
-                    })}
+                  <div className="flex items-center gap-1 px-3 py-2 bg-muted rounded-lg text-sm font-medium">
+                    {currentPage} / {totalPages}
+                  </div>
+
+                  <button
+                    onClick={() => updateParams({ page: currentPage + 1 })}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center gap-2 px-4 py-2 min-h-[44px] bg-background border border-border rounded-lg hover:border-primary/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium touch-manipulation flex-1 justify-center"
+                  >
+                    Next
+                    <FiChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
 
-                <button
-                  onClick={() => updateParams({ page: currentPage + 1 })}
-                  disabled={currentPage === totalPages}
-                  className="flex items-center gap-2 px-4 py-2 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
-                >
-                  Next
-                  <FiChevronRight className="w-4 h-4" />
-                </button>
+                {/* Desktop pagination controls */}
+                <div className="hidden sm:flex items-center gap-2">
+                  <button
+                    onClick={() => updateParams({ page: currentPage - 1 })}
+                    disabled={currentPage === 1}
+                    className="flex items-center gap-2 px-4 py-2 min-h-[44px] bg-background border border-border rounded-lg hover:border-primary/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium touch-manipulation"
+                  >
+                    <FiChevronLeft className="w-4 h-4" />
+                    Previous
+                  </button>
+
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                      .filter((page) => {
+                        const distance = Math.abs(page - currentPage);
+                        return (
+                          distance === 0 ||
+                          distance === 1 ||
+                          page === 1 ||
+                          page === totalPages
+                        );
+                      })
+                      .map((page, index, array) => {
+                        const showEllipsis =
+                          index > 0 && array[index - 1] !== page - 1;
+                        return (
+                          <div key={page} className="flex items-center gap-1">
+                            {showEllipsis && (
+                              <span className="px-2 py-1 text-muted-foreground">
+                                ...
+                              </span>
+                            )}
+                            <button
+                              onClick={() => updateParams({ page })}
+                              className={`w-10 h-10 min-h-[44px] rounded-lg text-sm font-medium transition-colors touch-manipulation ${
+                                currentPage === page
+                                  ? "bg-primary text-primary-foreground"
+                                  : "bg-background border border-border hover:border-primary/50"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          </div>
+                        );
+                      })}
+                  </div>
+
+                  <button
+                    onClick={() => updateParams({ page: currentPage + 1 })}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center gap-2 px-4 py-2 min-h-[44px] bg-background border border-border rounded-lg hover:border-primary/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium touch-manipulation"
+                  >
+                    Next
+                    <FiChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           )}

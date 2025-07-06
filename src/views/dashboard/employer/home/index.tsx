@@ -22,50 +22,38 @@ import {
 } from "react-icons/fi";
 
 const SkeletonCard = () => (
-  <div className="bg-card rounded-xl p-4 sm:p-6 border border-border animate-pulse">
-    <div className="flex items-center gap-3 sm:gap-4">
-      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-lg flex-shrink-0"></div>
-      <div className="flex-1">
-        <div className="h-3 sm:h-4 bg-muted rounded w-20 sm:w-24 mb-2"></div>
-        <div className="h-5 sm:h-6 bg-muted rounded w-12 sm:w-16"></div>
+  <div className="bg-card rounded-xl p-5 sm:p-6 border border-border animate-pulse">
+    <div className="flex items-center gap-4">
+      <div className="w-12 h-12 bg-muted rounded-xl flex-shrink-0"></div>
+      <div className="flex-1 min-w-0">
+        <div className="h-4 bg-muted rounded w-24 mb-2"></div>
+        <div className="h-6 bg-muted rounded w-16"></div>
       </div>
     </div>
   </div>
 );
 
 const SkeletonJobCard = () => (
-  <div className="bg-card rounded-xl p-4 sm:p-6 border border-border animate-pulse">
-    <div className="flex items-start justify-between mb-3 sm:mb-4">
-      <div className="flex items-center gap-2 sm:gap-3 flex-1">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-muted rounded-lg flex-shrink-0"></div>
+  <div className="bg-card rounded-xl p-5 sm:p-6 border border-border animate-pulse">
+    <div className="flex items-start justify-between mb-4">
+      <div className="flex items-center gap-3 flex-1">
+        <div className="w-10 h-10 bg-muted rounded-xl flex-shrink-0"></div>
         <div className="min-w-0 flex-1">
-          <div className="h-4 sm:h-5 bg-muted rounded w-24 sm:w-32 mb-1 sm:mb-2"></div>
-          <div className="h-3 sm:h-4 bg-muted rounded w-20 sm:w-24"></div>
+          <div className="h-5 bg-muted rounded w-32 mb-2"></div>
+          <div className="h-4 bg-muted rounded w-24"></div>
         </div>
       </div>
     </div>
-    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-      <div className="h-3 sm:h-4 bg-muted rounded w-16 sm:w-20"></div>
-      <div className="h-3 sm:h-4 bg-muted rounded w-20 sm:w-24"></div>
+    <div className="flex flex-col gap-3 mb-4">
+      <div className="h-4 bg-muted rounded w-20"></div>
+      <div className="h-4 bg-muted rounded w-24"></div>
     </div>
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+    <div className="flex justify-between items-center">
       <div className="flex gap-2">
-        <div className="h-7 sm:h-8 bg-muted rounded w-16 sm:w-16"></div>
-        <div className="h-7 sm:h-8 bg-muted rounded w-18 sm:w-20"></div>
+        <div className="h-8 bg-muted rounded w-16"></div>
+        <div className="h-8 bg-muted rounded w-20"></div>
       </div>
-      <div className="w-4 h-4 sm:w-5 sm:h-5 bg-muted rounded self-end sm:self-auto"></div>
-    </div>
-  </div>
-);
-
-const SkeletonProfileCard = () => (
-  <div className="bg-card rounded-xl p-4 sm:p-6 border border-border animate-pulse">
-    <div className="flex flex-col items-center text-center">
-      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted rounded-full mb-3 sm:mb-4"></div>
-      <div className="h-5 sm:h-6 bg-muted rounded w-24 sm:w-32 mb-2"></div>
-      <div className="h-3 sm:h-4 bg-muted rounded w-32 sm:w-40 mb-1 sm:mb-2"></div>
-      <div className="h-3 sm:h-4 bg-muted rounded w-28 sm:w-36 mb-3 sm:mb-4"></div>
-      <div className="h-8 sm:h-10 bg-muted rounded w-full"></div>
+      <div className="w-11 h-11 bg-muted rounded-lg"></div>
     </div>
   </div>
 );
@@ -225,44 +213,39 @@ export default function EmployerDashboard() {
 
   if (isLoading) {
     return (
-      <div className="w-full min-h-screen bg-background py-4 sm:py-6 px-4 sm:px-6">
-        <div className="w-full space-y-4 sm:space-y-6">
+      <div className="w-full min-h-screen bg-background py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-6">
+        <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
           {/* Header Skeleton */}
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="h-6 sm:h-8 bg-muted rounded w-32 sm:w-48 mb-1 sm:mb-2"></div>
-              <div className="h-4 sm:h-5 bg-muted rounded w-40 sm:w-64"></div>
-            </div>
-          </div>
-
-          {/* Profile Completion Banner Skeleton */}
-          <div className="bg-card rounded-xl p-4 sm:p-6 border border-border animate-pulse">
-            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-muted rounded-full flex-shrink-0"></div>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+              <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 bg-muted rounded-xl flex-shrink-0 self-center sm:self-start animate-pulse"></div>
               <div className="flex-1 text-center sm:text-left">
-                <div className="h-5 sm:h-6 bg-muted rounded w-64 sm:w-96 mb-1 sm:mb-2 mx-auto sm:mx-0"></div>
-                <div className="h-3 sm:h-4 bg-muted rounded w-48 sm:w-64 mx-auto sm:mx-0"></div>
+                <div className="h-7 sm:h-8 md:h-9 bg-muted rounded w-48 sm:w-64 mb-2 mx-auto sm:mx-0 animate-pulse"></div>
+                <div className="h-4 sm:h-5 bg-muted rounded w-56 sm:w-80 mx-auto sm:mx-0 animate-pulse"></div>
               </div>
-              <div className="h-8 sm:h-10 bg-muted rounded w-24 sm:w-24 flex-shrink-0"></div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="h-12 bg-muted rounded-lg flex-1 sm:flex-none sm:w-32 animate-pulse"></div>
+              <div className="h-12 bg-muted rounded-lg flex-1 sm:flex-none sm:w-32 animate-pulse"></div>
+              <div className="h-12 bg-muted rounded-lg flex-1 sm:flex-none sm:w-32 animate-pulse"></div>
             </div>
           </div>
 
           {/* Stats Cards Skeleton */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
             <SkeletonCard />
             <SkeletonCard />
-            <div className="sm:col-span-2 md:col-span-1">
-              <SkeletonCard />
-            </div>
+            <SkeletonCard />
+            <SkeletonCard />
           </div>
 
           {/* Suggested Problems Skeleton */}
           <div className="space-y-4 sm:space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
-              <div className="h-5 sm:h-6 bg-muted rounded w-32 sm:w-40"></div>
-              <div className="h-4 sm:h-5 bg-muted rounded w-16 sm:w-16"></div>
+              <div className="h-7 sm:h-8 bg-muted rounded w-40 sm:w-48 animate-pulse"></div>
+              <div className="h-5 bg-muted rounded w-20 animate-pulse"></div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
               <SkeletonJobCard />
               <SkeletonJobCard />
               <SkeletonJobCard />
@@ -271,29 +254,12 @@ export default function EmployerDashboard() {
           </div>
 
           {/* Applications Skeleton */}
-          <div className="space-y-3 sm:space-y-4">
-            <div className="h-5 sm:h-6 bg-muted rounded w-28 sm:w-32"></div>
-            <div className="bg-card rounded-xl border border-border animate-pulse overflow-hidden">
-              <div className="p-3 sm:p-4 border-b border-border">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-                  <div className="h-3 sm:h-4 bg-muted rounded"></div>
-                  <div className="h-3 sm:h-4 bg-muted rounded"></div>
-                  <div className="h-3 sm:h-4 bg-muted rounded hidden sm:block"></div>
-                  <div className="h-3 sm:h-4 bg-muted rounded hidden sm:block"></div>
-                </div>
-              </div>
-              <div className="divide-y divide-border">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="p-3 sm:p-4">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-                      <div className="h-3 sm:h-4 bg-muted rounded"></div>
-                      <div className="h-3 sm:h-4 bg-muted rounded"></div>
-                      <div className="h-3 sm:h-4 bg-muted rounded hidden sm:block"></div>
-                      <div className="h-3 sm:h-4 bg-muted rounded hidden sm:block"></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="h-7 sm:h-8 bg-muted rounded w-36 sm:w-40 animate-pulse"></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
             </div>
           </div>
         </div>
@@ -302,32 +268,33 @@ export default function EmployerDashboard() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-background py-4 sm:py-6 px-4 sm:px-6">
-      <div className="w-full space-y-4 sm:space-y-6">
+    <div className="w-full min-h-screen bg-background py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-6">
+      <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
         {/* Header with Company Info */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 md:gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
             {/* Company Logo */}
-            <div className="relative">
+            <div className="relative flex-shrink-0 self-center sm:self-start">
               {companyInfo.logo ? (
                 <img
                   src={companyInfo.logo}
                   alt={`${companyInfo.name} logo`}
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl border-2 border-border shadow-md object-cover"
+                  className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl border-2 border-border shadow-md object-cover touch-manipulation"
+                  loading="lazy"
                 />
               ) : (
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl border-2 border-primary/20 shadow-md flex items-center justify-center">
-                  <FiHome className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl border-2 border-primary/20 shadow-md flex items-center justify-center">
+                  <FiHome className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 text-primary" />
                 </div>
               )}
             </div>
 
             {/* Company Details */}
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+            <div className="flex-1 text-center sm:text-left">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground leading-tight">
                 {companyInfo.name}
               </h1>
-              <p className="text-muted-foreground mt-1 text-sm sm:text-base">
+              <p className="text-muted-foreground mt-1 text-sm sm:text-base md:text-base leading-relaxed">
                 Welcome back, {profile?.firstName || user?.firstName}! Manage
                 your company's talent pipeline.
               </p>
@@ -335,91 +302,91 @@ export default function EmployerDashboard() {
           </div>
 
           {/* Quick Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-3">
             <button
               onClick={() => openModal()}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2 text-sm"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 sm:px-5 py-3 sm:py-2.5 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm flex-1 sm:flex-none order-1 min-h-[44px] touch-manipulation"
             >
               <FiPlus className="w-4 h-4" />
-              Post Problem
+              <span className="whitespace-nowrap">Post Problem</span>
             </button>
             <button
               onClick={() => router.push("/dashboard/matches")}
-              className="bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2 text-sm border border-blue-200 dark:border-blue-800/30"
+              className="bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 sm:px-5 py-3 sm:py-2.5 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm border border-blue-200 dark:border-blue-800/30 flex-1 sm:flex-none order-2 min-h-[44px] touch-manipulation"
             >
               <FiUsers className="w-4 h-4" />
-              View Matches
+              <span className="whitespace-nowrap">View Matches</span>
             </button>
             <button
               onClick={() => router.push("/dashboard/profile")}
-              className="bg-muted hover:bg-muted/80 text-foreground px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2 text-sm"
+              className="bg-muted hover:bg-muted/80 text-foreground px-4 sm:px-5 py-3 sm:py-2.5 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm flex-1 sm:flex-none order-3 min-h-[44px] touch-manipulation"
             >
               <FiEdit className="w-4 h-4" />
-              Edit Profile
+              <span className="whitespace-nowrap">Edit Profile</span>
             </button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          <div className="bg-card rounded-xl p-4 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-2 sm:p-3 rounded-xl">
-                <FiBriefcase className="text-blue-600 dark:text-blue-400 w-5 h-5 sm:w-6 sm:h-6" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+          <div className="bg-card rounded-xl p-5 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] touch-manipulation">
+            <div className="flex items-center gap-4">
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl flex-shrink-0">
+                <FiBriefcase className="text-blue-600 dark:text-blue-400 w-6 h-6" />
               </div>
-              <div>
-                <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-muted-foreground font-medium mb-1">
                   Total Applications
                 </p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">
+                <p className="text-2xl font-bold text-foreground">
                   {employerStats.totalApplications}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-card rounded-xl p-4 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="bg-green-50 dark:bg-green-900/20 p-2 sm:p-3 rounded-xl">
-                <FiUsers className="text-green-600 dark:text-green-400 w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="bg-card rounded-xl p-5 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] touch-manipulation">
+            <div className="flex items-center gap-4">
+              <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-xl flex-shrink-0">
+                <FiUsers className="text-green-600 dark:text-green-400 w-6 h-6" />
               </div>
-              <div>
-                <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-muted-foreground font-medium mb-1">
                   Hired Candidates
                 </p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">
+                <p className="text-2xl font-bold text-foreground">
                   {employerStats.totalHired}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-card rounded-xl p-4 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="bg-orange-50 dark:bg-orange-900/20 p-2 sm:p-3 rounded-xl">
-                <FiTarget className="text-orange-600 dark:text-orange-400 w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="bg-card rounded-xl p-5 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] touch-manipulation">
+            <div className="flex items-center gap-4">
+              <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded-xl flex-shrink-0">
+                <FiTarget className="text-orange-600 dark:text-orange-400 w-6 h-6" />
               </div>
-              <div>
-                <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-muted-foreground font-medium mb-1">
                   Active Problems
                 </p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">
+                <p className="text-2xl font-bold text-foreground">
                   {employerStats.activeProblems}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-card rounded-xl p-4 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="bg-purple-50 dark:bg-purple-900/20 p-2 sm:p-3 rounded-xl">
-                <FiEye className="text-purple-600 dark:text-purple-400 w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="bg-card rounded-xl p-5 sm:p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] touch-manipulation">
+            <div className="flex items-center gap-4">
+              <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-xl flex-shrink-0">
+                <FiEye className="text-purple-600 dark:text-purple-400 w-6 h-6" />
               </div>
-              <div>
-                <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-muted-foreground font-medium mb-1">
                   Total Shortlisted
                 </p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">
+                <p className="text-2xl font-bold text-foreground">
                   {employerStats.totalShortlisted}
                 </p>
               </div>
@@ -446,7 +413,7 @@ export default function EmployerDashboard() {
               {suggestions.length > 4 && (
                 <button
                   onClick={() => router.push("/dashboard/problems")}
-                  className="bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary hover:text-primary/90 text-xs sm:text-sm font-semibold transition-all duration-300 px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-md hover:shadow-lg"
+                  className="bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary hover:text-primary/90 text-sm font-semibold transition-all duration-300 px-6 py-3 rounded-xl shadow-md hover:shadow-lg min-h-[44px] touch-manipulation"
                 >
                   View All
                 </button>
@@ -527,10 +494,10 @@ export default function EmployerDashboard() {
                         onClick={() => {
                           openModal(suggestion);
                         }}
-                        className="self-end sm:self-auto text-white p-2 sm:p-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 bg-primary hover:bg-primary/90"
+                        className="self-end sm:self-auto text-white p-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 bg-primary hover:bg-primary/90 min-w-[44px] min-h-[44px] touch-manipulation flex items-center justify-center"
                         title="Create problem from this template"
                       >
-                        <FiPlus className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <FiPlus className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
@@ -552,7 +519,7 @@ export default function EmployerDashboard() {
                   </p>
                   <button
                     onClick={() => router.push("/dashboard/profile")}
-                    className="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base"
+                    className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-base min-h-[44px] touch-manipulation"
                   >
                     Complete Profile
                   </button>
@@ -586,23 +553,24 @@ export default function EmployerDashboard() {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-4 sm:mb-6">
                       <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
-                        <div className="bg-gradient-to-br from-primary/20 to-primary/10 p-2 sm:p-3 rounded-xl border border-primary/20 shadow-md group-hover:shadow-lg transition-all duration-300 flex-shrink-0">
+                        <div className="bg-gradient-to-br from-primary/20 to-primary/10 p-2.5 sm:p-3 rounded-xl border border-primary/20 shadow-md group-hover:shadow-lg transition-all duration-300 flex-shrink-0">
                           {application.applicant.photoUrl ? (
                             <img
                               src={application.applicant.photoUrl}
                               alt={`${application.applicant.firstName} ${application.applicant.lastName}`}
-                              className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover"
+                              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover"
+                              loading="lazy"
                             />
                           ) : (
-                            <FiUser className="text-primary w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
+                            <FiUser className="text-primary w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-300" />
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-bold text-foreground text-sm sm:text-base leading-tight mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
+                          <h3 className="font-bold text-foreground text-base sm:text-lg leading-tight mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
                             {application.applicant.firstName}{" "}
                             {application.applicant.lastName}
                           </h3>
-                          <p className="text-xs sm:text-sm text-muted-foreground font-medium truncate">
+                          <p className="text-sm sm:text-base text-muted-foreground font-medium truncate">
                             {application.problem.fellowField}
                           </p>
                         </div>
@@ -662,7 +630,7 @@ export default function EmployerDashboard() {
                     </div>
 
                     {/* Action buttons */}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-3 sm:pt-4 border-t border-border gap-3 sm:gap-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 border-t border-border gap-3 sm:gap-0">
                       <div className="flex gap-2 sm:gap-3">
                         <button
                           onClick={() =>
@@ -674,7 +642,7 @@ export default function EmployerDashboard() {
                               )}`
                             )
                           }
-                          className="flex-1 sm:flex-none px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 bg-primary hover:bg-primary/90 text-white"
+                          className="flex-1 sm:flex-none px-5 py-3 sm:py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 bg-primary hover:bg-primary/90 text-white min-h-[44px] touch-manipulation"
                         >
                           View Applicant
                         </button>
@@ -699,7 +667,7 @@ export default function EmployerDashboard() {
                   </p>
                   <button
                     onClick={() => openModal()}
-                    className="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm sm:text-base"
+                    className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-base min-h-[44px] touch-manipulation"
                   >
                     Post Your First Problem
                   </button>

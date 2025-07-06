@@ -7,9 +7,9 @@ import { FiBriefcase, FiStar, FiUser } from "react-icons/fi";
 const stats = [
   {
     id: 1,
-    value: 2500,
-    display: "2.5k+",
-    description: "Join over 800 satisfied professionals!",
+    value: 1500,
+    display: "1.5k+",
+    description: "Join over 1k satisfied professionals!",
     icon: (
       <FiUser className="ml-2 w-6 h-6 text-primary dark:text-primary-foreground" />
     ),

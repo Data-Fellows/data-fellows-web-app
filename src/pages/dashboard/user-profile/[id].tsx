@@ -1,5 +1,6 @@
 import { getUserProfile } from "@/api/profile";
 import { useToast } from "@/context/ToastContext";
+import { getUser } from "@/helpers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -186,6 +187,10 @@ export default function UserProfileView() {
     .filter(Boolean)
     .join(", ");
 
+  // Check if current user can see bookmarked jobs
+  // Only the profile owner should see their own bookmarked jobs
+  const currentUser = getUser();
+  const canSeeBookmarkedJobs = currentUser && currentUser._id === profile._id;
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -250,7 +255,10 @@ export default function UserProfileView() {
                 <div className="flex items-center gap-2">
                   <FiCalendar className="w-4 h-4" />
                   <span>
-                    Joined {new Date(profile.createdAt).toLocaleDateString()}
+                    Joined{" "}
+                    {profile.createdAt
+                      ? new Date(profile.createdAt).toLocaleDateString()
+                      : "Recently"}
                   </span>
                 </div>
               </div>
@@ -513,106 +521,109 @@ export default function UserProfileView() {
               </div>
             )}
 
-            {/* Bookmarked Jobs Section */}
-            {bookmarkedJobs && bookmarkedJobs.length > 0 && (
-              <div className="bg-card border border-border rounded-xl p-6 shadow-lg">
-                <div className="flex items-center gap-3 mb-4">
-                  <FiUsers className="w-5 h-5 text-primary" />
-                  <h2 className="text-xl font-semibold text-foreground">
-                    Bookmarked Jobs
-                  </h2>
-                  <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
-                    {bookmarkedJobs.length}
-                  </span>
-                </div>
-                <div className="space-y-4">
-                  {bookmarkedJobs.map((job: any, index: number) => (
-                    <div
-                      key={job._id || index}
-                      className="border border-border rounded-lg p-4"
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h3 className="font-semibold text-foreground">
-                            {job.fellowField}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {job.employer?.companyName}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {job.payRange && (
-                            <span className="text-xs font-medium text-green-600">
-                              ${job.payRange.min?.toLocaleString()} - $
-                              {job.payRange.max?.toLocaleString()}
-                            </span>
-                          )}
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              job.status === "Unsolved"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-gray-100 text-gray-700"
-                            }`}
-                          >
-                            {job.status}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                        {job.description}
-                      </p>
-
-                      {/* Job type and skills */}
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {job.type?.map((type: string, i: number) => (
-                          <span
-                            key={i}
-                            className="px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700"
-                          >
-                            {type}
-                          </span>
-                        ))}
-                      </div>
-
-                      {job.skills && job.skills.length > 0 && (
-                        <div className="mb-3">
-                          <span className="text-xs font-medium text-foreground block mb-1">
-                            Required Skills:
-                          </span>
-                          <div className="flex flex-wrap gap-1">
-                            {job.skills
-                              .slice(0, 4)
-                              .map((skill: string, i: number) => (
-                                <span
-                                  key={i}
-                                  className="px-2 py-1 rounded-md text-xs font-medium bg-secondary/80 text-secondary-foreground"
-                                >
-                                  {skill}
-                                </span>
-                              ))}
-                            {job.skills.length > 4 && (
-                              <span className="px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground">
-                                +{job.skills.length - 4} more
+            {/* Bookmarked Jobs Section - Only visible to profile owner */}
+            {canSeeBookmarkedJobs &&
+              bookmarkedJobs &&
+              bookmarkedJobs.length > 0 && (
+                <div className="bg-card border border-border rounded-xl p-6 shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <FiUsers className="w-5 h-5 text-primary" />
+                    <h2 className="text-xl font-semibold text-foreground">
+                      Bookmarked Jobs
+                    </h2>
+                    <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
+                      {bookmarkedJobs.length}
+                    </span>
+                  </div>
+                  <div className="space-y-4">
+                    {bookmarkedJobs.map((job: any, index: number) => (
+                      <div
+                        key={job._id || index}
+                        className="border border-border rounded-lg p-4"
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <h3 className="font-semibold text-foreground">
+                              {job.fellowField}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {job.employer?.companyName}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {job.payRange && (
+                              <span className="text-xs font-medium text-green-600">
+                                ${job.payRange.min?.toLocaleString()} - $
+                                {job.payRange.max?.toLocaleString()}
                               </span>
                             )}
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                job.status === "Unsolved"
+                                  ? "bg-green-100 text-green-700"
+                                  : "bg-gray-100 text-gray-700"
+                              }`}
+                            >
+                              {job.status}
+                            </span>
                           </div>
                         </div>
-                      )}
+                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                          {job.description}
+                        </p>
 
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>
-                          {job.noOfApplicants || 0} applicant
-                          {job.noOfApplicants !== 1 ? "s" : ""}
-                        </span>
-                        <span>
-                          Posted {new Date(job.createdAt).toLocaleDateString()}
-                        </span>
+                        {/* Job type and skills */}
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {job.type?.map((type: string, i: number) => (
+                            <span
+                              key={i}
+                              className="px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700"
+                            >
+                              {type}
+                            </span>
+                          ))}
+                        </div>
+
+                        {job.skills && job.skills.length > 0 && (
+                          <div className="mb-3">
+                            <span className="text-xs font-medium text-foreground block mb-1">
+                              Required Skills:
+                            </span>
+                            <div className="flex flex-wrap gap-1">
+                              {job.skills
+                                .slice(0, 4)
+                                .map((skill: string, i: number) => (
+                                  <span
+                                    key={i}
+                                    className="px-2 py-1 rounded-md text-xs font-medium bg-secondary/80 text-secondary-foreground"
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              {job.skills.length > 4 && (
+                                <span className="px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground">
+                                  +{job.skills.length - 4} more
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <span>
+                            {job.noOfApplicants || 0} applicant
+                            {job.noOfApplicants !== 1 ? "s" : ""}
+                          </span>
+                          <span>
+                            Posted{" "}
+                            {new Date(job.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
 
           {/* Right Column */}
@@ -716,17 +727,20 @@ export default function UserProfileView() {
                     {applications?.length || 0}
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <FiDownload className="w-4 h-4 text-primary" />
-                    <span className="text-sm text-muted-foreground">
-                      Bookmarks
+                {/* Only show bookmarks count to profile owner */}
+                {canSeeBookmarkedJobs && (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <FiDownload className="w-4 h-4 text-primary" />
+                      <span className="text-sm text-muted-foreground">
+                        Bookmarks
+                      </span>
+                    </div>
+                    <span className="text-lg font-semibold text-foreground">
+                      {bookmarkedJobs?.length || 0}
                     </span>
                   </div>
-                  <span className="text-lg font-semibold text-foreground">
-                    {bookmarkedJobs?.length || 0}
-                  </span>
-                </div>
+                )}
               </div>
             </div>
 

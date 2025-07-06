@@ -46,7 +46,7 @@ const TabsTrigger = ({
   <button
     className={`${className} ${
       activeTab === value ? "bg-card text-primary shadow-sm" : ""
-    }`}
+    } min-h-[44px] touch-manipulation`}
     onClick={() => setActiveTab(value)}
   >
     {children}
@@ -136,11 +136,13 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex items-center justify-center min-h-[400px]">
+        <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
             <div className="flex flex-col items-center gap-4">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
-              <p className="text-muted-foreground">Loading match details...</p>
+              <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-b-2 border-primary"></div>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                Loading match details...
+              </p>
             </div>
           </div>
         </div>
@@ -151,23 +153,23 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
   if (error || !match) {
     return (
       <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex items-center justify-center min-h-[400px]">
+        <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
             <div className="text-center">
               <div className="mb-4">
-                <div className="mx-auto h-16 w-16 rounded-full bg-red-100 flex items-center justify-center">
-                  <ExternalLink className="h-8 w-8 text-red-600" />
+                <div className="mx-auto h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-red-100 flex items-center justify-center">
+                  <ExternalLink className="h-6 w-6 sm:h-8 sm:w-8 text-red-600" />
                 </div>
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
                 {error || "Match not found"}
               </h3>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-xs sm:max-w-md mx-auto">
                 The match you're looking for could not be loaded.
               </p>
               <button
                 onClick={handleBack}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm sm:text-base touch-manipulation"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Go Back
@@ -185,39 +187,41 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-6 py-8 max-w-full">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-full">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mb-6 sm:mb-8">
           <button
             onClick={handleBack}
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] touch-manipulation text-sm sm:text-base"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Matches
+            <span className="hidden sm:inline">Back to Matches</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
 
         {/* Match Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Main Content with Tabs */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 space-y-4 sm:space-y-6">
             {/* Match Header */}
-            <div className="bg-card rounded-lg border border-border p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground mb-2">
+            <div className="bg-card rounded-lg border border-border p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
                     {problem.fellowField} Match
                   </h1>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      Matched on {formatDate(match.createdAt)}
+                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <span className="hidden sm:inline">Matched on </span>
+                      {formatDate(match.createdAt)}
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 self-start">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                    className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
                       "active"
                     )}`}
                   >
@@ -231,12 +235,12 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
             <Tabs defaultValue="overview" className="w-full">
               {({ activeTab, setActiveTab }: any) => (
                 <>
-                  <TabsList className="grid w-full grid-cols-4 mb-6 p-1 bg-muted rounded-lg">
+                  <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-4 sm:mb-6 p-1 bg-muted rounded-lg">
                     <TabsTrigger
                       value="overview"
                       activeTab={activeTab}
                       setActiveTab={setActiveTab}
-                      className="px-6 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
+                      className="px-2 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
                     >
                       Overview
                     </TabsTrigger>
@@ -244,7 +248,7 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                       value="messages"
                       activeTab={activeTab}
                       setActiveTab={setActiveTab}
-                      className="px-6 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
+                      className="px-2 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
                     >
                       Messages
                     </TabsTrigger>
@@ -252,7 +256,7 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                       value="milestones"
                       activeTab={activeTab}
                       setActiveTab={setActiveTab}
-                      className="px-6 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
+                      className="px-2 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
                     >
                       Milestones
                     </TabsTrigger>
@@ -260,39 +264,40 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                       value="negotiation"
                       activeTab={activeTab}
                       setActiveTab={setActiveTab}
-                      className="px-6 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
+                      className="px-2 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-card data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-md transition-all"
                     >
-                      Negotiation
+                      <span className="hidden sm:inline">Negotiation</span>
+                      <span className="sm:hidden">Price</span>
                     </TabsTrigger>
                   </TabsList>
 
                   <TabsContent value="overview" activeTab={activeTab}>
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                       {/* Project Requirements */}
-                      <div className="bg-card border border-border rounded-lg p-6">
-                        <h3 className="text-lg font-semibold text-foreground mb-4">
+                      <div className="bg-card border border-border rounded-lg p-4 sm:p-6">
+                        <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">
                           Project Requirements
                         </h3>
-                        <div className="space-y-4">
+                        <div className="space-y-3 sm:space-y-4">
                           <div>
-                            <h4 className="font-medium text-foreground mb-2">
+                            <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
                               Description
                             </h4>
-                            <p className="text-muted-foreground leading-relaxed">
+                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                               {problem.description}
                             </p>
                           </div>
 
                           <div>
-                            <h4 className="font-medium text-foreground mb-2">
+                            <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
                               Required Skills
                             </h4>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1 sm:gap-2">
                               {problem.skills.map(
                                 (skill: string, index: number) => (
                                   <span
                                     key={index}
-                                    className="bg-primary/10 border border-border text-primary px-3 py-1 rounded-full text-sm font-medium"
+                                    className="bg-primary/10 border border-border text-primary px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
                                   >
                                     {skill}
                                   </span>
@@ -302,12 +307,12 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                           </div>
 
                           <div>
-                            <h4 className="font-medium text-foreground mb-2">
+                            <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
                               Budget Range
                             </h4>
                             <div className="flex items-center gap-2">
-                              <DollarSign className="h-4 w-4 text-muted-foreground" />
-                              <span className="text-foreground font-medium">
+                              <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
+                              <span className="text-sm sm:text-base text-foreground font-medium">
                                 ${problem.payRange.min.toLocaleString()} - $
                                 {problem.payRange.max.toLocaleString()}
                               </span>
@@ -315,15 +320,15 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                           </div>
 
                           <div>
-                            <h4 className="font-medium text-foreground mb-2">
+                            <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
                               Project Types
                             </h4>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1 sm:gap-2">
                               {problem.type.map(
                                 (type: string, index: number) => (
                                   <span
                                     key={index}
-                                    className="bg-accent/10 border border-border text-accent-foreground px-3 py-1 rounded-full text-sm font-medium"
+                                    className="bg-accent/10 border border-border text-accent-foreground px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
                                   >
                                     {type}
                                   </span>
@@ -334,10 +339,10 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
 
                           {problem.candidatesQualification && (
                             <div>
-                              <h4 className="font-medium text-foreground mb-2">
+                              <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
                                 Required Qualifications
                               </h4>
-                              <p className="text-muted-foreground leading-relaxed">
+                              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                                 {problem.candidatesQualification}
                               </p>
                             </div>
@@ -345,10 +350,10 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
 
                           {problem.niceToHaves && (
                             <div>
-                              <h4 className="font-medium text-foreground mb-2">
+                              <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
                                 Nice to Have
                               </h4>
-                              <p className="text-muted-foreground leading-relaxed">
+                              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                                 {problem.niceToHaves}
                               </p>
                             </div>
@@ -385,15 +390,15 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6 order-first lg:order-last">
             {/* Other User Profile */}
-            <div className="bg-card rounded-lg border border-border p-6">
-              <h2 className="text-lg font-semibold mb-4">
+            <div className="bg-card rounded-lg border border-border p-4 sm:p-6">
+              <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
                 {isEmployer ? "Matched Talent" : "Company"}
               </h2>
 
-              <div className="flex items-center gap-4 mb-4">
-                <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+              <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden flex-shrink-0">
                   {(otherUser as any).profilePicture ||
                   (otherUser as any).photoUrl ? (
                     <img
@@ -403,19 +408,20 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                       }
                       alt={`${otherUser.firstName} ${otherUser.lastName}`}
                       className="h-full w-full object-cover"
+                      loading="lazy"
                     />
                   ) : (
-                    <span className="text-lg font-semibold text-primary">
+                    <span className="text-sm sm:text-lg font-semibold text-primary">
                       {otherUser.firstName[0]}
                       {otherUser.lastName[0]}
                     </span>
                   )}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">
                     {otherUser.firstName} {otherUser.lastName}
                   </h3>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-muted-foreground text-xs sm:text-sm truncate">
                     {otherUser.email}
                   </p>
                 </div>
@@ -423,26 +429,28 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
 
               {/* Show company details for users, skills for employers */}
               {!isEmployer && (match.employer as any).companyName && (
-                <div className="space-y-3 mb-4">
+                <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
                   <div>
-                    <h4 className="font-medium text-foreground mb-1">
+                    <h4 className="font-medium text-foreground mb-1 text-sm sm:text-base">
                       Company
                     </h4>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-xs sm:text-sm">
                       {(match.employer as any).companyName}
                     </p>
                   </div>
                   {(match.employer as any).companyCity && (
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="h-4 w-4" />
-                      {(match.employer as any).companyCity},{" "}
-                      {(match.employer as any).companyState}
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                      <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                      <span className="truncate">
+                        {(match.employer as any).companyCity},{" "}
+                        {(match.employer as any).companyState}
+                      </span>
                     </div>
                   )}
                   {(match.employer as any).companySize && (
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Users className="h-4 w-4" />
-                      {(match.employer as any).companySize} company
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                      <Users className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                      <span>{(match.employer as any).companySize} company</span>
                     </div>
                   )}
                 </div>
@@ -450,9 +458,11 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
 
               {/* Show skills for users */}
               {isEmployer && (otherUser as any).skills && (
-                <div className="mb-4">
-                  <h4 className="font-medium text-foreground mb-2">Skills</h4>
-                  <div className="flex flex-wrap gap-2">
+                <div className="mb-3 sm:mb-4">
+                  <h4 className="font-medium text-foreground mb-2 text-sm sm:text-base">
+                    Skills
+                  </h4>
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {(otherUser as any).skills
                       .slice(0, 6)
                       .map((skill: any, index: number) => (
@@ -475,7 +485,7 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
               <div className="space-y-3">
                 <button
                   onClick={() => handleViewProfile(otherUser._id)}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border text-primary rounded-md hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 min-h-[44px] border border-border text-primary rounded-md hover:bg-primary hover:text-primary-foreground transition-colors text-sm sm:text-base touch-manipulation"
                 >
                   <ExternalLink className="h-4 w-4" />
                   View Profile
@@ -484,18 +494,26 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
             </div>
 
             {/* Match Stats */}
-            <div className="bg-card rounded-lg border border-border p-6">
-              <h3 className="font-semibold mb-4">Match Information</h3>
-              <div className="space-y-3">
+            <div className="bg-card rounded-lg border border-border p-4 sm:p-6">
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+                Match Information
+              </h3>
+              <div className="space-y-2 sm:space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Status</span>
+                  <span className="text-muted-foreground text-xs sm:text-sm">
+                    Status
+                  </span>
                   <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
                     Active
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Matched On</span>
-                  <span className="text-sm">{formatDate(match.createdAt)}</span>
+                  <span className="text-muted-foreground text-xs sm:text-sm">
+                    Matched On
+                  </span>
+                  <span className="text-xs sm:text-sm">
+                    {formatDate(match.createdAt)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -509,10 +527,10 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
               <div className="sticky top-0 bg-card border-b border-border p-3 sm:p-4 lg:p-6 flex items-center justify-between rounded-t-xl sm:rounded-t-2xl">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
                   Problem Details
-                </h2>
+                </h2>{" "}
                 <button
                   onClick={closeProblemModal}
-                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors min-h-[44px] min-w-[44px] touch-manipulation"
                 >
                   <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
@@ -653,12 +671,12 @@ export default function MatchDetailPage({ matchId }: MatchDetailPageProps) {
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-border">
                     <button
                       onClick={closeProblemModal}
-                      className="flex-1 px-6 sm:px-8 py-2.5 sm:py-3 border border-border rounded-lg font-semibold transition-all duration-300 hover:bg-muted text-sm sm:text-base"
+                      className="flex-1 px-6 sm:px-8 py-2.5 sm:py-3 min-h-[44px] border border-border rounded-lg font-semibold transition-all duration-300 hover:bg-muted text-sm sm:text-base touch-manipulation"
                     >
                       Close
                     </button>
                     {!isEmployer && (
-                      <button className="flex-1 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base bg-primary hover:bg-primary/90 text-white">
+                      <button className="flex-1 px-6 sm:px-8 py-2.5 sm:py-3 min-h-[44px] rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 text-sm sm:text-base bg-primary hover:bg-primary/90 text-white touch-manipulation">
                         Apply Now
                       </button>
                     )}

@@ -265,7 +265,7 @@ export default function EditProblemModal({
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Fellow Field <span className="text-red-500">*</span>
@@ -277,7 +277,7 @@ export default function EditProblemModal({
                   handleInputChange("fellowField", e.target.value)
                 }
                 placeholder="e.g., Data Science, Machine Learning"
-                className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base min-h-[44px] touch-manipulation"
               />
             </div>
 
@@ -285,13 +285,13 @@ export default function EditProblemModal({
               <label className="block text-sm font-medium text-foreground mb-3">
                 Work Types <span className="text-red-500">*</span>
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                 {WORK_TYPES.map((type) => (
                   <button
                     key={type}
                     type="button"
                     onClick={() => handleWorkTypeToggle(type)}
-                    className={`px-4 py-2 rounded-lg border transition-all ${
+                    className={`px-3 sm:px-4 py-2.5 sm:py-2 rounded-lg border transition-all text-xs sm:text-sm font-medium min-h-[44px] touch-manipulation ${
                       formData.type.includes(type)
                         ? "bg-primary text-primary-foreground border-primary"
                         : "border-border bg-background text-foreground hover:bg-muted"
@@ -307,12 +307,12 @@ export default function EditProblemModal({
 
       case 2:
         return (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-foreground mb-3">
                 Salary Range <span className="text-red-500">*</span>
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-xs text-muted-foreground mb-2">
                     Minimum (₦)
@@ -326,7 +326,7 @@ export default function EditProblemModal({
                         handleSalaryChange("min", e.target.value)
                       }
                       placeholder="0"
-                      className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base min-h-[44px] touch-manipulation"
                     />
                   </div>
                 </div>
@@ -343,7 +343,7 @@ export default function EditProblemModal({
                         handleSalaryChange("max", e.target.value)
                       }
                       placeholder="0"
-                      className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base min-h-[44px] touch-manipulation"
                     />
                   </div>
                 </div>
@@ -362,26 +362,26 @@ export default function EditProblemModal({
 
       case 3:
         return (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-foreground mb-3">
                 Required Skills <span className="text-red-500">*</span>
               </label>
               {skillsLoading ? (
                 <div className="flex items-center justify-center py-8">
-                  <FiLoader className="w-6 h-6 animate-spin text-primary" />
-                  <span className="ml-2 text-muted-foreground">
+                  <FiLoader className="w-5 h-5 sm:w-6 sm:h-6 animate-spin text-primary" />
+                  <span className="ml-2 text-muted-foreground text-sm sm:text-base">
                     Loading skills...
                   </span>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 max-h-64 overflow-y-auto scrollbar-hide">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 max-h-48 sm:max-h-64 overflow-y-auto scrollbar-hide">
                   {availableSkills.map((skill) => (
                     <button
                       key={skill}
                       type="button"
                       onClick={() => handleSkillToggle(skill)}
-                      className={`px-3 py-2 text-sm rounded-lg border transition-all ${
+                      className={`px-2.5 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition-all min-h-[44px] touch-manipulation ${
                         formData.skills.includes(skill)
                           ? "bg-primary text-primary-foreground border-primary"
                           : "border-border bg-background text-foreground hover:bg-muted"
@@ -397,7 +397,7 @@ export default function EditProblemModal({
                   <p className="text-sm text-muted-foreground mb-2">
                     Selected skills ({formData.skills.length}):
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {formData.skills.map((skill) => (
                       <span
                         key={skill}
@@ -415,7 +415,7 @@ export default function EditProblemModal({
 
       case 4:
         return (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Problem Description <span className="text-red-500">*</span>
@@ -426,8 +426,8 @@ export default function EditProblemModal({
                   handleInputChange("description", e.target.value)
                 }
                 placeholder="Describe the problem you need solved..."
-                rows={4}
-                className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                rows={3}
+                className="w-full px-3 sm:px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-sm sm:text-base touch-manipulation"
               />
             </div>
 
@@ -441,8 +441,8 @@ export default function EditProblemModal({
                   handleInputChange("candidatesQualification", e.target.value)
                 }
                 placeholder="List the required qualifications..."
-                rows={4}
-                className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                rows={3}
+                className="w-full px-3 sm:px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-sm sm:text-base touch-manipulation"
               />
             </div>
 
@@ -457,7 +457,7 @@ export default function EditProblemModal({
                 }
                 placeholder="Additional preferred qualifications..."
                 rows={3}
-                className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                className="w-full px-3 sm:px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-sm sm:text-base touch-manipulation"
               />
             </div>
           </div>
@@ -471,32 +471,34 @@ export default function EditProblemModal({
   if (!isOpen || !problem) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-background border border-border rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-background border border-border rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-lg md:max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden touch-manipulation">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border">
           <div>
-            <h2 className="text-2xl font-bold text-foreground">Edit Problem</h2>
-            <p className="text-muted-foreground mt-1">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">
+              Edit Problem
+            </h2>
+            <p className="text-muted-foreground mt-1 text-sm sm:text-base">
               Step {currentStep} of 4
             </p>
           </div>
           <button
             onClick={handleClose}
-            className="p-2 hover:bg-muted rounded-lg transition-all"
+            className="p-2 hover:bg-muted rounded-lg transition-all min-h-[44px] min-w-[44px] touch-manipulation"
             disabled={isLoading}
           >
-            <FiX className="w-5 h-5 text-muted-foreground" />
+            <FiX className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
           </button>
         </div>
 
         {/* Progress Bar */}
-        <div className="px-6 py-4 border-b border-border">
-          <div className="flex items-center space-x-2">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-border">
+          <div className="flex items-center space-x-1 sm:space-x-2">
             {Array.from({ length: 4 }).map((_, index) => (
               <div
                 key={index}
-                className={`flex-1 h-2 rounded-full transition-all ${
+                className={`flex-1 h-1.5 sm:h-2 rounded-full transition-all ${
                   index + 1 <= currentStep ? "bg-primary" : "bg-muted"
                 }`}
               />
@@ -505,22 +507,22 @@ export default function EditProblemModal({
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto scrollbar-hide max-h-[calc(90vh-240px)]">
+        <div className="p-4 sm:p-6 overflow-y-auto scrollbar-hide max-h-[calc(95vh-220px)] sm:max-h-[calc(90vh-240px)]">
           {renderStep()}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-border bg-muted/20">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-t border-border bg-muted/20">
           <button
             onClick={handlePrevious}
             disabled={currentStep === 1 || isLoading}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-background text-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-border bg-background text-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm sm:text-base min-h-[44px] touch-manipulation"
           >
             <FiChevronLeft className="w-4 h-4" />
-            Previous
+            <span className="hidden sm:inline">Previous</span>
           </button>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2">
             {Array.from({ length: 4 }).map((_, index) => (
               <div
                 key={index}
@@ -539,26 +541,29 @@ export default function EditProblemModal({
             <button
               onClick={handleNext}
               disabled={!validateStep(currentStep) || isLoading}
-              className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm sm:text-base min-h-[44px] touch-manipulation"
             >
-              Next
+              <span className="hidden sm:inline">Next</span>
+              <span className="sm:hidden">Next</span>
               <FiChevronRight className="w-4 h-4" />
             </button>
           ) : (
             <button
               onClick={handleSubmit}
               disabled={!validateStep(currentStep) || isLoading}
-              className="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm sm:text-base min-h-[44px] touch-manipulation"
             >
               {isLoading ? (
                 <>
                   <FiLoader className="w-4 h-4 animate-spin" />
-                  Updating...
+                  <span className="hidden sm:inline">Updating...</span>
+                  <span className="sm:hidden">Save</span>
                 </>
               ) : (
                 <>
                   <FiTarget className="w-4 h-4" />
-                  Update Problem
+                  <span className="hidden sm:inline">Update Problem</span>
+                  <span className="sm:hidden">Update</span>
                 </>
               )}
             </button>

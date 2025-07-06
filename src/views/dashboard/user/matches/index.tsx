@@ -172,51 +172,53 @@ export default function UserMatchesPage() {
   };
 
   const MatchCard = ({ match }: { match: Match }) => (
-    <div className="bg-card border border-border rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20">
+    <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/20">
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-xl font-bold text-foreground truncate">
+      <div className="flex items-start justify-between mb-4 sm:mb-6 gap-4">
+        <div className="flex-1 min-w-0 overflow-hidden">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 flex-wrap">
+            <h3 className="text-lg sm:text-xl font-bold text-foreground truncate max-w-full">
               {match.problem.fellowField}
             </h3>
-            <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+            <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 whitespace-nowrap">
               <FiStar className="w-3 h-3 mr-1" />
               Matched
             </div>
           </div>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-            <div className="flex items-center gap-1">
-              <FiBriefcase className="w-4 h-4" />
-              <span>{match.employer.companyName}</span>
+          <div className="flex items-center gap-2 sm:gap-4 text-sm text-muted-foreground mb-2 flex-wrap">
+            <div className="flex items-center gap-1 min-w-0">
+              <FiBriefcase className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">{match.employer.companyName}</span>
             </div>
             {match.employer.companyCity && (
-              <div className="flex items-center gap-1">
-                <FiMapPin className="w-4 h-4" />
-                <span>
+              <div className="flex items-center gap-1 min-w-0">
+                <FiMapPin className="w-4 h-4 flex-shrink-0" />
+                <span className="truncate">
                   {match.employer.companyCity}, {match.employer.companyCountry}
                 </span>
               </div>
             )}
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">Applied:</span>
-            <span className="font-medium text-foreground">
+          <div className="flex items-center gap-2 text-sm flex-wrap">
+            <span className="text-muted-foreground whitespace-nowrap">
+              Applied:
+            </span>
+            <span className="font-medium text-foreground whitespace-nowrap">
               {formatDate(match.createdAt)}
             </span>
           </div>
         </div>
 
-        <div className="flex-shrink-0 ml-6">
+        <div className="flex-shrink-0">
           {match.employer.companyLogo ? (
             <img
               src={match.employer.companyLogo}
               alt={match.employer.companyName}
-              className="w-16 h-16 rounded-full object-cover border-2 border-border"
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-border"
             />
           ) : (
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border-2 border-border">
-              <FiBriefcase className="w-8 h-8 text-primary" />
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center border-2 border-border">
+              <FiBriefcase className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
           )}
         </div>
@@ -262,32 +264,32 @@ export default function UserMatchesPage() {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-6 border-t border-border">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+      <div className="flex items-center justify-between pt-4 sm:pt-6 border-t border-border gap-4 flex-wrap">
+        <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+          <div className="flex items-center gap-1 text-sm text-muted-foreground whitespace-nowrap">
             <FiDollarSign className="w-4 h-4" />
             <span>
               {formatSalary(match.problem.payRange.min)} -{" "}
               {formatSalary(match.problem.payRange.max)}
             </span>
           </div>
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1 text-sm text-muted-foreground whitespace-nowrap">
             <FiCalendar className="w-4 h-4" />
             <span>{formatDate(match.createdAt)}</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={() => console.log("Problem details would open in a modal")}
-            className="flex items-center gap-2 px-3 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-3 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors text-sm font-medium whitespace-nowrap"
           >
             <FiBriefcase className="w-4 h-4" />
             Problem
           </button>
           <button
             onClick={() => router.push(`/dashboard/matches/${match._id}`)}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium whitespace-nowrap"
           >
             <FiEye className="w-4 h-4" />
             View Match

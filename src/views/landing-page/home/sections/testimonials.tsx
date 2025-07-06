@@ -12,7 +12,7 @@ const testimonials = [
     linkedin: "https://www.linkedin.com/in/gloria-oppong-70aa1138/",
   },
   {
-    name: "Samuel Amoo",
+    name: "Samuel Onocha",
     title: "",
     quote:
       "Data Fellows AI & matching capabilities with the ability to create a problem statement was really helpful.",
