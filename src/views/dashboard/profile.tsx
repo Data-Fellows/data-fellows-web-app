@@ -10,56 +10,8 @@ import UserProfile from "@/views/dashboard/user/profile/";
 
 // Loading skeleton component
 const ProfileSkeleton = () => (
-  <div className="min-h-screen bg-gray-50 dark:bg-zinc-900 py-8">
-    <div className="max-w-6xl mx-auto px-4">
-      <div className="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700 overflow-hidden">
-        <div className="relative h-48 bg-gradient-to-r from-blue-500 to-purple-600 animate-pulse"></div>
-        <div className="px-6 pb-6">
-          <div className="flex items-start justify-between -mt-16 mb-6">
-            <div className="flex items-end gap-6">
-              <div className="w-32 h-32 bg-gray-200 dark:bg-zinc-700 rounded-full border-4 border-white dark:border-zinc-800 animate-pulse"></div>
-              <div className="mb-4">
-                <div className="h-6 bg-gray-200 dark:bg-zinc-700 rounded w-48 mb-2 animate-pulse"></div>
-                <div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-32 animate-pulse"></div>
-              </div>
-            </div>
-            <div className="h-10 bg-gray-200 dark:bg-zinc-700 rounded w-24 animate-pulse"></div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-gray-50 dark:bg-zinc-900 rounded-lg p-6"
-                >
-                  <div className="h-5 bg-gray-200 dark:bg-zinc-700 rounded w-32 mb-4 animate-pulse"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-full animate-pulse"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-3/4 animate-pulse"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-6">
-              {[...Array(2)].map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-gray-50 dark:bg-zinc-900 rounded-lg p-6"
-                >
-                  <div className="h-5 bg-gray-200 dark:bg-zinc-700 rounded w-24 mb-4 animate-pulse"></div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-full animate-pulse"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-2/3 animate-pulse"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <FiLoader className="animate-spin w-12 h-12 text-primary" />
   </div>
 );
 

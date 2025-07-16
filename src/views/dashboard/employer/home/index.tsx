@@ -214,7 +214,7 @@ export default function EmployerDashboard() {
   if (isLoading) {
     return (
       <div className="w-full min-h-screen bg-background py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-6">
-        <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
+        <div className="w-full max-w-full mx-auto space-y-4 sm:space-y-5 md:space-y-6">
           {/* Header Skeleton */}
           <div className="flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
@@ -269,7 +269,7 @@ export default function EmployerDashboard() {
 
   return (
     <div className="w-full min-h-screen bg-background py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-6">
-      <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
+      <div className="w-full max-w-full mx-auto space-y-4 sm:space-y-5 md:space-y-6">
         {/* Header with Company Info */}
         <div className="flex flex-col gap-4 md:gap-6">
           <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
