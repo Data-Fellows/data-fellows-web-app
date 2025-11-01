@@ -1,231 +1,115 @@
-import { easeOut, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import {
+  FiInstagram,
+  FiLinkedin,
+  FiTwitter,
+  FiYoutube,
+} from "react-icons/fi";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: easeOut },
-  },
-};
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "Community", href: "/community" },
+  { label: "Products", href: "/products" },
+  { label: "Resources", href: "/resources" },
+  { label: "Partners", href: "/partners" },
+  { label: "About", href: "/about" },
+  { label: "Join", href: "/join" },
+];
 
-function DesktopFooter() {
+const partnerHighlights = [
+  "AWS Startups",
+  "Microsoft for Startups",
+  "DataCamp Classroom",
+  "Zummit Africa",
+  "Vatebra Academy",
+  "Everything Analytics",
+];
+
+const socialLinks = [
+  { label: "LinkedIn", href: "#", icon: FiLinkedin },
+  { label: "Twitter / X", href: "#", icon: FiTwitter },
+  { label: "YouTube", href: "#", icon: FiYoutube },
+  { label: "Instagram", href: "#", icon: FiInstagram },
+];
+
+export const Footer = () => {
+  const year = new Date().getFullYear();
+
   return (
-    <motion.footer
-      className="bg-gradient-to-br from-[#1B3A4B] to-[#2C6E8F] text-white"
-      initial="hidden"
-      animate="visible"
-    >
-      <div className="mx-auto max-w-7xl px-8 py-16">
-        <motion.div
-          className="flex justify-between gap-12"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
-        >
-          <motion.div variants={fadeInUp}>
-            <Image
-              src="/svgs/landing-page/Logo.svg"
-              alt="Data Fellows Logo"
-              width={150}
-              height={60}
-              className="h-16 w-auto"
-            />
-            <p className="mt-4 max-w-xs text-sm font-light">
-              Affordable Data Analytics Solutions Powered by AI.
-            </p>
-          </motion.div>
-
-          <motion.div className="flex gap-20" variants={fadeInUp}>
-            <div>
-              <h3 className="mb-4 text-xl font-semibold">Product</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/sign-up"
-                    className="hover:text-yellow-300 transition"
-                  >
-                    Data Professionals
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/sign-up"
-                    className="hover:text-yellow-300 transition"
-                  >
-                    Business Partners
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-4 text-xl font-semibold">Support</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/contact"
-                    className="hover:text-yellow-300 transition"
-                  >
-                    Help & Support
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/contact"
-                    className="hover:text-yellow-300 transition"
-                  >
-                    Contact Us
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="flex flex-col items-end space-y-4"
-            variants={fadeInUp}
-          >
-            <div className="flex space-x-4 text-xl">
-              <Link href="#" aria-label="Twitter">
-                <FaTwitter className="hover:text-blue-400 transition" />
-              </Link>
-              <Link href="#" aria-label="LinkedIn">
-                <FaLinkedin className="hover:text-blue-600 transition" />
-              </Link>
-              <Link href="#" aria-label="GitHub">
-                <FaGithub className="hover:text-gray-300 transition" />
-              </Link>
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      <motion.div
-        className="border-t border-white/20 bg-gradient-to-br from-[#1B3A4B]/80 to-[#2C6E8F]/80 px-8 py-6"
-        variants={fadeInUp}
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between text-sm">
-          <span>
-            © {new Date().getFullYear()} Data Fellows. All Rights Reserved.
-          </span>
-          <div className="flex space-x-6">
-            <Link
-              href="/privacy-policy"
-              className="hover:text-yellow-300 transition"
-            >
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-yellow-300 transition">
-              Terms of Use
-            </Link>
-          </div>
-        </div>
-      </motion.div>
-    </motion.footer>
-  );
-}
-
-function MobileFooter() {
-  return (
-    <motion.footer
-      className="bg-gradient-to-br from-[#1B3A4B] to-[#2C6E8F] text-white"
-      initial="hidden"
-      animate="visible"
-    >
-      <div className="px-6 py-10 space-y-8">
-        <motion.div variants={fadeInUp}>
+    <footer className="mt-16 border-t border-border bg-secondary/40">
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-12 md:flex-row md:items-start md:justify-between lg:px-0">
+        <div className="space-y-5 md:max-w-sm">
           <Image
             src="/svgs/data-fellow.svg"
             alt="Data Fellows Logo"
-            width={120}
-            height={40}
+            width={140}
+            height={48}
             className="h-12 w-auto"
           />
-          <p className="mt-4 text-base font-light">
-            Affordable Data Analytics Solutions Powered by AI.
+          <p className="text-sm text-muted-foreground">
+            Turning data into clarity for people and businesses. We train,
+            build, and launch tools that make data feel human.
           </p>
-        </motion.div>
-
-        <motion.div variants={fadeInUp}>
-          <h3 className="mb-4 text-lg font-semibold">Product</h3>
-          <ul className="space-y-3">
-            <li>
-              <Link href="/sign-up" className="hover:text-teal-300 transition">
-                Data Professionals
+          <div className="flex items-center gap-3 text-primary">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <Link
+                key={label}
+                href={href}
+                aria-label={label}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background text-lg transition hover:bg-primary hover:text-primary-foreground"
+              >
+                <Icon />
               </Link>
-            </li>
-            <li>
-              <Link href="/sign-up" className="hover:text-teal-300 transition">
-                Business Partners
-              </Link>
-            </li>
-          </ul>
-        </motion.div>
-
-        <motion.div variants={fadeInUp}>
-          <h3 className="mb-4 text-lg font-semibold">Support</h3>
-          <ul className="space-y-3">
-            <li>
-              <Link href="/contact" className="hover:text-teal-300 transition">
-                Help & Support
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-teal-300 transition">
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-        </motion.div>
-
-        <motion.div className="flex space-x-6 text-xl" variants={fadeInUp}>
-          <Link href="#" aria-label="Twitter">
-            <FaTwitter className="hover:text-blue-400 transition" />
-          </Link>
-          <Link href="#" aria-label="LinkedIn">
-            <FaLinkedin className="hover:text-blue-600 transition" />
-          </Link>
-          <Link href="#" aria-label="GitHub">
-            <FaGithub className="hover:text-gray-300 transition" />
-          </Link>
-        </motion.div>
-      </div>
-
-      <motion.div
-        className="border-t border-white/20 px-6 py-6"
-        variants={fadeInUp}
-      >
-        <div className="flex flex-col items-center space-y-4 text-sm">
-          <span>© {new Date().getFullYear()} Data Fellows.</span>
-          <div className="flex space-x-4">
-            <Link
-              href="/privacy-policy"
-              className="hover:text-teal-300 transition"
-            >
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-teal-300 transition">
-              Terms of Use
-            </Link>
+            ))}
           </div>
         </div>
-      </motion.div>
-    </motion.footer>
-  );
-}
 
-export const Footer = () => (
-  <>
-    <div className="hidden md:block">
-      <DesktopFooter />
-    </div>
-    <div className="block md:hidden">
-      <MobileFooter />
-    </div>
-  </>
-);
+        <div className="grid w-full max-w-3xl grid-cols-1 gap-12 sm:grid-cols-2">
+          <div>
+            <h4 className="text-base font-semibold text-foreground">
+              Quick links
+            </h4>
+            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+              {quickLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="transition hover:text-primary"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-base font-semibold text-foreground">
+              Partner network
+            </h4>
+            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+              {partnerHighlights.map((name) => (
+                <span
+                  key={name}
+                  className="rounded-md border border-border bg-background px-3 py-2 text-muted-foreground shadow-sm"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-border/70 bg-background/70">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-6 text-sm text-muted-foreground md:flex-row md:justify-between lg:px-0">
+          <span>&copy; {year} Data Fellows Inc. All rights reserved.</span>
+          <span className="font-medium text-foreground">
+            Built by Data Fellows Inc.
+          </span>
+        </div>
+      </div>
+    </footer>
+  );
+};

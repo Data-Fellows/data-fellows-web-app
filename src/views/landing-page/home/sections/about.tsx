@@ -1,138 +1,140 @@
-import { easeOut, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FaLightbulb, FaRocket } from "react-icons/fa";
+import { FiArrowRight, FiLinkedin } from "react-icons/fi";
+import {
+  advisors,
+  communityAdmins,
+  foundingTeam,
+} from "../../shared/team";
 
-const MotionButton = motion.button;
-
-const containerVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: easeOut,
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeOut } },
-};
-
-export default function About() {
-  return (
-    <motion.div
-      className="lg:h-[70vh] md:h-full pb-20 flex items-center justify-center"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-    >
-      <main className="w-full px-4 sm:px-6 lg:px-20 py-8 md:py-4 ">
-        <div className="flex flex-col lg:flex-row items-center justify-center">
-          <div className="w-full lg:w-[70%] pr-0 lg:pr-16 space-y-12">
-            <div className="space-y-6">
-              <motion.h1
-                className="text-4xl md:text-5xl font-bold text-left text-primary"
-                variants={fadeUp}
-              >
-                About Us
-              </motion.h1>
-              <motion.div className="space-y-4 text-left" variants={fadeUp}>
-                <h2 className="text-3xl md:text-4xl font-bold text-primary">
-                  We Help To Get Solutions
-                </h2>
-                <p className="text-lg text-muted-foreground">
-                  Discover the mission, vision, and values of Data Fellows, and
-                  explore the innovative AI-powered tool, BizPilot, along with
-                  the dedicated team driving Data Fellows forward.
-                </p>
-              </motion.div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 gap-y-12">
-              <motion.div className="space-y-4" variants={fadeUp}>
-                <div className="flex items-start space-x-10">
-                  <div className="w-16  flex items-center justify-center rounded-full ">
-                    <FaRocket className="w-12 h-12 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-primary">
-                      Mission & Vision
-                    </h3>
-                    <p className="mt-2 text-muted-foreground">
-                      Empowering businesses with tailored analytics solutions
-                      and connecting them with skilled data professionals
-                      through a community-driven platform.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-              <motion.div className="space-y-4" variants={fadeUp}>
-                <div className="flex items-start space-x-10">
-                  <div className="w-16 h-16 flex items-center justify-center rounded-full ">
-                    <FaLightbulb className="w-12 h-12 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-primary">
-                      BizPilot AI
-                    </h3>
-                    <p className="mt-2 text-muted-foreground">
-                      Experience the unique AI-powered matching process that
-                      simplifies finding the right talent for your data needs.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-            <motion.div className="flex justify-start" variants={fadeUp}>
-              <Link href="/about">
-                <MotionButton
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: "0 4px 24px 0 rgba(64, 144, 111, 0.15)",
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-[200px] cursor-pointer md:h-14 text-lg font-bold rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition px-6 py-3 shadow"
-                >
-                  Our Team
-                </MotionButton>
-              </Link>
-            </motion.div>
-          </div>
-          <motion.div
-            className="w-full lg:w-[30%] mt-12 lg:mt-0 relative flex justify-center"
-            variants={fadeUp}
-          >
-            <div className="rounded-lg overflow-hidden">
-              <Image
-                src="/svgs/landing-page/aboutwoman.svg"
-                alt="Data Fellows team member"
-                width={400}
-                height={500}
-                className="w-full h-auto object-cover rounded-2xl"
-              />
-            </div>
-            <div className="absolute -bottom-24 w-[60%] -translate-x-1 rounded-lg shadow-2xl bg-background border p-6">
-              <div className="text-center">
-                <h3 className="text-2xl font-bold text-primary">
-                  Data Fellows
-                </h3>
-                <p className="mt-1 text-muted-foreground">Looking for help?</p>
-                <div className="mt-4 pt-4 border-t">
-                  <p className="font-semibold text-center text-foreground">
-                    Join us now and get the best Data Fellow to solve your
-                    problems
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+const PersonCard = ({
+  name,
+  role,
+  tagline,
+  image,
+  linkedin,
+}: {
+  name: string;
+  role: string;
+  tagline: string;
+  image: string;
+  linkedin?: string;
+}) => (
+  <div className="overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md">
+    <div className="relative h-64">
+      <Image
+        src={image}
+        alt={name}
+        fill
+        sizes="(max-width: 768px) 100vw, 280px"
+        className="object-cover"
+      />
+    </div>
+    <div className="space-y-2 px-5 py-6">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-base font-semibold text-foreground">{name}</p>
+          <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            {role}
+          </p>
         </div>
-      </main>
-    </motion.div>
+        {linkedin ? (
+          <Link
+            href={linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
+            aria-label={`LinkedIn profile of ${name}`}
+          >
+            <FiLinkedin className="h-4 w-4" />
+          </Link>
+        ) : null}
+      </div>
+      <p className="text-sm text-muted-foreground">{tagline}</p>
+    </div>
+  </div>
+);
+
+const About = () => {
+  return (
+    <section id="about" className="px-4" aria-labelledby="about-heading">
+      <div className="mx-auto max-w-6xl space-y-12">
+        <div className="grid gap-8 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-10 shadow-inner lg:grid-cols-12 lg:gap-12 lg:px-10">
+          <div className="space-y-6 lg:col-span-7">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+              About
+            </span>
+            <h2
+              id="about-heading"
+              className="text-3xl font-semibold text-foreground sm:text-4xl"
+            >
+              Our story and the people behind it.
+            </h2>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Data Fellows started with a simple belief - data should help
+              people, not confuse them. What began as a small group of learners
+              has grown into a global ecosystem that connects training,
+              mentorship, and product innovation. Every Fellow contributes to a
+              shared goal: helping people and businesses make smarter decisions.
+            </p>
+            <div className="rounded-2xl border border-primary/10 bg-background px-5 py-4 text-sm text-muted-foreground shadow-sm">
+              <strong className="block text-foreground">
+                Vision: A world where anyone can use data with confidence and
+                purpose.
+              </strong>
+            </div>
+          </div>
+          <div className="space-y-4 rounded-3xl border border-primary/10 bg-background px-6 py-5 shadow-md lg:col-span-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              Why we exist
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              We connect curious people with mentors, collaborative projects,
+              and product teams that ship real solutions. Fellows experiment,
+              gather feedback from partners, and scale what works.
+            </p>
+            <div className="flex items-center gap-3 text-sm font-semibold text-primary">
+              <FiArrowRight className="h-4 w-4" />
+              <span>Join a community that builds for real-world impact.</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Founding team
+          </h3>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {foundingTeam.map((person) => (
+              <PersonCard key={person.name} {...person} />
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-10 lg:grid-cols-2">
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground">
+              Community leadership
+            </h3>
+            <div className="grid gap-6 sm:grid-cols-2">
+              {communityAdmins.map((person) => (
+                <PersonCard key={person.name} {...person} />
+              ))}
+            </div>
+          </div>
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground">Advisors</h3>
+            <div className="grid gap-6">
+              {advisors.map((person) => (
+                <PersonCard key={person.name} {...person} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
-}
+};
+
+export default About;
+

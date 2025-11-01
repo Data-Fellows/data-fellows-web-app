@@ -1,38 +1,27 @@
 import LandingPageLayout from "@/layouts/landing-page";
 import React from "react";
 import About from "./sections/about";
-import ContactUs from "./sections/contact-us";
+import Community from "./sections/community";
 import Hero from "./sections/hero";
-import HeroTwo from "./sections/hero-two";
+import Join from "./sections/join";
 import Partners from "./sections/partners";
-import Services from "./sections/services";
-import Testimonials from "./sections/testimonials";
-import BizpilotLandingDemo from "@/services/bizpilot/BizpilotLandingDemo";
-import { useRouter } from "next/router";
+import Products from "./sections/products";
+import Resources from "./sections/resources";
+import WhoWeAre from "./sections/who-we-are";
 
 const Home: React.FC = () => {
-  const router = useRouter();
-
-  const handleSignUpClick = (userType: 'data-professional' | 'business-owner') => {
-    // Navigate to sign-up page with user type
-    router.push({
-      pathname: '/auth/sign-up',
-      query: { type: userType === 'business-owner' ? 'employer' : 'user' }
-    });
-  };
-
   return (
     <LandingPageLayout>
-      <Hero />
-      <About />
-      <Services />
-      <Testimonials />
-      <HeroTwo />
-      <ContactUs />
-      <Partners />
-      
-      {/* BizPilot Demo - Floating button that appears on all sections */}
-      <BizpilotLandingDemo onSignUpClick={handleSignUpClick} />
+      <div className="space-y-24 pt-28 md:space-y-28 md:pt-32">
+        <Hero />
+        <WhoWeAre />
+        <Products />
+        <Community />
+        <Partners />
+        <Resources />
+        <About />
+        <Join />
+      </div>
     </LandingPageLayout>
   );
 };

@@ -1,127 +1,111 @@
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { FiBriefcase, FiUser } from "react-icons/fi";
+import Link from "next/link";
+import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.15,
-    },
+const ecosystem = [
+  {
+    title: "Community",
+    description: "Learn with people who care about real-world impact.",
   },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring" as const, stiffness: 80 },
+  {
+    title: "Products",
+    description: "Build tools like Inscend from challenges members face.",
   },
-};
-
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { duration: 1 },
+  {
+    title: "Impact",
+    description: "Launch pilots that help small businesses grow with data.",
   },
-};
+];
 
-export function Hero() {
+const Hero = () => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<
-    "data-professional" | "business-owner"
-  >("data-professional");
 
   return (
-    <div className="relative min-h-screen">
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={fadeIn}
-        className="absolute inset-0 z-0"
-      >
-        <Image
-          src="/images/hero.jpg"
-          alt="Hero background"
-          fill
-          style={{ objectFit: "cover", objectPosition: "center" }}
-          priority
-          quality={75}
-        />
-      </motion.div>
-
-      <div className="relative z-10 flex min-h-screen bg-black/70 items-center justify-center pt-10 text-white">
-        <main className="relative mx-1 pb-24 pt-16 text-center md:container md:mx-auto md:px-6">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="md:mx-auto md:max-w-4xl"
+    <section
+      id="hero"
+      className="relative isolate overflow-hidden"
+      aria-labelledby="hero-heading"
+    >
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-secondary/70 via-white to-primary/5" />
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:py-20 lg:grid-cols-12 lg:items-center lg:px-0">
+        <div className="space-y-6 lg:col-span-6">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+            Turning data into clarity
+          </span>
+          <h1
+            id="hero-heading"
+            className="text-4xl font-semibold leading-tight text-foreground sm:text-5xl"
           >
-            <motion.div
-              variants={fadeUp}
-              className="mb-8 inline-flex items-center rounded-full border-4 border-muted-foreground/10 border-opacity-90 bg-muted-foreground/5 bg-opacity-20 px-2 py-1 font-bold"
+            Making data simple, useful, and human.
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            We are a global community of people learning, building, and creating
+            tools that help small businesses grow -- starting with our flagship
+            product, Inscend.
+          </p>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <button
+              onClick={() => router.push("/join")}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
             >
-              <span className="rounded-full bg-primary px-4 py-1 text-sm">
-                New here?
-              </span>
-              <span className="px-3">Sign Up now as a</span>
-            </motion.div>
+              Join the Community
+              <FiArrowUpRight className="h-4 w-4" />
+            </button>
+            <Link
+              href="https://inscend.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10"
+            >
+              See Inscend
+              <FiArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Inclusion and purpose first -- every program is designed so anyone
+            can succeed with data, no matter where they start.
+          </p>
+        </div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="mb-6 text-4xl font-bold leading-tight md:text-6xl"
-            >
-              Affordable Data Analytics Solutions Powered by
-              <span className="w-44 text-primary">AI</span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              className="mb-12 text-xl text-white font-light"
-            >
-              Powerful, self-serve product and growth analytics. Welcome to
-              DataFellows with BizPilot AI integration.
-            </motion.p>
-
-            <motion.div
-              variants={fadeUp}
-              className="flex w-full flex-col items-center justify-center gap-6 sm:flex-row max-sm:w-[80%] max-sm:mx-auto"
-            >
-              <button
-                className={`w-full flex items-center justify-center gap-2 rounded cursor-pointer bg-primary px-6 py-3 text-primary-foreground font-semibold shadow hover:bg-primary/80 transition sm:w-auto ${
-                  activeTab === "data-professional" ? "ring-2 ring-primary" : ""
-                }`}
-                onClick={() => {
-                  setActiveTab("data-professional");
-                  router.push("/auth/sign-up?type=data-professional");
-                }}
-              >
-                <FiUser className="w-5 h-5" />
-                Data Professional
-              </button>
-              <button
-                className={`w-full flex items-center justify-center gap-2 rounded cursor-pointer bg-primary px-6 py-3 text-primary-foreground font-semibold shadow hover:bg-primary/80 transition sm:w-auto ${
-                  activeTab === "business-owner" ? "ring-2 ring-primary" : ""
-                }`}
-                onClick={() => {
-                  setActiveTab("business-owner");
-                  router.push("/auth/sign-up?type=business-owner");
-                }}
-              >
-                <FiBriefcase className="w-5 h-5" />
-                Business Owner
-              </button>
-            </motion.div>
-          </motion.div>
-        </main>
+        <div className="relative rounded-3xl border border-primary/10 bg-white/70 p-6 shadow-xl backdrop-blur-sm lg:col-span-6">
+          <div className="overflow-hidden rounded-2xl border border-white/40">
+            <Image
+              src="/images/data-community-hero.jpg"
+              alt="Data Fellows members collaborating"
+              width={720}
+              height={540}
+              className="h-full w-full object-cover"
+              priority
+            />
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            {ecosystem.map((step, index) => (
+              <Fragment key={step.title}>
+                <div className="flex items-start gap-3 rounded-2xl border border-primary/10 bg-secondary/70 px-4 py-3 shadow-sm">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                    {index + 1}
+                  </span>
+                  <div className="max-w-[12rem]">
+                    <p className="text-sm font-semibold text-foreground">
+                      {step.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+                {index < ecosystem.length - 1 && (
+                  <FiArrowRight className="hidden h-4 w-4 text-primary/60 sm:block" />
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
 
 export default Hero;

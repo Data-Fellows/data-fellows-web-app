@@ -4,7 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import React, { ReactNode, useState } from "react";
-import { FiLogIn, FiMenu, FiUserPlus, FiX } from "react-icons/fi";
+import { FiArrowUpRight, FiMenu, FiX } from "react-icons/fi";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/community", label: "Community" },
+  { href: "/products", label: "Products" },
+  { href: "/resources", label: "Resources" },
+  { href: "/partners", label: "Partners" },
+  { href: "/about", label: "About" },
+];
 
 function Navbar() {
   const pathname = usePathname();
@@ -21,8 +30,8 @@ function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border shadow-sm">
-      <nav className="mx-auto flex w-full md:w-[80%] items-center justify-between px-4 py-4 ">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md">
+      <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4">
         <div className="flex items-center gap-4">
           <Image
             src="/svgs/data-fellow.svg"
@@ -32,17 +41,11 @@ function Navbar() {
             className="h-12 w-12 md:h-16 md:w-16"
           />
           <div className="hidden md:flex items-center gap-6">
-            {[
-              { href: "/", label: "Home" },
-              { href: "/about", label: "About Us" },
-              { href: "/our-community", label: "Our Community" },
-              { href: "/services", label: "Services" },
-              { href: "/contact", label: "Contact Us" },
-            ].map(({ href, label }) => (
+            {navLinks.map(({ href, label }) => (
               <Link key={href} href={href} className={getNavLinkClass(href)}>
                 <span className="relative z-10">{label}</span>
                 <span
-                  className={`absolute left-0 bottom-0 h-[2px] w-full bg-primary transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100 ${
+                  className={`absolute left-0 bottom-0 h-[2px] w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100 ${
                     pathname === href ? "scale-x-100" : ""
                   }`}
                   aria-hidden="true"
@@ -55,23 +58,13 @@ function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={() => {
-              router.push("/auth/sign-up");
+              router.push("/join");
               setIsOpen(false);
             }}
-            className="flex items-center gap-2 rounded-md bg-primary cursor-pointer px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition"
+            className="flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
           >
-            <FiUserPlus className="w-5 h-5" />
-            Get Started
-          </button>
-          <button
-            onClick={() => {
-              router.push("/auth/sign-in");
-              setIsOpen(false);
-            }}
-            className="flex items-center gap-2 rounded-md border border-primary cursor-pointer px-5 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition"
-          >
-            <FiLogIn className="w-5 h-5" />
-            Sign In
+            Join the Ecosystem
+            <FiArrowUpRight className="h-4 w-4" />
           </button>
         </div>
 
@@ -104,13 +97,7 @@ function Navbar() {
           </button>
         </div>
         <div className="flex flex-col space-y-4 px-6 pt-2">
-          {[
-            { href: "/", label: "Home" },
-            { href: "/about", label: "About Us" },
-            { href: "/our-community", label: "Our Community" },
-            { href: "/services", label: "Services" },
-            { href: "/contact", label: "Contact Us" },
-          ].map(({ href, label }) => (
+          {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -125,26 +112,16 @@ function Navbar() {
             </Link>
           ))}
 
-          <div className="pt-6 space-y-3">
+          <div className="space-y-3 pt-6">
             <button
               onClick={() => {
-                router.push("/auth/sign-up");
+                router.push("/join");
                 setIsOpen(false);
               }}
-              className="flex items-center gap-2 w-full cursor-pointer rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition"
+              className="flex w-full items-center justify-between rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
             >
-              <FiUserPlus className="w-5 h-5" />
-              Get Started
-            </button>
-            <button
-              onClick={() => {
-                router.push("/auth/sign-in");
-                setIsOpen(false);
-              }}
-              className="flex items-center gap-2 w-full cursor-pointer rounded-md border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition"
-            >
-              <FiLogIn className="w-5 h-5" />
-              Login
+              <span>Join the Ecosystem</span>
+              <FiArrowUpRight className="h-4 w-4" />
             </button>
           </div>
         </div>
