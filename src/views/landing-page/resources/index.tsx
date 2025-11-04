@@ -60,7 +60,7 @@ const ResourcesPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="resources-hero-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 shadow-lg lg:px-12">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 lg:px-12">
             <div className="space-y-6 text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
                 Resources
@@ -80,7 +80,7 @@ const ResourcesPage = () => {
                 href="https://mailchi.mp/datafellowsai/newsletter"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
                 Subscribe to the newsletter
                 <FiArrowRight className="h-4 w-4" />
@@ -99,10 +99,10 @@ const ResourcesPage = () => {
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {library.map(({ category, description, items, icon: Icon }) => (
-                <div
-                  key={category}
-                  className="flex h-full flex-col gap-5 rounded-3xl border border-primary/10 bg-background px-6 py-6 shadow-sm"
-                >
+            <div
+              key={category}
+              className="flex h-full flex-col gap-5 rounded-3xl border border-primary/10 bg-background px-6 py-6"
+            >
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
                   </span>
@@ -134,7 +134,7 @@ const ResourcesPage = () => {
         </section>
 
         <section className="px-4" aria-labelledby="podcast-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10 shadow-lg">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="space-y-3">
                 <h2

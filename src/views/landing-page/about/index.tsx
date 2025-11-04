@@ -27,7 +27,7 @@ const AboutUs = () => {
         <About />
 
         <section className="px-4" aria-labelledby="values-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10 shadow-lg">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <div className="space-y-6">
               <h2
                 id="values-heading"
@@ -39,7 +39,7 @@ const AboutUs = () => {
                 {values.map(({ title, description }) => (
                   <div
                     key={title}
-                    className="rounded-2xl border border-primary/10 bg-secondary/50 px-5 py-5 text-sm text-muted-foreground shadow-sm"
+                    className="rounded-2xl border border-primary/10 bg-secondary/50 px-5 py-5 text-sm text-muted-foreground"
                   >
                     <p className="text-base font-semibold text-foreground">
                       {title}

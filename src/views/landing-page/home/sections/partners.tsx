@@ -40,7 +40,7 @@ const Partners = () => {
       className="px-4"
       aria-labelledby="partners-heading"
     >
-      <div className="mx-auto max-w-6xl space-y-8 rounded-3xl border border-primary/10 bg-background px-6 py-12 shadow-lg lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-6xl space-y-8 rounded-3xl border border-primary/10 bg-background px-6 py-12 lg:px-10 lg:py-16">
         <div className="space-y-4 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
             Partners
@@ -62,7 +62,7 @@ const Partners = () => {
           {partnerCategories.map(({ title, description, partners, icon: Icon }) => (
             <div
               key={title}
-              className="flex flex-col gap-5 rounded-2xl border border-primary/10 bg-secondary/40 p-6 shadow-sm"
+              className="flex flex-col gap-5 rounded-2xl border border-primary/10 bg-secondary/40 p-6"
             >
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -77,7 +77,7 @@ const Partners = () => {
                 {partners.map((partner) => (
                   <span
                     key={partner}
-                    className="rounded-xl border border-primary/10 bg-background px-4 py-3 text-sm font-medium text-muted-foreground shadow-sm"
+                    className="rounded-xl border border-primary/10 bg-background px-4 py-3 text-sm font-medium text-muted-foreground"
                   >
                     {partner}
                   </span>

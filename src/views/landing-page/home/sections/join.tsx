@@ -25,7 +25,7 @@ const Join = () => {
 
   return (
     <section id="join" className="px-4" aria-labelledby="join-heading">
-      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-12 shadow-lg lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-12 lg:px-10 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
           <div className="space-y-6 lg:col-span-5">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -42,13 +42,13 @@ const Join = () => {
               the next generation of tools that make data simple for everyone.
             </p>
             <div className="flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              <span className="rounded-full bg-background px-3 py-1 shadow-sm">
+              <span className="rounded-full bg-background px-3 py-1">
                 Global community
               </span>
-              <span className="rounded-full bg-background px-3 py-1 shadow-sm">
+              <span className="rounded-full bg-background px-3 py-1">
                 Mentorship & projects
               </span>
-              <span className="rounded-full bg-background px-3 py-1 shadow-sm">
+              <span className="rounded-full bg-background px-3 py-1">
                 Product innovation
               </span>
             </div>
@@ -75,7 +75,7 @@ const Join = () => {
           <div className="lg:col-span-7">
             <form
               onSubmit={handleSubmit}
-              className="space-y-5 rounded-3xl border border-primary/10 bg-background px-6 py-8 shadow-md"
+              className="space-y-5 rounded-3xl border border-primary/10 bg-background px-6 py-8"
             >
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
@@ -91,7 +91,7 @@ const Join = () => {
                         name: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                     placeholder="Ada Lovelace"
                   />
                 </label>
@@ -108,7 +108,7 @@ const Join = () => {
                         email: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                     placeholder="you@email.com"
                   />
                 </label>
@@ -125,7 +125,7 @@ const Join = () => {
                         country: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                     placeholder="Nigeria"
                   />
                 </label>
@@ -140,7 +140,7 @@ const Join = () => {
                         role: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                   >
                     {roles.map((role) => (
                       <option key={role} value={role}>
@@ -154,7 +154,7 @@ const Join = () => {
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
                 >
                   <FiSend className="h-4 w-4" />
                   Join the Ecosystem

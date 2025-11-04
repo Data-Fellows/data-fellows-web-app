@@ -50,7 +50,7 @@ const WhoWeAre = () => {
               {quotes.map((item) => (
                 <blockquote
                   key={item.quote}
-                  className="rounded-2xl border border-primary/10 bg-background px-5 py-4 text-sm text-foreground shadow-sm"
+                  className="rounded-2xl border border-primary/10 bg-background px-5 py-4 text-sm text-foreground"
                 >
                   <p className="font-semibold">"{item.quote}"</p>
                   <span className="mt-2 block text-xs font-medium text-muted-foreground">
@@ -63,7 +63,7 @@ const WhoWeAre = () => {
 
           <div className="lg:col-span-6">
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md sm:h-64">
+              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:h-64">
                 <Image
                   src="/images/TOBI OLADIMEJI-FOUNDER.jpg"
                   alt="Tobi Oladimeji speaking at a community session"
@@ -73,7 +73,7 @@ const WhoWeAre = () => {
                   priority
                 />
               </div>
-              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md sm:mt-10 sm:h-64">
+              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:mt-10 sm:h-64">
                 <Image
                   src="/images/community/Ayodeji.jpeg"
                   alt="Ayodeji leading a workshop"
@@ -82,7 +82,7 @@ const WhoWeAre = () => {
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md sm:-mt-10 sm:h-64">
+              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:-mt-10 sm:h-64">
                 <Image
                   src="/images/community/Tijani.jpeg"
                   alt="Community collaboration session"
@@ -91,7 +91,7 @@ const WhoWeAre = () => {
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md sm:h-64">
+              <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:h-64">
                 <Image
                   src="/images/community/Wuraola.jpeg"
                   alt="Wuraola sharing project updates"
@@ -104,11 +104,11 @@ const WhoWeAre = () => {
           </div>
         </div>
 
-        <div className="grid gap-6 rounded-3xl border border-primary/10 bg-white/70 p-6 shadow-sm backdrop-blur sm:grid-cols-3">
+        <div className="grid gap-6 rounded-3xl border border-primary/10 bg-white/70 p-6 backdrop-blur sm:grid-cols-3">
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="rounded-2xl bg-secondary/40 px-5 py-6 text-center shadow-sm"
+              className="rounded-2xl bg-secondary/40 px-5 py-6 text-center"
             >
               <p className="text-3xl font-semibold text-primary">
                 {stat.value}

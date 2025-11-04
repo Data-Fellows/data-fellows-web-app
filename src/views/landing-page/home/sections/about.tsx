@@ -20,7 +20,7 @@ const PersonCard = ({
   image: string;
   linkedin?: string;
 }) => (
-  <div className="overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md">
+  <div className="overflow-hidden rounded-3xl border border-primary/10 bg-background">
     <div className="relative h-64">
       <Image
         src={image}
@@ -59,7 +59,7 @@ const About = () => {
   return (
     <section id="about" className="px-4" aria-labelledby="about-heading">
       <div className="mx-auto max-w-6xl space-y-12">
-        <div className="grid gap-8 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-10 shadow-inner lg:grid-cols-12 lg:gap-12 lg:px-10">
+        <div className="grid gap-8 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-10 lg:grid-cols-12 lg:gap-12 lg:px-10">
           <div className="space-y-6 lg:col-span-7">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
               About
@@ -77,14 +77,14 @@ const About = () => {
               mentorship, and product innovation. Every Fellow contributes to a
               shared goal: helping people and businesses make smarter decisions.
             </p>
-            <div className="rounded-2xl border border-primary/10 bg-background px-5 py-4 text-sm text-muted-foreground shadow-sm">
+            <div className="rounded-2xl border border-primary/10 bg-background px-5 py-4 text-sm text-muted-foreground">
               <strong className="block text-foreground">
                 Vision: A world where anyone can use data with confidence and
                 purpose.
               </strong>
             </div>
           </div>
-          <div className="space-y-4 rounded-3xl border border-primary/10 bg-background px-6 py-5 shadow-md lg:col-span-5">
+          <div className="space-y-4 rounded-3xl border border-primary/10 bg-background px-6 py-5 lg:col-span-5">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
               Why we exist
             </h3>

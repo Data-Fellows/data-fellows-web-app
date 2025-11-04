@@ -7,7 +7,7 @@ const JoinPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="join-hero-heading">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/40 shadow-lg">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/40">
             <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
               <div className="space-y-6 px-6 py-12 lg:col-span-6 lg:px-10">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">

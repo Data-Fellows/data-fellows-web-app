@@ -52,7 +52,7 @@ const Resources = () => {
           {resources.map((resource) => (
             <article
               key={resource.title}
-              className="group overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+              className="group overflow-hidden rounded-3xl border border-primary/10 bg-background transition hover:-translate-y-1"
             >
               <div className="relative h-48 overflow-hidden">
                 <Image
@@ -62,7 +62,7 @@ const Resources = () => {
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
-                <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary shadow-sm backdrop-blur">
+                <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
                   <FiBookOpen className="h-3.5 w-3.5" />
                   {resource.category}
                 </span>

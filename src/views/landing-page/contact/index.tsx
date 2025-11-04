@@ -37,7 +37,7 @@ const ContactPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="contact-hero-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 shadow-lg lg:px-12">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 lg:px-12">
             <div className="space-y-4 text-center">
               <h1
                 id="contact-hero-heading"
@@ -55,7 +55,7 @@ const ContactPage = () => {
 
         <section className="px-4" aria-labelledby="contact-details-heading">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
-            <div className="space-y-6 rounded-3xl border border-primary/10 bg-background px-6 py-8 shadow-lg lg:col-span-5">
+            <div className="space-y-6 rounded-3xl border border-primary/10 bg-background px-6 py-8 lg:col-span-5">
               <h2
                 id="contact-details-heading"
                 className="text-2xl font-semibold text-foreground sm:text-3xl"
@@ -98,7 +98,7 @@ const ContactPage = () => {
                   notes: "",
                 });
               }}
-              className="space-y-5 rounded-3xl border border-primary/10 bg-background px-6 py-8 shadow-lg lg:col-span-7"
+              className="space-y-5 rounded-3xl border border-primary/10 bg-background px-6 py-8 lg:col-span-7"
             >
               <h2 className="text-xl font-semibold text-foreground">
                 Send us a message
@@ -117,7 +117,7 @@ const ContactPage = () => {
                         name: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                     placeholder="Your name"
                   />
                 </label>
@@ -134,7 +134,7 @@ const ContactPage = () => {
                         email: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                     placeholder="you@email.com"
                   />
                 </label>
@@ -150,7 +150,7 @@ const ContactPage = () => {
                       topic: event.target.value,
                     }));
                   }}
-                  className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                 >
                   <option>General inquiry</option>
                   <option>Partnership</option>
@@ -171,13 +171,13 @@ const ContactPage = () => {
                       notes: event.target.value,
                     }));
                   }}
-                  className="rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  className="rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                   placeholder="Tell us how we can support you."
                 />
               </label>
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
                 <FiSend className="h-4 w-4" />
                 Send message

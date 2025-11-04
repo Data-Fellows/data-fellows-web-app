@@ -20,7 +20,7 @@ const TeamCard = ({
   image: string;
   linkedin?: string;
 }) => (
-  <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md">
+  <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-background">
     <div className="relative h-56">
       <Image
         src={image}

@@ -70,7 +70,7 @@ const ProductsPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="products-hero-heading">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-lg">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-background">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
               <div className="space-y-6 px-6 py-12 lg:col-span-6 lg:px-10">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -92,7 +92,7 @@ const ProductsPage = () => {
                   href="https://inscend.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
                 >
                   Explore Inscend.io
                   <FiArrowUpRight className="h-4 w-4" />
@@ -107,7 +107,7 @@ const ProductsPage = () => {
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground shadow-sm backdrop-blur">
+                  <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
                     Built and refined with 20 pilot projects across 3 continents.
                   </div>
                 </div>
@@ -134,7 +134,7 @@ const ProductsPage = () => {
               {productHighlights.map(({ title, description, icon: Icon }) => (
                 <div
                   key={title}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-6 shadow-sm"
+                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-6"
                 >
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
@@ -150,7 +150,7 @@ const ProductsPage = () => {
         </section>
 
         <section className="px-4" aria-labelledby="case-studies-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10 shadow-lg">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <h2
               id="case-studies-heading"
               className="text-2xl font-semibold text-foreground sm:text-3xl"
@@ -158,11 +158,11 @@ const ProductsPage = () => {
               Case study snapshots
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {caseStudies.map(({ name, result }) => (
-                <div
-                  key={name}
-                  className="rounded-2xl border border-primary/10 bg-secondary/50 px-4 py-4 shadow-sm"
-                >
+                {caseStudies.map(({ name, result }) => (
+                  <div
+                    key={name}
+                    className="rounded-2xl border border-primary/10 bg-secondary/50 px-4 py-4"
+                  >
                   <p className="text-sm font-semibold text-foreground">{name}</p>
                   <p className="mt-2 text-sm text-muted-foreground">{result}</p>
                 </div>
@@ -172,7 +172,7 @@ const ProductsPage = () => {
         </section>
 
         <section className="px-4" aria-labelledby="roadmap-heading">
-          <div className="mx-auto max-w-6xl space-y-6 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-10 shadow-inner">
+          <div className="mx-auto max-w-6xl space-y-6 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-10">
             <h2
               id="roadmap-heading"
               className="text-2xl font-semibold text-foreground sm:text-3xl"
@@ -180,11 +180,11 @@ const ProductsPage = () => {
               Roadmap highlights
             </h2>
             <div className="grid gap-4 md:grid-cols-3">
-              {roadmap.map(({ quarter, focus, detail }) => (
-                <div
-                  key={quarter}
-                  className="rounded-2xl border border-primary/10 bg-background px-5 py-6 shadow-sm"
-                >
+                {roadmap.map(({ quarter, focus, detail }) => (
+                  <div
+                    key={quarter}
+                    className="rounded-2xl border border-primary/10 bg-background px-5 py-6"
+                  >
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     {quarter}
                   </p>

@@ -30,7 +30,7 @@ const Community = () => {
       className="px-4"
       aria-labelledby="community-heading"
     >
-      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 shadow-inner lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 lg:px-10 lg:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14">
           <div className="space-y-6 lg:col-span-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -52,7 +52,7 @@ const Community = () => {
               {rhythm.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-2xl border border-primary/10 bg-background px-4 py-4 shadow-sm"
+                  className="rounded-2xl border border-primary/10 bg-background px-4 py-4"
                 >
                   <p className="text-sm font-semibold text-foreground">
                     {item.title}
@@ -65,7 +65,7 @@ const Community = () => {
             </div>
             <button
               onClick={() => router.push("/community")}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
             >
               <FiUsers className="h-4 w-4" />
               Join the Community
@@ -74,7 +74,7 @@ const Community = () => {
 
           <div className="space-y-4 lg:col-span-6">
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md">
+              <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background">
                 <Image
                   src="/images/community/Agada.jpeg"
                   alt="Community members during a virtual catchup"
@@ -83,7 +83,7 @@ const Community = () => {
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background shadow-md sm:mt-6">
+              <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:mt-6">
                 <Image
                   src="/images/community/Nerat.jpeg"
                   alt="Mentorship session with Fellows"
@@ -93,7 +93,7 @@ const Community = () => {
                 />
               </div>
             </div>
-            <div className="rounded-3xl border border-primary/10 bg-background px-6 py-5 shadow-md">
+            <div className="rounded-3xl border border-primary/10 bg-background px-6 py-5">
               <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                 <FiArrowRightCircle className="h-5 w-5 text-primary" />
                 <span>

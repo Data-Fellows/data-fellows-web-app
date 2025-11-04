@@ -12,7 +12,7 @@ import WhoWeAre from "./sections/who-we-are";
 const Home: React.FC = () => {
   return (
     <LandingPageLayout>
-      <div className="space-y-24 pt-28 md:space-y-28 md:pt-32">
+      <div className="space-y-24 md:space-y-28">
         <Hero />
         <WhoWeAre />
         <Products />

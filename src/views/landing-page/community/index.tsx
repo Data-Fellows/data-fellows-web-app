@@ -100,7 +100,7 @@ const CommunityPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="community-hero-heading">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/40 shadow-lg">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/40">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
               <div className="space-y-6 px-6 py-12 lg:col-span-6 lg:px-10">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -121,7 +121,7 @@ const CommunityPage = () => {
                   href="https://bit.ly/m/datafellows"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
                 >
                   <FiUsers className="h-4 w-4" />
                   Join us on Discord
@@ -136,7 +136,7 @@ const CommunityPage = () => {
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground shadow-sm backdrop-blur">
+                  <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
                     1000+ members across 15 countries and counting.
                   </div>
                 </div>
@@ -163,7 +163,7 @@ const CommunityPage = () => {
               {programs.map(({ title, description, icon: Icon }) => (
                 <div
                   key={title}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-background px-6 py-6 shadow-sm"
+                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-background px-6 py-6"
                 >
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
@@ -179,7 +179,7 @@ const CommunityPage = () => {
         </section>
 
         <section className="px-4" aria-labelledby="community-rhythm-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10 shadow-lg">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <div className="space-y-6">
               <h2
                 id="community-rhythm-heading"
@@ -191,7 +191,7 @@ const CommunityPage = () => {
                 {rhythm.map(({ title, cadence }) => (
                   <div
                     key={title}
-                    className="rounded-2xl border border-primary/10 bg-secondary/40 px-5 py-5 shadow-sm"
+                    className="rounded-2xl border border-primary/10 bg-secondary/40 px-5 py-5"
                   >
                     <p className="text-sm font-semibold text-foreground">
                       {title}

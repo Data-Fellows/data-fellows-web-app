@@ -92,7 +92,7 @@ export const Footer = () => {
               {partnerHighlights.map((name) => (
                 <span
                   key={name}
-                  className="rounded-md border border-border bg-background px-3 py-2 text-muted-foreground shadow-sm"
+                  className="rounded-md border border-border bg-background px-3 py-2 text-muted-foreground"
                 >
                   {name}
                 </span>

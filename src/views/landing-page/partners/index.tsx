@@ -40,7 +40,7 @@ const PartnersPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="partners-hero-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-12 shadow-lg lg:px-12">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-12 lg:px-12">
             <div className="flex flex-col gap-6 text-center">
               <h1
                 id="partners-hero-heading"
@@ -54,7 +54,7 @@ const PartnersPage = () => {
               </p>
               <Link
                 href="mailto:partners@datafellowsai.com"
-                className="mx-auto inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                className="mx-auto inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
                 Start a partnership conversation
                 <FiArrowUpRight className="h-4 w-4" />
@@ -73,10 +73,10 @@ const PartnersPage = () => {
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
               {partnerCategories.map(({ title, description, partners, icon: Icon }) => (
-                <div
-                  key={title}
-                  className="flex h-full flex-col gap-5 rounded-3xl border border-primary/10 bg-background px-6 py-6 shadow-sm"
-                >
+            <div
+              key={title}
+              className="flex h-full flex-col gap-5 rounded-3xl border border-primary/10 bg-background px-6 py-6"
+            >
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
                   </span>
@@ -105,7 +105,7 @@ const PartnersPage = () => {
         </section>
 
         <section className="px-4" aria-labelledby="partner-benefits-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10 shadow-lg">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <h2
               id="partner-benefits-heading"
               className="text-2xl font-semibold text-foreground sm:text-3xl"
@@ -113,15 +113,15 @@ const PartnersPage = () => {
               What partners experience
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {[
-                "Access to talent that has shipped real products and pilots.",
-                "Rapid experimentation loops with Fellows and SMEs in-market.",
-                "A warm community channel to share opportunities and insights.",
-              ].map((benefit) => (
-                <div
-                  key={benefit}
-                  className="rounded-2xl border border-primary/10 bg-secondary/50 px-4 py-4 text-sm text-muted-foreground shadow-sm"
-                >
+                {[
+                  "Access to talent that has shipped real products and pilots.",
+                  "Rapid experimentation loops with Fellows and SMEs in-market.",
+                  "A warm community channel to share opportunities and insights.",
+                ].map((benefit) => (
+                  <div
+                    key={benefit}
+                    className="rounded-2xl border border-primary/10 bg-secondary/50 px-4 py-4 text-sm text-muted-foreground"
+                  >
                   {benefit}
                 </div>
               ))}

@@ -14,7 +14,7 @@ export const CommunityLeadCard = ({
 }) => {
   return (
     <motion.div
-      className="rounded-xl bg-card text-card-foreground shadow-md transition-shadow duration-300 hover:shadow-lg flex flex-col items-center p-6"
+      className="flex flex-col items-center rounded-xl border border-primary/10 bg-card p-6 text-card-foreground transition-transform duration-300 hover:-translate-y-1"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

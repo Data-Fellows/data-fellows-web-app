@@ -27,7 +27,7 @@ const Products = () => {
       className="px-4"
       aria-labelledby="products-heading"
     >
-      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-12 shadow-lg lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-12 lg:px-10 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
           <div className="space-y-6 lg:col-span-5">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -49,7 +49,7 @@ const Products = () => {
               {features.map((feature) => (
                 <div
                   key={feature.title}
-                  className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-secondary/50 px-4 py-4 shadow-sm"
+                  className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-secondary/50 px-4 py-4"
                 >
                   <span className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <FiStar className="h-4 w-4" />
@@ -69,7 +69,7 @@ const Products = () => {
               href="https://inscend.io"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
             >
               Explore Inscend.io
               <FiArrowUpRight className="h-4 w-4" />
@@ -77,7 +77,7 @@ const Products = () => {
           </div>
 
           <div className="relative lg:col-span-7">
-            <div className="relative overflow-hidden rounded-3xl border border-primary/10 bg-secondary/30 shadow-lg">
+            <div className="relative overflow-hidden rounded-3xl border border-primary/10 bg-secondary/30">
               <Image
                 src="/images/company-dash.png"
                 alt="Inscend dashboards"
@@ -85,7 +85,7 @@ const Products = () => {
                 height={600}
                 className="h-full w-full object-cover"
               />
-              <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground shadow-sm backdrop-blur">
+              <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
                 Built with real Data Fellows businesses in Lagos, Nairobi, and
                 Toronto.
               </div>
