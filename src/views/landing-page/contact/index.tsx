@@ -37,7 +37,7 @@ const ContactPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="contact-hero-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 lg:px-12">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">
             <div className="space-y-4 text-center">
               <h1
                 id="contact-hero-heading"
@@ -71,7 +71,7 @@ const ContactPage = () => {
                   <Link
                     key={title}
                     href={href}
-                    className="flex items-center gap-4 rounded-2xl border border-primary/10 bg-secondary/50 px-5 py-4 text-sm text-muted-foreground transition hover:border-primary/30"
+                    className="flex items-center gap-4 rounded-2xl border border-primary/10 bg-secondary/10 px-5 py-4 text-sm text-muted-foreground transition hover:border-primary/30"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
@@ -201,4 +201,3 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
-

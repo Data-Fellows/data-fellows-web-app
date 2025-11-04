@@ -53,22 +53,24 @@ const Join = () => {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-4 pt-4">
-              {["/images/community/Blessing.jpeg", "/images/community/Wuraola.jpeg", "/images/community/Nerat.jpeg"].map(
-                (image) => (
-                  <div
-                    key={image}
-                    className="relative h-24 overflow-hidden rounded-2xl border border-primary/20"
-                  >
-                    <Image
-                      src={image}
-                      alt="Data Fellows member"
-                      fill
-                      sizes="(max-width: 768px) 30vw, 200px"
-                      className="object-cover"
-                    />
-                  </div>
-                ),
-              )}
+              {[
+                "/images/community/Blessing.jpeg",
+                "/images/community/Wuraola.jpeg",
+                "/images/community/Nerat.jpeg",
+              ].map((image) => (
+                <div
+                  key={image}
+                  className="relative h-24 overflow-hidden rounded-2xl border border-primary/20"
+                >
+                  <Image
+                    src={image}
+                    alt="Data Fellows member"
+                    fill
+                    sizes="(max-width: 768px) 30vw, 200px"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -169,7 +171,7 @@ const Join = () => {
               </div>
 
               {submitted ? (
-                <p className="flex items-center gap-2 rounded-2xl border border-primary/10 bg-secondary/50 px-4 py-3 text-xs font-medium text-primary">
+                <p className="flex items-center gap-2 rounded-2xl border border-primary/10 bg-secondary/10 px-4 py-3 text-xs font-medium text-primary">
                   <FiCheckCircle className="h-4 w-4" />
                   Thank you! We&apos;ll follow up with next steps shortly.
                 </p>
@@ -188,5 +190,3 @@ const Join = () => {
 };
 
 export default Join;
-
-

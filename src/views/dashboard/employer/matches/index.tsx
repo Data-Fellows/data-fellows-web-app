@@ -258,7 +258,7 @@ export default function EmployerMatchesPage() {
         {match.problem.type.slice(0, 3).map((type, index) => (
           <span
             key={index}
-            className="px-2 sm:px-3 py-1 bg-secondary/50 text-secondary-foreground rounded-full text-xs sm:text-sm"
+            className="px-2 sm:px-3 py-1 bg-secondary/10 text-secondary-foreground rounded-full text-xs sm:text-sm"
           >
             {type}
           </span>

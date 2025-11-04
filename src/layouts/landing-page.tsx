@@ -96,7 +96,7 @@ function Navbar() {
             <FiX className="h-6 w-6 text-primary" />
           </button>
         </div>
-        <div className="flex flex-col space-y-4 px-6 pt-2">
+        <div className="flex flex-col bg-background space-y-4 px-6 py-8">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -137,7 +137,7 @@ interface LandingPageLayoutProps {
 const LandingPageLayout: React.FC<LandingPageLayoutProps> = ({ children }) => (
   <div className="min-h-screen bg-background">
     <Navbar />
-    <main className="w-full">{children}</main>
+    <main className="w-full pt-24 md:pt-32">{children}</main>
     <Footer />
   </div>
 );

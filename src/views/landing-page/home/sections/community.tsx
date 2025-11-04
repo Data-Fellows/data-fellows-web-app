@@ -30,7 +30,7 @@ const Community = () => {
       className="px-4"
       aria-labelledby="community-heading"
     >
-      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-12 lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-10 lg:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14">
           <div className="space-y-6 lg:col-span-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -110,5 +110,3 @@ const Community = () => {
 };
 
 export default Community;
-
-

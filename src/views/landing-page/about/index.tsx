@@ -39,7 +39,7 @@ const AboutUs = () => {
                 {values.map(({ title, description }) => (
                   <div
                     key={title}
-                    className="rounded-2xl border border-primary/10 bg-secondary/50 px-5 py-5 text-sm text-muted-foreground"
+                    className="rounded-2xl border border-primary/10 bg-secondary/10 px-5 py-5 text-sm text-muted-foreground"
                   >
                     <p className="text-base font-semibold text-foreground">
                       {title}

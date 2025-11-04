@@ -108,7 +108,8 @@ const ProductsPage = () => {
                     priority
                   />
                   <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
-                    Built and refined with 20 pilot projects across 3 continents.
+                    Built and refined with 20 pilot projects across 3
+                    continents.
                   </div>
                 </div>
               </div>
@@ -134,7 +135,7 @@ const ProductsPage = () => {
               {productHighlights.map(({ title, description, icon: Icon }) => (
                 <div
                   key={title}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-6"
+                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-6"
                 >
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
@@ -149,7 +150,7 @@ const ProductsPage = () => {
           </div>
         </section>
 
-        <section className="px-4" aria-labelledby="case-studies-heading">
+        {/* <section className="px-4" aria-labelledby="case-studies-heading">
           <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <h2
               id="case-studies-heading"
@@ -158,12 +159,14 @@ const ProductsPage = () => {
               Case study snapshots
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-                {caseStudies.map(({ name, result }) => (
-                  <div
-                    key={name}
-                    className="rounded-2xl border border-primary/10 bg-secondary/50 px-4 py-4"
-                  >
-                  <p className="text-sm font-semibold text-foreground">{name}</p>
+              {caseStudies.map(({ name, result }) => (
+                <div
+                  key={name}
+                  className="rounded-2xl border border-primary/10 bg-secondary/10 px-4 py-4"
+                >
+                  <p className="text-sm font-semibold text-foreground">
+                    {name}
+                  </p>
                   <p className="mt-2 text-sm text-muted-foreground">{result}</p>
                 </div>
               ))}
@@ -172,7 +175,7 @@ const ProductsPage = () => {
         </section>
 
         <section className="px-4" aria-labelledby="roadmap-heading">
-          <div className="mx-auto max-w-6xl space-y-6 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-10">
+          <div className="mx-auto max-w-6xl space-y-6 rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10">
             <h2
               id="roadmap-heading"
               className="text-2xl font-semibold text-foreground sm:text-3xl"
@@ -180,11 +183,11 @@ const ProductsPage = () => {
               Roadmap highlights
             </h2>
             <div className="grid gap-4 md:grid-cols-3">
-                {roadmap.map(({ quarter, focus, detail }) => (
-                  <div
-                    key={quarter}
-                    className="rounded-2xl border border-primary/10 bg-background px-5 py-6"
-                  >
+              {roadmap.map(({ quarter, focus, detail }) => (
+                <div
+                  key={quarter}
+                  className="rounded-2xl border border-primary/10 bg-background px-5 py-6"
+                >
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     {quarter}
                   </p>
@@ -196,12 +199,10 @@ const ProductsPage = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
       </div>
     </LandingPageLayout>
   );
 };
 
 export default ProductsPage;
-
-

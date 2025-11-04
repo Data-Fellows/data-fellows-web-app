@@ -19,6 +19,21 @@ const stats = [
   { value: "20+", label: "Pilot projects launched" },
 ];
 
+const statAccentClasses = [
+  {
+    card: "border-primary/30 bg-primary/10",
+    value: "text-primary",
+  },
+  {
+    card: "border-accent/30 bg-accent/10",
+    value: "text-accent-foreground",
+  },
+  {
+    card: "border-ring/30 bg-ring/10",
+    value: "text-ring",
+  },
+];
+
 const WhoWeAre = () => {
   return (
     <section
@@ -104,20 +119,23 @@ const WhoWeAre = () => {
           </div>
         </div>
 
-        <div className="grid gap-6 rounded-3xl border border-primary/10 bg-white/70 p-6 backdrop-blur sm:grid-cols-3">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl bg-secondary/40 px-5 py-6 text-center"
-            >
-              <p className="text-3xl font-semibold text-primary">
-                {stat.value}
-              </p>
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+        <div className="grid gap-6 rounded-3xl border border-border/70 bg-card/80 p-6 shadow-lg shadow-primary/5 backdrop-blur dark:bg-card/40 sm:grid-cols-3">
+          {stats.map((stat, index) => {
+            const accent = statAccentClasses[index % statAccentClasses.length];
+            return (
+              <div
+                key={stat.label}
+                className={`rounded-2xl border px-5 py-6 text-center shadow-sm shadow-black/5 dark:shadow-black/30 ${accent.card}`}
+              >
+                <p className={`text-4xl font-semibold ${accent.value}`}>
+                  {stat.value}
+                </p>
+                <p className="text-xs uppercase tracking-wide text-muted-foreground/90">
+                  {stat.label}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

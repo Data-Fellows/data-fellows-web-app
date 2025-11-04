@@ -1,11 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FiInstagram,
-  FiLinkedin,
-  FiTwitter,
-  FiYoutube,
-} from "react-icons/fi";
+import { FiInstagram, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -37,7 +32,7 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-16 border-t border-border bg-secondary/40">
+    <footer className="mt-16 border-t border-border bg-secondary/10">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-12 md:flex-row md:items-start md:justify-between lg:px-0">
         <div className="space-y-5 md:max-w-sm">
           <Image
@@ -73,10 +68,7 @@ export const Footer = () => {
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
               {quickLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <Link
-                    href={href}
-                    className="transition hover:text-primary"
-                  >
+                  <Link href={href} className="transition hover:text-primary">
                     {label}
                   </Link>
                 </li>

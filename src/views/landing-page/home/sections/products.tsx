@@ -22,11 +22,7 @@ const features = [
 
 const Products = () => {
   return (
-    <section
-      id="products"
-      className="px-4"
-      aria-labelledby="products-heading"
-    >
+    <section id="products" className="px-4" aria-labelledby="products-heading">
       <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-12 lg:px-10 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
           <div className="space-y-6 lg:col-span-5">
@@ -49,7 +45,7 @@ const Products = () => {
               {features.map((feature) => (
                 <div
                   key={feature.title}
-                  className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-secondary/50 px-4 py-4"
+                  className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-secondary/10 px-4 py-4"
                 >
                   <span className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <FiStar className="h-4 w-4" />
@@ -98,5 +94,3 @@ const Products = () => {
 };
 
 export default Products;
-
-

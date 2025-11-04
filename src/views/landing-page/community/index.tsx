@@ -100,7 +100,7 @@ const CommunityPage = () => {
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="community-hero-heading">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/40">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/10">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
               <div className="space-y-6 px-6 py-12 lg:col-span-6 lg:px-10">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -191,7 +191,7 @@ const CommunityPage = () => {
                 {rhythm.map(({ title, cadence }) => (
                   <div
                     key={title}
-                    className="rounded-2xl border border-primary/10 bg-secondary/40 px-5 py-5"
+                    className="rounded-2xl border border-primary/10 bg-secondary/10 px-5 py-5"
                   >
                     <p className="text-sm font-semibold text-foreground">
                       {title}
@@ -231,5 +231,3 @@ const CommunityPage = () => {
 };
 
 export default CommunityPage;
-
-

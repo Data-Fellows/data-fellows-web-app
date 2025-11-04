@@ -1,11 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight, FiLinkedin } from "react-icons/fi";
-import {
-  advisors,
-  communityAdmins,
-  foundingTeam,
-} from "../../shared/team";
 
 const PersonCard = ({
   name,
@@ -59,7 +54,7 @@ const About = () => {
   return (
     <section id="about" className="px-4" aria-labelledby="about-heading">
       <div className="mx-auto max-w-6xl space-y-12">
-        <div className="grid gap-8 rounded-3xl border border-primary/10 bg-secondary/40 px-6 py-10 lg:grid-cols-12 lg:gap-12 lg:px-10">
+        <div className="grid gap-8 rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10 lg:grid-cols-12 lg:gap-12 lg:px-10">
           <div className="space-y-6 lg:col-span-7">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
               About
@@ -99,42 +94,9 @@ const About = () => {
             </div>
           </div>
         </div>
-
-        <div className="space-y-6">
-          <h3 className="text-xl font-semibold text-foreground">
-            Founding team
-          </h3>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {foundingTeam.map((person) => (
-              <PersonCard key={person.name} {...person} />
-            ))}
-          </div>
-        </div>
-
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-foreground">
-              Community leadership
-            </h3>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {communityAdmins.map((person) => (
-                <PersonCard key={person.name} {...person} />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-foreground">Advisors</h3>
-            <div className="grid gap-6">
-              {advisors.map((person) => (
-                <PersonCard key={person.name} {...person} />
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
 };
 
 export default About;
-

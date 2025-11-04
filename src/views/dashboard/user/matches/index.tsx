@@ -251,7 +251,7 @@ export default function UserMatchesPage() {
         {match.problem.type.slice(0, 3).map((type, index) => (
           <span
             key={index}
-            className="px-3 py-1 bg-secondary/50 text-secondary-foreground rounded-full text-sm"
+            className="px-3 py-1 bg-secondary/10 text-secondary-foreground rounded-full text-sm"
           >
             {type}
           </span>

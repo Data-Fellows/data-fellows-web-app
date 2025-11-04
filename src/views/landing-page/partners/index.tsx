@@ -72,34 +72,36 @@ const PartnersPage = () => {
               Partner network at a glance
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
-              {partnerCategories.map(({ title, description, partners, icon: Icon }) => (
-            <div
-              key={title}
-              className="flex h-full flex-col gap-5 rounded-3xl border border-primary/10 bg-background px-6 py-6"
-            >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <p className="text-lg font-semibold text-foreground">
-                      {title}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {description}
-                    </p>
+              {partnerCategories.map(
+                ({ title, description, partners, icon: Icon }) => (
+                  <div
+                    key={title}
+                    className="flex h-full flex-col gap-5 rounded-3xl border border-primary/10 bg-background px-6 py-6"
+                  >
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <p className="text-lg font-semibold text-foreground">
+                        {title}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {description}
+                      </p>
+                    </div>
+                    <div className="grid gap-3">
+                      {partners.map((partner) => (
+                        <span
+                          key={partner}
+                          className="rounded-xl border border-primary/10 bg-secondary/10 px-4 py-2 text-sm font-medium text-muted-foreground"
+                        >
+                          {partner}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="grid gap-3">
-                    {partners.map((partner) => (
-                      <span
-                        key={partner}
-                        className="rounded-xl border border-primary/10 bg-secondary/50 px-4 py-2 text-sm font-medium text-muted-foreground"
-                      >
-                        {partner}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
         </section>
@@ -113,15 +115,15 @@ const PartnersPage = () => {
               What partners experience
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-                {[
-                  "Access to talent that has shipped real products and pilots.",
-                  "Rapid experimentation loops with Fellows and SMEs in-market.",
-                  "A warm community channel to share opportunities and insights.",
-                ].map((benefit) => (
-                  <div
-                    key={benefit}
-                    className="rounded-2xl border border-primary/10 bg-secondary/50 px-4 py-4 text-sm text-muted-foreground"
-                  >
+              {[
+                "Access to talent that has shipped real products and pilots.",
+                "Rapid experimentation loops with Fellows and SMEs in-market.",
+                "A warm community channel to share opportunities and insights.",
+              ].map((benefit) => (
+                <div
+                  key={benefit}
+                  className="rounded-2xl border border-primary/10 bg-secondary/10 px-4 py-4 text-sm text-muted-foreground"
+                >
                   {benefit}
                 </div>
               ))}
@@ -134,5 +136,3 @@ const PartnersPage = () => {
 };
 
 export default PartnersPage;
-
-
