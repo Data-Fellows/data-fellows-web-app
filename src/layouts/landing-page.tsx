@@ -30,7 +30,7 @@ function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/90 ">
       <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4">
         <div className="flex items-center gap-4">
           <Image
@@ -40,6 +40,7 @@ function Navbar() {
             height={80}
             className="h-12 w-12 md:h-16 md:w-16"
           />
+
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(({ href, label }) => (
               <Link key={href} href={href} className={getNavLinkClass(href)}>
@@ -96,7 +97,7 @@ function Navbar() {
             <FiX className="h-6 w-6 text-primary" />
           </button>
         </div>
-        <div className="flex flex-col bg-background space-y-4 px-6 py-8">
+        <div className="flex flex-col bg-background h-screen space-y-4 px-6 py-8">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -137,7 +138,8 @@ interface LandingPageLayoutProps {
 const LandingPageLayout: React.FC<LandingPageLayoutProps> = ({ children }) => (
   <div className="min-h-screen bg-background">
     <Navbar />
-    <main className="w-full pt-24 md:pt-32">{children}</main>
+    {/* reduced top padding on mobile (pt-6), keep larger spacing on md+ */}
+    <main className="w-full pt-6 md:pt-32">{children}</main>
     <Footer />
   </div>
 );
