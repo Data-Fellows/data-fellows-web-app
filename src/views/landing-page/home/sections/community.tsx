@@ -1,33 +1,43 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { FiArrowRightCircle, FiUsers } from "react-icons/fi";
 
 const rhythm = [
   {
     title: "Community Sunday Catchup",
     cadence: "Every two weeks",
+    description:
+      "Live check-ins where Fellows demo what they are building and ask for quick feedback.",
   },
   {
     title: "Fireside Sessions",
     cadence: "Once a month",
+    description:
+      "Intimate talks with partners and mentors that unpack a single theme with actionable prompts.",
   },
   {
     title: "Newsletter",
     cadence: "Every two weeks",
+    description:
+      "A curated inbox drop featuring templates, wins, and calls for collaborators.",
   },
   {
     title: "Journey So Far",
     cadence: "Stories from members -- last Friday monthly",
+    description:
+      "A rotating spotlight on a Fellow showing the behind-the-scenes of a recent success.",
   },
 ];
 
 const Community = () => {
   const router = useRouter();
+  const [activeRhythm, setActiveRhythm] = useState<string | null>(null);
 
   return (
     <section
       id="community"
-      className="px-4"
+      className="px-4 sm:px-6"
       aria-labelledby="community-heading"
     >
       <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-10 lg:py-16">
@@ -49,19 +59,49 @@ const Community = () => {
               that turn lessons into real experience.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
-              {rhythm.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl border border-primary/10 bg-background px-4 py-4"
-                >
-                  <p className="text-sm font-semibold text-foreground">
-                    {item.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {item.cadence}
-                  </p>
-                </div>
-              ))}
+              {rhythm.map((item) => {
+                const isActive = activeRhythm === item.title;
+                return (
+                  <button
+                    key={item.title}
+                    type="button"
+                    aria-expanded={isActive}
+                    onClick={() =>
+                      setActiveRhythm((prev) =>
+                        prev === item.title ? null : item.title
+                      )
+                    }
+                    className={`rounded-2xl border px-4 py-4 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+                      isActive
+                        ? "border-primary bg-background shadow-sm"
+                        : "border-primary/10 bg-background hover:border-primary/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">
+                          {item.title}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.cadence}
+                        </p>
+                      </div>
+                      <span
+                        className={`text-xs font-semibold uppercase tracking-wide ${
+                          isActive ? "text-primary" : "text-muted-foreground"
+                        }`}
+                      >
+                        {isActive ? "Open" : "Tap to read"}
+                      </span>
+                    </div>
+                    {isActive ? (
+                      <p className="mt-3 text-xs text-muted-foreground/90">
+                        {item.description}
+                      </p>
+                    ) : null}
+                  </button>
+                );
+              })}
             </div>
             <button
               onClick={() => router.push("/community")}

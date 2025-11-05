@@ -17,7 +17,7 @@ export const Hero = () => {
       aria-labelledby="hero-heading"
       className="min-h-screen flex items-center overflow-hidden"
     >
-      <div className="w-full mx-auto max-w-7xl px-6 h-full">
+      <div className="w-full mx-auto max-w-7xl h-full items-center px-4 pt-24 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center h-full">
           {/* Left: copy */}
           <div className="lg:col-span-7">
@@ -35,13 +35,13 @@ export const Hero = () => {
 
               <p className="mt-4 text-lg text-muted-foreground">
                 The Data Fellows bring learners, mentors and builders together
-                to ship real products and pilots—turning insights into
+                to ship real products and pilots -- turning insights into
                 measurable growth for small businesses.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
                 <button
-                  onClick={() => router.push("/join")}
+                  onClick={() => router.push("/community")}
                   className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md hover:bg-primary/90"
                 >
                   Join the Ecosystem
@@ -90,7 +90,7 @@ export const Hero = () => {
 
                 <div className="px-6 py-5">
                   <p className="text-sm font-semibold text-card-foreground">
-                    Inscend • Small business pilot
+                    Inscend - Small business pilot
                   </p>
                   <p className="mt-2 text-sm text-muted-foreground">
                     A product-led pilot that helps local businesses grow via
@@ -113,7 +113,7 @@ export const Hero = () => {
                     </div>
 
                     <button
-                      onClick={() => router.push("/join")}
+                      onClick={() => router.push("/contact")}
                       className="rounded-full bg-[#001628] px-3 py-2 text-xs font-semibold text-white hover:bg-[#001628]/90"
                     >
                       Get Involved

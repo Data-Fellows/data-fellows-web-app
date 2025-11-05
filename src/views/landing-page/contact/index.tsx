@@ -5,19 +5,19 @@ import { FiMail, FiMessageCircle, FiPhone, FiSend } from "react-icons/fi";
 
 const contactChannels = [
   {
-    title: "General inquiries",
+    title: "General inquiries & speaking",
     detail: "hello@datafellowsai.com",
     icon: FiMail,
     href: "mailto:hello@datafellowsai.com",
   },
   {
-    title: "Partnerships",
+    title: "Partnership desk",
     detail: "partners@datafellowsai.com",
     icon: FiMessageCircle,
     href: "mailto:partners@datafellowsai.com",
   },
   {
-    title: "Press",
+    title: "Press & media hotline",
     detail: "press@datafellowsai.com",
     icon: FiPhone,
     href: "tel:+1234567890",
@@ -43,11 +43,12 @@ const ContactPage = () => {
                 id="contact-hero-heading"
                 className="text-3xl font-semibold text-foreground sm:text-4xl"
               >
-                Let's build something together.
+                Inquiries & partnerships.
               </h1>
               <p className="mx-auto max-w-2xl text-base text-muted-foreground">
                 Whether you want to partner with Data Fellows, feature a Fellow,
-                or learn more about Inscend, we would love to hear from you.
+                or learn more about Inscend, leave us a detailed message and the
+                right person will reach out within two business days.
               </p>
             </div>
           </div>
@@ -159,7 +160,7 @@ const ContactPage = () => {
                 </select>
               </label>
               <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                Message
+                Message body
                 <textarea
                   rows={4}
                   required

@@ -38,7 +38,7 @@ const WhoWeAre = () => {
   return (
     <section
       id="who-we-are"
-      className="px-4"
+      className="px-4 sm:px-6"
       aria-labelledby="who-we-are-heading"
     >
       <div className="mx-auto max-w-6xl space-y-10 lg:space-y-16">

@@ -1,6 +1,7 @@
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
 import { FiArrowUpRight, FiGlobe, FiHeart, FiLayers } from "react-icons/fi";
+import { PartnerLogoCarousel } from "../shared/partner-logo-carousel";
 
 const partnerCategories = [
   {
@@ -60,6 +61,16 @@ const PartnersPage = () => {
                 <FiArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
+          </div>
+        </section>
+
+        <section className="px-4" aria-labelledby="partner-logos-heading">
+          <div className="mx-auto max-w-6xl">
+            <PartnerLogoCarousel
+              title="Partners across ecosystems"
+              description="From training labs to global accelerators, these logos represent the organisations co-building Data Fellows."
+              className="bg-background"
+            />
           </div>
         </section>
 

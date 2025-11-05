@@ -52,7 +52,11 @@ const PersonCard = ({
 
 const About = () => {
   return (
-    <section id="about" className="px-4" aria-labelledby="about-heading">
+    <section
+      id="about"
+      className="px-4 sm:px-6"
+      aria-labelledby="about-heading"
+    >
       <div className="mx-auto max-w-6xl space-y-12">
         <div className="grid gap-8 rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10 lg:grid-cols-12 lg:gap-12 lg:px-10">
           <div className="space-y-6 lg:col-span-7">

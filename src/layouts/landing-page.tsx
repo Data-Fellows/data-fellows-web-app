@@ -31,15 +31,18 @@ function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/90 ">
-      <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4">
+      <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <div className="flex items-center gap-4">
-          <Image
-            src="/svgs/data-fellow.svg"
-            alt="Data Fellows Logo"
-            width={80}
-            height={80}
-            className="h-12 w-12 md:h-16 md:w-16"
-          />
+          <Link href="/" aria-label="Go to home">
+            <Image
+              src="/svgs/data-fellow.svg"
+              alt="Data Fellows Logo"
+              width={80}
+              height={80}
+              className="h-12 w-12 md:h-16 md:w-16"
+              priority
+            />
+          </Link>
 
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(({ href, label }) => (
@@ -59,12 +62,12 @@ function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={() => {
-              router.push("/join");
+              router.push("/contact");
               setIsOpen(false);
             }}
             className="flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
           >
-            Join the Ecosystem
+            Contact Us
             <FiArrowUpRight className="h-4 w-4" />
           </button>
         </div>
@@ -116,12 +119,12 @@ function Navbar() {
           <div className="space-y-3 pt-6">
             <button
               onClick={() => {
-                router.push("/join");
+                router.push("/contact");
                 setIsOpen(false);
               }}
               className="flex w-full items-center justify-between rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
             >
-              <span>Join the Ecosystem</span>
+              <span>Contact Us</span>
               <FiArrowUpRight className="h-4 w-4" />
             </button>
           </div>
@@ -138,8 +141,7 @@ interface LandingPageLayoutProps {
 const LandingPageLayout: React.FC<LandingPageLayoutProps> = ({ children }) => (
   <div className="min-h-screen bg-background">
     <Navbar />
-    {/* reduced top padding on mobile (pt-6), keep larger spacing on md+ */}
-    <main className="w-full pt-6 md:pt-32">{children}</main>
+    <main className="w-full ">{children}</main>
     <Footer />
   </div>
 );

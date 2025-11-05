@@ -3,7 +3,6 @@ import React from "react";
 import About from "./sections/about";
 import Community from "./sections/community";
 import Hero from "./sections/hero";
-import Join from "./sections/join";
 import Partners from "./sections/partners";
 import Products from "./sections/products";
 import Resources from "./sections/resources";
@@ -20,7 +19,6 @@ const Home: React.FC = () => {
         <Partners />
         <Resources />
         <About />
-        <Join />
       </div>
     </LandingPageLayout>
   );

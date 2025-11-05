@@ -1,4 +1,5 @@
 import { FiGlobe, FiGrid, FiHeart } from "react-icons/fi";
+import { PartnerLogoCarousel } from "../../shared/partner-logo-carousel";
 
 const partnerCategories = [
   {
@@ -30,7 +31,11 @@ const partnerCategories = [
 
 const Partners = () => {
   return (
-    <section id="partners" className="px-4" aria-labelledby="partners-heading">
+    <section
+      id="partners"
+      className="px-4 sm:px-6"
+      aria-labelledby="partners-heading"
+    >
       <div className="mx-auto max-w-6xl space-y-8 rounded-3xl border border-primary/10 bg-background px-6 py-12 lg:px-10 lg:py-16">
         <div className="space-y-4 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -48,6 +53,8 @@ const Partners = () => {
             impact.
           </p>
         </div>
+
+        <PartnerLogoCarousel />
 
         <div className="grid gap-8 lg:grid-cols-3">
           {partnerCategories.map(

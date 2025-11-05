@@ -2,6 +2,7 @@ import { CommunityLeadCard } from "@/components";
 import LandingPageLayout from "@/layouts/landing-page";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   FiAward,
   FiBookOpen,
@@ -11,11 +12,70 @@ import {
 } from "react-icons/fi";
 
 const rhythm = [
-  { title: "Community Sunday Catchup", cadence: "Every two weeks" },
-  { title: "Fireside Sessions", cadence: "Once a month" },
-  { title: "Newsletter", cadence: "Every two weeks" },
-  { title: "Journey So Far", cadence: "Stories last Friday monthly" },
+  {
+    title: "Community Sunday Catchup",
+    cadence: "Every two weeks",
+    description:
+      "Interactive stand-ups featuring demos, open asks, and a quick celebration of weekly wins.",
+  },
+  {
+    title: "Fireside Sessions",
+    cadence: "Once a month",
+    description:
+      "Cozy, video-first chats with mentors unpacking a challenge and sharing actionable templates.",
+  },
+  {
+    title: "Newsletter",
+    cadence: "Every two weeks",
+    description:
+      "Inbox roundups that stitch together member stories, new guides, and curated opportunities.",
+  },
+  {
+    title: "Journey So Far",
+    cadence: "Last Friday of every month",
+    description:
+      "An audio-first spotlight revealing the behind-the-scenes of a Fellow's latest success.",
+  },
 ];
+
+type RhythmCardProps = {
+  title: string;
+  cadence: string;
+  description: string;
+};
+
+const RhythmCard = ({ title, cadence, description }: RhythmCardProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <button
+      type="button"
+      aria-expanded={isOpen}
+      onClick={() => setIsOpen((prev) => !prev)}
+      className={`rounded-2xl border px-5 py-5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+        isOpen
+          ? "border-primary bg-secondary/10 shadow-sm"
+          : "border-primary/10 bg-secondary/10 hover:border-primary/40"
+      }`}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold text-foreground">{title}</p>
+          <p className="text-xs text-muted-foreground">{cadence}</p>
+        </div>
+        <span
+          className={`text-xs font-semibold uppercase tracking-wide ${
+            isOpen ? "text-primary" : "text-muted-foreground"
+          }`}
+        >
+          {isOpen ? "Close" : "Read"}
+        </span>
+      </div>
+      {isOpen ? (
+        <p className="mt-3 text-xs text-muted-foreground">{description}</p>
+      ) : null}
+    </button>
+  );
+};
 
 const programs = [
   {
@@ -99,7 +159,7 @@ const CommunityPage = () => {
   return (
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
-        <section className="px-4" aria-labelledby="community-hero-heading">
+        <section className="px-4 sm:px-6" aria-labelledby="community-hero-heading">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/10">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
               <div className="space-y-6 px-6 py-12 lg:col-span-6 lg:px-10">
@@ -145,7 +205,7 @@ const CommunityPage = () => {
           </div>
         </section>
 
-        <section className="px-4" aria-labelledby="community-programs-heading">
+        <section className="px-4 sm:px-6" aria-labelledby="community-programs-heading">
           <div className="mx-auto max-w-6xl space-y-10">
             <div className="text-center">
               <h2
@@ -178,7 +238,7 @@ const CommunityPage = () => {
           </div>
         </section>
 
-        <section className="px-4" aria-labelledby="community-rhythm-heading">
+        <section className="px-4 sm:px-6" aria-labelledby="community-rhythm-heading">
           <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <div className="space-y-6">
               <h2
@@ -188,23 +248,20 @@ const CommunityPage = () => {
                 Our rhythm
               </h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                {rhythm.map(({ title, cadence }) => (
-                  <div
+                {rhythm.map(({ title, cadence, description }) => (
+                  <RhythmCard
                     key={title}
-                    className="rounded-2xl border border-primary/10 bg-secondary/10 px-5 py-5"
-                  >
-                    <p className="text-sm font-semibold text-foreground">
-                      {title}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{cadence}</p>
-                  </div>
+                    title={title}
+                    cadence={cadence}
+                    description={description}
+                  />
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        <section className="px-4" aria-labelledby="community-leads-heading">
+        <section className="px-4 sm:px-6" aria-labelledby="community-leads-heading">
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="text-center">
               <h2

@@ -9,7 +9,6 @@ const quickLinks = [
   { label: "Resources", href: "/resources" },
   { label: "Partners", href: "/partners" },
   { label: "About", href: "/about" },
-  { label: "Join", href: "/join" },
 ];
 
 const partnerHighlights = [
@@ -18,7 +17,9 @@ const partnerHighlights = [
   "DataCamp Classroom",
   "Zummit Africa",
   "Vatebra Academy",
-  "Everything Analytics",
+  "Communitech",
+  "Accelerator Centre",
+  "TBDC",
 ];
 
 const socialLinks = [
@@ -35,13 +36,16 @@ export const Footer = () => {
     <footer className="mt-16 border-t border-border bg-secondary/10">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-12 md:flex-row md:items-start md:justify-between lg:px-0">
         <div className="space-y-5 md:max-w-sm">
-          <Image
-            src="/svgs/data-fellow.svg"
-            alt="Data Fellows Logo"
-            width={140}
-            height={48}
-            className="h-12 w-auto"
-          />
+          <Link href="/" aria-label="Go to home">
+            <Image
+              src="/svgs/data-fellow.svg"
+              alt="Data Fellows Logo"
+              width={140}
+              height={48}
+              className="h-12 w-auto"
+              priority
+            />
+          </Link>
           <p className="text-sm text-muted-foreground">
             Turning data into clarity for people and businesses. We train,
             build, and launch tools that make data feel human.
@@ -80,11 +84,15 @@ export const Footer = () => {
             <h4 className="text-base font-semibold text-foreground">
               Partner network
             </h4>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <p className="mt-4 text-sm text-muted-foreground">
+              We co-build with accelerators, training partners, and allied
+              communities who keep Data Fellows grounded in real outcomes.
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-muted-foreground">
               {partnerHighlights.map((name) => (
                 <span
                   key={name}
-                  className="rounded-md border border-border bg-background px-3 py-2 text-muted-foreground"
+                  className="rounded-xl border border-border/60 bg-background px-3 py-2"
                 >
                   {name}
                 </span>
