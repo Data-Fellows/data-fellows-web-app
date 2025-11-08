@@ -2,11 +2,17 @@ export interface PartnerLogo {
   id: number;
   name: string;
   logo: string;
+  className?: string;
 }
 
 export const partnerLogos: PartnerLogo[] = [
   { id: 1, name: "AWS", logo: "/svgs/landing-page/aws-logo.png" },
-  { id: 11, name: "Communitech", logo: "/images/communitech.png" },
+  {
+    id: 11,
+    name: "Communitech",
+    logo: "/images/communitech.png",
+    className: "bg-black text-white",
+  },
   { id: 9, name: "Data Rango", logo: "/svgs/landing-page/data-rango.png" },
   {
     id: 8,
@@ -32,5 +38,16 @@ export const partnerLogos: PartnerLogo[] = [
     name: "Everything Analytics",
     logo: "/svgs/landing-page/everything-analyticsi.png",
   },
+  { id: 12, name: "TBDC", logo: "/images/partners/tbdc.png" },
+  {
+    id: 13,
+    name: "Bhive",
+    logo: "/images/partners/bhive.png",
+    className: "bg-black text-white",
+  },
+  {
+    id: 14,
+    name: "Accelerator Centre",
+    logo: "/images/partners/accelerator-centre.png",
+  },
 ];
-

@@ -116,8 +116,8 @@ const Community = () => {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background">
                 <Image
-                  src="/images/community/Agada.jpeg"
-                  alt="Community members during a virtual catchup"
+                  src="/images/community/iyinoluwa-soleye.jpg"
+                  alt="Iyinoluwa Soleye during a Fellows community session"
                   fill
                   sizes="(max-width: 768px) 50vw, 280px"
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -125,8 +125,8 @@ const Community = () => {
               </div>
               <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:mt-6">
                 <Image
-                  src="/images/community/Nerat.jpeg"
-                  alt="Mentorship session with Fellows"
+                  src="/images/community/favour-falade.jpg"
+                  alt="Favour Falade sharing a pilot update"
                   fill
                   sizes="(max-width: 768px) 50vw, 280px"
                   className="object-cover transition duration-500 group-hover:scale-105"

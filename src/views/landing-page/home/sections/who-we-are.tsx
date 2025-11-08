@@ -80,8 +80,8 @@ const WhoWeAre = () => {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:h-64">
                 <Image
-                  src="/images/TOBI OLADIMEJI-FOUNDER.jpg"
-                  alt="Tobi Oladimeji speaking at a community session"
+                  src="/images/community/osaretin-ebuehi.jpg"
+                  alt="Osaretin Ebuehi sharing a build update"
                   fill
                   sizes="(max-width: 768px) 50vw, 300px"
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -90,8 +90,8 @@ const WhoWeAre = () => {
               </div>
               <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:mt-10 sm:h-64">
                 <Image
-                  src="/images/community/Ayodeji.jpeg"
-                  alt="Ayodeji leading a workshop"
+                  src="/images/community/eunice-otowo.jpg"
+                  alt="Eunice Otowo at work on a prototype"
                   fill
                   sizes="(max-width: 768px) 50vw, 300px"
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -99,8 +99,8 @@ const WhoWeAre = () => {
               </div>
               <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:-mt-10 sm:h-64">
                 <Image
-                  src="/images/community/Tijani.jpeg"
-                  alt="Community collaboration session"
+                  src="/images/community/olalere-kaosara.jpg"
+                  alt="Olalere Kaosara collaborating with Fellows"
                   fill
                   sizes="(max-width: 768px) 50vw, 300px"
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -108,8 +108,8 @@ const WhoWeAre = () => {
               </div>
               <div className="group relative h-56 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:h-64">
                 <Image
-                  src="/images/community/Wuraola.jpeg"
-                  alt="Wuraola sharing project updates"
+                  src="/images/community/chiamaka-aniagor.jpg"
+                  alt="Chiamaka Aniagor during a Fellows showcase"
                   fill
                   sizes="(max-width: 768px) 50vw, 300px"
                   className="object-cover transition duration-500 group-hover:scale-105"

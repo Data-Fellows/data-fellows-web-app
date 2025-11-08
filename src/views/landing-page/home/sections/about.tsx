@@ -82,6 +82,11 @@ const About = () => {
                 purpose.
               </strong>
             </div>
+            <div className="rounded-2xl border border-primary/10 bg-background px-5 py-4 text-sm text-muted-foreground">
+              There isn&apos;t an admin dashboard yet -- website updates flow
+              through the core team. Send a note via the contact form and we
+              will queue it in the build pipeline.
+            </div>
           </div>
           <div className="space-y-4 rounded-3xl border border-primary/10 bg-background px-6 py-5 lg:col-span-5">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">

@@ -126,6 +126,29 @@ button {
   cursor: pointer;
 }
 
+/* MailerLite embed overrides */
+.ml-embedded,
+.ml-embedded form {
+  width: 100%;
+}
+
+.ml-embedded input,
+.ml-embedded textarea {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  border-radius: var(--radius);
+  border: 1px solid var(--border) !important;
+  padding: 0.65rem 0.9rem !important;
+}
+
+.ml-embedded button {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+  padding: 0.65rem 1.5rem !important;
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */

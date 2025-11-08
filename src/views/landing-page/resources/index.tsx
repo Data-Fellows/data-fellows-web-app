@@ -252,6 +252,32 @@ const ResourcesPage = () => {
           </div>
         </section>
 
+        <section className="px-4 sm:px-6" aria-labelledby="newsletter-heading">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:flex lg:items-center lg:gap-12">
+            <div className="space-y-4 lg:w-1/2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+                Newsletter
+              </span>
+              <h2
+                id="newsletter-heading"
+                className="text-3xl font-semibold text-foreground sm:text-4xl"
+              >
+                Subscribe for Community & Growth ops updates.
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Get Evelyn&apos;s fortnightly digest with pilot experiments,
+                product drops, and templates straight from Discord recaps.
+              </p>
+              <p className="text-xs text-muted-foreground">
+                No spam. Just practical notes you can share with your team.
+              </p>
+            </div>
+            <div className="mt-8 w-full lg:mt-0 lg:w-1/2">
+              <div className="ml-embedded" data-form="bmvCX7" />
+            </div>
+          </div>
+        </section>
+
         <section className="px-4 sm:px-6" aria-labelledby="podcast-heading">
           <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">

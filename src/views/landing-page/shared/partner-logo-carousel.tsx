@@ -100,9 +100,7 @@ export const PartnerLogoCarousel = ({
           {duplicatedLogos.map((partner, index) => (
             <div
               key={`${partner.id}-${index}`}
-              className={`mx-3 flex h-24 w-40 items-center justify-center rounded-2xl bg-white p-4 text-sm shadow-md transition-colors sm:mx-4 sm:h-32 sm:w-52 sm:rounded-3xl sm:p-6 md:h-36 md:w-60 ${
-                partner.id === 11 ? "bg-black text-white" : ""
-              }`}
+              className={`mx-3 flex h-24 w-40 items-center justify-center rounded-2xl bg-white p-4 text-sm shadow-md transition-colors sm:mx-4 sm:h-32 sm:w-52 sm:rounded-3xl sm:p-6 md:h-36 md:w-60 ${partner.className ?? ""}`}
             >
               <div className="relative h-full w-full">
                 <Image

@@ -104,54 +104,86 @@ const programs = [
   },
 ];
 
-const communityLeads = [
+type CommunityLead = {
+  name: string;
+  image: string;
+  linkedin: string;
+  role: string;
+};
+
+const communityLeadGroups: {
+  title: string;
+  description: string;
+  leads: CommunityLead[];
+}[] = [
   {
-    name: "James Ogunsanya",
-    image: "/images/community/James.jpeg",
-    linkedin: "https://www.linkedin.com/in/oyindamolajames",
-    role: "Data Science Lead",
+    title: "Data Science Leads",
+    description:
+      "They guide experiments across AI, ML, and research-focused builds so Fellows can ship credible insights.",
+    leads: [
+      {
+        name: "James Ogunsanya",
+        image: "/images/community/James.jpeg",
+        linkedin: "https://www.linkedin.com/in/oyindamolajames",
+        role: "Data Science Lead",
+      },
+      {
+        name: "Ayodeji Ajayi",
+        image: "/images/community/Ayodeji.jpeg",
+        linkedin: "https://www.linkedin.com/in/ayodejiajayi1",
+        role: "Data Science Lead",
+      },
+      {
+        name: "Blessing Oludele",
+        image: "/images/community/Blessing.jpeg",
+        linkedin: "https://www.linkedin.com/in/blessingoludele",
+        role: "Data Science Lead",
+      },
+      {
+        name: "Nerat Dazam",
+        image: "/images/community/Nerat.jpeg",
+        linkedin: "https://www.linkedin.com/in/nerat-dazam",
+        role: "Data Science Lead",
+      },
+    ],
   },
   {
-    name: "Ayodeji Ajayi",
-    image: "/images/community/Ayodeji.jpeg",
-    linkedin: "https://www.linkedin.com/in/ayodejiajayi1",
-    role: "AI & Data Science Lead",
+    title: "Data Analytics Leads",
+    description:
+      "These Fellows turn business questions into playbooks, dashboards, and storytelling templates the community can reuse.",
+    leads: [
+      {
+        name: "Tijani Ogbuade",
+        image: "/images/community/Tijani.jpeg",
+        linkedin: "https://www.linkedin.com/in/tijani-ogbuade",
+        role: "Data Analytics Lead",
+      },
+      {
+        name: "Agada Joshua",
+        image: "/images/community/Agada.jpeg",
+        linkedin: "https://www.linkedin.com/in/joshua-agada",
+        role: "Data Analytics Lead",
+      },
+    ],
   },
   {
-    name: "Blessing Oludele",
-    image: "/images/community/Blessing.jpeg",
-    linkedin: "https://www.linkedin.com/in/blessingoludele",
-    role: "Product Analytics Lead",
-  },
-  {
-    name: "Nerat Dazam",
-    image: "/images/community/Nerat.jpeg",
-    linkedin: "https://www.linkedin.com/in/nerat-dazam",
-    role: "Data Strategy Lead",
-  },
-  {
-    name: "Tijani Ogbuade",
-    image: "/images/community/Tijani.jpeg",
-    linkedin: "https://www.linkedin.com/in/tijani-ogbuade",
-    role: "Analytics Community Lead",
-  },
-  {
-    name: "Agada Joshua",
-    image: "/images/community/Agada.jpeg",
-    linkedin: "https://www.linkedin.com/in/joshua-agada",
-    role: "Analytics Community Lead",
-  },
-  {
-    name: "Oyindamola Victor",
-    image: "/images/victor_cto.JPG",
-    linkedin: "https://www.linkedin.com/in/oyindamolavictor/",
-    role: "Engineering Community Lead",
-  },
-  {
-    name: "Wuraola Akeeb",
-    image: "/images/community/Wuraola.jpeg",
-    linkedin: "https://www.linkedin.com/in/akeebwuraolaayomide",
-    role: "Engineering Community Lead",
+    title: "Data Engineering Leads",
+    description:
+      "They keep our infrastructure, automations, and experimentation pipelines running smoothly.",
+    leads: [
+      {
+        name: "Oyindamola Victor",
+        image: "/images/victor_cto.JPG",
+        linkedin: "https://www.linkedin.com/in/oyindamolavictor/",
+        role: "Data Engineering Lead",
+      },
+      {
+        name: "Wuraola Akeeb",
+        image: "/images/community/Wuraola.jpeg",
+        linkedin: "https://www.linkedin.com/in/akeebwuraolaayomide",
+        role: "Data Engineering Lead",
+      },
+    ],
   },
 ];
 
@@ -262,7 +294,7 @@ const CommunityPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="community-leads-heading">
-          <div className="mx-auto max-w-6xl space-y-8">
+          <div className="mx-auto max-w-6xl space-y-10">
             <div className="text-center">
               <h2
                 id="community-leads-heading"
@@ -272,12 +304,26 @@ const CommunityPage = () => {
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
                 These are the people hosting conversations, unblocking projects,
-                and cheering Fellows on.
+                and cheering Fellows on across every discipline.
               </p>
             </div>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {communityLeads.map((lead) => (
-                <CommunityLeadCard key={lead.name} {...lead} />
+            <div className="space-y-10">
+              {communityLeadGroups.map(({ title, description, leads }) => (
+                <div key={title} className="space-y-6">
+                  <div className="space-y-2 text-left">
+                    <h3 className="text-xl font-semibold text-foreground">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {description}
+                    </p>
+                  </div>
+                  <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                    {leads.map((lead) => (
+                      <CommunityLeadCard key={lead.name} {...lead} />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

@@ -23,26 +23,22 @@ const features = [
 
 const productSlides = [
   {
+    image: "/images/dash.png",
+    title: "Inscend dark mode action board",
+    caption:
+      "Full-fidelity dark mode workspace matching the new mockup -- restock alerts, customer nudges, and margin insights in one view.",
+  },
+  {
     image: "/images/company-dash.png",
-    title: "Ops overview dashboard",
-    caption: "Snapshot of revenue, margin, and actions surfaced for Lagos grocers.",
+    title: "Inscend light mode workspace",
+    caption:
+      "Light theme dashboard that mirrors the updated mock: revenue, actions, and product stats ready for client-facing reviews.",
   },
   {
     image: "/images/dp-dash.png",
-    title: "Pilot metrics",
-    caption: "The same board Fellows used to ship 20 pilots across 3 continents.",
-  },
-  {
-    image: "/images/dash.png",
-    title: "Action board in dark mode",
-    caption: "Operators can triage alerts, assign owners, and log learnings in one place.",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80&sat=-12",
-    title: "AI-generated: small business owner celebrating a win",
+    title: "Pilot metrics tracker",
     caption:
-      "A generated still representing the real people we design for -- a founder relieved after insights turn into action.",
+      "Breaks down experiments, notes, and ownership so partners can follow every pilot without extra spreadsheets.",
   },
 ];
 

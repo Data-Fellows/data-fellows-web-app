@@ -32,8 +32,8 @@ export const foundingTeam = [
 export const communityAdmins = [
   {
     name: "Sambo Evelyn",
-    role: "Community Operations Manager",
-    tagline: "Keeps the community connected and programs flowing.",
+    role: "Community & Growth Operations Manager",
+    tagline: "Keeps programs coordinated and member growth loops healthy.",
     image: "/images/placeholders/no-profile-picture.jpg",
   },
 ];

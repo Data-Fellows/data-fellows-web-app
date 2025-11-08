@@ -245,6 +245,28 @@ const Resources = () => {
             ))}
           </div>
         </div>
+
+        <div className="rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10 lg:flex lg:items-center lg:gap-10">
+          <div className="space-y-4 lg:w-1/2">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+              Newsletter
+            </span>
+            <h3 className="text-2xl font-semibold text-foreground">
+              Join the Community & Growth operations newsletter.
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Evelyn curates every issue with pilot recaps, hiring drops, and
+              templates. Subscribe to get the same notes shared during Sunday
+              catch-ups.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Powered by MailerLite -- unsubscribe anytime.
+            </p>
+          </div>
+          <div className="mt-8 w-full lg:mt-0 lg:w-1/2">
+            <div className="ml-embedded" data-form="bmvCX7" />
+          </div>
+        </div>
       </div>
     </section>
   );
