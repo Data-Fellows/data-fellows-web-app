@@ -2,13 +2,15 @@ import Image from "next/image";
 
 const quotes = [
   {
-    quote: "I built my first project here.",
-    name: "Blessing, Product Analyst",
+    quote:
+      "Beyond skills, Data Fellows has given me hope, clarity, and confidence in my data journey. And for that, I'm certain success is only a matter of time.",
+    name: "Jeremiah Colman, Data Fellow",
     image: "/images/community/Blessing.jpeg",
   },
   {
-    quote: "The community gave me confidence to start.",
-    name: "James, Data Fellow",
+    quote:
+      "Family through and through. The connections, insights, and knowledge shared here have shaped the way I approach my career and goals.",
+    name: "Hephzibah Otuene, Data Fellow",
     image: "/images/community/James.jpeg",
   },
 ];

@@ -34,7 +34,7 @@ export const communityAdmins = [
     name: "Sambo Evelyn",
     role: "Community & Growth Operations Manager",
     tagline: "Keeps programs coordinated and member growth loops healthy.",
-    image: "/images/placeholders/no-profile-picture.jpg",
+    image: "/images/growth_manager.jpg",
   },
 ];
 
@@ -43,6 +43,6 @@ export const advisors = [
     name: "Oyeta Kokoroko",
     role: "Founder, Okoko Cosmetiques",
     tagline: "Early Founder Advisor for Inscend.",
-    image: "/images/placeholders/no-profile-picture.jpg",
+    image: "/images/advisor.webp",
   },
 ];

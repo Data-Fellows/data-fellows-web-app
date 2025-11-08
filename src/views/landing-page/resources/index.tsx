@@ -1,6 +1,8 @@
+import NewsletterModal from "@/components/newsletter-modal";
 import LandingPageLayout from "@/layouts/landing-page";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   FiArrowRight,
   FiBookmark,
@@ -11,52 +13,59 @@ import {
 
 const storySpotlights = [
   {
-    title: "From classroom to pilot: Ruth's journey building credit tools",
+    title: "The truth about getting your first Power BI gig",
     description:
-      "Ruth walks through the prompts, mentors, and dashboards that shaped her first pilot.",
-    image: "/images/community/Wuraola.jpeg",
-    date: "2025-10-07",
-    href: "#",
+      "Mubar Dauda breaks down the scope docs, pricing, and mindset shifts that helped him secure paid BI work.",
+    image: "/images/community/Agada.jpeg",
+    date: "2025-11-07",
+    href: "https://mubardauda.com/index.php/the-truth-about-getting-your-first-power-bi-gig-that-nobody-talks-about/",
   },
   {
-    title: "Inside the Lagos market pilots that shaped Inscend",
+    title: "Detecting fraudulent transactions in real life",
     description:
-      "A behind-the-scenes look at three merchants that influenced our launch stack.",
-    image: "/images/community/Agada.jpeg",
-    date: "2025-09-26",
-    href: "#",
+      "Nafisa Idris shares a step-by-step walkthrough for designing and evaluating an advanced fraud detection workflow.",
+    image: "/images/community/Wuraola.jpeg",
+    date: "2025-02-19",
+    href: "https://medium.com/@nafisaidris413/detecting-fraudulent-transactions-a-guide-to-building-an-advanced-fraud-detection-system-9e7506af55a4",
   },
 ];
 
 const guides = [
   {
-    title: "Facilitating your first data discovery call",
-    description: "A checklist for mentors working with new partners.",
-    image: "/images/community/Ayodeji.jpeg",
-    href: "#",
+    title: "Navigating Opportunities in the Diaspora with Jessica Ayodele",
+    description:
+      "Highlights from Jessica's community session on mapping relocation paths, transferable skills, and sponsorship asks.",
+    image: "/images/community/Blessing.jpeg",
+    href: "https://x.com/datafellowsinfo/status/1949109088433938940?s=46",
   },
   {
-    title: "Designing AI workflows for small business teams",
-    description: "The prompts and guardrails we lean on before automation.",
+    title: "Stand out as a potential hire: CVs do's and don'ts",
+    description:
+      "A practical tear-down on positioning your experience, quantifying wins, and presenting a readable CV.",
     image: "/images/community/Tijani.jpeg",
-    href: "#",
+    href: "https://youtu.be/jfPS1ifUQY0?si=6l50oxvuhp5fJiel",
   },
 ];
 
 const lessons = [
   {
-    title: "Why small businesses struggle with messy data",
-    description: "Themes we keep hearing from Fellows supporting SMEs.",
+    title: "Practical ways small businesses can use data to grow",
+    description:
+      "Ikonik Magazine captures how we help founders turn lightweight dashboards into growth decisions.",
     image: "/images/community/James.jpeg",
-    href: "#",
+    href: "https://ikonikpress.com/practical-ways-small-businesses-can-use-data-to-grow/",
   },
   {
-    title: "Community rhythms that keep projects shipping",
-    description: "How the cadence board ensures accountability.",
+    title: "Avoiding common data mistakes",
+    description:
+      "Tobi Oladimeji's guide on the pitfalls he sees when SMEs stand up their first analytics stack.",
     image: "/images/community/Blessing.jpeg",
-    href: "#",
+    href: "https://ikonikpress.com/avoiding-common-data-mistakes-by-tobi-oladimeji-for-ikonik-magazine/",
   },
 ];
+
+const journeySoFarUrl =
+  "https://x.com/datafellowsinfo/status/1976708564090540320?s=46";
 
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat("en-US", {
@@ -66,6 +75,8 @@ const formatDate = (value: string) =>
   }).format(new Date(value));
 
 const ResourcesPage = () => {
+  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
+
   return (
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -85,15 +96,14 @@ const ResourcesPage = () => {
                 Dive into the guides, reflections, and conversations coming out of the Data Fellows ecosystem.
                 Each piece is meant to be practical enough to use tomorrow.
               </p>
-              <Link
-                href="https://mailchi.mp/datafellowsai/newsletter"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+              <button
+                type="button"
+                onClick={() => setIsNewsletterOpen(true)}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 Subscribe to the newsletter
                 <FiArrowRight className="h-4 w-4" />
-              </Link>
+              </button>
             </div>
           </div>
         </section>
@@ -148,6 +158,12 @@ const ResourcesPage = () => {
                     </p>
                     <Link
                       href={story.href}
+                      target={story.href.startsWith("http") ? "_blank" : undefined}
+                      rel={
+                        story.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                       className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
                     >
                       Read story
@@ -171,7 +187,9 @@ const ResourcesPage = () => {
                   </p>
                 </div>
                 <Link
-                  href="#journey-so-far"
+                  href={journeySoFarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary"
                 >
                   Listen to latest
@@ -236,6 +254,14 @@ const ResourcesPage = () => {
                             </p>
                             <Link
                               href={item.href}
+                              target={
+                                item.href.startsWith("http") ? "_blank" : undefined
+                              }
+                              rel={
+                                item.href.startsWith("http")
+                                  ? "noopener noreferrer"
+                                  : undefined
+                              }
                               className="inline-flex items-center gap-2 text-xs font-semibold text-primary"
                             >
                               Open
@@ -272,11 +298,18 @@ const ResourcesPage = () => {
                 No spam. Just practical notes you can share with your team.
               </p>
             </div>
-            <div className="mt-8 w-full lg:mt-0 lg:w-1/2">
-              <div className="ml-embedded" data-form="bmvCX7" />
+              <div className="mt-8 w-full lg:mt-0 lg:w-1/2">
+                <button
+                  type="button"
+                  onClick={() => setIsNewsletterOpen(true)}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  Subscribe to the newsletter
+                  <FiArrowRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="podcast-heading">
           <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
@@ -293,7 +326,9 @@ const ResourcesPage = () => {
                 </p>
               </div>
               <Link
-                href="#"
+                href={journeySoFarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10"
               >
                 Listen to the latest episode
@@ -303,6 +338,10 @@ const ResourcesPage = () => {
           </div>
         </section>
       </div>
+      <NewsletterModal
+        isOpen={isNewsletterOpen}
+        onClose={() => setIsNewsletterOpen(false)}
+      />
     </LandingPageLayout>
   );
 };

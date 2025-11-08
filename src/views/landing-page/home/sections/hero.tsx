@@ -78,7 +78,7 @@ export const Hero = () => {
               <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 dark:ring-white/5 bg-card text-card-foreground border border-primary/10">
                 <div className="relative h-64 sm:h-72">
                   <Image
-                    src="/images/data-community-hero.jpg"
+                    src="/images/inscrenddash.png"
                     alt="Data Fellows community"
                     fill
                     priority

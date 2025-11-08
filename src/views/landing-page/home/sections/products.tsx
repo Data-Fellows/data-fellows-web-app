@@ -23,23 +23,23 @@ const features = [
 
 const productSlides = [
   {
-    image: "/images/dash.png",
+    image: "/images/inscrenddash.png",
     title: "Inscend dark mode action board",
     caption:
       "Full-fidelity dark mode workspace matching the new mockup -- restock alerts, customer nudges, and margin insights in one view.",
   },
   {
-    image: "/images/company-dash.png",
+    image: "/images/actioncard.png",
     title: "Inscend light mode workspace",
     caption:
       "Light theme dashboard that mirrors the updated mock: revenue, actions, and product stats ready for client-facing reviews.",
   },
-  {
-    image: "/images/dp-dash.png",
-    title: "Pilot metrics tracker",
-    caption:
-      "Breaks down experiments, notes, and ownership so partners can follow every pilot without extra spreadsheets.",
-  },
+  // {
+  //   image: "/images/dp-dash.png",
+  //   title: "Pilot metrics tracker",
+  //   caption:
+  //     "Breaks down experiments, notes, and ownership so partners can follow every pilot without extra spreadsheets.",
+  // },
 ];
 
 const SLIDE_DURATION = 6000;
@@ -59,7 +59,11 @@ const Products = () => {
   }, [isPaused]);
 
   return (
-    <section id="products" className="px-4 sm:px-6" aria-labelledby="products-heading">
+    <section
+      id="products"
+      className="px-4 sm:px-6"
+      aria-labelledby="products-heading"
+    >
       <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-12 lg:px-10 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
           <div className="space-y-6 lg:col-span-5">
@@ -73,7 +77,10 @@ const Products = () => {
               Tools born from real problems.
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              We do not just learn -- we build. Inscend helps small shop owners understand their business and act on it without needing an analyst. Every feature is inspired by questions that surfaced inside the community.
+              We do not just learn -- we build. Inscend helps small shop owners
+              understand their business and act on it without needing an
+              analyst. Every feature is inspired by questions that surfaced
+              inside the community.
             </p>
             <div className="space-y-4">
               {features.map((feature) => (
@@ -140,7 +147,11 @@ const Products = () => {
                   onClick={() => setIsPaused((prev) => !prev)}
                   className="rounded-full border border-border bg-background p-2 text-primary transition hover:border-primary"
                 >
-                  {isPaused ? <FiPlay className="h-4 w-4" /> : <FiPause className="h-4 w-4" />}
+                  {isPaused ? (
+                    <FiPlay className="h-4 w-4" />
+                  ) : (
+                    <FiPause className="h-4 w-4" />
+                  )}
                 </button>
                 <div className="flex items-center gap-2">
                   {productSlides.map((_, index) => (
@@ -170,4 +181,3 @@ const Products = () => {
 };
 
 export default Products;
-

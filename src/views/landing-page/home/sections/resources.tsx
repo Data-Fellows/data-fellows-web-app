@@ -1,5 +1,7 @@
+import NewsletterModal from "@/components/newsletter-modal";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { FiArrowRight, FiBookOpen, FiExternalLink } from "react-icons/fi";
 
 const featuredStory = {
@@ -65,6 +67,8 @@ const formatDate = (value: string) =>
   }).format(new Date(value));
 
 const Resources = () => {
+  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
+
   return (
     <section
       id="resources"
@@ -264,10 +268,21 @@ const Resources = () => {
             </p>
           </div>
           <div className="mt-8 w-full lg:mt-0 lg:w-1/2">
-            <div className="ml-embedded" data-form="bmvCX7" />
+            <button
+              type="button"
+              onClick={() => setIsNewsletterOpen(true)}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              Subscribe to the newsletter
+              <FiArrowRight className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </div>
+      <NewsletterModal
+        isOpen={isNewsletterOpen}
+        onClose={() => setIsNewsletterOpen(false)}
+      />
     </section>
   );
 };

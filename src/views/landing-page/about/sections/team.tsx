@@ -27,7 +27,7 @@ const TeamCard = ({
         alt={name}
         fill
         sizes="(max-width: 768px) 100vw, 240px"
-        className="object-cover"
+        className="object-cover object-top"
       />
     </div>
     <div className="flex flex-1 flex-col gap-2 px-5 py-5">
@@ -96,7 +96,7 @@ const TeamSection = () => {
           </div>
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-foreground">Advisors</h3>
-            <div className="grid gap-6">
+            <div className="grid gap-6 sm:grid-cols-2">
               {advisors.map((person) => (
                 <TeamCard key={person.name} {...person} />
               ))}
