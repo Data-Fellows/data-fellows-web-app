@@ -22,7 +22,7 @@ const PersonCard = ({
         alt={name}
         fill
         sizes="(max-width: 768px) 100vw, 280px"
-        className="object-cover"
+        className="object-cover object-top"
       />
     </div>
     <div className="space-y-2 px-5 py-6">

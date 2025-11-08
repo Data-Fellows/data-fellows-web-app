@@ -114,22 +114,22 @@ const Community = () => {
 
           <div className="space-y-4 lg:col-span-6">
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background">
+              <div className="group relative h-64 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:h-52">
                 <Image
                   src="/images/community/iyinoluwa-soleye.jpg"
                   alt="Iyinoluwa Soleye during a Fellows community session"
                   fill
                   sizes="(max-width: 768px) 50vw, 280px"
-                  className="object-cover transition duration-500 group-hover:scale-105"
+                  className="object-cover object-top transition duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="group relative h-52 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:mt-6">
+              <div className="group relative h-64 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:mt-6 sm:h-52">
                 <Image
                   src="/images/community/favour-falade.jpg"
                   alt="Favour Falade sharing a pilot update"
                   fill
                   sizes="(max-width: 768px) 50vw, 280px"
-                  className="object-cover transition duration-500 group-hover:scale-105"
+                  className="object-cover object-top transition duration-500 group-hover:scale-105"
                 />
               </div>
             </div>

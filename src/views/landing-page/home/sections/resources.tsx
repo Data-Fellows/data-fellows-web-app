@@ -100,7 +100,7 @@ const Resources = () => {
                 alt={featuredStory.title}
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"
-                className="object-cover transition duration-500 group-hover:scale-105"
+                className="object-cover object-top transition duration-500 group-hover:scale-105"
               />
               <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
                 <FiBookOpen className="h-3.5 w-3.5" />
@@ -139,7 +139,7 @@ const Resources = () => {
                     alt={item.title}
                     fill
                     sizes="96px"
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 </div>
                 <div className="space-y-2">
@@ -221,7 +221,7 @@ const Resources = () => {
                     alt={card.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                   <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
                     {card.category}
