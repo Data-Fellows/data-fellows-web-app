@@ -35,6 +35,8 @@ export const communityAdmins = [
     role: "Community & Growth Operations Manager",
     tagline: "Keeps programs coordinated and member growth loops healthy.",
     image: "/images/growth_manager.jpg",
+    featured: true,
+    linkedin: "https://www.linkedin.com/in/sambo-evelyn",
   },
 ];
 
@@ -45,5 +47,7 @@ export const advisors = [
     tagline:
       "Guides Inscend's growth with insights from building one of Canada's leading clean beauty brands.",
     image: "/images/advisor.webp",
+    featured: true,
+    linkedin: "https://www.linkedin.com/in/oy%C3%A9ta-kokoroko-9b52b6160",
   },
 ];

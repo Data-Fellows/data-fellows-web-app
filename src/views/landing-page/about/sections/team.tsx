@@ -13,15 +13,23 @@ const TeamCard = ({
   tagline,
   image,
   linkedin,
+  featured,
 }: {
   name: string;
   role: string;
   tagline: string;
   image: string;
   linkedin?: string;
+  featured?: boolean;
 }) => (
-  <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-background">
-    <div className="relative h-56">
+  <div
+    className={`flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-background ${
+      featured ? "sm:col-span-2" : ""
+    }`}
+  >
+    <div
+      className={`relative ${featured ? "h-72 md:h-80" : "h-56"}`}
+    >
       <Image
         src={image}
         alt={name}

@@ -23,19 +23,23 @@ export const CommunityLeadCard = ({
       <img
         src={image}
         alt={`Profile image of ${name}`}
-        className="mb-4 h-28 w-28 rounded-full border-2 object-cover"
+        className="mb-4 h-28 w-28 rounded-full border-2 object-cover object-top"
       />
-      <h4 className="text-lg font-semibold">{name}</h4>
-      <p className="mb-2 text-sm text-muted-foreground">{role}</p>
-      <a
-        href={linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center text-sm text-primary hover:underline"
-      >
-        <FaLinkedin className="mr-1" />
-        LinkedIn
-      </a>
+      <div className="flex w-full items-center gap-3">
+        <div className="flex-1 text-center">
+          <h4 className="text-lg font-semibold">{name}</h4>
+          <p className="text-sm text-muted-foreground">{role}</p>
+        </div>
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`LinkedIn profile of ${name}`}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
+        >
+          <FaLinkedin className="h-4 w-4" />
+        </a>
+      </div>
     </motion.div>
   );
 };
