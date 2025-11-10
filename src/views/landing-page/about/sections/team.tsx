@@ -21,47 +21,53 @@ const TeamCard = ({
   image: string;
   linkedin?: string;
   featured?: boolean;
-}) => (
-  <div
-    className={`flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-background ${
-      featured ? "sm:col-span-2" : ""
-    }`}
-  >
+}) => {
+  const imageHeightClass = featured ? "h-72 md:h-80" : "h-56";
+  const cardWidthClass = featured
+    ? "sm:col-span-2 sm:max-w-lg sm:mx-auto"
+    : "";
+  const imageSizes = featured
+    ? "(max-width: 768px) 100vw, 320px"
+    : "(max-width: 768px) 100vw, 240px";
+
+  return (
     <div
-      className={`relative ${featured ? "h-72 md:h-80" : "h-56"}`}
+      className={`flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-background ${cardWidthClass}`}
     >
-      <Image
-        src={image}
-        alt={name}
-        fill
-        sizes="(max-width: 768px) 100vw, 240px"
-        className="object-cover object-top"
-      />
-    </div>
-    <div className="flex flex-1 flex-col gap-2 px-5 py-5">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-base font-semibold text-foreground">{name}</p>
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">
-            {role}
-          </p>
-        </div>
-        {linkedin ? (
-          <Link
-            href={linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
-            aria-label={`LinkedIn profile of ${name}`}
-          >
-            <FiLinkedin className="h-4 w-4" />
-          </Link>
-        ) : null}
+      <div className={`relative ${imageHeightClass}`}>
+        <Image
+          src={image}
+          alt={name}
+          fill
+          sizes={imageSizes}
+          className="object-cover object-top"
+        />
       </div>
-      <p className="text-sm text-muted-foreground">{tagline}</p>
+      <div className="flex flex-1 flex-col gap-2 px-5 py-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-base font-semibold text-foreground">{name}</p>
+            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+              {role}
+            </p>
+          </div>
+          {linkedin ? (
+            <Link
+              href={linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
+              aria-label={`LinkedIn profile of ${name}`}
+            >
+              <FiLinkedin className="h-4 w-4" />
+            </Link>
+          ) : null}
+        </div>
+        <p className="text-sm text-muted-foreground">{tagline}</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const TeamSection = () => {
   return (
