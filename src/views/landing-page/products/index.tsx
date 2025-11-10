@@ -101,7 +101,7 @@ const ProductsPage = () => {
               <div className="relative h-full w-full lg:col-span-6">
                 <div className="relative h-full min-h-[320px]">
                   <Image
-                    src="/images/company-dash.png"
+                    src="/images/actioncard.png"
                     alt="Preview of Inscend dashboards"
                     fill
                     className="object-cover"

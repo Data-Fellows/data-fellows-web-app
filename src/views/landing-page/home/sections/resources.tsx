@@ -1,73 +1,34 @@
 import NewsletterModal from "@/components/newsletter-modal";
+import {
+  guides,
+  journeySoFarUrl,
+  lessons,
+  storySpotlights,
+} from "@/constants/resources";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FiArrowRight, FiBookOpen, FiExternalLink } from "react-icons/fi";
 
-const featuredStory = {
-  title: "How Blessing turned a data diary into a full article",
-  description:
-    "A Fellow-led story on building a retail pricing playbook with Inscend templates.",
-  image: "/images/community/Blessing.jpeg",
-  category: "Feature spotlight",
-  date: "2025-10-12",
-  href: "/resources#blessing-story",
-};
+const formatDate = (value?: string) =>
+  value
+    ? new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }).format(new Date(value))
+    : "";
 
-const storyHighlights = [
-  {
-    title: "Lagos pilots that reshaped our onboarding",
-    image: "/images/community/Agada.jpeg",
-    date: "2025-10-04",
-    href: "/resources#lagos-pilots",
-  },
-  {
-    title: "Designing AI prompts with the Fellows content guild",
-    image: "/images/community/Wuraola.jpeg",
-    date: "2025-09-18",
-    href: "/resources#content-guild",
-  },
-];
-
-const guideAndLessonCards = [
-  {
-    title: "Mentor playbook: running confident discovery calls",
-    category: "Guide",
-    description:
-      "Scripts, intake sheets, and the exact follow-up emails we send partners.",
-    image: "/images/community/Ayodeji.jpeg",
-    href: "/resources#mentor-guide",
-    date: "2025-09-30",
-  },
-  {
-    title: "Lessons from 20 pilots across 3 continents",
-    category: "Lesson",
-    description:
-      "What businesses taught us about simplifying metrics without losing rigor.",
-    image: "/images/community/James.jpeg",
-    href: "/resources#pilot-lessons",
-    date: "2025-09-15",
-  },
-  {
-    title: "Guide: Visual systems that make data feel human",
-    category: "Guide",
-    description:
-      "The design checklist Fellows now use before shipping a dashboard.",
-    image: "/images/community/Nerat.jpeg",
-    href: "/resources#design-guide",
-    date: "2025-08-29",
-  },
-];
-
-const formatDate = (value: string) =>
-  new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(value));
+const getLinkProps = (href: string) =>
+  href.startsWith("http")
+    ? { target: "_blank", rel: "noopener noreferrer" as const }
+    : {};
 
 const Resources = () => {
   const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
+  const featuredStory = storySpotlights[0];
+  const storyHighlights = storySpotlights.slice(1);
+  const guideAndLessonCards = [...guides, ...lessons];
 
   return (
     <section
@@ -93,39 +54,42 @@ const Resources = () => {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-12">
-          <article className="group overflow-hidden rounded-3xl border border-primary/10 bg-background lg:col-span-7">
-            <div className="relative h-80">
-              <Image
-                src={featuredStory.image}
-                alt={featuredStory.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 60vw"
-                className="object-cover object-top transition duration-500 group-hover:scale-105"
-              />
-              <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
-                <FiBookOpen className="h-3.5 w-3.5" />
-                {featuredStory.category}
+          {featuredStory && (
+            <article className="group overflow-hidden rounded-3xl border border-primary/10 bg-background lg:col-span-7">
+              <div className="relative h-80">
+                <Image
+                  src={featuredStory.image}
+                  alt={featuredStory.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover object-top transition duration-500 group-hover:scale-105"
+                />
+                <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
+                  <FiBookOpen className="h-3.5 w-3.5" />
+                  {featuredStory.category ?? "Feature spotlight"}
+                </div>
+                <div className="absolute bottom-4 left-4 rounded-full bg-background/90 px-4 py-1 text-xs uppercase tracking-wide text-muted-foreground backdrop-blur">
+                  {formatDate(featuredStory.date)}
+                </div>
               </div>
-              <div className="absolute bottom-4 left-4 rounded-full bg-background/90 px-4 py-1 text-xs uppercase tracking-wide text-muted-foreground backdrop-blur">
-                {formatDate(featuredStory.date)}
+              <div className="space-y-4 px-6 py-6">
+                <h3 className="text-2xl font-semibold text-foreground">
+                  {featuredStory.title}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {featuredStory.description}
+                </p>
+                <Link
+                  href={featuredStory.href}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-primary/80"
+                  {...getLinkProps(featuredStory.href)}
+                >
+                  Read the full story
+                  <FiExternalLink className="h-4 w-4" />
+                </Link>
               </div>
-            </div>
-            <div className="space-y-4 px-6 py-6">
-              <h3 className="text-2xl font-semibold text-foreground">
-                {featuredStory.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {featuredStory.description}
-              </p>
-              <Link
-                href={featuredStory.href}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-primary/80"
-              >
-                Read the full story
-                <FiExternalLink className="h-4 w-4" />
-              </Link>
-            </div>
-          </article>
+            </article>
+          )}
 
           <div className="space-y-4 lg:col-span-5">
             {storyHighlights.map((item) => (
@@ -152,6 +116,7 @@ const Resources = () => {
                   <Link
                     href={item.href}
                     className="inline-flex items-center gap-2 text-xs font-semibold text-primary"
+                    {...getLinkProps(item.href)}
                   >
                     View highlight
                     <FiArrowRight className="h-4 w-4" />
@@ -172,8 +137,9 @@ const Resources = () => {
                 prompts, and pivots behind each win.
               </p>
               <Link
-                href="/resources#journey-so-far"
+                href={journeySoFarUrl}
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+                {...getLinkProps(journeySoFarUrl)}
               >
                 Listen & read recap
                 <FiArrowRight className="h-4 w-4" />
@@ -181,7 +147,7 @@ const Resources = () => {
             </div>
 
             <Link
-              href="/resources#stories"
+              href="/resources#stories-heading"
               className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10"
             >
               Check previous stories & highlights
@@ -209,7 +175,7 @@ const Resources = () => {
               <FiArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {guideAndLessonCards.map((card) => (
               <article
                 key={card.title}
@@ -228,9 +194,11 @@ const Resources = () => {
                   </span>
                 </div>
                 <div className="space-y-3 px-5 py-5">
-                  <p className="text-xs text-muted-foreground">
-                    {formatDate(card.date)}
-                  </p>
+                  {card.date && (
+                    <p className="text-xs text-muted-foreground">
+                      {formatDate(card.date)}
+                    </p>
+                  )}
                   <h3 className="text-lg font-semibold text-foreground">
                     {card.title}
                   </h3>
@@ -240,6 +208,7 @@ const Resources = () => {
                   <Link
                     href={card.href}
                     className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+                    {...getLinkProps(card.href)}
                   >
                     Continue reading
                     <FiExternalLink className="h-4 w-4" />
@@ -259,9 +228,8 @@ const Resources = () => {
               Join the Community & Growth operations newsletter.
             </h3>
             <p className="text-sm text-muted-foreground">
-              Evelyn curates every issue with pilot recaps, hiring drops, and
-              templates. Subscribe to get the same notes shared during Sunday
-              catch-ups.
+              Every issue includes pilot recaps, hiring drops, and templates.
+              Subscribe to get the same notes shared during Sunday catch-ups.
             </p>
             <p className="text-xs text-muted-foreground">
               Powered by MailerLite -- unsubscribe anytime.
@@ -271,7 +239,7 @@ const Resources = () => {
             <button
               type="button"
               onClick={() => setIsNewsletterOpen(true)}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Subscribe to the newsletter
               <FiArrowRight className="h-4 w-4" />

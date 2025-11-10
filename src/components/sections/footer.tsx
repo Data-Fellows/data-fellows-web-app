@@ -23,10 +23,26 @@ const partnerHighlights = [
 ];
 
 const socialLinks = [
-  { label: "LinkedIn", href: "#", icon: FiLinkedin },
-  { label: "Twitter / X", href: "#", icon: FiTwitter },
-  { label: "YouTube", href: "#", icon: FiYoutube },
-  { label: "Instagram", href: "#", icon: FiInstagram },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/the-data-fellow/",
+    icon: FiLinkedin,
+  },
+  {
+    label: "Twitter / X",
+    href: "https://twitter.com/DatafellowsInfo",
+    icon: FiTwitter,
+  },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/@DataFellows?si=1eB-Usup0ijd1rxM",
+    icon: FiYoutube,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/data.fellows/",
+    icon: FiInstagram,
+  },
 ];
 
 export const Footer = () => {
@@ -56,6 +72,8 @@ export const Footer = () => {
                 key={label}
                 href={href}
                 aria-label={label}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background text-lg transition hover:bg-primary hover:text-primary-foreground"
               >
                 <Icon />

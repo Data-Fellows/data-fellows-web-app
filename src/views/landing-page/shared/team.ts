@@ -42,7 +42,8 @@ export const advisors = [
   {
     name: "Oyeta Kokoroko",
     role: "Founder, Okoko Cosmetiques",
-    tagline: "Early Founder Advisor for Inscend.",
+    tagline:
+      "Guides Inscend's growth with insights from building one of Canada's leading clean beauty brands.",
     image: "/images/advisor.webp",
   },
 ];
