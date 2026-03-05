@@ -50,4 +50,9 @@ export const partnerLogos: PartnerLogo[] = [
     name: "Accelerator Centre",
     logo: "/images/partners/accelerator-centre.png",
   },
+  {
+    id: 15,
+    name: "Innovation Factory",
+    logo: "/images/partners/Innovation_Factory.webp",
+  },
 ];

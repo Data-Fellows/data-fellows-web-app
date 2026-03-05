@@ -14,6 +14,7 @@ const TeamCard = ({
   image,
   linkedin,
   featured,
+  objectPosition,
 }: {
   name: string;
   role: string;
@@ -21,6 +22,7 @@ const TeamCard = ({
   image: string;
   linkedin?: string;
   featured?: boolean;
+  objectPosition?: string;
 }) => {
   const imageHeightClass = featured ? "h-72 md:h-80" : "h-56";
   const cardWidthClass = featured
@@ -41,6 +43,7 @@ const TeamCard = ({
           fill
           sizes={imageSizes}
           className="object-cover object-top"
+          style={objectPosition ? { objectPosition } : undefined}
         />
       </div>
       <div className="flex flex-1 flex-col gap-2 px-5 py-5">

@@ -92,20 +92,22 @@ const WhoWeAre = () => {
               </div>
               <div className="group relative h-72 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:mt-10 sm:h-64">
                 <Image
-                  src="/images/community/eunice-otowo.jpg"
-                  alt="Eunice Otowo at work on a prototype"
+                  src="/images/community/BISMA.jpg"
+                  alt="Bisma Aji Manggala-Process Engineer"
                   fill
                   sizes="(max-width: 768px) 50vw, 300px"
                   className="object-cover object-top transition duration-500 group-hover:scale-105"
+                  style={{ objectPosition: "center 25%" }}
                 />
               </div>
               <div className="group relative h-72 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:-mt-10 sm:h-64">
                 <Image
-                  src="/images/community/olalere-kaosara.jpg"
-                  alt="Olalere Kaosara collaborating with Fellows"
+                  src="/images/community/Yumna-BigDatafacilitator.jpg"
+                  alt="Yumna Gamal collaborating with Fellows"
                   fill
                   sizes="(max-width: 768px) 50vw, 300px"
                   className="object-cover object-top transition duration-500 group-hover:scale-105"
+                  style={{ objectPosition: "center 25%" }}
                 />
               </div>
               <div className="group relative h-72 overflow-hidden rounded-3xl border border-primary/10 bg-background sm:h-64">

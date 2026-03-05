@@ -10,22 +10,30 @@ export const foundingTeam = [
     name: "Nnamdi Oboli",
     role: "COO & Co-Founder",
     tagline: "Steers operations so Fellows can focus on building.",
-    image: "/images/Mr Nnamdi Oboli-Co-Founder.jpg",
+    image: "/images/Mr_Nnamdi Oboli-Co-Founder.jpg",
     linkedin: "https://www.linkedin.com/in/nnamdi-o-247a991a7/",
   },
   {
     name: "Oyindamola Victor",
     role: "CTO",
     tagline: "Builds smarter product systems with the community.",
-    image: "/images/victor_cto.JPG",
+    image: "/images/Oyindamola_Victor_cto.JPG",
     linkedin: "https://www.linkedin.com/in/oyindamolavictor/",
   },
   {
-    name: "Ayodeji Ajayi",
-    role: "Head of AI",
+    name: "Elijah Soladoye",
+    role: "Founding Software Engineer",
+    tagline: "Builds scalable and efficient systems for the community.",
+    image: "/images/Elijah_Founding_Software_Engineer.jpg",
+    linkedin: "https://www.linkedin.com/in/elijah-soladoye/",
+    objectPosition: "center 50%",
+  },
+  {
+    name: "Sami Ansari",
+    role: "Founding AI Engineer",
     tagline: "Turns complex models into tools people can actually use.",
-    image: "/images/community/Ayodeji.jpeg",
-    linkedin: "https://www.linkedin.com/in/ayodejiajayi1",
+    image: "/images/Sami_Founding_AI_ENGINEER.png",
+    linkedin: "https://www.linkedin.com/in/samiansari99/",
   },
 ];
 
@@ -37,6 +45,7 @@ export const communityAdmins = [
     image: "/images/growth_manager.jpg",
     featured: true,
     linkedin: "https://www.linkedin.com/in/sambo-evelyn",
+    objectPosition: "center 25%",
   },
 ];
 

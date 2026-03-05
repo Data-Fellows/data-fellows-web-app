@@ -26,6 +26,7 @@ const partnerCategories = [
       "Accelerator Centre",
       "TBDC",
       "Bhive",
+      "Innovation Factory",
     ],
   },
   {

@@ -128,12 +128,6 @@ const communityLeadGroups: {
         role: "Data Science Lead",
       },
       {
-        name: "Ayodeji Ajayi",
-        image: "/images/community/Ayodeji.jpeg",
-        linkedin: "https://www.linkedin.com/in/ayodejiajayi1",
-        role: "Data Science Lead",
-      },
-      {
         name: "Blessing Oludele",
         image: "/images/community/Blessing.jpeg",
         linkedin: "https://www.linkedin.com/in/blessingoludele",
@@ -173,7 +167,7 @@ const communityLeadGroups: {
     leads: [
       {
         name: "Oyindamola Victor",
-        image: "/images/victor_cto.JPG",
+        image: "/images/Oyindamola_Victor_cto.JPG",
         linkedin: "https://www.linkedin.com/in/oyindamolavictor/",
         role: "Data Engineering Lead",
       },
