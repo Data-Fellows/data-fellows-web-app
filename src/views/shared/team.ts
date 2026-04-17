@@ -7,13 +7,6 @@ export const foundingTeam = [
     linkedin: "https://www.linkedin.com/in/tobioladimeji/",
   },
   {
-    name: "Nnamdi Oboli",
-    role: "COO & Co-Founder",
-    tagline: "Steers operations so Fellows can focus on building.",
-    image: "/images/Mr_Nnamdi Oboli-Co-Founder.jpg",
-    linkedin: "https://www.linkedin.com/in/nnamdi-o-247a991a7/",
-  },
-  {
     name: "Oyindamola Victor",
     role: "CTO",
     tagline: "Builds smarter product systems with the community.",
@@ -51,12 +44,18 @@ export const communityAdmins = [
 
 export const advisors = [
   {
+    name: "Nnamdi Oboli",
+    role: "Co-Founder Dioni Visions Limited",
+    tagline: "Supports partnerships and market expansion in Nigeria, bringing experience from building and scaling consumer-facing ventures and understanding how local markets adopt and trust new products.",
+    image: "/images/Mr_Nnamdi Oboli-Co-Founder.jpg",
+    linkedin: "https://www.linkedin.com/in/nnamdi-o-247a991a7/",
+  },
+  {
     name: "Oyeta Kokoroko",
     role: "Founder, Okoko Cosmetiques",
     tagline:
       "Guides Inscend's growth with insights from building one of Canada's leading clean beauty brands.",
     image: "/images/advisor.webp",
-    featured: true,
     linkedin: "https://www.linkedin.com/in/oy%C3%A9ta-kokoroko-9b52b6160",
   },
 ];

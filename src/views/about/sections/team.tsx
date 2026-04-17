@@ -25,9 +25,7 @@ const TeamCard = ({
   objectPosition?: string;
 }) => {
   const imageHeightClass = featured ? "h-72 md:h-80" : "h-56";
-  const cardWidthClass = featured
-    ? "sm:col-span-2 sm:max-w-lg sm:mx-auto"
-    : "";
+  const cardWidthClass = featured ? "sm:col-span-2" : "";
   const imageSizes = featured
     ? "(max-width: 768px) 100vw, 320px"
     : "(max-width: 768px) 100vw, 240px";
