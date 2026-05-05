@@ -28,6 +28,13 @@ export const foundingTeam = [
     image: "/images/Sami_Founding_AI_ENGINEER.png",
     linkedin: "https://www.linkedin.com/in/samiansari99/",
   },
+  {
+    name: "Mercy Bankole",
+    role: "Product Owner",
+    tagline: "Keeps product aligned with real users by turning customer behavior into clear, buildable features",
+    image: "/images/Mercy_Bankole_product_owner.JPG",
+    linkedin: "https://www.linkedin.com/in/bankole-mercy-6b2a12224"
+  },
 ];
 
 export const communityAdmins = [
