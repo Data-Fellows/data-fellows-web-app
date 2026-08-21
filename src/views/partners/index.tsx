@@ -8,12 +8,7 @@ const partnerCategories = [
     title: "Training Partners",
     description: "Curriculum and mentorship programs we run together.",
     icon: FiLayers,
-    partners: [
-      "DataCamp Classroom",
-      "Zummit Africa",
-      "Vatebra Academy",
-      "Vatebra Innovation Hub",
-    ],
+    partners: ["DataCamp Classroom", "Zummit Africa", "Vatebra Academy"],
   },
   {
     title: "Ecosystem Partners",
