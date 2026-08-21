@@ -77,6 +77,24 @@ export const lessons: ResourceEntry[] = [
     category: "Lesson",
     date: "2025-01-18",
   },
+  {
+    title:
+      "What building Data Fellows taught me about the human side of innovation",
+    description:
+      "Tobi Oladimeji reflects on why empathy -- not just data -- has driven Data Fellows' growth, and what that means for anyone building in tech.",
+    image: "/images/tobi-beyond-data.webp",
+    href: "https://ikonikpress.com/beyond-data-how-tobi-oladimeji-is-redefining-the-human-side-of-innovation/",
+    category: "Lesson",
+  },
+  {
+    title:
+      "Why ecommerce brands lose revenue without realizing it -- and how decision intelligence fixes it",
+    description:
+      "Tobi Oladimeji shares how we use decision intelligence at Data Fellows to catch the hidden revenue leaks ecommerce brands often miss.",
+    image: "/images/ecommerce-decision-intelligence.webp",
+    href: "https://medium.com/@pressikonik/why-ecommerce-brands-lose-revenue-without-realizing-it-and-how-decision-intelligence-fixes-it-c74924c6b121",
+    category: "Lesson",
+  },
 ];
 
 export const journeySoFarUrl =
