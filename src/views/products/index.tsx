@@ -111,7 +111,7 @@ const ProductsPage = () => {
                     priority
                   />
                   <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
-                    Built and refined with 20 pilot projects across 3
+                    Built and refined with 30 pilot projects across 3
                     continents.
                   </div>
                 </div>
