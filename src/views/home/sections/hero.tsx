@@ -3,9 +3,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const stats = [
-  { label: "Members", value: "1K+" },
-  { label: "Countries", value: "15" },
-  { label: "Pilots", value: "20" },
+  { label: "Members", value: "1.6k+" },
+  { label: "Countries", value: "33+" },
+  { label: "Pilots", value: "30+" },
 ];
 
 export const Hero = () => {
@@ -90,11 +90,11 @@ export const Hero = () => {
 
                 <div className="px-6 py-5">
                   <p className="text-sm font-semibold text-card-foreground">
-                    Inscend - Small business pilot
+                    Inscend - The decision layer for founders
                   </p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    A product-led pilot that helps local businesses grow via
-                    data-driven ops and tailored recommendations.
+                    Turns your store's data and your own operating context into
+                    the next right action -- no analyst needed.
                   </p>
 
                   <div className="mt-4 flex items-center justify-between">
