@@ -90,7 +90,7 @@ export const lessons: ResourceEntry[] = [
     title:
       "Why ecommerce brands lose revenue without realizing it -- and how decision intelligence fixes it",
     description:
-      "Ikonik Press breaks down the hidden revenue leaks in ecommerce, and how a decision-intelligence approach catches them before they add up.",
+      "Tobi Oladimeji shares how we use decision intelligence at Data Fellows to catch the hidden revenue leaks ecommerce brands often miss.",
     image: "/images/ecommerce-decision-intelligence.webp",
     href: "https://medium.com/@pressikonik/why-ecommerce-brands-lose-revenue-without-realizing-it-and-how-decision-intelligence-fixes-it-c74924c6b121",
     category: "Lesson",
