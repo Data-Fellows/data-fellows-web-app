@@ -55,4 +55,9 @@ export const partnerLogos: PartnerLogo[] = [
     name: "Innovation Factory",
     logo: "/images/partners/Innovation_Factory.webp",
   },
+  {
+    id: 16,
+    name: "Vector Institute AI (Fastlane)",
+    logo: "/images/partners/vector-institute-fastlane.png",
+  },
 ];
