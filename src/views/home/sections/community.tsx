@@ -3,6 +3,22 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiArrowRightCircle, FiUsers } from "react-icons/fi";
 
+const scholarshipStats = [
+  { value: "600+", label: "DataCamp scholarships in 2025" },
+  { value: "900+", label: "DataCamp scholarships in 2026" },
+];
+
+const statAccentClasses = [
+  {
+    card: "border-primary/30 bg-primary/10",
+    value: "text-primary",
+  },
+  {
+    card: "border-accent/30 bg-accent/10",
+    value: "text-accent-foreground",
+  },
+];
+
 const rhythm = [
   {
     title: "Community Sunday Catchup",
@@ -58,6 +74,24 @@ const Community = () => {
               Members join mentorship sessions, group projects, and live events
               that turn lessons into real experience.
             </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {scholarshipStats.map((stat, index) => {
+                const accent = statAccentClasses[index % statAccentClasses.length];
+                return (
+                  <div
+                    key={stat.label}
+                    className={`rounded-2xl border px-5 py-6 text-center shadow-sm shadow-black/5 dark:shadow-black/30 ${accent.card}`}
+                  >
+                    <p className={`text-4xl font-semibold ${accent.value}`}>
+                      {stat.value}
+                    </p>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground/90">
+                      {stat.label}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {rhythm.map((item) => {
                 const isActive = activeRhythm === item.title;
