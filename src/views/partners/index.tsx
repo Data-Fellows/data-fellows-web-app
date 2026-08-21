@@ -27,6 +27,7 @@ const partnerCategories = [
       "TBDC",
       "Bhive",
       "Innovation Factory",
+      "Vector Institute AI (Fastlane)",
     ],
   },
   {
