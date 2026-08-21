@@ -29,6 +29,7 @@ const partnerCategories = [
       "Innovation Factory",
       "League of Innovators",
       "Vector Institute AI (Fastlane)",
+      "LVLUP Ventures",
     ],
   },
   {
