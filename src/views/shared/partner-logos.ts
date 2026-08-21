@@ -43,7 +43,6 @@ export const partnerLogos: PartnerLogo[] = [
     id: 13,
     name: "Bhive",
     logo: "/images/partners/bhive.png",
-    className: "bg-black text-white",
   },
   {
     id: 14,
@@ -58,6 +57,6 @@ export const partnerLogos: PartnerLogo[] = [
   {
     id: 16,
     name: "Vector Institute AI (Fastlane)",
-    logo: "/images/partners/vector-institute-fastlane.png",
+    logo: "/images/partners/vector-institute.webp",
   },
 ];
