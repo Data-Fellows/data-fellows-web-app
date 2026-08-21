@@ -58,6 +58,20 @@ const Community = () => {
               Members join mentorship sessions, group projects, and live events
               that turn lessons into real experience.
             </p>
+            <div className="flex flex-wrap gap-3">
+              <div className="rounded-2xl border border-primary/10 bg-background px-4 py-3">
+                <p className="text-lg font-semibold text-foreground">600+</p>
+                <p className="text-xs text-muted-foreground">
+                  DataCamp scholarships in 2025
+                </p>
+              </div>
+              <div className="rounded-2xl border border-primary/10 bg-background px-4 py-3">
+                <p className="text-lg font-semibold text-foreground">900+</p>
+                <p className="text-xs text-muted-foreground">
+                  DataCamp scholarships in 2026
+                </p>
+              </div>
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {rhythm.map((item) => {
                 const isActive = activeRhythm === item.title;
