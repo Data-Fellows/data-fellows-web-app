@@ -16,9 +16,9 @@ const quotes = [
 ];
 
 const stats = [
-  { value: "1000+", label: "Members" },
+  { value: "1.6k+", label: "Members" },
   { value: "15+", label: "Countries" },
-  { value: "20+", label: "Pilot projects launched" },
+  { value: "30+", label: "Pilot projects launched" },
 ];
 
 const statAccentClasses = [
