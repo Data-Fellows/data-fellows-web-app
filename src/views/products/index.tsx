@@ -12,13 +12,13 @@ const productHighlights = [
   {
     title: "Inscend Action Board",
     description:
-      "Daily prompts that help shop owners turn raw numbers into the next right move.",
+      "Every morning, a short list of prioritized actions -- each with its potential revenue impact -- built from your data and your operating reality.",
     icon: FiTrendingUp,
   },
   {
     title: "Impact Dashboard",
     description:
-      "Track experiments, campaigns, and growth without needing to build complex spreadsheets.",
+      "Track the outcome of every action, from restocks to campaigns, so you see what is actually moving revenue.",
     icon: FiBarChart2,
   },
   {
@@ -83,8 +83,11 @@ const ProductsPage = () => {
                   Build with tools born from the Data Fellows ecosystem.
                 </h1>
                 <p className="text-base leading-relaxed text-muted-foreground">
-                  Inscend is our flagship product -- a co-pilot for small
-                  businesses that turns messy data into confident action. It was
+                  Inscend is our flagship product: a decision layer for
+                  founder-led commerce brands. It combines platform data --
+                  from Shopify, SHOPLINE, and more -- with the operating
+                  context only a founder knows, then turns both into a short
+                  list of prioritized, ready-to-complete actions. It was
                   designed with Fellows, iterated with partners, and launched
                   with real pilots.
                 </p>
@@ -124,7 +127,7 @@ const ProductsPage = () => {
                 id="highlight-heading"
                 className="text-3xl font-semibold text-foreground sm:text-4xl"
               >
-                Why small businesses love Inscend.
+                Why founders love Inscend.
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
                 Every feature ties back to questions we heard from founders in

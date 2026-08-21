@@ -7,12 +7,12 @@ const features = [
   {
     title: "Action Board",
     description:
-      "Guided workflows for shop owners to analyse sales, expenses, and inventory without needing an analyst.",
+      "Every morning, a short list of prioritized actions -- each with its potential revenue impact -- so founders always know the next right move.",
   },
   {
     title: "Impact Dashboard",
     description:
-      "Visualise growth, spot opportunities, and measure the results of every experiment in real time.",
+      "See the outcome of every action you take, from restocks to campaign tweaks, so you know what is actually moving revenue.",
   },
   {
     title: "Built with Fellows",
@@ -77,10 +77,11 @@ const Products = () => {
               Tools born from real problems.
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              We do not just learn -- we build. Inscend helps small shop owners
-              understand their business and act on it without needing an
-              analyst. Every feature is inspired by questions that surfaced
-              inside the community.
+              We do not just learn -- we build. Inscend is the decision layer
+              for founder-led commerce: it combines a brand's platform data
+              with the operating context only a founder knows, then turns both
+              into a short list of prioritized, ready-to-complete actions --
+              no analyst required.
             </p>
             <div className="space-y-4">
               {features.map((feature) => (
