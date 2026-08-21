@@ -6,12 +6,7 @@ const partnerCategories = [
     title: "Training Partners",
     description: "Programs that power our learning journey.",
     icon: FiGrid,
-    partners: [
-      "DataCamp Classroom",
-      "Zummit Africa",
-      "Vatebra Academy",
-      "Vatebra Innovation Hub",
-    ],
+    partners: ["DataCamp Classroom", "Zummit Africa", "Vatebra Academy"],
   },
   {
     title: "Ecosystem Partners",

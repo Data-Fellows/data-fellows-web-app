@@ -79,12 +79,13 @@ export const lessons: ResourceEntry[] = [
   },
   {
     title:
-      "What building Data Fellows taught me about the human side of innovation",
+      "Clarity is the new currency: what building Data Fellows and Inscend taught me",
     description:
-      "Tobi Oladimeji reflects on why empathy -- not just data -- has driven Data Fellows' growth, and what that means for anyone building in tech.",
+      "Tobi Oladimeji on turning a childhood spent following his mum to the market into a global community and Inscend -- and why clarity, not more data, is what founders actually need.",
     image: "/images/tobi-beyond-data.webp",
     href: "https://ikonikpress.com/beyond-data-how-tobi-oladimeji-is-redefining-the-human-side-of-innovation/",
     category: "Lesson",
+    date: "2025-11-23",
   },
   {
     title:
