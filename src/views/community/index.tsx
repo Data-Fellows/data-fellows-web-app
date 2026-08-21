@@ -223,7 +223,7 @@ const CommunityPage = () => {
                     priority
                   />
                   <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
-                    1000+ members across 15 countries and counting.
+                    1,600+ members across 33+ countries and counting.
                   </div>
                 </div>
               </div>

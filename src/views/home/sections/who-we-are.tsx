@@ -17,7 +17,7 @@ const quotes = [
 
 const stats = [
   { value: "1.6k+", label: "Members" },
-  { value: "15+", label: "Countries" },
+  { value: "33+", label: "Countries" },
   { value: "30+", label: "Pilot projects launched" },
 ];
 
@@ -60,7 +60,7 @@ const WhoWeAre = () => {
               We help people learn, test ideas, and build tools that make life and business better.
             </p>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Today we have over one thousand members across fifteen countries and twenty pilot projects already launched.
+              Today we have over 1,600 members across 33+ countries and 30+ pilot projects already launched.
               Every Fellow brings a unique perspective, and together we turn insight into action.
             </p>
             <div className="space-y-4">
