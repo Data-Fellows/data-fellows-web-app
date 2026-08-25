@@ -4,8 +4,8 @@ import { useState } from "react";
 import { FiArrowRightCircle, FiUsers } from "react-icons/fi";
 
 const scholarshipStats = [
-  { value: "600+", label: "DataCamp scholarships in 2025" },
-  { value: "900+", label: "DataCamp scholarships in 2026" },
+  { value: "900+", label: "DataCamp scholarships in 2025" },
+  { value: "600+", label: "DataCamp scholarships in 2026" },
 ];
 
 const statAccentClasses = [
