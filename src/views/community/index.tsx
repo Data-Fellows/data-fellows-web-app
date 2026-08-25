@@ -117,7 +117,7 @@ const communityLeadGroups: {
   leads: CommunityLead[];
 }[] = [
   {
-    title: "Data Science Leads",
+    title: "Founding Data Science Leads",
     description:
       "They guide experiments across AI, ML, and research-focused builds so Fellows can ship credible insights.",
     leads: [
@@ -125,24 +125,24 @@ const communityLeadGroups: {
         name: "James Ogunsanya",
         image: "/images/community/James.jpeg",
         linkedin: "https://www.linkedin.com/in/oyindamolajames",
-        role: "Data Science Lead",
+        role: "Founding Data Science Lead",
       },
       {
         name: "Blessing Oludele",
         image: "/images/community/Blessing.jpeg",
         linkedin: "https://www.linkedin.com/in/blessingoludele",
-        role: "Data Science Lead",
+        role: "Founding Data Science Lead",
       },
       {
         name: "Nerat Dazam",
         image: "/images/community/Nerat.jpeg",
         linkedin: "https://www.linkedin.com/in/nerat-dazam",
-        role: "Data Science Lead",
+        role: "Founding Data Science Lead",
       },
     ],
   },
   {
-    title: "Data Analytics Leads",
+    title: "Founding Data Analytics Leads",
     description:
       "These Fellows turn business questions into playbooks, dashboards, and storytelling templates the community can reuse.",
     leads: [
@@ -150,18 +150,18 @@ const communityLeadGroups: {
         name: "Tijani Ogbuade",
         image: "/images/community/Tijani.jpeg",
         linkedin: "https://www.linkedin.com/in/tijani-ogbuade",
-        role: "Data Analytics Lead",
+        role: "Founding Data Analytics Lead",
       },
       {
         name: "Agada Joshua",
         image: "/images/community/Agada.jpeg",
         linkedin: "https://www.linkedin.com/in/joshua-agada",
-        role: "Data Analytics Lead",
+        role: "Founding Data Analytics Lead",
       },
     ],
   },
   {
-    title: "Data Engineering Leads",
+    title: "Founding Data Engineering Leads",
     description:
       "They keep our infrastructure, automations, and experimentation pipelines running smoothly.",
     leads: [
@@ -169,13 +169,13 @@ const communityLeadGroups: {
         name: "Oyindamola Victor",
         image: "/images/Oyindamola_Victor_cto.JPG",
         linkedin: "https://www.linkedin.com/in/oyindamolavictor/",
-        role: "Data Engineering Lead",
+        role: "Founding Data Engineering Lead",
       },
       {
         name: "Wuraola Akeeb",
         image: "/images/community/Wuraola.jpeg",
         linkedin: "https://www.linkedin.com/in/akeebwuraolaayomide",
-        role: "Data Engineering Lead",
+        role: "Founding Data Engineering Lead",
       },
     ],
   },
@@ -294,11 +294,12 @@ const CommunityPage = () => {
                 id="community-leads-heading"
                 className="text-3xl font-semibold text-foreground sm:text-4xl"
               >
-                Meet our community leads.
+                Meet our founding community leads.
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
-                These are the people hosting conversations, unblocking projects,
-                and cheering Fellows on across every discipline.
+                These are the Fellows who helped shape Data Fellows from day
+                one -- hosting conversations, unblocking projects, and
+                cheering Fellows on across every discipline.
               </p>
             </div>
             <div className="space-y-10">
