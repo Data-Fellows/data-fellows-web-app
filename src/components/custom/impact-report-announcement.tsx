@@ -14,15 +14,26 @@ const ImpactReportAnnouncement = () => {
     if (now < ANNOUNCEMENT_START || now > ANNOUNCEMENT_END) {
       return;
     }
-    if (sessionStorage.getItem(STORAGE_KEY)) {
-      return;
+    let alreadyDismissed = false;
+    try {
+      alreadyDismissed = Boolean(sessionStorage.getItem(STORAGE_KEY));
+    } catch {
+      // sessionStorage can throw in some mobile in-app browsers (e.g.
+      // Instagram/WhatsApp webviews) or restrictive privacy modes --
+      // treat that as "not dismissed" rather than silently failing.
     }
-    setIsOpen(true);
+    if (!alreadyDismissed) {
+      setIsOpen(true);
+    }
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    try {
+      sessionStorage.setItem(STORAGE_KEY, "1");
+    } catch {
+      // Ignore -- worst case the announcement reappears next load.
+    }
   };
 
   useEffect(() => {
