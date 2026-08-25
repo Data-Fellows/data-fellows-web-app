@@ -1,3 +1,4 @@
+import ImpactReportAnnouncement from "@/components/custom/impact-report-announcement";
 import LandingPageLayout from "@/layouts/landing-page";
 import React from "react";
 import About from "./sections/about";
@@ -12,6 +13,7 @@ const Home: React.FC = () => {
   console.log("home")
   return (
     <LandingPageLayout>
+      <ImpactReportAnnouncement />
       <div className="space-y-24 md:space-y-28">
         <Hero />
         <WhoWeAre />
