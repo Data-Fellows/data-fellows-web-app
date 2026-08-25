@@ -77,11 +77,11 @@ const ImpactReportAnnouncement = () => {
           Four-year anniversary
         </span>
         <h2 className="mt-4 text-2xl font-semibold text-foreground">
-          We&apos;re turning four.
+          Data Fellows is 4! Read our Impact Report.
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Four years of turning data into clarity, across 33 countries. Read
-          our Impact Report to see the full story.
+          Four years of turning data into clarity, across 33 countries. See
+          the full story.
         </p>
         <Link
           href="/documents/data-fellows-impact-report-2026.pdf"
