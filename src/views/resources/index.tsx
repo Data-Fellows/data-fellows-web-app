@@ -12,6 +12,7 @@ import { useState } from "react";
 import {
   FiArrowRight,
   FiBookmark,
+  FiDownload,
   FiExternalLink,
   FiHeadphones,
   FiPenTool,
@@ -59,6 +60,39 @@ const ResourcesPage = () => {
                 <FiArrowRight className="h-4 w-4" />
               </button>
             </div>
+          </div>
+        </section>
+
+        <section
+          className="px-4 sm:px-6"
+          aria-labelledby="impact-report-heading"
+        >
+          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-10 lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-12">
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+                Four-year anniversary
+              </span>
+              <h2
+                id="impact-report-heading"
+                className="text-2xl font-semibold text-foreground sm:text-3xl"
+              >
+                The Data Fellows Impact Report is here.
+              </h2>
+              <p className="max-w-2xl text-sm text-muted-foreground">
+                Four years of turning data into clarity, across 33 countries.
+                See the full story: our community, our programs, Inscend, and
+                what's ahead.
+              </p>
+            </div>
+            <Link
+              href="/documents/data-fellows-impact-report-2026.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 lg:mt-0"
+            >
+              Read the Impact Report
+              <FiDownload className="h-4 w-4" />
+            </Link>
           </div>
         </section>
 

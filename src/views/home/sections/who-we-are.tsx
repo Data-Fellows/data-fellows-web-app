@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { FiArrowRight } from "react-icons/fi";
 
 const quotes = [
   {
@@ -140,6 +142,18 @@ const WhoWeAre = () => {
               </div>
             );
           })}
+        </div>
+
+        <div className="text-center">
+          <Link
+            href="/documents/data-fellows-impact-report-2026.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+          >
+            Read our four-year Impact Report
+            <FiArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>
