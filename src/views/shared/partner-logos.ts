@@ -65,4 +65,9 @@ export const partnerLogos: PartnerLogo[] = [
     logo: "/images/partners/lvlup-ventures.png",
     className: "bg-black text-white",
   },
+  {
+    id: 18,
+    name: "Cisco Networking Academy",
+    logo: "/images/partners/cisco-networking-academy.png",
+  },
 ];
