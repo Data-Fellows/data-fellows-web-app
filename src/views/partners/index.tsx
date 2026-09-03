@@ -25,6 +25,7 @@ const partnerCategories = [
       "League of Innovators",
       "Vector Institute AI (Fastlane)",
       "LVLUP Ventures",
+      "Cisco Networking Academy",
     ],
   },
   {
