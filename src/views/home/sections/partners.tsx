@@ -11,6 +11,7 @@ const partnerCategories = [
       "Zummit Africa",
       "Vatebra Academy",
       "Cisco Networking Academy",
+      "Data Rango",
     ],
   },
   {
@@ -34,7 +35,7 @@ const partnerCategories = [
     title: "Community Partners",
     description: "Allies who amplify stories and opportunities.",
     icon: FiHeart,
-    partners: ["Everything Analytics", "Propel", "DaElites", "Data Rango"],
+    partners: ["Everything Analytics", "Propel", "DaElites"],
   },
 ];
 
