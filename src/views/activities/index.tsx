@@ -1,5 +1,8 @@
 import { activities, ActivityStatus } from "@/constants/activities";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
+import type { Challenge } from "@/types/challenge";
+import type { GetServerSideProps } from "next";
 import Link from "next/link";
 import { FiArrowUpRight, FiCalendar, FiUsers } from "react-icons/fi";
 
@@ -10,7 +13,68 @@ const statusStyles: Record<ActivityStatus, string> = {
   Closed: "border-border bg-muted text-muted-foreground",
 };
 
-const ActivitiesPage = () => {
+type ActivityCard = {
+  key: string;
+  type: string;
+  status: ActivityStatus;
+  title: string;
+  description: string;
+  cadence: string;
+  href: string;
+  external: boolean;
+  ctaLabel: string;
+};
+
+const challengeStatus = (challenge: Challenge): ActivityStatus => {
+  const today = new Date().toISOString().slice(0, 10);
+  if (today < challenge.start_date) return "Upcoming";
+  if (today > challenge.end_date) return "Closed";
+  return "Ongoing";
+};
+
+const formatDateRange = (start: string, end: string) =>
+  `${new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+  }).format(new Date(`${start}T00:00:00Z`))} -- ${new Intl.DateTimeFormat(
+    "en-US",
+    { month: "short", day: "numeric" }
+  ).format(new Date(`${end}T00:00:00Z`))}`;
+
+type ActivitiesPageProps = {
+  challenges: Challenge[];
+};
+
+const ActivitiesPage = ({ challenges }: ActivitiesPageProps) => {
+  const staticCards: ActivityCard[] = activities.map((activity) => ({
+    key: activity.title,
+    type: activity.type,
+    status: activity.status,
+    title: activity.title,
+    description: activity.description,
+    cadence: activity.cadence,
+    href: activity.registerHref,
+    external: true,
+    ctaLabel: activity.status === "Closed" ? "See recap" : "Register",
+  }));
+
+  const challengeCards: ActivityCard[] = challenges.map((challenge) => {
+    const status = challengeStatus(challenge);
+    return {
+      key: challenge.id,
+      type: "Challenge",
+      status,
+      title: challenge.title,
+      description: challenge.subtitle || challenge.description || "",
+      cadence: formatDateRange(challenge.start_date, challenge.end_date),
+      href: `/activities/challenges/${challenge.slug}`,
+      external: false,
+      ctaLabel: status === "Closed" ? "See recap" : "View challenge",
+    };
+  });
+
+  const cards = [...challengeCards, ...staticCards];
+
   return (
     <LandingPageLayout>
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -52,46 +116,46 @@ const ActivitiesPage = () => {
               Current activities
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {activities.map((activity) => (
+              {cards.map((card) => (
                 <article
-                  key={activity.title}
+                  key={card.key}
                   className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-background px-6 py-6"
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center rounded-full border border-primary/10 bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      {activity.type}
+                      {card.type}
                     </span>
                     <span
                       className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
-                        statusStyles[activity.status]
+                        statusStyles[card.status]
                       }`}
                     >
-                      {activity.status}
+                      {card.status}
                     </span>
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-lg font-semibold text-foreground">
-                      {activity.title}
+                      {card.title}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {activity.description}
+                      {card.description}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                     <FiCalendar className="h-4 w-4" />
-                    {activity.cadence}
+                    {card.cadence}
                   </div>
                   <Link
-                    href={activity.registerHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={card.href}
+                    target={card.external ? "_blank" : undefined}
+                    rel={card.external ? "noopener noreferrer" : undefined}
                     className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition ${
-                      activity.status === "Closed"
+                      card.status === "Closed"
                         ? "border border-border text-muted-foreground hover:bg-muted"
                         : "bg-primary text-primary-foreground hover:bg-primary/90"
                     }`}
                   >
-                    {activity.status === "Closed" ? "See recap" : "Register"}
+                    {card.ctaLabel}
                     <FiArrowUpRight className="h-4 w-4" />
                   </Link>
                 </article>
@@ -102,6 +166,25 @@ const ActivitiesPage = () => {
       </div>
     </LandingPageLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<
+  ActivitiesPageProps
+> = async ({ req, res }) => {
+  const supabase = createSupabaseServerClient({ req, res });
+  if (!supabase) {
+    return { props: { challenges: [] } };
+  }
+
+  const { data } = await supabase
+    .from("challenges")
+    .select(
+      "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, created_at, updated_at"
+    )
+    .eq("status", "published")
+    .order("start_date", { ascending: false });
+
+  return { props: { challenges: data ?? [] } };
 };
 
 export default ActivitiesPage;
