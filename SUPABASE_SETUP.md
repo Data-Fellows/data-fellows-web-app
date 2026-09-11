@@ -35,8 +35,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 
 ## 5. Create the first admin
 
-Once the admin login/CRUD area ships (Phase C), you'll need at least one
-admin account:
+To sign in at `/admin`, you need at least one admin account:
 
 1. Supabase Dashboard → Authentication → Users → **Add user** (set an email
    + password). Copy the new user's UUID.
@@ -47,7 +46,8 @@ admin account:
    ```
 
 Logging in via Supabase Auth alone is **not** enough -- without this row,
-the app still won't treat the account as staff.
+the app still won't treat the account as staff, and every `/api/admin/*`
+request will be rejected even if you're signed in.
 
 ## 6. Redeploy
 
@@ -58,3 +58,6 @@ Redeploy on Vercel so the new environment variables take effect.
 - Visit `/activities` -- once a challenge is published, its card should
   appear there and link to `/activities/challenges/<slug>`.
 - The challenge page's Home and Wall tabs should load real data.
+- Visit `/admin/login`, sign in with the account from step 5, and confirm
+  you land on `/admin/challenges`. From there you can create, edit, and
+  delete challenges -- no SQL needed for day-to-day use.
