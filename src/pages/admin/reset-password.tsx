@@ -40,12 +40,15 @@ const ResetPasswordPage = () => {
       return;
     }
 
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) setStatus("ready");
-    });
-
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
+    // Only a PASSWORD_RECOVERY event (fired when the emailed link's code is
+    // exchanged) should unlock this form. Checking getSession() or a plain
+    // SIGNED_IN event would also accept an ordinary, already-signed-in
+    // session -- e.g. this page opened directly, or an expired reset link
+    // clicked while someone else's admin session is active in the same
+    // browser -- and let the form silently change the wrong account's
+    // password.
+    const { data: listener } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
         setStatus("ready");
       }
     });

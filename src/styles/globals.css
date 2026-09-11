@@ -289,3 +289,21 @@ body.modal-open {
 .touch-manipulation {
   touch-action: manipulation;
 }
+
+/* Printing the challenge certificate should produce a certificate-only
+   page, not the surrounding nav/hero/tabs/footer chrome. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #certificate,
+  #certificate * {
+    visibility: visible;
+  }
+  #certificate {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

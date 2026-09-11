@@ -1,3 +1,4 @@
+import { dayNumberForToday } from "@/lib/challenge/day-number";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
@@ -55,7 +56,7 @@ export default async function handler(
 
   const { data: challenge } = await supabase
     .from("challenges")
-    .select("id")
+    .select("id, start_date")
     .eq("slug", slug)
     .eq("status", "published")
     .maybeSingle();
@@ -66,13 +67,22 @@ export default async function handler(
 
   const { data: day } = await supabase
     .from("challenge_days")
-    .select("id")
+    .select("id, day_number")
     .eq("id", dayId)
     .eq("challenge_id", challenge.id)
     .maybeSingle();
 
   if (!day) {
     return res.status(400).json({ success: false, error: "That day isn't valid." });
+  }
+
+  // The client only offers days that have started, but that's UI-only --
+  // enforce it here too so a direct API call can't check in for a future
+  // day and unlock progress/certificates early.
+  if (day.day_number > dayNumberForToday(challenge.start_date)) {
+    return res
+      .status(400)
+      .json({ success: false, error: "That day hasn't started yet." });
   }
 
   const { error } = await supabase.from("check_ins").insert({

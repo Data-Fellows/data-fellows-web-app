@@ -31,12 +31,15 @@ const formatDate = (value: string) =>
   }).format(new Date(value));
 
 const formatDateRange = (start: string, end: string) =>
-  `${new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric" }).format(
-    new Date(`${start}T00:00:00Z`)
-  )} -- ${new Intl.DateTimeFormat("en-US", {
+  `${new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${start}T00:00:00Z`))} -- ${new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "UTC",
   }).format(new Date(`${end}T00:00:00Z`))}`;
 
 const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {

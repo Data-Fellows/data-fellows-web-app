@@ -9,12 +9,14 @@ Nothing else on the site depends on Supabase.
 Create a free project at [supabase.com](https://supabase.com). Note the
 **Project URL** and the **anon/public API key** (Project Settings → API).
 
-## 2. Run the schema migration
+## 2. Run the schema migrations
 
-Open the Supabase SQL Editor and run the contents of
-`supabase/migrations/0001_challenges.sql`. This creates the `challenges`,
-`challenge_days`, `check_ins`, and `admins` tables, plus Row Level Security
-policies.
+Open the Supabase SQL Editor and run every file in `supabase/migrations/`,
+**in order** (`0001_challenges.sql`, then `0002_challenge_partner.sql`, then
+`0003_security_fixes.sql`, and so on as new ones are added). Skipping one or
+running them out of order can break the app -- for example, code that reads
+a column a later migration adds will fail until that migration runs, and
+0003 tightens security on tables 0001 creates.
 
 ## 3. Disable public sign-up
 
@@ -49,11 +51,24 @@ Logging in via Supabase Auth alone is **not** enough -- without this row,
 the app still won't treat the account as staff, and every `/api/admin/*`
 request will be rejected even if you're signed in.
 
-## 6. Redeploy
+## 6. Allow the password reset redirect
+
+Supabase only follows a password-reset link to pages you've allowed.
+Dashboard → Authentication → URL Configuration → **Redirect URLs** → add:
+
+```
+https://datafellowsai.com/admin/reset-password
+```
+
+Without this, "Forgot password?" emails send fine but the link in them
+redirects to Supabase's default Site URL instead of the reset-password
+page, and the flow silently doesn't work.
+
+## 7. Redeploy
 
 Redeploy on Vercel so the new environment variables take effect.
 
-## 7. Verify
+## 8. Verify
 
 - Visit `/activities` -- once a challenge is published, its card should
   appear there and link to `/activities/challenges/<slug>`.

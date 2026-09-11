@@ -62,18 +62,17 @@ export default async function handler(
     checkedInToday = count ?? 0;
   }
 
-  const { data: allCheckIns } = await supabase
-    .from("check_ins")
-    .select("member_email")
-    .eq("challenge_id", challenge.id);
-
-  const totalParticipants = new Set(
-    (allCheckIns ?? []).map((row) => row.member_email)
-  ).size;
+  // Distinct count runs in the database (via RPC) rather than fetching
+  // every check_ins row into JS and de-duping client-side, which would
+  // silently undercount past Supabase's default 1000-row API cap.
+  const { data: totalParticipants } = await supabase.rpc(
+    "count_distinct_participants",
+    { p_challenge_id: challenge.id }
+  );
 
   return res.status(200).json({
     checkedInToday,
     target: challenge.member_target,
-    totalParticipants,
+    totalParticipants: totalParticipants ?? 0,
   });
 }

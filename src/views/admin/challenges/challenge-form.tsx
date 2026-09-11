@@ -14,25 +14,30 @@ const dayFormSchema = z.object({
   summary: z.string().trim().optional(),
 });
 
-const challengeFormSchema = z.object({
-  slug: z
-    .string()
-    .trim()
-    .min(1, "Required")
-    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, and hyphens only"),
-  title: z.string().trim().min(1, "Required"),
-  subtitle: z.string().trim().optional(),
-  description: z.string().trim().optional(),
-  start_date: z.string().trim().min(1, "Required"),
-  end_date: z.string().trim().min(1, "Required"),
-  daily_commitment: z.string().trim().optional(),
-  member_target: z.string().trim().optional(),
-  status: z.enum(["draft", "published", "archived"]),
-  cta_join_label: z.string().trim().optional(),
-  cta_join_href: z.string().trim().optional(),
-  partner_name: z.string().trim().optional(),
-  days: z.array(dayFormSchema).min(1, "Add at least one day"),
-});
+const challengeFormSchema = z
+  .object({
+    slug: z
+      .string()
+      .trim()
+      .min(1, "Required")
+      .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, and hyphens only"),
+    title: z.string().trim().min(1, "Required"),
+    subtitle: z.string().trim().optional(),
+    description: z.string().trim().optional(),
+    start_date: z.string().trim().min(1, "Required"),
+    end_date: z.string().trim().min(1, "Required"),
+    daily_commitment: z.string().trim().optional(),
+    member_target: z.string().trim().optional(),
+    status: z.enum(["draft", "published", "archived"]),
+    cta_join_label: z.string().trim().optional(),
+    cta_join_href: z.string().trim().optional(),
+    partner_name: z.string().trim().optional(),
+    days: z.array(dayFormSchema).min(1, "Add at least one day"),
+  })
+  .refine((data) => data.end_date >= data.start_date, {
+    message: "End date must be on or after the start date.",
+    path: ["end_date"],
+  });
 
 type FormValues = z.infer<typeof challengeFormSchema>;
 
