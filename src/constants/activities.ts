@@ -36,6 +36,6 @@ export const activities: Activity[] = [
     cadence: "One-week sprint",
     description:
       "A one-week AI fluency sprint built with Anthropic's Claude -- prompting fundamentals, Projects and Artifacts, and real use cases across roles.",
-    registerHref: "https://bit.ly/m/datafellows",
+    registerHref: "https://claude-community-challenge.lovable.app/",
   },
 ];
