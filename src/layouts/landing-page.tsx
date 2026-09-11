@@ -9,6 +9,7 @@ import { FiArrowUpRight, FiMenu, FiX } from "react-icons/fi";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/community", label: "Community" },
+  { href: "/activities", label: "Activities" },
   { href: "/products", label: "Products" },
   { href: "/resources", label: "Resources" },
   { href: "/partners", label: "Partners" },
