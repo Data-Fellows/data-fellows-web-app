@@ -1,6 +1,7 @@
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -72,7 +73,15 @@ const AdminLoginPage = () => {
           </label>
 
           <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-            Password
+            <span className="flex items-center justify-between">
+              Password
+              <Link
+                href="/admin/forgot-password"
+                className="text-xs font-medium text-primary hover:underline"
+              >
+                Forgot password?
+              </Link>
+            </span>
             <input
               type="password"
               {...register("password")}
