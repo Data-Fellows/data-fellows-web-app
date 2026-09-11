@@ -13,6 +13,7 @@ export type Challenge = {
   status: ChallengeStatus;
   cta_join_label: string | null;
   cta_join_href: string | null;
+  partner_name: string | null;
   created_at: string;
   updated_at: string;
 };

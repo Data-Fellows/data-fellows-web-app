@@ -1,5 +1,6 @@
 import type { ChallengeWithDays } from "@/types/challenge";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { FiAward, FiPrinter } from "react-icons/fi";
 import { useMemberIdentity } from "../hooks/use-member-identity";
@@ -29,6 +30,15 @@ const formatDate = (value: string) =>
     year: "numeric",
   }).format(new Date(value));
 
+const formatDateRange = (start: string, end: string) =>
+  `${new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric" }).format(
+    new Date(`${start}T00:00:00Z`)
+  )} -- ${new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(`${end}T00:00:00Z`))}`;
+
 const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   const router = useRouter();
   const { identity, hydrated } = useMemberIdentity();
@@ -39,9 +49,9 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
     enabled: hydrated && !!identity?.email,
   });
 
-  const goToCheckIn = () => {
+  const goToTab = (tab: "check-in" | "tracker") => {
     router.push(
-      { pathname: router.pathname, query: { ...router.query, tab: "check-in" } },
+      { pathname: router.pathname, query: { ...router.query, tab } },
       undefined,
       { shallow: true }
     );
@@ -67,7 +77,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         </p>
         <button
           type="button"
-          onClick={goToCheckIn}
+          onClick={() => goToTab("check-in")}
           className="mt-6 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
         >
           Go to check-in
@@ -78,30 +88,55 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
 
   return (
     <div className="space-y-6">
-      <div className="mx-auto max-w-2xl space-y-6 rounded-3xl border-2 border-primary/30 bg-background px-10 py-14 text-center print:border-0">
-        <FiAward className="mx-auto h-10 w-10 text-primary" />
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+      <div
+        id="certificate"
+        className="mx-auto max-w-2xl space-y-7 rounded-3xl border border-primary/20 bg-gradient-to-b from-secondary/20 to-background px-8 py-12 text-center sm:px-14 print:border-primary/30 print:bg-none"
+      >
+        <div className="flex items-center justify-center gap-3">
+          <Image
+            src="/svgs/data-fellow.svg"
+            alt="Data Fellows"
+            width={120}
+            height={40}
+            className="h-9 w-auto"
+          />
+          <span className="h-8 w-px bg-primary/20" aria-hidden="true" />
+          <FiAward className="h-8 w-8 text-primary" />
+        </div>
+
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
           Certificate of Participation
         </p>
-        <h2 className="text-3xl font-semibold text-foreground">
+
+        <h2 className="text-3xl font-semibold text-foreground sm:text-4xl">
           {data.memberName}
         </h2>
+
         <p className="text-base text-muted-foreground">
           has successfully completed
           <br />
-          <span className="font-semibold text-foreground">
+          <span className="text-lg font-semibold text-foreground">
             {challenge.title}
           </span>
         </p>
+
         <p className="text-sm text-muted-foreground">
+          {formatDateRange(challenge.start_date, challenge.end_date)}
+          {challenge.daily_commitment ? ` · ${challenge.daily_commitment} daily` : ""}
+        </p>
+
+        <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
           {data.completedDays}/{data.totalDays} days
           {data.completedAt ? ` · ${formatDate(data.completedAt)}` : ""}
-        </p>
+        </span>
+
         <p className="text-xs uppercase tracking-wide text-muted-foreground">
-          Data Fellows
+          Issued by Data Fellows
+          {challenge.partner_name ? ` · Powered by ${challenge.partner_name}` : ""}
         </p>
       </div>
-      <div className="text-center print:hidden">
+
+      <div className="flex flex-wrap items-center justify-center gap-3 print:hidden">
         <button
           type="button"
           onClick={() => window.print()}
@@ -109,6 +144,13 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         >
           <FiPrinter className="h-4 w-4" />
           Print / Save as PDF
+        </button>
+        <button
+          type="button"
+          onClick={() => goToTab("tracker")}
+          className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+        >
+          Back to tracker
         </button>
       </div>
     </div>
