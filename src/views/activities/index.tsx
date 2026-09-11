@@ -36,10 +36,12 @@ const formatDateRange = (start: string, end: string) =>
   `${new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
-  }).format(new Date(`${start}T00:00:00Z`))} -- ${new Intl.DateTimeFormat(
-    "en-US",
-    { month: "short", day: "numeric" }
-  ).format(new Date(`${end}T00:00:00Z`))}`;
+    timeZone: "UTC",
+  }).format(new Date(`${start}T00:00:00Z`))} -- ${new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${end}T00:00:00Z`))}`;
 
 type ActivitiesPageProps = {
   challenges: Challenge[];

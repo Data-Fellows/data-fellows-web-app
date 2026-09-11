@@ -14,6 +14,17 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+// `next` comes from the URL and is attacker-controlled (e.g. a link like
+// /admin/login?next=https://evil.example). Only ever redirect to a local
+// /admin path -- never an absolute URL or protocol-relative "//" one.
+const safeNextPath = (next: unknown) => {
+  if (typeof next !== "string") return "/admin/challenges";
+  if (!next.startsWith("/admin") || next.startsWith("//")) {
+    return "/admin/challenges";
+  }
+  return next;
+};
+
 const AdminLoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -38,9 +49,7 @@ const AdminLoginPage = () => {
       return;
     }
 
-    const next =
-      typeof router.query.next === "string" ? router.query.next : "/admin/challenges";
-    router.push(next);
+    router.push(safeNextPath(router.query.next));
   };
 
   return (

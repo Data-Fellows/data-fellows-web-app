@@ -8,25 +8,30 @@ const daySchema = z.object({
   summary: z.string().trim().optional(),
 });
 
-const challengeSchema = z.object({
-  slug: z
-    .string()
-    .trim()
-    .min(1)
-    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, and hyphens only"),
-  title: z.string().trim().min(1),
-  subtitle: z.string().trim().optional(),
-  description: z.string().trim().optional(),
-  start_date: z.string().trim().min(1),
-  end_date: z.string().trim().min(1),
-  daily_commitment: z.string().trim().optional(),
-  member_target: z.number().int().positive().nullable().optional(),
-  status: z.enum(["draft", "published", "archived"]),
-  cta_join_label: z.string().trim().optional(),
-  cta_join_href: z.string().trim().url().optional().or(z.literal("")),
-  partner_name: z.string().trim().optional(),
-  days: z.array(daySchema).min(1, "Add at least one day"),
-});
+const challengeSchema = z
+  .object({
+    slug: z
+      .string()
+      .trim()
+      .min(1)
+      .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, and hyphens only"),
+    title: z.string().trim().min(1),
+    subtitle: z.string().trim().optional(),
+    description: z.string().trim().optional(),
+    start_date: z.string().trim().min(1),
+    end_date: z.string().trim().min(1),
+    daily_commitment: z.string().trim().optional(),
+    member_target: z.number().int().positive().nullable().optional(),
+    status: z.enum(["draft", "published", "archived"]),
+    cta_join_label: z.string().trim().optional(),
+    cta_join_href: z.string().trim().url().optional().or(z.literal("")),
+    partner_name: z.string().trim().optional(),
+    days: z.array(daySchema).min(1, "Add at least one day"),
+  })
+  .refine((data) => data.end_date >= data.start_date, {
+    message: "End date must be on or after the start date.",
+    path: ["end_date"],
+  });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { supabase, admin } = await requireAdmin({ req, res });

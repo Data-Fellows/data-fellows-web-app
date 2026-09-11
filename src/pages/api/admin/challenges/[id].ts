@@ -10,25 +10,30 @@ const daySchema = z.object({
   summary: z.string().trim().optional(),
 });
 
-const challengeSchema = z.object({
-  slug: z
-    .string()
-    .trim()
-    .min(1)
-    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, and hyphens only"),
-  title: z.string().trim().min(1),
-  subtitle: z.string().trim().optional(),
-  description: z.string().trim().optional(),
-  start_date: z.string().trim().min(1),
-  end_date: z.string().trim().min(1),
-  daily_commitment: z.string().trim().optional(),
-  member_target: z.number().int().positive().nullable().optional(),
-  status: z.enum(["draft", "published", "archived"]),
-  cta_join_label: z.string().trim().optional(),
-  cta_join_href: z.string().trim().url().optional().or(z.literal("")),
-  partner_name: z.string().trim().optional(),
-  days: z.array(daySchema).min(1, "Add at least one day"),
-});
+const challengeSchema = z
+  .object({
+    slug: z
+      .string()
+      .trim()
+      .min(1)
+      .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, and hyphens only"),
+    title: z.string().trim().min(1),
+    subtitle: z.string().trim().optional(),
+    description: z.string().trim().optional(),
+    start_date: z.string().trim().min(1),
+    end_date: z.string().trim().min(1),
+    daily_commitment: z.string().trim().optional(),
+    member_target: z.number().int().positive().nullable().optional(),
+    status: z.enum(["draft", "published", "archived"]),
+    cta_join_label: z.string().trim().optional(),
+    cta_join_href: z.string().trim().url().optional().or(z.literal("")),
+    partner_name: z.string().trim().optional(),
+    days: z.array(daySchema).min(1, "Add at least one day"),
+  })
+  .refine((data) => data.end_date >= data.start_date, {
+    message: "End date must be on or after the start date.",
+    path: ["end_date"],
+  });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { supabase, admin } = await requireAdmin({ req, res });
@@ -106,13 +111,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .filter((existingId) => !keepIds.has(existingId));
 
     if (toDelete.length > 0) {
-      await supabase.from("challenge_days").delete().in("id", toDelete);
+      const { error } = await supabase.from("challenge_days").delete().in("id", toDelete);
+      if (error) {
+        return res
+          .status(500)
+          .json({ error: "The challenge was updated, but removing an old day failed." });
+      }
     }
 
     for (const [index, day] of days.entries()) {
       const dayNumber = index + 1;
       if (day.id) {
-        await supabase
+        const { error } = await supabase
           .from("challenge_days")
           .update({
             day_number: dayNumber,
@@ -121,14 +131,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             summary: day.summary || null,
           })
           .eq("id", day.id);
+        if (error) {
+          return res.status(500).json({
+            error: `The challenge was updated, but saving day ${dayNumber} failed. Reload and check your days before trying again.`,
+          });
+        }
       } else {
-        await supabase.from("challenge_days").insert({
+        const { error } = await supabase.from("challenge_days").insert({
           challenge_id: id,
           day_number: dayNumber,
           title: day.title,
           lesson_url: day.lesson_url || null,
           summary: day.summary || null,
         });
+        if (error) {
+          return res.status(500).json({
+            error: `The challenge was updated, but adding day ${dayNumber} failed. Reload and check your days before trying again.`,
+          });
+        }
       }
     }
 

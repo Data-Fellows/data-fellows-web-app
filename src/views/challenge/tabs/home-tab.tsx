@@ -6,6 +6,7 @@ const formatDate = (value: string) =>
     weekday: "short",
     month: "short",
     day: "numeric",
+    timeZone: "UTC",
   }).format(new Date(`${value}T00:00:00Z`));
 
 const addDays = (isoDate: string, days: number) => {
