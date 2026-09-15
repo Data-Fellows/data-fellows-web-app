@@ -2,6 +2,7 @@ import { activities, ActivityStatus } from "@/constants/activities";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
 import type { Challenge } from "@/types/challenge";
+import type { Session } from "@/types/session";
 import type { GetServerSideProps } from "next";
 import Link from "next/link";
 import { FiArrowUpRight, FiCalendar, FiUsers } from "react-icons/fi";
@@ -43,11 +44,26 @@ const formatDateRange = (start: string, end: string) =>
     timeZone: "UTC",
   }).format(new Date(`${end}T00:00:00Z`))}`;
 
-type ActivitiesPageProps = {
-  challenges: Challenge[];
+const formatDate = (value: string) =>
+  new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${value}T00:00:00Z`));
+
+const sessionStatus = (session: Session): ActivityStatus => {
+  const today = new Date().toISOString().slice(0, 10);
+  if (today < session.session_date) return "Upcoming";
+  if (today > session.session_date) return "Closed";
+  return "Open";
 };
 
-const ActivitiesPage = ({ challenges }: ActivitiesPageProps) => {
+type ActivitiesPageProps = {
+  challenges: Challenge[];
+  sessions: Session[];
+};
+
+const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
   const staticCards: ActivityCard[] = activities.map((activity) => ({
     key: activity.title,
     type: activity.type,
@@ -75,7 +91,22 @@ const ActivitiesPage = ({ challenges }: ActivitiesPageProps) => {
     };
   });
 
-  const cards = [...challengeCards, ...staticCards];
+  const sessionCards: ActivityCard[] = sessions.map((session) => {
+    const status = sessionStatus(session);
+    return {
+      key: session.id,
+      type: "Event",
+      status,
+      title: session.title,
+      description: session.description || "",
+      cadence: formatDate(session.session_date),
+      href: session.registration_url || "https://bit.ly/m/datafellows",
+      external: true,
+      ctaLabel: status === "Closed" ? "See recap" : "Register",
+    };
+  });
+
+  const cards = [...challengeCards, ...sessionCards, ...staticCards];
 
   return (
     <LandingPageLayout>
@@ -175,18 +206,25 @@ export const getServerSideProps: GetServerSideProps<
 > = async ({ req, res }) => {
   const supabase = createSupabaseServerClient({ req, res });
   if (!supabase) {
-    return { props: { challenges: [] } };
+    return { props: { challenges: [], sessions: [] } };
   }
 
-  const { data } = await supabase
-    .from("challenges")
-    .select(
-      "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, created_at, updated_at"
-    )
-    .eq("status", "published")
-    .order("start_date", { ascending: false });
+  const [{ data: challenges }, { data: sessions }] = await Promise.all([
+    supabase
+      .from("challenges")
+      .select(
+        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, created_at, updated_at"
+      )
+      .eq("status", "published")
+      .order("start_date", { ascending: false }),
+    supabase
+      .from("sessions")
+      .select("id, title, description, session_date, registration_url, status, created_at, updated_at")
+      .eq("status", "published")
+      .order("session_date", { ascending: false }),
+  ]);
 
-  return { props: { challenges: data ?? [] } };
+  return { props: { challenges: challenges ?? [], sessions: sessions ?? [] } };
 };
 
 export default ActivitiesPage;

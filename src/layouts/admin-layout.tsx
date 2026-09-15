@@ -37,6 +37,12 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             >
               Challenges
             </Link>
+            <Link
+              href="/admin/sessions"
+              className="text-sm font-medium text-foreground hover:text-primary"
+            >
+              Sessions
+            </Link>
             <button
               type="button"
               onClick={handleSignOut}

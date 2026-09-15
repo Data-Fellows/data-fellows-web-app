@@ -35,6 +35,10 @@ const challengeSchema = z
     path: ["end_date"],
   });
 
+const statusSchema = z.object({
+  status: z.enum(["draft", "published", "archived"]),
+});
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { supabase, admin } = await requireAdmin({ req, res });
   if (!supabase || !admin) {
@@ -155,6 +159,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ success: true });
   }
 
+  if (req.method === "PATCH") {
+    const parsed = statusSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Invalid status." });
+    }
+    const { error } = await supabase
+      .from("challenges")
+      .update({ status: parsed.data.status })
+      .eq("id", id);
+    if (error) {
+      return res.status(500).json({ error: "Failed to update the status." });
+    }
+    return res.status(200).json({ success: true });
+  }
+
   if (req.method === "DELETE") {
     const { error } = await supabase.from("challenges").delete().eq("id", id);
     if (error) {
@@ -163,6 +182,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ success: true });
   }
 
-  res.setHeader("Allow", "GET, PUT, DELETE");
+  res.setHeader("Allow", "GET, PUT, PATCH, DELETE");
   return res.status(405).json({ error: "Method not allowed" });
 }
