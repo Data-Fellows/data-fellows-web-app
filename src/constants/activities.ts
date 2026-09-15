@@ -18,15 +18,6 @@ export const activities: Activity[] = [
     cadence: "Every two weeks",
     description:
       "Our recurring community call -- check in, share progress, ask for help, and stay connected between bigger events.",
-    registerHref: "https://bit.ly/m/datafellows",
-  },
-  {
-    title: "Twitter Space",
-    type: "Recurring",
-    status: "Ongoing",
-    cadence: "Every two weeks",
-    description:
-      "Live audio conversations on X (Twitter) -- join the community to get notified and pick up the space link each time.",
     registerHref: "https://forms.gle/LTBu4n9NTMhYjjEM6",
   },
   {
