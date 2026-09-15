@@ -21,6 +21,15 @@ export const activities: Activity[] = [
     registerHref: "https://bit.ly/m/datafellows",
   },
   {
+    title: "Twitter Space",
+    type: "Recurring",
+    status: "Ongoing",
+    cadence: "Every two weeks",
+    description:
+      "Live audio conversations on X (Twitter) -- join the community to get notified and pick up the space link each time.",
+    registerHref: "https://forms.gle/LTBu4n9NTMhYjjEM6",
+  },
+  {
     title: "DataCamp Learning",
     type: "Recurring",
     status: "Open",
