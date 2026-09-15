@@ -53,7 +53,9 @@ const formatDate = (value: string) =>
 
 const sessionStatus = (session: Session): ActivityStatus => {
   const today = new Date().toISOString().slice(0, 10);
-  return today < session.session_date ? "Upcoming" : "Open";
+  if (today < session.session_date) return "Upcoming";
+  if (today > session.session_date) return "Closed";
+  return "Open";
 };
 
 type ActivitiesPageProps = {
@@ -100,7 +102,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       cadence: formatDate(session.session_date),
       href: session.registration_url || "https://bit.ly/m/datafellows",
       external: true,
-      ctaLabel: "Register",
+      ctaLabel: status === "Closed" ? "See recap" : "Register",
     };
   });
 
