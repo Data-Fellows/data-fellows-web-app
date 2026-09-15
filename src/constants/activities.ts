@@ -21,13 +21,22 @@ export const activities: Activity[] = [
     registerHref: "https://bit.ly/m/datafellows",
   },
   {
-    title: "Fireside Sessions",
+    title: "DataCamp Learning",
     type: "Recurring",
-    status: "Ongoing",
-    cadence: "Once a month",
+    status: "Open",
+    cadence: "Self-paced",
     description:
-      "Longer-form conversations with partners and mentors that unpack a topic, a career path, or a body of work in depth.",
-    registerHref: "https://bit.ly/m/datafellows",
+      "Free access to DataCamp's courses and certifications -- build data, AI, and analytics skills at your own pace.",
+    registerHref: "https://forms.gle/NoGwPBVBM3Fq3Pi86",
+  },
+  {
+    title: "Propel Community",
+    type: "Recurring",
+    status: "Open",
+    cadence: "Ongoing",
+    description:
+      "Job opportunities and paid earning surveys for the Data Fellows community, powered by Propel.",
+    registerHref: "https://datafellows.propel.community/auth",
   },
   {
     title: "Claude 101 Challenge",
