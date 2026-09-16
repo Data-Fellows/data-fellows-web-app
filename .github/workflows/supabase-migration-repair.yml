@@ -1,0 +1,37 @@
+name: Repair Supabase migration history
+
+# One-time (or occasional) manual tool: marks migration file(s) as already
+# applied without actually running them. Needed the first time this
+# pipeline is set up, since migrations 0001-0005 were already run by hand
+# in the Supabase SQL Editor before this workflow existed -- without this,
+# the auto-deploy workflow would try to re-run "create table ..." for
+# tables that already exist and fail. Only needed again if a migration
+# ever needs to be manually applied outside this pipeline in the future.
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: "Space-separated migration versions to mark as applied (e.g. 0001 0002 0003 0004 0005)"
+        required: true
+        default: "0001 0002 0003 0004 0005"
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Mark migrations as already applied
+        run: |
+          supabase migration repair ${{ github.event.inputs.versions }} \
+            --status applied \
+            --project-ref "$SUPABASE_PROJECT_REF" \
+            --password "$SUPABASE_DB_PASSWORD"
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_PROJECT_REF: xbuwpiyxpgimnchsfbgr
