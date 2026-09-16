@@ -12,6 +12,7 @@ const formSchema = z.object({
   description: z.string().trim().optional(),
   session_date: z.string().trim().min(1, "Required"),
   registration_url: z.string().trim().optional(),
+  replay_url: z.string().trim().optional(),
   status: z.enum(["draft", "published", "archived"]),
 });
 
@@ -28,6 +29,7 @@ const toFormValues = (session?: Session): FormValues => ({
   description: session?.description ?? "",
   session_date: session?.session_date ?? "",
   registration_url: session?.registration_url ?? "",
+  replay_url: session?.replay_url ?? "",
   status: session?.status ?? "draft",
 });
 
@@ -164,15 +166,27 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
         </div>
 
         <label className={labelClass}>
-          Registration / watch link
+          Registration link
           <input
             {...register("registration_url")}
             className={inputClass}
             placeholder="https://..."
           />
           <span className="text-xs text-muted-foreground">
-            Where "Register" on the Activities page sends people -- your sign-up form, or the
-            YouTube link once you have it.
+            Where "Register" sends people before the session -- your sign-up form.
+          </span>
+        </label>
+
+        <label className={labelClass}>
+          Replay link (optional)
+          <input
+            {...register("replay_url")}
+            className={inputClass}
+            placeholder="https://youtube.com/..."
+          />
+          <span className="text-xs text-muted-foreground">
+            Add this once the recording is up. Once the session date has passed, "See recap"
+            sends people here instead -- falls back to the registration link if left blank.
           </span>
         </label>
       </div>

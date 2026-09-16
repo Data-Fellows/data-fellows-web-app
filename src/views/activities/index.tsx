@@ -93,6 +93,11 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
 
   const sessionCards: ActivityCard[] = sessions.map((session) => {
     const status = sessionStatus(session);
+    const fallbackHref = "https://bit.ly/m/datafellows";
+    const href =
+      status === "Closed"
+        ? session.replay_url || session.registration_url || fallbackHref
+        : session.registration_url || fallbackHref;
     return {
       key: session.id,
       type: "Event",
@@ -100,7 +105,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       title: session.title,
       description: session.description || "",
       cadence: formatDate(session.session_date),
-      href: session.registration_url || "https://bit.ly/m/datafellows",
+      href,
       external: true,
       ctaLabel: status === "Closed" ? "See recap" : "Register",
     };
@@ -219,7 +224,7 @@ export const getServerSideProps: GetServerSideProps<
       .order("start_date", { ascending: false }),
     supabase
       .from("sessions")
-      .select("id, title, description, session_date, registration_url, status, created_at, updated_at")
+      .select("id, title, description, session_date, registration_url, replay_url, status, created_at, updated_at")
       .eq("status", "published")
       .order("session_date", { ascending: false }),
   ]);
