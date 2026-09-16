@@ -73,7 +73,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
     cadence: activity.cadence,
     href: activity.registerHref,
     external: true,
-    ctaLabel: activity.status === "Closed" ? "See recap" : "Register",
+    ctaLabel: activity.status === "Closed" ? "See recap" : "Join",
   }));
 
   const challengeCards: ActivityCard[] = challenges.map((challenge) => {
@@ -107,7 +107,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       cadence: formatDate(session.session_date),
       href,
       external: true,
-      ctaLabel: status === "Closed" ? "See recap" : "Register",
+      ctaLabel: status === "Closed" ? "See recap" : "Join",
     };
   });
 
