@@ -1,3 +1,4 @@
+import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
 import { useState } from "react";
@@ -35,6 +36,11 @@ const ContactPage = () => {
 
   return (
     <LandingPageLayout>
+      <PageSeo
+        title="Contact -- Data Fellows"
+        description="Get in touch with Data Fellows for general inquiries, partnerships, or press."
+        path="/contact"
+      />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="contact-hero-heading">
           <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">

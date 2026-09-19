@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import type { ChallengeWithDays } from "@/types/challenge";
 import { challengeTabs, ChallengeTabId } from "@/constants/challenge-tabs";
@@ -59,6 +60,15 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
 
   return (
     <LandingPageLayout>
+      <PageSeo
+        title={`${challenge.title} -- Data Fellows`}
+        description={
+          challenge.subtitle ||
+          challenge.description ||
+          `Join ${challenge.title}, a Data Fellows community challenge.`
+        }
+        path={`/activities/challenges/${challenge.slug}`}
+      />
       <div className="space-y-10 pt-28 md:pt-32">
         <section className="px-4 sm:px-6">
           <div className="mx-auto max-w-5xl space-y-6 rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">

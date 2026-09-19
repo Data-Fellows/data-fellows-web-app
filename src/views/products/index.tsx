@@ -1,3 +1,4 @@
+import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import Image from "next/image";
 import Link from "next/link";
@@ -68,6 +69,11 @@ const caseStudies = [
 const ProductsPage = () => {
   return (
     <LandingPageLayout>
+      <PageSeo
+        title="Products -- Data Fellows"
+        description="Inscend and our other tools turn everyday business data into prioritized, revenue-impact actions -- built by Data Fellows."
+        path="/products"
+      />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="products-hero-heading">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-background">

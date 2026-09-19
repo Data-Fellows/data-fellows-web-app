@@ -1,3 +1,4 @@
+import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
 import { FiArrowUpRight, FiGlobe, FiHeart, FiLayers } from "react-icons/fi";
@@ -44,6 +45,11 @@ const partnerCategories = [
 const PartnersPage = () => {
   return (
     <LandingPageLayout>
+      <PageSeo
+        title="Partners -- Data Fellows"
+        description="Training, ecosystem, and community partners who help Data Fellows deliver real outcomes for our members worldwide."
+        path="/partners"
+      />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="partners-hero-heading">
           <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-12 lg:px-12">

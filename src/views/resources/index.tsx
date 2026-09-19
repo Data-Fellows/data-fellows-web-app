@@ -1,4 +1,5 @@
 import NewsletterModal from "@/components/custom/newsletter-modal";
+import PageSeo from "@/components/seo/page-seo";
 import {
   guides,
   journeySoFarUrl,
@@ -30,6 +31,11 @@ const ResourcesPage = () => {
 
   return (
     <LandingPageLayout>
+      <PageSeo
+        title="Resources -- Data Fellows"
+        description="Guides, lessons, and story spotlights from the Data Fellows community -- practical resources for learning data and AI skills."
+        path="/resources"
+      />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section
           className="px-4 sm:px-6"
