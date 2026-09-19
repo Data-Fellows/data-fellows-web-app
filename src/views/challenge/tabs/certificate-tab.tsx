@@ -1,8 +1,11 @@
+import { SITE_URL } from "@/constants/site";
+import { useToast } from "@/stores/context/ToastContext";
 import type { ChallengeWithDays } from "@/types/challenge";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FiAward, FiPrinter } from "react-icons/fi";
+import { FiAward, FiLink, FiPrinter } from "react-icons/fi";
+import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { useMemberIdentity } from "../hooks/use-member-identity";
 
 type CertificateResponse = {
@@ -45,6 +48,7 @@ const formatDateRange = (start: string, end: string) =>
 const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   const router = useRouter();
   const { identity, hydrated } = useMemberIdentity();
+  const { showToast } = useToast();
 
   const { data, isLoading } = useQuery({
     queryKey: ["challenge-certificate", challenge.slug, identity?.email],
@@ -88,6 +92,28 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       </div>
     );
   }
+
+  const challengeUrl = `${SITE_URL}/activities/challenges/${challenge.slug}`;
+  const shareText = `I just completed ${challenge.title} with @DatafellowsInfo! 🎉 ${data.completedDays}/${data.totalDays} days done.`;
+
+  const shareToTwitter = () => {
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(challengeUrl)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const shareToLinkedIn = () => {
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(challengeUrl)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(challengeUrl);
+      showToast("Link copied to clipboard", "success");
+    } catch {
+      showToast("Couldn't copy the link -- copy it from your address bar instead.", "error");
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -155,6 +181,38 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         >
           Back to tracker
         </button>
+      </div>
+
+      <div className="space-y-3 print:hidden">
+        <p className="text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Share your achievement
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={shareToTwitter}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+          >
+            <FaXTwitter className="h-4 w-4" />
+            Share on X
+          </button>
+          <button
+            type="button"
+            onClick={shareToLinkedIn}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+          >
+            <FaLinkedin className="h-4 w-4" />
+            Share on LinkedIn
+          </button>
+          <button
+            type="button"
+            onClick={copyLink}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+          >
+            <FiLink className="h-4 w-4" />
+            Copy link
+          </button>
+        </div>
       </div>
     </div>
   );

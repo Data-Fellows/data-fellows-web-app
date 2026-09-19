@@ -1,4 +1,5 @@
 import { activities, ActivityStatus } from "@/constants/activities";
+import CommunityPulse from "@/components/custom/community-pulse";
 import PageSeo from "@/components/seo/page-seo";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
@@ -150,6 +151,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                 <FiUsers className="h-4 w-4" />
                 Join the Community
               </Link>
+              <CommunityPulse />
             </div>
           </div>
         </section>
