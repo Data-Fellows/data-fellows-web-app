@@ -1,4 +1,5 @@
 import { activities, ActivityStatus } from "@/constants/activities";
+import PageSeo from "@/components/seo/page-seo";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
 import type { Challenge } from "@/types/challenge";
@@ -115,6 +116,11 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
 
   return (
     <LandingPageLayout>
+      <PageSeo
+        title="Activities -- Data Fellows"
+        description="Challenges, recurring sessions, and community events at Data Fellows -- join a cohort, check in daily, and track your progress."
+        path="/activities"
+      />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section
           className="px-4 sm:px-6"

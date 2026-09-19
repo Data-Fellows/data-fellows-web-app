@@ -1,5 +1,9 @@
 import { Head, Html, Main, NextScript } from "next/document";
 
+// Public at build time -- see ANALYTICS_SETUP.md. Unset by default so the
+// site builds and runs cleanly with no analytics until this is configured.
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
 export default function Document() {
   return (
     <Html lang="en">
@@ -21,6 +25,24 @@ export default function Document() {
             `,
           }}
         />
+        {GA_MEASUREMENT_ID ? (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_MEASUREMENT_ID}');
+                `,
+              }}
+            />
+          </>
+        ) : null}
       </Head>
       <body className="antialiased">
         <Main />

@@ -1,4 +1,5 @@
 import Toast from "@/components/custom/toast";
+import { DEFAULT_DESCRIPTION } from "@/constants/site";
 import Layout from "@/layouts";
 import { ToastProvider } from "@/stores/context/ToastContext";
 import { ThemeProvider } from "@/stores/providers/ThemeProvider";
@@ -38,6 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <ToastProvider>
             <Head>
               <title>Data Fellows</title>
+              <meta name="description" content={DEFAULT_DESCRIPTION} />
             </Head>
             <Component {...pageProps} />
             <Toast />

@@ -1,3 +1,4 @@
+import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import About from "../home/sections/about";
 import TeamSection from "./sections/team";
@@ -23,6 +24,11 @@ const values = [
 const AboutUs = () => {
   return (
     <LandingPageLayout>
+      <PageSeo
+        title="About -- Data Fellows"
+        description="Data Fellows trains, builds, and launches tools that make data feel human. Here's who we are and what we value."
+        path="/about"
+      />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <About />
 

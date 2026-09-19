@@ -1,4 +1,5 @@
 import { CommunityLeadCard } from "@/components";
+import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import Image from "next/image";
 import Link from "next/link";
@@ -184,6 +185,11 @@ const communityLeadGroups: {
 const CommunityPage = () => {
   return (
     <LandingPageLayout>
+      <PageSeo
+        title="Community -- Data Fellows"
+        description="Join a global community of data fellows -- recurring calls, mentorship, challenges, and real support as you build your data and AI skills."
+        path="/community"
+      />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4 sm:px-6" aria-labelledby="community-hero-heading">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/10">
