@@ -8,6 +8,7 @@ export type Activity = {
   cadence: string;
   description: string;
   registerHref: string;
+  image?: string;
 };
 
 export const activities: Activity[] = [

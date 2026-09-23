@@ -20,6 +20,7 @@ const formSchema = z.object({
   session_date: z.string().trim().min(1, "Required"),
   registration_url: urlSchema,
   replay_url: urlSchema,
+  image_url: urlSchema,
   status: z.enum(["draft", "published", "archived"]),
 });
 
@@ -37,6 +38,7 @@ const toFormValues = (session?: Session): FormValues => ({
   session_date: session?.session_date ?? "",
   registration_url: session?.registration_url ?? "",
   replay_url: session?.replay_url ?? "",
+  image_url: session?.image_url ?? "",
   status: session?.status ?? "draft",
 });
 
@@ -201,6 +203,19 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
             <span className="text-xs text-muted-foreground">
               Add this once the recording is up. Once the session date has passed, "See recap"
               sends people here instead -- falls back to the registration link if left blank.
+            </span>
+          )}
+        </label>
+
+        <label className={labelClass}>
+          Banner image (optional)
+          <input {...register("image_url")} className={inputClass} placeholder="https://..." />
+          {errors.image_url ? (
+            <span className="text-xs text-destructive">{errors.image_url.message}</span>
+          ) : (
+            <span className="text-xs text-muted-foreground">
+              Link to the speaker flyer/graphic -- shown as the card preview on /activities.
+              Leave blank for a plain text card.
             </span>
           )}
         </label>

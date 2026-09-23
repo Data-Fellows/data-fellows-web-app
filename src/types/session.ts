@@ -7,6 +7,7 @@ export type Session = {
   session_date: string;
   registration_url: string | null;
   replay_url: string | null;
+  image_url: string | null;
   status: SessionStatus;
   created_at: string;
   updated_at: string;

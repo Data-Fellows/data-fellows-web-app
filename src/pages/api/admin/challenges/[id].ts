@@ -29,6 +29,7 @@ const challengeSchema = z
     cta_join_label: z.string().trim().optional(),
     cta_join_href: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
     partner_name: z.string().trim().optional(),
+    image_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
     days: z.array(daySchema).min(1, "Add at least one day"),
   })
   .refine((data) => data.end_date >= data.start_date, {
@@ -55,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { data, error } = await supabase
       .from("challenges")
       .select(
-        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, summary)"
+        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, image_url, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, summary)"
       )
       .eq("id", id)
       .maybeSingle();
@@ -92,6 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         cta_join_label: challenge.cta_join_label || null,
         cta_join_href: challenge.cta_join_href || null,
         partner_name: challenge.partner_name || null,
+        image_url: challenge.image_url || null,
       })
       .eq("id", id);
 

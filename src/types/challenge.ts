@@ -14,6 +14,7 @@ export type Challenge = {
   cta_join_label: string | null;
   cta_join_href: string | null;
   partner_name: string | null;
+  image_url: string | null;
   created_at: string;
   updated_at: string;
 };

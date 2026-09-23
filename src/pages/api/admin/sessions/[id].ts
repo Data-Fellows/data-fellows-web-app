@@ -9,6 +9,7 @@ const sessionSchema = z.object({
   session_date: z.string().trim().min(1),
   registration_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
   replay_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
+  image_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
   status: z.enum(["draft", "published", "archived"]),
 });
 
@@ -30,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "GET") {
     const { data, error } = await supabase
       .from("sessions")
-      .select("id, title, description, session_date, registration_url, replay_url, status, created_at, updated_at")
+      .select("id, title, description, session_date, registration_url, replay_url, image_url, status, created_at, updated_at")
       .eq("id", id)
       .maybeSingle();
 
@@ -55,6 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         session_date: values.session_date,
         registration_url: values.registration_url || null,
         replay_url: values.replay_url || null,
+        image_url: values.image_url || null,
         status: values.status,
       })
       .eq("id", id);

@@ -26,6 +26,7 @@ type ActivityCard = {
   href: string;
   external: boolean;
   ctaLabel: string;
+  imageUrl?: string | null;
 };
 
 const challengeStatus = (challenge: Challenge): ActivityStatus => {
@@ -76,6 +77,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
     href: activity.registerHref,
     external: true,
     ctaLabel: activity.status === "Closed" ? "See recap" : "Join",
+    imageUrl: activity.image,
   }));
 
   const challengeCards: ActivityCard[] = challenges.map((challenge) => {
@@ -90,6 +92,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       href: `/activities/challenges/${challenge.slug}`,
       external: false,
       ctaLabel: status === "Closed" ? "See recap" : "View challenge",
+      imageUrl: challenge.image_url,
     };
   });
 
@@ -110,6 +113,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       href,
       external: true,
       ctaLabel: status === "Closed" ? "See recap" : "Join",
+      imageUrl: session.image_url,
     };
   });
 
@@ -165,8 +169,16 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
               {cards.map((card) => (
                 <article
                   key={card.key}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-background px-6 py-6"
+                  className="flex h-full flex-col gap-4 overflow-hidden rounded-3xl border border-primary/10 bg-background px-6 py-6"
                 >
+                  {card.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs from arbitrary hosts (Canva exports, etc.), can't allowlist every domain for next/image
+                    <img
+                      src={card.imageUrl}
+                      alt=""
+                      className="-mx-6 -mt-6 aspect-video w-[calc(100%+3rem)] max-w-none object-cover"
+                    />
+                  ) : null}
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center rounded-full border border-primary/10 bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       {card.type}
@@ -226,13 +238,13 @@ export const getServerSideProps: GetServerSideProps<
     supabase
       .from("challenges")
       .select(
-        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, created_at, updated_at"
+        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, image_url, created_at, updated_at"
       )
       .eq("status", "published")
       .order("start_date", { ascending: false }),
     supabase
       .from("sessions")
-      .select("id, title, description, session_date, registration_url, replay_url, status, created_at, updated_at")
+      .select("id, title, description, session_date, registration_url, replay_url, image_url, status, created_at, updated_at")
       .eq("status", "published")
       .order("session_date", { ascending: false }),
   ]);
