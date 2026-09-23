@@ -1,3 +1,4 @@
+import { describeZodError } from "@/lib/api/zod-error";
 import { requireAdmin } from "@/lib/supabase/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
@@ -6,8 +7,8 @@ const sessionSchema = z.object({
   title: z.string().trim().min(1),
   description: z.string().trim().optional(),
   session_date: z.string().trim().min(1),
-  registration_url: z.string().trim().url().optional().or(z.literal("")),
-  replay_url: z.string().trim().url().optional().or(z.literal("")),
+  registration_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
+  replay_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
   status: z.enum(["draft", "published", "archived"]),
 });
 
@@ -32,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "POST") {
     const parsed = sessionSchema.safeParse(req.body);
     if (!parsed.success) {
-      return res.status(400).json({ error: "Please check the form and try again." });
+      return res.status(400).json({ error: describeZodError(parsed.error) });
     }
     const values = parsed.data;
 
