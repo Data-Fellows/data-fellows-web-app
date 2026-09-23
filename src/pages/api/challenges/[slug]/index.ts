@@ -24,7 +24,7 @@ export default async function handler(
   const { data, error } = await supabase
     .from("challenges")
     .select(
-      "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, summary)"
+      "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, image_url, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, summary)"
     )
     .eq("slug", slug)
     .eq("status", "published")

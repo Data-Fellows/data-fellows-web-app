@@ -39,6 +39,7 @@ const challengeFormSchema = z
     cta_join_label: z.string().trim().optional(),
     cta_join_href: urlSchema,
     partner_name: z.string().trim().optional(),
+    image_url: urlSchema,
     days: z.array(dayFormSchema).min(1, "Add at least one day"),
   })
   .refine((data) => data.end_date >= data.start_date, {
@@ -67,6 +68,7 @@ const toFormValues = (challenge?: ChallengeWithDays): FormValues => ({
   cta_join_label: challenge?.cta_join_label ?? "",
   cta_join_href: challenge?.cta_join_href ?? "",
   partner_name: challenge?.partner_name ?? "",
+  image_url: challenge?.image_url ?? "",
   days:
     challenge?.challenge_days && challenge.challenge_days.length > 0
       ? challenge.challenge_days.map((day) => ({
@@ -287,6 +289,19 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
             className={inputClass}
             placeholder="Shown on the certificate as 'Powered by ...'"
           />
+        </label>
+
+        <label className={labelClass}>
+          Banner image (optional)
+          <input {...register("image_url")} className={inputClass} placeholder="https://..." />
+          {errors.image_url ? (
+            <span className="text-xs text-destructive">{errors.image_url.message}</span>
+          ) : (
+            <span className="text-xs text-muted-foreground">
+              Link to an image (e.g. a flyer you've already designed) -- shown as the card
+              preview on /activities. Leave blank for a plain text card.
+            </span>
+          )}
         </label>
       </div>
 
