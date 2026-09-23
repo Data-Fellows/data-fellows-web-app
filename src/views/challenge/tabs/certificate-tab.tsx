@@ -2,9 +2,11 @@ import { SITE_URL } from "@/constants/site";
 import { useToast } from "@/stores/context/ToastContext";
 import type { ChallengeWithDays } from "@/types/challenge";
 import { useQuery } from "@tanstack/react-query";
+import { toPng } from "html-to-image";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FiAward, FiLink, FiPrinter } from "react-icons/fi";
+import { useRef, useState } from "react";
+import { FiAward, FiDownload, FiLink, FiPrinter } from "react-icons/fi";
 import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { useMemberIdentity } from "../hooks/use-member-identity";
 
@@ -49,6 +51,8 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   const router = useRouter();
   const { identity, hydrated } = useMemberIdentity();
   const { showToast } = useToast();
+  const certificateRef = useRef<HTMLDivElement>(null);
+  const [isDownloadingImage, setIsDownloadingImage] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["challenge-certificate", challenge.slug, identity?.email],
@@ -115,10 +119,53 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
     }
   };
 
+  const downloadImage = async () => {
+    const node = certificateRef.current;
+    if (!node) return;
+    setIsDownloadingImage(true);
+    // Capture a detached clone appended directly to <body>, not the node
+    // in place -- html-to-image still picks up positioning/padding from
+    // the certificate's real ancestors (the page's centered, padded
+    // layout) even when only the certificate node itself is passed in,
+    // which was leaving blank space on one side of the exported image.
+    // A clone with no meaningful ancestors sidesteps that entirely.
+    // Kept invisible via opacity (not moved off-screen) so it still
+    // lays out normally -- positioning it off-screen broke max-w/auto
+    // width sizing and produced a blank capture.
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "fixed";
+    wrapper.style.top = "0";
+    wrapper.style.left = "0";
+    wrapper.style.zIndex = "-1";
+    wrapper.style.opacity = "0";
+    wrapper.style.pointerEvents = "none";
+    const clone = node.cloneNode(true) as HTMLElement;
+    clone.classList.add("certificate-capture");
+    clone.style.margin = "0";
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+    try {
+      // A PNG shares far better than a PDF -- opens instantly as an image
+      // on WhatsApp/Twitter/LinkedIn instead of needing a PDF viewer.
+      await new Promise(requestAnimationFrame);
+      const dataUrl = await toPng(clone, { pixelRatio: 2 });
+      const link = document.createElement("a");
+      link.download = `${challenge.slug}-certificate.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch {
+      showToast("Couldn't generate the image. Try Print / Save as PDF instead.", "error");
+    } finally {
+      document.body.removeChild(wrapper);
+      setIsDownloadingImage(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div
         id="certificate"
+        ref={certificateRef}
         className="mx-auto max-w-2xl space-y-7 rounded-3xl border border-primary/20 bg-gradient-to-b from-secondary/20 to-background px-8 py-12 text-center sm:px-14 print:border-primary/30 print:bg-none"
       >
         <div className="flex items-center justify-center gap-3">
@@ -168,8 +215,17 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       <div className="flex flex-wrap items-center justify-center gap-3 print:hidden">
         <button
           type="button"
+          onClick={downloadImage}
+          disabled={isDownloadingImage}
+          className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+        >
+          <FiDownload className="h-4 w-4" />
+          {isDownloadingImage ? "Generating..." : "Download image"}
+        </button>
+        <button
+          type="button"
           onClick={() => window.print()}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+          className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
         >
           <FiPrinter className="h-4 w-4" />
           Print / Save as PDF

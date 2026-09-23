@@ -290,13 +290,43 @@ body.modal-open {
   touch-action: manipulation;
 }
 
+/* Applied briefly to #certificate while html-to-image captures it for the
+   "Download image" button (see certificate-tab.tsx). Tailwind v4 renders
+   gradients/opacity colors via color-mix()/oklch(), which html-to-image's
+   SVG-based capture renders incorrectly (a washed-out gradient, badges
+   with a mismatched background) -- so during capture we swap to the same
+   plain-hex, forced-color styling already proven to work for print.
+   Deliberately not scoped to a media query since this runs on-screen. */
+.certificate-capture {
+  background: #0f172a !important;
+  background-image: none !important;
+  /* The certificate is centered (mx-auto) within a wider page section --
+     captured in isolation, that auto margin gets computed against the
+     wrong containing width, shifting the box sideways and clipping it
+     against the fixed export canvas. Not relevant once isolated. */
+  margin: 0 !important;
+}
+.certificate-capture,
+.certificate-capture * {
+  color: #f1f5f9 !important;
+  border-color: #475569 !important;
+}
+.certificate-capture * {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 /* Printing the challenge certificate should produce a certificate-only
    page, not the surrounding nav/hero/tabs/footer chrome. It should also
-   always print on a clean white background with dark text, regardless of
-   whether the site is in dark mode when the visitor prints/saves it --
-   without this, the certificate's CSS variables inherit dark-mode values
-   (near-black background, near-white text) straight into the PDF. */
+   always print as a deliberate dark, branded certificate -- background
+   colors are off by default when printing, so print-color-adjust forces
+   the browser to actually render them instead of falling back to a plain
+   white page. */
 @media print {
+  #certificate {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
   body * {
     visibility: hidden;
   }
@@ -304,18 +334,41 @@ body.modal-open {
   #certificate * {
     visibility: visible;
   }
+  /* Hidden nav/hero/footer/etc. still reserve their real content height
+     (visibility only stops painting, not layout), which can overflow one
+     page and produce a spurious blank second page. Collapse every hidden
+     element to zero size -- except the certificate itself and anything
+     that contains it, since those need their normal layout intact. */
+  body *:not(#certificate):not(#certificate *):not(:has(#certificate)) {
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-width: 0 !important;
+  }
   #certificate {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
-    background: #ffffff !important;
+    background: #0f172a !important;
     background-image: none !important;
   }
   #certificate,
   #certificate * {
-    color: #0f172a !important;
-    border-color: #cbd5e1 !important;
+    color: #f1f5f9 !important;
+    border-color: #475569 !important;
+  }
+  /* Badges/pills inside the certificate carry their own Tailwind bg-*
+     color -- without this they'd render as a mismatched block instead of
+     a consistent dark card, and (combined with forcing one text color
+     everywhere) risk the exact invisible-text bug this print styling has
+     already had once. Only descendants, never #certificate itself --
+     that's the one element that's supposed to have a background. */
+  #certificate * {
+    background-color: transparent !important;
+    background-image: none !important;
   }
 }
 

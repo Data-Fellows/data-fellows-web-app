@@ -19,7 +19,7 @@ export const activities: Activity[] = [
     cadence: "Every two weeks",
     description:
       "Our recurring community call -- check in, share progress, ask for help, and stay connected between bigger events.",
-    registerHref: "https://forms.gle/LTBu4n9NTMhYjjEM6",
+    registerHref: "https://twitter.com/DatafellowsInfo",
   },
   {
     title: "DataCamp Learning",
