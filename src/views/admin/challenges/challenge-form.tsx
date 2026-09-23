@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { FiPlus, FiTrash2 } from "react-icons/fi";
+import { FiDownload, FiPlus, FiTrash2 } from "react-icons/fi";
 import { z } from "zod";
 
 const urlSchema = z
@@ -173,15 +173,24 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
           {mode === "create" ? "New challenge" : "Edit challenge"}
         </h1>
         {mode === "edit" ? (
-          <button
-            type="button"
-            onClick={handleDelete}
-            disabled={deleteMutation.isPending}
-            className="inline-flex items-center gap-2 rounded-full border border-destructive/30 px-4 py-2 text-sm font-semibold text-destructive transition hover:bg-destructive/10 disabled:opacity-60"
-          >
-            <FiTrash2 className="h-4 w-4" />
-            {deleteMutation.isPending ? "Deleting..." : "Delete"}
-          </button>
+          <div className="flex items-center gap-3">
+            <a
+              href={`/api/admin/challenges/${challengeId}/check-ins.csv`}
+              className="inline-flex items-center gap-2 rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-foreground transition hover:border-primary/40"
+            >
+              <FiDownload className="h-4 w-4" />
+              Export check-ins (CSV)
+            </a>
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteMutation.isPending}
+              className="inline-flex items-center gap-2 rounded-full border border-destructive/30 px-4 py-2 text-sm font-semibold text-destructive transition hover:bg-destructive/10 disabled:opacity-60"
+            >
+              <FiTrash2 className="h-4 w-4" />
+              {deleteMutation.isPending ? "Deleting..." : "Delete"}
+            </button>
+          </div>
         ) : null}
       </div>
 

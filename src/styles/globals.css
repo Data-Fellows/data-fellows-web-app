@@ -291,7 +291,11 @@ body.modal-open {
 }
 
 /* Printing the challenge certificate should produce a certificate-only
-   page, not the surrounding nav/hero/tabs/footer chrome. */
+   page, not the surrounding nav/hero/tabs/footer chrome. It should also
+   always print on a clean white background with dark text, regardless of
+   whether the site is in dark mode when the visitor prints/saves it --
+   without this, the certificate's CSS variables inherit dark-mode values
+   (near-black background, near-white text) straight into the PDF. */
 @media print {
   body * {
     visibility: hidden;
@@ -305,5 +309,13 @@ body.modal-open {
     left: 0;
     top: 0;
     width: 100%;
+    background: #ffffff !important;
+    background-image: none !important;
+  }
+  #certificate,
+  #certificate * {
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
   }
 }
+
