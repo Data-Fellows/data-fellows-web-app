@@ -48,8 +48,13 @@ const ImageUploadField = ({ label, helpText, value, onChange, error }: ImageUplo
     try {
       const url = await uploadActivityImage(file);
       onChange(url);
-    } catch {
-      setUploadError("Upload failed. Try again.");
+    } catch (err) {
+      // Surface the real reason (bucket missing, RLS rejection, file too
+      // large, etc.) instead of a generic message -- a silent "try again"
+      // gives an admin nothing to act on when the fix is usually a
+      // one-time setup step, not a retry.
+      const message = err instanceof Error ? err.message : "";
+      setUploadError(message ? `Upload failed: ${message}` : "Upload failed. Try again.");
     } finally {
       setIsUploading(false);
     }
