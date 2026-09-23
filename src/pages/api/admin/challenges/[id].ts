@@ -1,3 +1,4 @@
+import { describeZodError } from "@/lib/api/zod-error";
 import { requireAdmin } from "@/lib/supabase/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
@@ -6,7 +7,7 @@ const daySchema = z.object({
   // Present when editing a day that already exists -- absent for a new one.
   id: z.string().uuid().optional(),
   title: z.string().trim().min(1),
-  lesson_url: z.string().trim().url().optional().or(z.literal("")),
+  lesson_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
   summary: z.string().trim().optional(),
 });
 
@@ -26,7 +27,7 @@ const challengeSchema = z
     member_target: z.number().int().positive().nullable().optional(),
     status: z.enum(["draft", "published", "archived"]),
     cta_join_label: z.string().trim().optional(),
-    cta_join_href: z.string().trim().url().optional().or(z.literal("")),
+    cta_join_href: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
     partner_name: z.string().trim().optional(),
     days: z.array(daySchema).min(1, "Add at least one day"),
   })
@@ -72,7 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "PUT") {
     const parsed = challengeSchema.safeParse(req.body);
     if (!parsed.success) {
-      return res.status(400).json({ error: "Please check the form and try again." });
+      return res.status(400).json({ error: describeZodError(parsed.error) });
     }
     const { days, ...challenge } = parsed.data;
 

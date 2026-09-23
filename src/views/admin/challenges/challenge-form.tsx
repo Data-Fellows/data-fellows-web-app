@@ -7,10 +7,17 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { z } from "zod";
 
+const urlSchema = z
+  .string()
+  .trim()
+  .url("Enter a valid URL, e.g. https://example.com")
+  .optional()
+  .or(z.literal(""));
+
 const dayFormSchema = z.object({
   id: z.string().optional(),
   title: z.string().trim().min(1, "Required"),
-  lesson_url: z.string().trim().optional(),
+  lesson_url: urlSchema,
   summary: z.string().trim().optional(),
 });
 
@@ -30,7 +37,7 @@ const challengeFormSchema = z
     member_target: z.string().trim().optional(),
     status: z.enum(["draft", "published", "archived"]),
     cta_join_label: z.string().trim().optional(),
-    cta_join_href: z.string().trim().optional(),
+    cta_join_href: urlSchema,
     partner_name: z.string().trim().optional(),
     days: z.array(dayFormSchema).min(1, "Add at least one day"),
   })
@@ -258,6 +265,9 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
           <label className={labelClass}>
             Join button link
             <input {...register("cta_join_href")} className={inputClass} placeholder="https://..." />
+            {errors.cta_join_href ? (
+              <span className="text-xs text-destructive">{errors.cta_join_href.message}</span>
+            ) : null}
           </label>
         </div>
 
@@ -328,6 +338,11 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
                   className={inputClass}
                   placeholder="https://..."
                 />
+                {errors.days?.[index]?.lesson_url ? (
+                  <span className="text-xs text-destructive">
+                    {errors.days[index]?.lesson_url?.message}
+                  </span>
+                ) : null}
               </label>
               <label className={labelClass}>
                 Summary (optional)

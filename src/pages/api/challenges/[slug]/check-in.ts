@@ -1,4 +1,5 @@
 import { dayNumberForToday } from "@/lib/challenge/day-number";
+import { describeZodError } from "@/lib/api/zod-error";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
@@ -38,7 +39,7 @@ export default async function handler(
   if (!parsed.success) {
     return res
       .status(400)
-      .json({ success: false, error: "Please check the form and try again." });
+      .json({ success: false, error: describeZodError(parsed.error) });
   }
 
   const { dayId, memberName, memberEmail, learningNote, company } = parsed.data;

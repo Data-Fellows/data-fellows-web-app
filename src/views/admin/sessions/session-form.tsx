@@ -7,12 +7,19 @@ import { useForm } from "react-hook-form";
 import { FiTrash2 } from "react-icons/fi";
 import { z } from "zod";
 
+const urlSchema = z
+  .string()
+  .trim()
+  .url("Enter a valid URL, e.g. https://example.com")
+  .optional()
+  .or(z.literal(""));
+
 const formSchema = z.object({
   title: z.string().trim().min(1, "Required"),
   description: z.string().trim().optional(),
   session_date: z.string().trim().min(1, "Required"),
-  registration_url: z.string().trim().optional(),
-  replay_url: z.string().trim().optional(),
+  registration_url: urlSchema,
+  replay_url: urlSchema,
   status: z.enum(["draft", "published", "archived"]),
 });
 
@@ -172,9 +179,13 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
             className={inputClass}
             placeholder="https://..."
           />
-          <span className="text-xs text-muted-foreground">
-            Where "Register" sends people before the session -- your sign-up form.
-          </span>
+          {errors.registration_url ? (
+            <span className="text-xs text-destructive">{errors.registration_url.message}</span>
+          ) : (
+            <span className="text-xs text-muted-foreground">
+              Where "Register" sends people before the session -- your sign-up form.
+            </span>
+          )}
         </label>
 
         <label className={labelClass}>
@@ -184,10 +195,14 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
             className={inputClass}
             placeholder="https://youtube.com/..."
           />
-          <span className="text-xs text-muted-foreground">
-            Add this once the recording is up. Once the session date has passed, "See recap"
-            sends people here instead -- falls back to the registration link if left blank.
-          </span>
+          {errors.replay_url ? (
+            <span className="text-xs text-destructive">{errors.replay_url.message}</span>
+          ) : (
+            <span className="text-xs text-muted-foreground">
+              Add this once the recording is up. Once the session date has passed, "See recap"
+              sends people here instead -- falls back to the registration link if left blank.
+            </span>
+          )}
         </label>
       </div>
 
