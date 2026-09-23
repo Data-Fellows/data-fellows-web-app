@@ -123,23 +123,32 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
     const node = certificateRef.current;
     if (!node) return;
     setIsDownloadingImage(true);
+    // Capture a detached clone appended directly to <body>, not the node
+    // in place -- html-to-image still picks up positioning/padding from
+    // the certificate's real ancestors (the page's centered, padded
+    // layout) even when only the certificate node itself is passed in,
+    // which was leaving blank space on one side of the exported image.
+    // A clone with no meaningful ancestors sidesteps that entirely.
+    // Kept invisible via opacity (not moved off-screen) so it still
+    // lays out normally -- positioning it off-screen broke max-w/auto
+    // width sizing and produced a blank capture.
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "fixed";
+    wrapper.style.top = "0";
+    wrapper.style.left = "0";
+    wrapper.style.zIndex = "-1";
+    wrapper.style.opacity = "0";
+    wrapper.style.pointerEvents = "none";
+    const clone = node.cloneNode(true) as HTMLElement;
+    clone.classList.add("certificate-capture");
+    clone.style.margin = "0";
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
     try {
       // A PNG shares far better than a PDF -- opens instantly as an image
       // on WhatsApp/Twitter/LinkedIn instead of needing a PDF viewer.
-      // certificate-capture forces the same plain-hex dark styling as
-      // print (see globals.css) -- html-to-image can't reliably capture
-      // Tailwind v4's gradient/opacity colors otherwise.
-      node.classList.add("certificate-capture");
       await new Promise(requestAnimationFrame);
-      // html-to-image's auto-detected size doesn't reliably match a
-      // max-w-*/mx-auto centered node -- pin it explicitly to the node's
-      // actual rendered box so the output isn't cropped or off-center.
-      const rect = node.getBoundingClientRect();
-      const dataUrl = await toPng(node, {
-        pixelRatio: 2,
-        width: rect.width,
-        height: rect.height,
-      });
+      const dataUrl = await toPng(clone, { pixelRatio: 2 });
       const link = document.createElement("a");
       link.download = `${challenge.slug}-certificate.png`;
       link.href = dataUrl;
@@ -147,7 +156,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
     } catch {
       showToast("Couldn't generate the image. Try Print / Save as PDF instead.", "error");
     } finally {
-      node.classList.remove("certificate-capture");
+      document.body.removeChild(wrapper);
       setIsDownloadingImage(false);
     }
   };
