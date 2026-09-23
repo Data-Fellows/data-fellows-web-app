@@ -34,9 +34,13 @@ export const parseChallengeImportText = (raw: string): ParsedChallengeImport => 
   const subtitle = headerLines.find((line, i) => i > 0 && !COMMITMENT_LINE.test(line)) ?? "";
   const rawCommitmentLine = headerLines.find((line) => COMMITMENT_LINE.test(line)) ?? "";
   // "Seven days -- 60-90 minutes a day" -> just the time portion; the
-  // duration itself comes from the start/end dates the admin sets.
-  const commitmentLine = rawCommitmentLine.includes("·")
-    ? rawCommitmentLine.split("·").pop()!.trim()
+  // duration itself comes from the start/end dates the admin sets. The
+  // separator is always surrounded by spaces (" -- ", " -- ", " · "),
+  // unlike a hyphen inside a number range like "60-90", so splitting on
+  // a *spaced* dash/mid-dot can't misfire on the range itself.
+  const CLAUSE_SEPARATOR = /\s(?:·|--|—|–)\s/;
+  const commitmentLine = CLAUSE_SEPARATOR.test(rawCommitmentLine)
+    ? rawCommitmentLine.split(CLAUSE_SEPARATOR).pop()!.trim()
     : rawCommitmentLine;
 
   const days = dayStarts.map((day, i) => {

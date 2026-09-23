@@ -218,40 +218,42 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
         ) : null}
       </div>
 
-      <div className="rounded-3xl border border-primary/10 bg-background px-6 py-6">
-        <button
-          type="button"
-          onClick={() => setShowImport((prev) => !prev)}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
-        >
-          <FiClipboard className="h-4 w-4" />
-          {showImport ? "Hide" : "Paste a doc instead of typing it in"}
-        </button>
-        {showImport ? (
-          <div className="mt-4 space-y-3">
-            <p className="text-xs text-muted-foreground">
-              Paste the whole write-up -- title, intro, and each day as &quot;Day 1 -- Title&quot;,
-              &quot;Day 2 -- Title&quot;, etc. Fills in the title, subtitle, and one row per day below.
-              Review everything before saving -- this is a best-effort parse, not magic.
-            </p>
-            <textarea
-              value={importText}
-              onChange={(e) => setImportText(e.target.value)}
-              rows={8}
-              className={textareaClass}
-              placeholder="Paste your challenge doc here..."
-            />
-            <button
-              type="button"
-              onClick={handleImport}
-              disabled={!importText.trim()}
-              className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
-            >
-              Fill in the form
-            </button>
-          </div>
-        ) : null}
-      </div>
+      {mode === "create" ? (
+        <div className="rounded-3xl border border-primary/10 bg-background px-6 py-6">
+          <button
+            type="button"
+            onClick={() => setShowImport((prev) => !prev)}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+          >
+            <FiClipboard className="h-4 w-4" />
+            {showImport ? "Hide" : "Paste a doc instead of typing it in"}
+          </button>
+          {showImport ? (
+            <div className="mt-4 space-y-3">
+              <p className="text-xs text-muted-foreground">
+                Paste the whole write-up -- title, intro, and each day as &quot;Day 1 -- Title&quot;,
+                &quot;Day 2 -- Title&quot;, etc. Fills in the title, subtitle, and one row per day below.
+                Review everything before saving -- this is a best-effort parse, not magic.
+              </p>
+              <textarea
+                value={importText}
+                onChange={(e) => setImportText(e.target.value)}
+                rows={8}
+                className={textareaClass}
+                placeholder="Paste your challenge doc here..."
+              />
+              <button
+                type="button"
+                onClick={handleImport}
+                disabled={!importText.trim()}
+                className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+              >
+                Fill in the form
+              </button>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="space-y-5 rounded-3xl border border-primary/10 bg-background px-6 py-6">
         <div className="grid gap-4 sm:grid-cols-2">
