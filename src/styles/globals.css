@@ -304,6 +304,19 @@ body.modal-open {
   #certificate * {
     visibility: visible;
   }
+  /* Hidden nav/hero/footer/etc. still reserve their real content height
+     (visibility only stops painting, not layout), which can overflow one
+     page and produce a spurious blank second page. Collapse every hidden
+     element to zero size -- except the certificate itself and anything
+     that contains it, since those need their normal layout intact. */
+  body *:not(#certificate):not(#certificate *):not(:has(#certificate)) {
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-width: 0 !important;
+  }
   #certificate {
     position: absolute;
     left: 0;
@@ -316,6 +329,12 @@ body.modal-open {
   #certificate * {
     color: #0f172a !important;
     border-color: #cbd5e1 !important;
+    /* Badges/pills inside the certificate carry their own Tailwind
+       bg-* color (dark in dark mode) -- without this they'd render as a
+       solid dark block with the same forced-dark text on top, making
+       the text invisible. */
+    background-color: transparent !important;
+    background-image: none !important;
   }
 }
 
