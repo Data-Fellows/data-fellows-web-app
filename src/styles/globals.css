@@ -290,6 +290,27 @@ body.modal-open {
   touch-action: manipulation;
 }
 
+/* Applied briefly to #certificate while html-to-image captures it for the
+   "Download image" button (see certificate-tab.tsx). Tailwind v4 renders
+   gradients/opacity colors via color-mix()/oklch(), which html-to-image's
+   SVG-based capture renders incorrectly (a washed-out gradient, badges
+   with a mismatched background) -- so during capture we swap to the same
+   plain-hex, forced-color styling already proven to work for print.
+   Deliberately not scoped to a media query since this runs on-screen. */
+.certificate-capture {
+  background: #0f172a !important;
+  background-image: none !important;
+}
+.certificate-capture,
+.certificate-capture * {
+  color: #f1f5f9 !important;
+  border-color: #475569 !important;
+}
+.certificate-capture * {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 /* Printing the challenge certificate should produce a certificate-only
    page, not the surrounding nav/hero/tabs/footer chrome. It should also
    always print as a deliberate dark, branded certificate -- background

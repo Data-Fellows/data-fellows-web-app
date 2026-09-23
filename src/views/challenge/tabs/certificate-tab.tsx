@@ -2,9 +2,11 @@ import { SITE_URL } from "@/constants/site";
 import { useToast } from "@/stores/context/ToastContext";
 import type { ChallengeWithDays } from "@/types/challenge";
 import { useQuery } from "@tanstack/react-query";
+import { toPng } from "html-to-image";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FiAward, FiLink, FiPrinter } from "react-icons/fi";
+import { useRef, useState } from "react";
+import { FiAward, FiDownload, FiLink, FiPrinter } from "react-icons/fi";
 import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { useMemberIdentity } from "../hooks/use-member-identity";
 
@@ -49,6 +51,8 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   const router = useRouter();
   const { identity, hydrated } = useMemberIdentity();
   const { showToast } = useToast();
+  const certificateRef = useRef<HTMLDivElement>(null);
+  const [isDownloadingImage, setIsDownloadingImage] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["challenge-certificate", challenge.slug, identity?.email],
@@ -115,10 +119,36 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
     }
   };
 
+  const downloadImage = async () => {
+    const node = certificateRef.current;
+    if (!node) return;
+    setIsDownloadingImage(true);
+    try {
+      // A PNG shares far better than a PDF -- opens instantly as an image
+      // on WhatsApp/Twitter/LinkedIn instead of needing a PDF viewer.
+      // certificate-capture forces the same plain-hex dark styling as
+      // print (see globals.css) -- html-to-image can't reliably capture
+      // Tailwind v4's gradient/opacity colors otherwise.
+      node.classList.add("certificate-capture");
+      await new Promise(requestAnimationFrame);
+      const dataUrl = await toPng(node, { pixelRatio: 2 });
+      const link = document.createElement("a");
+      link.download = `${challenge.slug}-certificate.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch {
+      showToast("Couldn't generate the image. Try Print / Save as PDF instead.", "error");
+    } finally {
+      node.classList.remove("certificate-capture");
+      setIsDownloadingImage(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div
         id="certificate"
+        ref={certificateRef}
         className="mx-auto max-w-2xl space-y-7 rounded-3xl border border-primary/20 bg-gradient-to-b from-secondary/20 to-background px-8 py-12 text-center sm:px-14 print:border-primary/30 print:bg-none"
       >
         <div className="flex items-center justify-center gap-3">
@@ -168,8 +198,17 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       <div className="flex flex-wrap items-center justify-center gap-3 print:hidden">
         <button
           type="button"
+          onClick={downloadImage}
+          disabled={isDownloadingImage}
+          className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+        >
+          <FiDownload className="h-4 w-4" />
+          {isDownloadingImage ? "Generating..." : "Download image"}
+        </button>
+        <button
+          type="button"
           onClick={() => window.print()}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+          className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
         >
           <FiPrinter className="h-4 w-4" />
           Print / Save as PDF
