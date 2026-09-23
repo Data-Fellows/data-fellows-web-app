@@ -292,11 +292,15 @@ body.modal-open {
 
 /* Printing the challenge certificate should produce a certificate-only
    page, not the surrounding nav/hero/tabs/footer chrome. It should also
-   always print on a clean white background with dark text, regardless of
-   whether the site is in dark mode when the visitor prints/saves it --
-   without this, the certificate's CSS variables inherit dark-mode values
-   (near-black background, near-white text) straight into the PDF. */
+   always print as a deliberate dark, branded certificate -- background
+   colors are off by default when printing, so print-color-adjust forces
+   the browser to actually render them instead of falling back to a plain
+   white page. */
 @media print {
+  #certificate {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
   body * {
     visibility: hidden;
   }
@@ -322,17 +326,21 @@ body.modal-open {
     left: 0;
     top: 0;
     width: 100%;
-    background: #ffffff !important;
+    background: #0f172a !important;
     background-image: none !important;
   }
   #certificate,
   #certificate * {
-    color: #0f172a !important;
-    border-color: #cbd5e1 !important;
-    /* Badges/pills inside the certificate carry their own Tailwind
-       bg-* color (dark in dark mode) -- without this they'd render as a
-       solid dark block with the same forced-dark text on top, making
-       the text invisible. */
+    color: #f1f5f9 !important;
+    border-color: #475569 !important;
+  }
+  /* Badges/pills inside the certificate carry their own Tailwind bg-*
+     color -- without this they'd render as a mismatched block instead of
+     a consistent dark card, and (combined with forcing one text color
+     everywhere) risk the exact invisible-text bug this print styling has
+     already had once. Only descendants, never #certificate itself --
+     that's the one element that's supposed to have a background. */
+  #certificate * {
     background-color: transparent !important;
     background-image: none !important;
   }
