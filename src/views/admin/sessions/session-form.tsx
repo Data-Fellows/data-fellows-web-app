@@ -1,3 +1,4 @@
+import ImageUploadField from "@/components/admin/image-upload-field";
 import type { Session } from "@/types/session";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -79,6 +80,8 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -207,18 +210,13 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
           )}
         </label>
 
-        <label className={labelClass}>
-          Banner image (optional)
-          <input {...register("image_url")} className={inputClass} placeholder="https://..." />
-          {errors.image_url ? (
-            <span className="text-xs text-destructive">{errors.image_url.message}</span>
-          ) : (
-            <span className="text-xs text-muted-foreground">
-              Link to the speaker flyer/graphic -- shown as the card preview on /activities.
-              Leave blank for a plain text card.
-            </span>
-          )}
-        </label>
+        <ImageUploadField
+          label="Banner image (optional)"
+          value={watch("image_url") ?? ""}
+          onChange={(url) => setValue("image_url", url, { shouldDirty: true })}
+          error={errors.image_url?.message}
+          helpText="The speaker flyer/graphic -- shown as the card preview on /activities. Leave blank for a plain text card."
+        />
       </div>
 
       {formError ? <p className="text-center text-sm text-destructive">{formError}</p> : null}

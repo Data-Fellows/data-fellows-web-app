@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FiDownload, FiPlus, FiTrash2 } from "react-icons/fi";
+import ImageUploadField from "@/components/admin/image-upload-field";
 import { z } from "zod";
 
 const urlSchema = z
@@ -131,6 +132,8 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
     register,
     control,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(challengeFormSchema),
@@ -291,18 +294,13 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
           />
         </label>
 
-        <label className={labelClass}>
-          Banner image (optional)
-          <input {...register("image_url")} className={inputClass} placeholder="https://..." />
-          {errors.image_url ? (
-            <span className="text-xs text-destructive">{errors.image_url.message}</span>
-          ) : (
-            <span className="text-xs text-muted-foreground">
-              Link to an image (e.g. a flyer you've already designed) -- shown as the card
-              preview on /activities. Leave blank for a plain text card.
-            </span>
-          )}
-        </label>
+        <ImageUploadField
+          label="Banner image (optional)"
+          value={watch("image_url") ?? ""}
+          onChange={(url) => setValue("image_url", url, { shouldDirty: true })}
+          error={errors.image_url?.message}
+          helpText="Shown as the card preview on /activities. Leave blank for a plain text card."
+        />
       </div>
 
       <div className="space-y-4 rounded-3xl border border-primary/10 bg-background px-6 py-6">
