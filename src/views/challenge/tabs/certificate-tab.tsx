@@ -131,7 +131,15 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       // Tailwind v4's gradient/opacity colors otherwise.
       node.classList.add("certificate-capture");
       await new Promise(requestAnimationFrame);
-      const dataUrl = await toPng(node, { pixelRatio: 2 });
+      // html-to-image's auto-detected size doesn't reliably match a
+      // max-w-*/mx-auto centered node -- pin it explicitly to the node's
+      // actual rendered box so the output isn't cropped or off-center.
+      const rect = node.getBoundingClientRect();
+      const dataUrl = await toPng(node, {
+        pixelRatio: 2,
+        width: rect.width,
+        height: rect.height,
+      });
       const link = document.createElement("a");
       link.download = `${challenge.slug}-certificate.png`;
       link.href = dataUrl;

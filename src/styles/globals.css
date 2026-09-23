@@ -300,6 +300,11 @@ body.modal-open {
 .certificate-capture {
   background: #0f172a !important;
   background-image: none !important;
+  /* The certificate is centered (mx-auto) within a wider page section --
+     captured in isolation, that auto margin gets computed against the
+     wrong containing width, shifting the box sideways and clipping it
+     against the fixed export canvas. Not relevant once isolated. */
+  margin: 0 !important;
 }
 .certificate-capture,
 .certificate-capture * {
