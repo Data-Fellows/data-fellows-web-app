@@ -14,7 +14,17 @@ type AnimatedCounterProps = {
 const AnimatedCounter = ({ value, suffix = "" }: AnimatedCounterProps) => {
   const ref = useRef<HTMLSpanElement | null>(null);
   const reduced = useReducedMotion();
-  const [shown, setShown] = useState(reduced ? value : 0);
+  // Always start at 0, matching the server-rendered markup exactly -- on
+  // the client's *first* render, framer-motion's useReducedMotion() can
+  // already resolve synchronously to the device's real preference (it
+  // checks matchMedia during render, not in an effect), while SSR has no
+  // way to know that preference and always renders `0`. Seeding this
+  // state from `reduced` meant a reduced-motion visitor's hydration
+  // render produced "1,600" where the server had sent "0", a text
+  // mismatch that made React discard and replace the SSR'd subtree. The
+  // effect below still jumps straight to the final value for reduced-
+  // motion users -- it just does so after hydration, not during it.
+  const [shown, setShown] = useState(0);
 
   useEffect(() => {
     if (reduced) {
