@@ -33,24 +33,6 @@ const timeline = [
   },
 ] as const;
 
-const surveyHighlights = [
-  {
-    value: "74%",
-    description:
-      "of surveyed members said the DataCamp Scholarship was the membership benefit they valued most.",
-  },
-  {
-    value: "82%",
-    description:
-      "said yes or maybe to volunteering to help grow the community.",
-  },
-  {
-    value: "39",
-    description:
-      "respondents informed the 2026 community snapshot -- kept visible here alongside the percentages above.",
-  },
-] as const;
-
 const ImpactPage = () => {
   return (
     <LandingPageLayout>
@@ -149,18 +131,6 @@ const ImpactPage = () => {
               discipline groups, physical meetups and more follow-up with
               past cohorts -- the roadmap follows this feedback.
             </p>
-            <div className="mt-10 grid gap-4 md:grid-cols-3">
-              {surveyHighlights.map((item) => (
-                <div key={item.value} className="rounded-3xl bg-background p-7">
-                  <div className="text-4xl font-semibold text-gold">
-                    {item.value}
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
