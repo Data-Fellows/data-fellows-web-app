@@ -2,6 +2,16 @@
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  /* A fixed deep navy for surfaces that should always read as "dark
+     premium showcase" regardless of the site's light/dark theme toggle
+     (e.g. the Inscend product section, impact stat cards) -- unlike
+     --primary, which intentionally flips to a light accent color in dark
+     mode, this never changes. */
+  --navy-deep: hsl(210 55% 12%);
+  --navy-deep-foreground: hsl(210 40% 96%);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -39,6 +49,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-deep-foreground: var(--navy-deep-foreground);
 }
 
 [data-theme="light"] {
@@ -66,6 +80,8 @@
   --chart-3: hsl(37 92% 55%);
   --chart-4: hsl(330 70% 52%);
   --chart-5: hsl(50 100% 48%);
+  --gold: hsl(39 78% 54%);
+  --gold-foreground: hsl(213 35% 14%);
   --radius: 0.6rem;
   --sidebar-background: hsl(210 33% 99%);
   --sidebar-foreground: hsl(213 35% 16%);
@@ -102,6 +118,8 @@
   --chart-3: hsl(37 92% 60%);
   --chart-4: hsl(325 70% 60%);
   --chart-5: hsl(50 95% 65%);
+  --gold: hsl(39 85% 62%);
+  --gold-foreground: hsl(213 35% 10%);
   --radius: 0.6rem;
   --sidebar-background: hsl(215 28% 12%);
   --sidebar-foreground: hsl(210 33% 92%);

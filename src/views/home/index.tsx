@@ -2,16 +2,16 @@ import ImpactReportAnnouncement from "@/components/custom/impact-report-announce
 import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import React from "react";
-import About from "./sections/about";
 import Community from "./sections/community";
+import Cta from "./sections/cta";
 import Hero from "./sections/hero";
+import Impact from "./sections/impact";
 import Partners from "./sections/partners";
 import Products from "./sections/products";
 import Resources from "./sections/resources";
 import WhoWeAre from "./sections/who-we-are";
 
 const Home: React.FC = () => {
-  console.log("home")
   return (
     <LandingPageLayout>
       <PageSeo
@@ -23,11 +23,12 @@ const Home: React.FC = () => {
       <div className="space-y-24 md:space-y-28">
         <Hero />
         <WhoWeAre />
+        <Impact />
         <Products />
         <Community />
         <Partners />
         <Resources />
-        <About />
+        <Cta />
       </div>
     </LandingPageLayout>
   );
