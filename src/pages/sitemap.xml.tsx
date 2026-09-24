@@ -7,6 +7,7 @@ const STATIC_PATHS = [
   "/activities",
   "/community",
   "/products",
+  "/impact",
   "/partners",
   "/resources",
   "/about",

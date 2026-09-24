@@ -7,6 +7,7 @@ const quickLinks = [
   { label: "Community", href: "/community" },
   { label: "Activities", href: "/activities" },
   { label: "Products", href: "/products" },
+  { label: "Impact", href: "/impact" },
   { label: "Resources", href: "/resources" },
   { label: "Partners", href: "/partners" },
   { label: "About", href: "/about" },

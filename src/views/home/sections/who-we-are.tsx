@@ -1,3 +1,4 @@
+import { formatCompactStat, impactStats } from "@/constants/site";
 import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
@@ -17,10 +18,15 @@ const quotes = [
   },
 ];
 
+// Numbers are derived from impactStats (the canonical source) so they
+// can't drift from the fuller stat band shown later on the page.
 const stats = [
-  { value: "1.6k+", label: "Members" },
-  { value: "33+", label: "Countries" },
-  { value: "30+", label: "Pilot projects launched" },
+  { value: formatCompactStat(impactStats[0]), label: "Members" },
+  { value: formatCompactStat(impactStats[1]), label: "Countries" },
+  {
+    value: formatCompactStat(impactStats[2]),
+    label: "Pilot projects launched",
+  },
 ];
 
 const statAccentClasses = [
@@ -62,8 +68,12 @@ const WhoWeAre = () => {
               We help people learn, test ideas, and build tools that make life and business better.
             </p>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Today we have over 1,600 members across 33+ countries and 30+ pilot projects already launched.
-              Every Fellow brings a unique perspective, and together we turn insight into action.
+              Today we have over {impactStats[0].value.toLocaleString()}
+              {impactStats[0].suffix} members across {impactStats[1].value}
+              {impactStats[1].suffix} countries and {impactStats[2].value}
+              {impactStats[2].suffix} pilot projects already launched. Every
+              Fellow brings a unique perspective, and together we turn
+              insight into action.
             </p>
             <div className="space-y-4">
               {quotes.map((item) => (

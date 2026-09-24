@@ -64,19 +64,19 @@ const Products = () => {
       className="px-4 sm:px-6"
       aria-labelledby="products-heading"
     >
-      <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-12 lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-6xl rounded-3xl bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-10 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
           <div className="space-y-6 lg:col-span-5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-              Products
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gold">
+              Built from the community
             </span>
             <h2
               id="products-heading"
-              className="text-3xl font-semibold text-foreground sm:text-4xl"
+              className="text-3xl font-semibold tracking-tight sm:text-4xl"
             >
-              Tools born from real problems.
+              Inscend turns business data into the next right action.
             </h2>
-            <p className="text-base leading-relaxed text-muted-foreground">
+            <p className="text-base leading-relaxed text-navy-deep-foreground/70">
               We do not just learn -- we build. Inscend is the decision layer
               for founder-led commerce: it combines a brand's platform data
               with the operating context only a founder knows, then turns both
@@ -87,16 +87,16 @@ const Products = () => {
               {features.map((feature) => (
                 <div
                   key={feature.title}
-                  className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-secondary/10 px-4 py-4"
+                  className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4"
                 >
-                  <span className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <span className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-gold/15 text-gold">
                     <FiStar className="h-4 w-4" />
                   </span>
                   <div>
-                    <h3 className="text-sm font-semibold text-foreground">
+                    <h3 className="text-sm font-semibold text-white">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-navy-deep-foreground/70">
                       {feature.description}
                     </p>
                   </div>
@@ -107,7 +107,7 @@ const Products = () => {
               href="https://inscend.io"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+              className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
             >
               Explore Inscend.io
               <FiArrowUpRight className="h-4 w-4" />
@@ -115,7 +115,7 @@ const Products = () => {
           </div>
 
           <div className="relative lg:col-span-7">
-            <div className="relative h-[420px] overflow-hidden rounded-3xl border border-primary/10 bg-secondary/30">
+            <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10 bg-black/20">
               {productSlides.map((slide, index) => (
                 <div
                   key={slide.title}

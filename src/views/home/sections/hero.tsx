@@ -1,11 +1,15 @@
+import { formatCompactStat, impactStats } from "@/constants/site";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+// Short labels for the tight hero card -- numbers are still derived from
+// impactStats (the canonical source) so they can't drift from the fuller
+// stat band shown later on the page.
 const stats = [
-  { label: "Members", value: "1.6k+" },
-  { label: "Countries", value: "33+" },
-  { label: "Pilots", value: "30+" },
+  { label: "Members", value: formatCompactStat(impactStats[0]) },
+  { label: "Countries", value: formatCompactStat(impactStats[1]) },
+  { label: "Pilots", value: formatCompactStat(impactStats[2]) },
 ];
 
 export const Hero = () => {

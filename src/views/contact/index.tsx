@@ -1,27 +1,29 @@
 import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
+import { site } from "@/constants/site";
 import Link from "next/link";
 import { useState } from "react";
-import { FiMail, FiMessageCircle, FiPhone, FiSend } from "react-icons/fi";
+import { FiMail, FiMessageCircle, FiSend, FiUsers } from "react-icons/fi";
 
 const contactChannels = [
   {
-    title: "General inquiries & speaking",
-    detail: "hello@datafellowsai.com",
-    icon: FiMail,
-    href: "mailto:hello@datafellowsai.com",
+    title: "Join the community",
+    detail: "Discord, learning, events and member opportunities.",
+    icon: FiUsers,
+    href: site.communityUrl,
+    external: true,
   },
   {
-    title: "Partnership desk",
-    detail: "partners@datafellowsai.com",
+    title: "Partnerships",
+    detail: site.partnerEmail,
     icon: FiMessageCircle,
-    href: "mailto:partners@datafellowsai.com",
+    href: `mailto:${site.partnerEmail}`,
   },
   {
-    title: "Press & media hotline",
-    detail: "press@datafellowsai.com",
-    icon: FiPhone,
-    href: "tel:+1234567890",
+    title: "General inquiries & press",
+    detail: site.email,
+    icon: FiMail,
+    href: `mailto:${site.email}`,
   },
 ];
 
@@ -74,10 +76,12 @@ const ContactPage = () => {
                 Fellows will get back within two business days.
               </p>
               <div className="space-y-4">
-                {contactChannels.map(({ title, detail, icon: Icon, href }) => (
+                {contactChannels.map(({ title, detail, icon: Icon, href, external }) => (
                   <Link
                     key={title}
                     href={href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
                     className="flex items-center gap-4 rounded-2xl border border-primary/10 bg-secondary/10 px-5 py-4 text-sm text-muted-foreground transition hover:border-primary/30"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">

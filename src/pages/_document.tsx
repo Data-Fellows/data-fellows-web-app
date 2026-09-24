@@ -1,8 +1,36 @@
+import { site } from "@/constants/site";
 import { Head, Html, Main, NextScript } from "next/document";
 
 // Public at build time -- see ANALYTICS_SETUP.md. Unset by default so the
 // site builds and runs cleanly with no analytics until this is configured.
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
+// Organization/WebSite structured data applies site-wide and doesn't vary
+// per page, unlike PageSeo's per-route title/description/OG tags -- lives
+// here rather than duplicated into every view.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/svgs/data-fellow.svg`,
+  description: site.description,
+  foundingDate: site.foundingYear,
+  email: site.email,
+  sameAs: [
+    "https://www.linkedin.com/company/the-data-fellow/",
+    "https://twitter.com/DatafellowsInfo",
+    "https://youtube.com/@DataFellows",
+    "https://www.instagram.com/data.fellows/",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: site.url,
+};
 
 export default function Document() {
   return (
@@ -43,6 +71,14 @@ export default function Document() {
             />
           </>
         ) : null}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
       </Head>
       <body className="antialiased">
         <Main />

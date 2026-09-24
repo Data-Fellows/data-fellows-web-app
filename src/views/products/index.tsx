@@ -1,3 +1,4 @@
+import { site } from "@/constants/site";
 import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
 import Image from "next/image";
@@ -7,6 +8,7 @@ import {
   FiBarChart2,
   FiLayers,
   FiTrendingUp,
+  FiUsers,
 } from "react-icons/fi";
 
 const productHighlights = [
@@ -27,42 +29,6 @@ const productHighlights = [
     description:
       "Templates, playbooks, and community-shared learnings that get smarter with every pilot.",
     icon: FiLayers,
-  },
-];
-
-const roadmap = [
-  {
-    quarter: "Q1 2026",
-    focus: "Intake automation",
-    detail:
-      "Smart onboarding wizard that tailors Inscend to each small business domain.",
-  },
-  {
-    quarter: "Q2 2026",
-    focus: "Community signal hub",
-    detail:
-      "Surface real wins and lessons from Fellows directly inside the product.",
-  },
-  {
-    quarter: "Q3 2026",
-    focus: "Partner co-build kits",
-    detail:
-      "Launch packs that help partners customise Inscend for their own ecosystems.",
-  },
-];
-
-const caseStudies = [
-  {
-    name: "Lagos neighborhood grocer",
-    result: "35% lift in repeat customers after automating restock alerts.",
-  },
-  {
-    name: "Toronto wellness studio",
-    result: "Saved 12 hours weekly by streamlining bookings and payments data.",
-  },
-  {
-    name: "Accra food collective",
-    result: "Improved supplier negotiations using Inscend's margin insights.",
   },
 ];
 
@@ -98,7 +64,7 @@ const ProductsPage = () => {
                   with real pilots.
                 </p>
                 <Link
-                  href="https://inscend.io"
+                  href={site.inscendUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
@@ -117,7 +83,7 @@ const ProductsPage = () => {
                     priority
                   />
                   <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
-                    Built and refined with 30 pilot projects across 3
+                    Built and tested through pilot projects across three
                     continents.
                   </div>
                 </div>
@@ -159,56 +125,33 @@ const ProductsPage = () => {
           </div>
         </section>
 
-        {/* <section className="px-4" aria-labelledby="case-studies-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
-            <h2
-              id="case-studies-heading"
-              className="text-2xl font-semibold text-foreground sm:text-3xl"
-            >
-              Case study snapshots
-            </h2>
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {caseStudies.map(({ name, result }) => (
-                <div
-                  key={name}
-                  className="rounded-2xl border border-primary/10 bg-secondary/10 px-4 py-4"
-                >
-                  <p className="text-sm font-semibold text-foreground">
-                    {name}
-                  </p>
-                  <p className="mt-2 text-sm text-muted-foreground">{result}</p>
-                </div>
-              ))}
+        <section className="px-4" aria-labelledby="products-cta-heading">
+          <div className="mx-auto flex max-w-6xl flex-col gap-6 rounded-3xl bg-navy-deep px-6 py-10 text-navy-deep-foreground sm:flex-row sm:items-center sm:justify-between lg:px-12">
+            <div className="max-w-xl space-y-2">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+                Built from the community
+              </p>
+              <h2 id="products-cta-heading" className="text-2xl font-semibold sm:text-3xl">
+                See what Fellows are building next.
+              </h2>
+              <p className="text-sm text-navy-deep-foreground/70">
+                Join the community to follow Inscend&apos;s progress and the next
+                wave of tools coming out of the ecosystem.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href={site.communityUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+              >
+                <FiUsers className="h-4 w-4" />
+                Join the community
+              </Link>
             </div>
           </div>
         </section>
-
-        <section className="px-4" aria-labelledby="roadmap-heading">
-          <div className="mx-auto max-w-6xl space-y-6 rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10">
-            <h2
-              id="roadmap-heading"
-              className="text-2xl font-semibold text-foreground sm:text-3xl"
-            >
-              Roadmap highlights
-            </h2>
-            <div className="grid gap-4 md:grid-cols-3">
-              {roadmap.map(({ quarter, focus, detail }) => (
-                <div
-                  key={quarter}
-                  className="rounded-2xl border border-primary/10 bg-background px-5 py-6"
-                >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    {quarter}
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-foreground">
-                    {focus}
-                  </p>
-                  <p className="mt-2 text-sm text-muted-foreground">{detail}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section> */}
       </div>
     </LandingPageLayout>
   );
