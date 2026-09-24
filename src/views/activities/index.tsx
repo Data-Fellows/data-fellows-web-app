@@ -7,25 +7,52 @@ import type { Challenge } from "@/types/challenge";
 import type { Session } from "@/types/session";
 import type { GetServerSideProps } from "next";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiArrowUpRight, FiCalendar, FiUsers } from "react-icons/fi";
 
 // Some activity descriptions run several paragraphs (pasted straight from a
 // doc) and were blowing up card height on the grid. Clamp to 3 lines and let
-// people expand only the ones that actually overflow it.
+// people expand only the ones that actually overflow it. Whether a
+// description overflows depends on rendered width and font size, not
+// character count -- a "short" description can still wrap past 3 lines on a
+// narrow card or with larger text, and a "long" one can fit fine on a wide
+// one. So measure the actual clamped element instead of guessing from
+// length, and re-measure on resize (grid column count changes at
+// breakpoints, text size can change at any time).
 const CardDescription = ({ text }: { text: string }) => {
   const [expanded, setExpanded] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = paragraphRef.current;
+    if (!el) return;
+
+    const checkOverflow = () => {
+      // Once expanded there's no clamp to overflow, so scrollHeight always
+      // equals clientHeight -- skip the check rather than let it flip
+      // isOverflowing to false and hide the "Show less" toggle.
+      if (expanded) return;
+      setIsOverflowing(el.scrollHeight > el.clientHeight + 1);
+    };
+
+    checkOverflow();
+    const resizeObserver = new ResizeObserver(checkOverflow);
+    resizeObserver.observe(el);
+    return () => resizeObserver.disconnect();
+  }, [text, expanded]);
+
   if (!text) return null;
-  const isLong = text.length > 160;
 
   return (
     <div>
       <p
+        ref={paragraphRef}
         className={`text-sm text-muted-foreground ${expanded ? "" : "line-clamp-3"}`}
       >
         {text}
       </p>
-      {isLong ? (
+      {isOverflowing || expanded ? (
         <button
           type="button"
           onClick={() => setExpanded((value) => !value)}
@@ -261,7 +288,10 @@ export const getServerSideProps: GetServerSideProps<
     return { props: { challenges: [], sessions: [] } };
   }
 
-  const [{ data: challenges }, { data: sessions }] = await Promise.all([
+  const [
+    { data: challenges, error: challengesError },
+    { data: sessions, error: sessionsError },
+  ] = await Promise.all([
     supabase
       .from("challenges")
       .select(
@@ -275,6 +305,18 @@ export const getServerSideProps: GetServerSideProps<
       .eq("status", "published")
       .order("session_date", { ascending: false }),
   ]);
+
+  // A query error here used to fall through to an empty array with no
+  // signal at all -- that's exactly how the Fireside session and Cisco
+  // Challenge silently vanished from this page when a column didn't exist
+  // yet. Logging server-side means a future occurrence shows up in Vercel
+  // logs instead of just looking like "nothing to show".
+  if (challengesError) {
+    console.error("[activities] failed to load challenges:", challengesError);
+  }
+  if (sessionsError) {
+    console.error("[activities] failed to load sessions:", sessionsError);
+  }
 
   return { props: { challenges: challenges ?? [], sessions: sessions ?? [] } };
 };
