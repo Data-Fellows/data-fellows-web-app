@@ -161,7 +161,17 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
     try {
       // A PNG shares far better than a PDF -- opens instantly as an image
       // on WhatsApp/Twitter/LinkedIn instead of needing a PDF viewer.
-      await new Promise(requestAnimationFrame);
+      //
+      // This used to wait on requestAnimationFrame to let the clone's
+      // layout settle before capture, but on Safari opening the pre-opened
+      // tab above backgrounds *this* document -- and Safari fully
+      // suspends rAF callbacks for background documents, so that promise
+      // could hang until the user manually switched back to this tab,
+      // leaving the new tab blank and the button stuck on "Generating...".
+      // setTimeout still fires on a hidden page (Safari just throttles it
+      // rather than stopping it outright), so it can't get stuck the same
+      // way.
+      await new Promise((resolve) => setTimeout(resolve, 50));
       const dataUrl = await toPng(clone, { pixelRatio: 2 });
 
       if (preOpenedTab) {
