@@ -25,6 +25,13 @@ const AnimatedCounter = ({ value, suffix = "" }: AnimatedCounterProps) => {
     const node = ref.current;
     if (!node) return;
 
+    // Tracks whichever requestAnimationFrame is currently pending so the
+    // effect cleanup can cancel it -- without this, navigating away (or a
+    // re-render restarting the effect) while the count-up is mid-flight
+    // left the recursive tick() loop running and calling setShown on an
+    // unmounted component for the rest of its 900ms duration.
+    let frameId: number | null = null;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
@@ -34,15 +41,20 @@ const AnimatedCounter = ({ value, suffix = "" }: AnimatedCounterProps) => {
           const progress = Math.min(1, (now - start) / duration);
           const eased = 1 - Math.pow(1 - progress, 3);
           setShown(Math.round(value * eased));
-          if (progress < 1) requestAnimationFrame(tick);
+          if (progress < 1) {
+            frameId = requestAnimationFrame(tick);
+          }
         };
-        requestAnimationFrame(tick);
+        frameId = requestAnimationFrame(tick);
         observer.disconnect();
       },
       { threshold: 0.35 }
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (frameId !== null) cancelAnimationFrame(frameId);
+    };
   }, [value, reduced]);
 
   return (

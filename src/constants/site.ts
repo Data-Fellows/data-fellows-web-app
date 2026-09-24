@@ -16,9 +16,6 @@ export const site = {
   partnerEmail: "partners@datafellowsai.com",
   communityUrl: "https://bit.ly/m/datafellows",
   inscendUrl: "https://inscend.io",
-  propelUrl: "https://datafellows.propel.community/auth",
-  dataCampFormUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLSdo9nAFByz0p_Dcp4bcZwDmM1qF0RBguN72pvNzfavFktW-Jw/viewform?usp=send_form",
   impactReportUrl: "/documents/data-fellows-impact-report-2026.pdf",
 } as const;
 
@@ -31,6 +28,18 @@ export const impactStats = [
   { value: 30, suffix: "+", label: "Ecosystem pilot projects launched" },
   { value: 1500, suffix: "+", label: "DataCamp scholarships since 2025" },
 ] as const;
+
+// Compact display for a stat used in tight spaces (hero mini-stats, etc.)
+// -- e.g. 1600 -> "1.6k+". Kept in sync with impactStats' value/suffix so a
+// number can't drift between the full stat band and a compact rendering of
+// the same figure.
+export const formatCompactStat = (stat: {
+  value: number;
+  suffix: string;
+}) =>
+  stat.value >= 1000
+    ? `${(stat.value / 1000).toFixed(1)}k${stat.suffix}`
+    : `${stat.value}${stat.suffix}`;
 
 export const extendedStats = [
   { value: "52+", label: "Sunday Catchups hosted" },
