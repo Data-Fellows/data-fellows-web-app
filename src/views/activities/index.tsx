@@ -7,7 +7,36 @@ import type { Challenge } from "@/types/challenge";
 import type { Session } from "@/types/session";
 import type { GetServerSideProps } from "next";
 import Link from "next/link";
+import { useState } from "react";
 import { FiArrowUpRight, FiCalendar, FiUsers } from "react-icons/fi";
+
+// Some activity descriptions run several paragraphs (pasted straight from a
+// doc) and were blowing up card height on the grid. Clamp to 3 lines and let
+// people expand only the ones that actually overflow it.
+const CardDescription = ({ text }: { text: string }) => {
+  const [expanded, setExpanded] = useState(false);
+  if (!text) return null;
+  const isLong = text.length > 160;
+
+  return (
+    <div>
+      <p
+        className={`text-sm text-muted-foreground ${expanded ? "" : "line-clamp-3"}`}
+      >
+        {text}
+      </p>
+      {isLong ? (
+        <button
+          type="button"
+          onClick={() => setExpanded((value) => !value)}
+          className="mt-1 text-xs font-semibold text-primary hover:underline"
+        >
+          {expanded ? "Show less" : "Read more"}
+        </button>
+      ) : null}
+    </div>
+  );
+};
 
 const statusStyles: Record<ActivityStatus, string> = {
   Open: "border-primary/30 bg-primary/10 text-primary",
@@ -195,9 +224,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                     <h3 className="text-lg font-semibold text-foreground">
                       {card.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {card.description}
-                    </p>
+                    <CardDescription text={card.description} />
                   </div>
                   <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                     <FiCalendar className="h-4 w-4" />
