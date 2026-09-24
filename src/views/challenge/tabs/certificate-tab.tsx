@@ -122,6 +122,20 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   const downloadImage = async () => {
     const node = certificateRef.current;
     if (!node) return;
+
+    // Safari (especially iOS) doesn't reliably honor <a download> for a
+    // generated data: URL -- tapping it does nothing visible, which is
+    // exactly the report this is fixing. Its workaround is to open the
+    // image in a new tab so people can save it with the native long-press
+    // "Save Image" gesture instead. That window has to be opened here,
+    // synchronously inside the click handler -- Safari only allows
+    // window.open() without treating it as a blocked popup while it's
+    // still directly inside the user gesture, and by the time the image
+    // finishes generating (several awaits below) that gesture is gone.
+    const isSafari =
+      typeof navigator !== "undefined" && /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const preOpenedTab = isSafari ? window.open("", "_blank") : null;
+
     setIsDownloadingImage(true);
     // Capture a detached clone appended directly to <body>, not the node
     // in place -- html-to-image still picks up positioning/padding from
@@ -149,11 +163,28 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       // on WhatsApp/Twitter/LinkedIn instead of needing a PDF viewer.
       await new Promise(requestAnimationFrame);
       const dataUrl = await toPng(clone, { pixelRatio: 2 });
-      const link = document.createElement("a");
-      link.download = `${challenge.slug}-certificate.png`;
-      link.href = dataUrl;
-      link.click();
+
+      if (preOpenedTab) {
+        const doc = preOpenedTab.document;
+        doc.title = `${challenge.title} certificate`;
+        doc.body.style.margin = "0";
+        doc.body.style.background = "#0f172a";
+        const img = doc.createElement("img");
+        img.src = dataUrl;
+        img.alt = "Certificate";
+        img.style.display = "block";
+        img.style.width = "100%";
+        img.style.height = "auto";
+        doc.body.appendChild(img);
+        showToast("Opened in a new tab -- press and hold (or right-click) the image to save it.", "success");
+      } else {
+        const link = document.createElement("a");
+        link.download = `${challenge.slug}-certificate.png`;
+        link.href = dataUrl;
+        link.click();
+      }
     } catch {
+      preOpenedTab?.close();
       showToast("Couldn't generate the image. Try Print / Save as PDF instead.", "error");
     } finally {
       document.body.removeChild(wrapper);
