@@ -261,7 +261,10 @@ export const getServerSideProps: GetServerSideProps<
     return { props: { challenges: [], sessions: [] } };
   }
 
-  const [{ data: challenges }, { data: sessions }] = await Promise.all([
+  const [
+    { data: challenges, error: challengesError },
+    { data: sessions, error: sessionsError },
+  ] = await Promise.all([
     supabase
       .from("challenges")
       .select(
@@ -275,6 +278,18 @@ export const getServerSideProps: GetServerSideProps<
       .eq("status", "published")
       .order("session_date", { ascending: false }),
   ]);
+
+  // A query error here used to fall through to an empty array with no
+  // signal at all -- that's exactly how the Fireside session and Cisco
+  // Challenge silently vanished from this page when a column didn't exist
+  // yet. Logging server-side means a future occurrence shows up in Vercel
+  // logs instead of just looking like "nothing to show".
+  if (challengesError) {
+    console.error("[activities] failed to load challenges:", challengesError);
+  }
+  if (sessionsError) {
+    console.error("[activities] failed to load sessions:", sessionsError);
+  }
 
   return { props: { challenges: challenges ?? [], sessions: sessions ?? [] } };
 };
