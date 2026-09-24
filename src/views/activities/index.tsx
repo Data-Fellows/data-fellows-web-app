@@ -39,7 +39,25 @@ const CardDescription = ({ text }: { text: string }) => {
     checkOverflow();
     const resizeObserver = new ResizeObserver(checkOverflow);
     resizeObserver.observe(el);
-    return () => resizeObserver.disconnect();
+
+    // ResizeObserver only fires when the clamped element's own box size
+    // changes, but line-clamp pins that box to a fixed 3-line height no
+    // matter what -- so a web font swapping in mid-load (fallback font ->
+    // Poppins) can change how many lines the text needs without ever
+    // changing the box size, and the observer stays silent even though
+    // scrollHeight just changed underneath it. Recheck once webfonts
+    // finish loading too.
+    let cancelled = false;
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) checkOverflow();
+      });
+    }
+
+    return () => {
+      cancelled = true;
+      resizeObserver.disconnect();
+    };
   }, [text, expanded]);
 
   if (!text) return null;
