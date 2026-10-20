@@ -8,7 +8,11 @@ const registerSchema = z.object({
   email: z.string().trim().email("Enter a valid email").max(200),
   // Honeypot -- real users never see or fill this field. Any non-empty
   // value means a bot, so we accept the request but silently no-op it.
-  company: z.string().max(0).optional(),
+  // Bounded rather than max(0): a max(0) field rejects any non-empty
+  // value at the schema level, so a bot that actually fills it in would
+  // fail validation and get an explicit 400 here instead of ever reaching
+  // the no-op branch below -- the opposite of "silent".
+  company: z.string().max(500).optional(),
 });
 
 type RegisterResponse = {
@@ -50,7 +54,7 @@ export default async function handler(
 
   const { data: session } = await supabase
     .from("sessions")
-    .select("id")
+    .select("id, session_date")
     .eq("id", id)
     .eq("status", "published")
     .eq("registration_mode", "internal")
@@ -58,6 +62,19 @@ export default async function handler(
 
   if (!session) {
     return res.status(404).json({ success: false, error: "Session not found." });
+  }
+
+  // The client only offers Register while the session is still upcoming,
+  // but that's UI-only -- a published row stays published after its date
+  // passes (so /activities can show it as Closed with a replay link), so
+  // enforce it here too rather than relying on the RLS policy alone to
+  // stop a direct API call from registering for a session that already
+  // happened.
+  const today = new Date().toISOString().slice(0, 10);
+  if (session.session_date < today) {
+    return res
+      .status(400)
+      .json({ success: false, error: "Registration for this session has closed." });
   }
 
   const { error } = await supabase.from("session_registrations").insert({

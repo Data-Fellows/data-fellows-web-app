@@ -87,6 +87,11 @@ type ActivityCard = {
   // Present only for sessions using in-app registration -- renders the CTA
   // as a button opening the registration modal instead of a Link.
   onRegisterClick?: () => void;
+  // Present only for internal-registration sessions that also saved an
+  // optional link -- rendered as a secondary "More info" link alongside
+  // the Register button, since the admin form promises that URL will be
+  // shown to visitors rather than silently unused.
+  moreInfoHref?: string | null;
 };
 
 const challengeStatus = (challenge: Challenge): ActivityStatus => {
@@ -189,6 +194,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       onRegisterClick: usesInternalRegistration
         ? () => setRegisterSession({ id: session.id, title: session.title })
         : undefined,
+      moreInfoHref: usesInternalRegistration ? session.registration_url : null,
     };
   });
 
@@ -277,13 +283,26 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                     {card.cadence}
                   </div>
                   {card.onRegisterClick ? (
-                    <button
-                      type="button"
-                      onClick={card.onRegisterClick}
-                      className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-                    >
-                      {card.ctaLabel}
-                    </button>
+                    <div className="mt-auto flex flex-col items-stretch gap-2">
+                      <button
+                        type="button"
+                        onClick={card.onRegisterClick}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                      >
+                        {card.ctaLabel}
+                      </button>
+                      {card.moreInfoHref ? (
+                        <Link
+                          href={card.moreInfoHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground"
+                        >
+                          More info
+                          <FiArrowUpRight className="h-3.5 w-3.5" />
+                        </Link>
+                      ) : null}
+                    </div>
                   ) : (
                     <Link
                       href={card.href}

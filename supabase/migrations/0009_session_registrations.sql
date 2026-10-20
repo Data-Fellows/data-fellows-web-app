@@ -25,6 +25,12 @@ alter table public.session_registrations enable row level security;
 -- No "public can read" policy at all -- unlike check_ins there's no public
 -- Wall that needs to show registrant names, so registrant name/email stays
 -- admin-only by default (RLS with no matching policy denies access).
+--
+-- A session stays published after its date passes so /activities can
+-- still show it as Closed (with a replay link) -- without the
+-- session_date check here, that same published row would keep accepting
+-- new registrations indefinitely via direct API/REST calls, even once the
+-- UI has stopped offering the Register button for it.
 create policy "public can insert registrations for published internal sessions"
   on public.session_registrations for insert
   with check (
@@ -33,6 +39,7 @@ create policy "public can insert registrations for published internal sessions"
       where s.id = session_id
         and s.status = 'published'
         and s.registration_mode = 'internal'
+        and s.session_date >= current_date
     )
   );
 

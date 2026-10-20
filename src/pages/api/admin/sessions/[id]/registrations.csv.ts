@@ -1,7 +1,12 @@
+import { buildCsv } from "@/lib/api/csv";
 import { requireAdmin } from "@/lib/supabase/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const csvEscape = (value: string) => `"${value.replace(/"/g, '""')}"`;
+// Supabase's PostgREST API caps a single response at 1000 rows by
+// default (see supabase/migrations/0003_security_fixes.sql for the same
+// gotcha on check_ins) -- fetch in pages so a popular session's full
+// registrant list makes it into the CSV instead of silently truncating.
+const PAGE_SIZE = 1000;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { supabase, admin } = await requireAdmin({ req, res });
@@ -29,26 +34,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(404).json({ error: "Session not found." });
   }
 
-  const { data: registrations, error } = await supabase
-    .from("session_registrations")
-    .select("name, email, created_at")
-    .eq("session_id", id)
-    .order("created_at", { ascending: true });
+  const registrations: { name: string; email: string; created_at: string }[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from("session_registrations")
+      .select("name, email, created_at")
+      .eq("session_id", id)
+      .order("created_at", { ascending: true })
+      .range(from, from + PAGE_SIZE - 1);
 
-  if (error) {
-    return res.status(500).json({ error: "Failed to load registrations." });
+    if (error) {
+      return res.status(500).json({ error: "Failed to load registrations." });
+    }
+    if (!data || data.length === 0) break;
+    registrations.push(...data);
+    if (data.length < PAGE_SIZE) break;
+    from += PAGE_SIZE;
   }
 
-  const rows = (registrations ?? []).map((row) => [
-    row.name,
-    row.email,
-    row.created_at,
-  ]);
+  const rows = registrations.map((row) => [row.name, row.email, row.created_at]);
 
   const header = ["Name", "Email", "Registered at"];
-  const csv = [header, ...rows]
-    .map((cols) => cols.map((col) => csvEscape(String(col))).join(","))
-    .join("\n");
+  const csv = buildCsv([header, ...rows]);
 
   const slug = session.title
     .toLowerCase()
