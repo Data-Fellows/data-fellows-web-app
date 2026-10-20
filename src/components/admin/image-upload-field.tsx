@@ -2,14 +2,14 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useState } from "react";
 import { FiImage, FiLoader, FiX } from "react-icons/fi";
 
-const uploadActivityImage = async (file: File) => {
+const uploadActivityImage = async (file: File, bucket: string) => {
   const supabase = createSupabaseBrowserClient();
   if (!supabase) {
     throw new Error("Supabase isn't configured.");
   }
   const ext = file.name.split(".").pop() || "jpg";
   const path = `${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("activity-images").upload(path, file, {
+  const { error } = await supabase.storage.from(bucket).upload(path, file, {
     cacheControl: "3600",
     upsert: false,
     contentType: file.type,
@@ -17,7 +17,7 @@ const uploadActivityImage = async (file: File) => {
   if (error) {
     throw error;
   }
-  const { data } = supabase.storage.from("activity-images").getPublicUrl(path);
+  const { data } = supabase.storage.from(bucket).getPublicUrl(path);
   return data.publicUrl;
 };
 
@@ -27,13 +27,24 @@ type ImageUploadFieldProps = {
   value: string;
   onChange: (url: string) => void;
   error?: string;
+  // Every admin-uploaded image so far is a flyer/banner/thumbnail -- they
+  // all share the one public bucket rather than needing per-content-type
+  // storage buckets and migrations.
+  bucket?: string;
 };
 
 // Uploads directly to Supabase Storage from the browser -- replaces the
 // old "paste an image URL" text field so admins can just pick a file
 // (e.g. a flyer already made in Canva) instead of hosting it somewhere
 // else first.
-const ImageUploadField = ({ label, helpText, value, onChange, error }: ImageUploadFieldProps) => {
+const ImageUploadField = ({
+  label,
+  helpText,
+  value,
+  onChange,
+  error,
+  bucket = "activity-images",
+}: ImageUploadFieldProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
@@ -46,7 +57,7 @@ const ImageUploadField = ({ label, helpText, value, onChange, error }: ImageUplo
     setIsUploading(true);
     setUploadError(null);
     try {
-      const url = await uploadActivityImage(file);
+      const url = await uploadActivityImage(file, bucket);
       onChange(url);
     } catch (err) {
       // Surface the real reason (bucket missing, RLS rejection, file too

@@ -1,13 +1,10 @@
 import NewsletterModal from "@/components/custom/newsletter-modal";
 import PageSeo from "@/components/seo/page-seo";
-import {
-  guides,
-  journeySoFarUrl,
-  lessons,
-  storySpotlights,
-} from "@/constants/resources";
+import { journeySoFarUrl } from "@/constants/resources";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
-import Image from "next/image";
+import type { Resource, ResourceCategory } from "@/types/resource";
+import type { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
@@ -24,22 +21,14 @@ const formatDate = (value: string) =>
     month: "short",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(value));
+    timeZone: "UTC",
+  }).format(new Date(`${value}T00:00:00Z`));
 
-type ResourceCard = {
-  type: "Story" | "Guide" | "Lesson";
-  title: string;
-  description: string;
-  image: string;
-  href: string;
-  date?: string;
-};
-
-const typeIcon = {
+const typeIcon: Record<ResourceCategory, typeof FiPenTool> = {
   Story: FiPenTool,
   Guide: FiBookmark,
   Lesson: FiHeadphones,
-} as const;
+};
 
 const filters = ["All", "Story", "Guide", "Lesson"] as const;
 const filterLabels: Record<(typeof filters)[number], string> = {
@@ -49,45 +38,24 @@ const filterLabels: Record<(typeof filters)[number], string> = {
   Lesson: "Lessons",
 };
 
-const ResourcesPage = () => {
+const FALLBACK_IMAGE = "/images/data-community-hero.jpg";
+
+type ResourcesPageProps = {
+  resources: Resource[];
+};
+
+const ResourcesPage = ({ resources }: ResourcesPageProps) => {
   const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
   const [activeFilter, setActiveFilter] =
     useState<(typeof filters)[number]>("All");
 
-  const allResources: ResourceCard[] = useMemo(
-    () => [
-      ...storySpotlights.map((item) => ({
-        type: "Story" as const,
-        title: item.title,
-        description: item.description,
-        image: item.image,
-        href: item.href,
-        date: item.date,
-      })),
-      ...guides.map((item) => ({
-        type: "Guide" as const,
-        title: item.title,
-        description: item.description,
-        image: item.image,
-        href: item.href,
-        date: item.date,
-      })),
-      ...lessons.map((item) => ({
-        type: "Lesson" as const,
-        title: item.title,
-        description: item.description,
-        image: item.image,
-        href: item.href,
-        date: item.date,
-      })),
-    ],
-    []
+  const visibleResources = useMemo(
+    () =>
+      activeFilter === "All"
+        ? resources
+        : resources.filter((item) => item.category === activeFilter),
+    [resources, activeFilter]
   );
-
-  const visibleResources =
-    activeFilter === "All"
-      ? allResources
-      : allResources.filter((item) => item.type === activeFilter);
 
   return (
     <LandingPageLayout>
@@ -202,37 +170,38 @@ const ResourcesPage = () => {
             {visibleResources.length > 0 ? (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {visibleResources.map((item) => {
-                  const Icon = typeIcon[item.type];
+                  const Icon = typeIcon[item.category];
                   return (
                     <article
-                      key={item.title}
+                      key={item.id}
                       className="overflow-hidden rounded-3xl border border-primary/10 bg-background"
                     >
                       <div className="relative h-48">
-                        <Image
-                          src={item.image}
+                        {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
+                        <img
+                          src={item.image_url || FALLBACK_IMAGE}
                           alt={item.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover object-top"
+                          className="absolute inset-0 h-full w-full object-cover object-top"
                         />
                         <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
                           <Icon className="h-3.5 w-3.5" />
-                          {item.type}
+                          {item.category}
                         </span>
                       </div>
                       <div className="space-y-3 px-6 py-6">
-                        {item.date ? (
+                        {item.published_date ? (
                           <p className="text-xs text-muted-foreground">
-                            {formatDate(item.date)}
+                            {formatDate(item.published_date)}
                           </p>
                         ) : null}
                         <h3 className="text-lg font-semibold text-foreground">
                           {item.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {item.description}
-                        </p>
+                        {item.description ? (
+                          <p className="text-sm text-muted-foreground">
+                            {item.description}
+                          </p>
+                        ) : null}
                         <Link
                           href={item.href}
                           target={
@@ -255,8 +224,9 @@ const ResourcesPage = () => {
               </div>
             ) : (
               <p className="rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10 text-center text-sm text-muted-foreground">
-                No {filterLabels[activeFilter].toLowerCase()} yet -- check back
-                soon.
+                {resources.length === 0
+                  ? "No resources yet -- check back soon."
+                  : `No ${filterLabels[activeFilter].toLowerCase()} yet -- check back soon.`}
               </p>
             )}
 
@@ -355,6 +325,28 @@ const ResourcesPage = () => {
       />
     </LandingPageLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<
+  ResourcesPageProps
+> = async ({ req, res }) => {
+  const supabase = createSupabaseServerClient({ req, res });
+  if (!supabase) {
+    return { props: { resources: [] } };
+  }
+
+  const { data, error } = await supabase
+    .from("resources")
+    .select("id, title, description, category, href, image_url, published_date, status, created_at, updated_at")
+    .eq("status", "published")
+    .order("published_date", { ascending: false, nullsFirst: false })
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("[resources] failed to load resources:", error);
+  }
+
+  return { props: { resources: data ?? [] } };
 };
 
 export default ResourcesPage;
