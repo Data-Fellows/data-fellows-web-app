@@ -10,7 +10,11 @@
 // injection guidance. Applied to every cell, not just the obviously
 // user-supplied ones, since that's cheap and avoids having to reason case
 // by case about which columns can never start with those characters.
-const FORMULA_PREFIX = /^[=+\-@]/;
+// A leading tab (0x09) or carriage return (0x0D) is included too -- some
+// spreadsheet apps trim leading whitespace/control characters before
+// deciding whether a cell is a formula, so those can smuggle in one of
+// the characters above.
+const FORMULA_PREFIX = /^[\t\r=+\-@]/;
 
 export const csvCell = (value: string) => {
   const safe = FORMULA_PREFIX.test(value) ? `'${value}` : value;
