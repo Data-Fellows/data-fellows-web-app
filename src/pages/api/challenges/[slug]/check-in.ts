@@ -11,7 +11,10 @@ const checkInSchema = z.object({
   learningNote: z.string().trim().max(1000).optional(),
   // Honeypot -- real users never see or fill this field. Any non-empty
   // value means a bot, so we accept the request but silently no-op it.
-  company: z.string().max(0).optional(),
+  // Bounded rather than max(0): a max(0) field rejects any non-empty value
+  // at the schema level, so a bot that fills it in would 400 here instead
+  // of ever reaching the no-op branch below -- the opposite of "silent".
+  company: z.string().max(500).optional(),
 });
 
 type CheckInResponse = {

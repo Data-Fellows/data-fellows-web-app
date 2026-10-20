@@ -1,7 +1,8 @@
+import { buildCsv } from "@/lib/api/csv";
 import { requireAdmin } from "@/lib/supabase/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const csvEscape = (value: string) => `"${value.replace(/"/g, '""')}"`;
+const PAGE_SIZE = 1000;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { supabase, admin } = await requireAdmin({ req, res });
@@ -29,19 +30,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(404).json({ error: "Challenge not found." });
   }
 
-  const { data: checkIns, error } = await supabase
-    .from("check_ins")
-    .select(
-      "member_name, member_email, learning_note, created_at, challenge_days(day_number, title)"
-    )
-    .eq("challenge_id", id)
-    .order("created_at", { ascending: true });
+  const checkIns: {
+    member_name: string;
+    member_email: string;
+    learning_note: string | null;
+    created_at: string;
+    challenge_days: { day_number: number; title: string } | { day_number: number; title: string }[] | null;
+  }[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from("check_ins")
+      .select(
+        "member_name, member_email, learning_note, created_at, challenge_days(day_number, title)"
+      )
+      .eq("challenge_id", id)
+      .order("created_at", { ascending: true })
+      .order("id", { ascending: true })
+      .range(from, from + PAGE_SIZE - 1);
 
-  if (error) {
-    return res.status(500).json({ error: "Failed to load check-ins." });
+    if (error) {
+      return res.status(500).json({ error: "Failed to load check-ins." });
+    }
+    if (!data || data.length === 0) break;
+    checkIns.push(...data);
+    if (data.length < PAGE_SIZE) break;
+    from += PAGE_SIZE;
   }
 
-  const rows = (checkIns ?? []).map((row) => {
+  const rows = checkIns.map((row) => {
     const day = Array.isArray(row.challenge_days) ? row.challenge_days[0] : row.challenge_days;
     return [
       String(day?.day_number ?? ""),
@@ -54,9 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   const header = ["Day", "Day title", "Name", "Email", "Learning note", "Checked in at"];
-  const csv = [header, ...rows]
-    .map((cols) => cols.map((col) => csvEscape(String(col))).join(","))
-    .join("\n");
+  const csv = buildCsv([header, ...rows]);
 
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
   res.setHeader(
