@@ -5,7 +5,6 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
 import type { Resource, ResourceCategory } from "@/types/resource";
 import type { GetServerSideProps } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
@@ -178,12 +177,11 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                       className="overflow-hidden rounded-3xl border border-primary/10 bg-background"
                     >
                       <div className="relative h-48">
-                        <Image
+                        {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
+                        <img
                           src={item.image_url || FALLBACK_IMAGE}
                           alt={item.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover object-top"
+                          className="absolute inset-0 h-full w-full object-cover object-top"
                         />
                         <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
                           <Icon className="h-3.5 w-3.5" />

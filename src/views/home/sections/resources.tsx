@@ -2,7 +2,6 @@ import NewsletterModal from "@/components/custom/newsletter-modal";
 import { journeySoFarUrl } from "@/constants/resources";
 import type { Resource } from "@/types/resource";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FiArrowRight, FiBookOpen, FiExternalLink } from "react-icons/fi";
@@ -86,12 +85,11 @@ const Resources = () => {
           <div className="grid gap-8 lg:grid-cols-12">
             <article className="group overflow-hidden rounded-3xl border border-primary/10 bg-background lg:col-span-7">
               <div className="relative h-80">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
+                <img
                   src={featuredStory.image_url || "/images/data-community-hero.jpg"}
                   alt={featuredStory.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-cover object-top transition duration-500 group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
                 />
                 <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
                   <FiBookOpen className="h-3.5 w-3.5" />
@@ -130,12 +128,11 @@ const Resources = () => {
                   className="flex gap-4 rounded-3xl border border-primary/10 bg-background p-4"
                 >
                   <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
+                    <img
                       src={item.image_url || "/images/data-community-hero.jpg"}
                       alt={item.title}
-                      fill
-                      sizes="96px"
-                      className="object-cover object-top"
+                      className="absolute inset-0 h-full w-full object-cover object-top"
                     />
                   </div>
                   <div className="space-y-2">
@@ -218,12 +215,11 @@ const Resources = () => {
                   className="overflow-hidden rounded-3xl border border-primary/10 bg-background"
                 >
                   <div className="relative h-48">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
+                    <img
                       src={card.image_url || "/images/data-community-hero.jpg"}
                       alt={card.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover object-top"
+                      className="absolute inset-0 h-full w-full object-cover object-top"
                     />
                     <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
                       {card.category}
