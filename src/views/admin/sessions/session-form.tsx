@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FiTrash2 } from "react-icons/fi";
+import { FiDownload, FiTrash2 } from "react-icons/fi";
 import { z } from "zod";
 
 const urlSchema = z
@@ -20,6 +20,7 @@ const formSchema = z.object({
   description: z.string().trim().optional(),
   session_date: z.string().trim().min(1, "Required"),
   registration_url: urlSchema,
+  registration_mode: z.enum(["external", "internal"]),
   replay_url: urlSchema,
   image_url: urlSchema,
   status: z.enum(["draft", "published", "archived"]),
@@ -38,6 +39,7 @@ const toFormValues = (session?: Session): FormValues => ({
   description: session?.description ?? "",
   session_date: session?.session_date ?? "",
   registration_url: session?.registration_url ?? "",
+  registration_mode: session?.registration_mode ?? "external",
   replay_url: session?.replay_url ?? "",
   image_url: session?.image_url ?? "",
   status: session?.status ?? "draft",
@@ -117,6 +119,8 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
     deleteMutation.mutate();
   };
 
+  const registrationMode = watch("registration_mode");
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <div className="flex items-center justify-between">
@@ -124,15 +128,26 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
           {mode === "create" ? "New session" : "Edit session"}
         </h1>
         {mode === "edit" ? (
-          <button
-            type="button"
-            onClick={handleDelete}
-            disabled={deleteMutation.isPending}
-            className="inline-flex items-center gap-2 rounded-full border border-destructive/30 px-4 py-2 text-sm font-semibold text-destructive transition hover:bg-destructive/10 disabled:opacity-60"
-          >
-            <FiTrash2 className="h-4 w-4" />
-            {deleteMutation.isPending ? "Deleting..." : "Delete"}
-          </button>
+          <div className="flex items-center gap-3">
+            {initialSession?.registration_mode === "internal" ? (
+              <a
+                href={`/api/admin/sessions/${sessionId}/registrations.csv`}
+                className="inline-flex items-center gap-2 rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-foreground transition hover:border-primary/40"
+              >
+                <FiDownload className="h-4 w-4" />
+                Export registrations (CSV)
+              </a>
+            ) : null}
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteMutation.isPending}
+              className="inline-flex items-center gap-2 rounded-full border border-destructive/30 px-4 py-2 text-sm font-semibold text-destructive transition hover:bg-destructive/10 disabled:opacity-60"
+            >
+              <FiTrash2 className="h-4 w-4" />
+              {deleteMutation.isPending ? "Deleting..." : "Delete"}
+            </button>
+          </div>
         ) : null}
       </div>
 
@@ -177,8 +192,60 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
           </label>
         </div>
 
+        <div className={labelClass}>
+          Registration
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label
+              className={`flex cursor-pointer items-start gap-3 rounded-2xl border px-4 py-3 text-sm transition ${
+                registrationMode === "external"
+                  ? "border-primary bg-primary/5"
+                  : "border-border hover:border-primary/30"
+              }`}
+            >
+              <input
+                type="radio"
+                value="external"
+                {...register("registration_mode")}
+                className="mt-1"
+              />
+              <span>
+                <span className="block font-semibold text-foreground">
+                  Send people somewhere
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  "Register" links out to a form you manage elsewhere (Google Form, Discord, Luma).
+                </span>
+              </span>
+            </label>
+            <label
+              className={`flex cursor-pointer items-start gap-3 rounded-2xl border px-4 py-3 text-sm transition ${
+                registrationMode === "internal"
+                  ? "border-primary bg-primary/5"
+                  : "border-border hover:border-primary/30"
+              }`}
+            >
+              <input
+                type="radio"
+                value="internal"
+                {...register("registration_mode")}
+                className="mt-1"
+              />
+              <span>
+                <span className="block font-semibold text-foreground">
+                  Register here
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  "Register" opens a name/email form on the site -- export who signed up as a CSV.
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
         <label className={labelClass}>
-          Registration link
+          {registrationMode === "internal"
+            ? "More info link (optional)"
+            : "Registration link"}
           <input
             {...register("registration_url")}
             className={inputClass}
@@ -188,7 +255,9 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
             <span className="text-xs text-destructive">{errors.registration_url.message}</span>
           ) : (
             <span className="text-xs text-muted-foreground">
-              Where "Register" sends people before the session -- your sign-up form.
+              {registrationMode === "internal"
+                ? "Optional -- shown as a secondary link if people want more detail before registering."
+                : 'Where "Register" sends people before the session -- your sign-up form.'}
             </span>
           )}
         </label>

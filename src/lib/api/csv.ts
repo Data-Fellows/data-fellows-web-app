@@ -1,8 +1,19 @@
-// Per OWASP's CSV injection guidance, a leading tab (0x09) or carriage
-// return (0x0D) can also trigger formula evaluation in some spreadsheet
-// apps even before one of the "real" formula characters, since those
-// apps trim leading whitespace/control characters when deciding whether
-// a cell is a formula.
+// Shared helpers for building admin CSV exports from user-submitted data
+// (challenge check-ins, session registrations, etc).
+
+// A cell value beginning with =, +, -, or @ can be interpreted as a
+// formula by spreadsheet apps (Excel, Google Sheets, etc.) when the CSV is
+// opened -- classic CSV/formula injection. Since these exports always
+// include at least one field supplied by an unauthenticated visitor (a
+// check-in name, a registration name), prefix a leading apostrophe to
+// force spreadsheet apps to treat the cell as plain text, per OWASP's CSV
+// injection guidance. Applied to every cell, not just the obviously
+// user-supplied ones, since that's cheap and avoids having to reason case
+// by case about which columns can never start with those characters.
+// A leading tab (0x09) or carriage return (0x0D) is included too -- some
+// spreadsheet apps trim leading whitespace/control characters before
+// deciding whether a cell is a formula, so those can smuggle in one of
+// the characters above.
 const FORMULA_PREFIX = /^[\t\r=+\-@]/;
 
 export const csvCell = (value: string) => {

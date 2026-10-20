@@ -1,5 +1,6 @@
 import { activities, ActivityStatus } from "@/constants/activities";
 import CommunityPulse from "@/components/custom/community-pulse";
+import SessionRegisterModal from "@/components/custom/session-register-modal";
 import PageSeo from "@/components/seo/page-seo";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
@@ -83,6 +84,14 @@ type ActivityCard = {
   external: boolean;
   ctaLabel: string;
   imageUrl?: string | null;
+  // Present only for sessions using in-app registration -- renders the CTA
+  // as a button opening the registration modal instead of a Link.
+  onRegisterClick?: () => void;
+  // Present only for internal-registration sessions that also saved an
+  // optional link -- rendered as a secondary "More info" link alongside
+  // the Register button, since the admin form promises that URL will be
+  // shown to visitors rather than silently unused.
+  moreInfoHref?: string | null;
 };
 
 const challengeStatus = (challenge: Challenge): ActivityStatus => {
@@ -123,6 +132,11 @@ type ActivitiesPageProps = {
 };
 
 const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
+  const [registerSession, setRegisterSession] = useState<{
+    id: string;
+    title: string;
+  } | null>(null);
+
   const staticCards: ActivityCard[] = activities.map((activity) => ({
     key: activity.title,
     type: activity.type,
@@ -155,6 +169,8 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
   const sessionCards: ActivityCard[] = sessions.map((session) => {
     const status = sessionStatus(session);
     const fallbackHref = "https://bit.ly/m/datafellows";
+    const usesInternalRegistration =
+      session.registration_mode === "internal" && status !== "Closed";
     const href =
       status === "Closed"
         ? session.replay_url || session.registration_url || fallbackHref
@@ -168,8 +184,17 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       cadence: formatDate(session.session_date),
       href,
       external: true,
-      ctaLabel: status === "Closed" ? "See recap" : "Join",
+      ctaLabel:
+        status === "Closed"
+          ? "See recap"
+          : usesInternalRegistration
+            ? "Register"
+            : "Join",
       imageUrl: session.image_url,
+      onRegisterClick: usesInternalRegistration
+        ? () => setRegisterSession({ id: session.id, title: session.title })
+        : undefined,
+      moreInfoHref: usesInternalRegistration ? session.registration_url : null,
     };
   });
 
@@ -257,25 +282,52 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                     <FiCalendar className="h-4 w-4" />
                     {card.cadence}
                   </div>
-                  <Link
-                    href={card.href}
-                    target={card.external ? "_blank" : undefined}
-                    rel={card.external ? "noopener noreferrer" : undefined}
-                    className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition ${
-                      card.status === "Closed"
-                        ? "border border-border text-muted-foreground hover:bg-muted"
-                        : "bg-primary text-primary-foreground hover:bg-primary/90"
-                    }`}
-                  >
-                    {card.ctaLabel}
-                    <FiArrowUpRight className="h-4 w-4" />
-                  </Link>
+                  {card.onRegisterClick ? (
+                    <div className="mt-auto flex flex-col items-stretch gap-2">
+                      <button
+                        type="button"
+                        onClick={card.onRegisterClick}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                      >
+                        {card.ctaLabel}
+                      </button>
+                      {card.moreInfoHref ? (
+                        <Link
+                          href={card.moreInfoHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground"
+                        >
+                          More info
+                          <FiArrowUpRight className="h-3.5 w-3.5" />
+                        </Link>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <Link
+                      href={card.href}
+                      target={card.external ? "_blank" : undefined}
+                      rel={card.external ? "noopener noreferrer" : undefined}
+                      className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                        card.status === "Closed"
+                          ? "border border-border text-muted-foreground hover:bg-muted"
+                          : "bg-primary text-primary-foreground hover:bg-primary/90"
+                      }`}
+                    >
+                      {card.ctaLabel}
+                      <FiArrowUpRight className="h-4 w-4" />
+                    </Link>
+                  )}
                 </article>
               ))}
             </div>
           </div>
         </section>
       </div>
+      <SessionRegisterModal
+        session={registerSession}
+        onClose={() => setRegisterSession(null)}
+      />
     </LandingPageLayout>
   );
 };
@@ -301,7 +353,7 @@ export const getServerSideProps: GetServerSideProps<
       .order("start_date", { ascending: false }),
     supabase
       .from("sessions")
-      .select("id, title, description, session_date, registration_url, replay_url, image_url, status, created_at, updated_at")
+      .select("id, title, description, session_date, registration_url, registration_mode, replay_url, image_url, status, created_at, updated_at")
       .eq("status", "published")
       .order("session_date", { ascending: false }),
   ]);
