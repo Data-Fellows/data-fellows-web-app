@@ -1,1 +1,1 @@
-export { default } from "@/views/resources";
+export { default, getServerSideProps } from "@/views/resources";

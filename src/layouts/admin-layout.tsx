@@ -43,6 +43,12 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             >
               Sessions
             </Link>
+            <Link
+              href="/admin/resources"
+              className="text-sm font-medium text-foreground hover:text-primary"
+            >
+              Resources
+            </Link>
             <button
               type="button"
               onClick={handleSignOut}
