@@ -40,6 +40,8 @@ const challengeFormSchema = z
     status: z.enum(["draft", "published", "archived"]),
     cta_join_label: z.string().trim().optional(),
     cta_join_href: urlSchema,
+    cta_resources_label: z.string().trim().optional(),
+    cta_resources_href: urlSchema,
     partner_name: z.string().trim().optional(),
     image_url: urlSchema,
     days: z.array(dayFormSchema).min(1, "Add at least one day"),
@@ -69,6 +71,8 @@ const toFormValues = (challenge?: ChallengeWithDays): FormValues => ({
   status: challenge?.status ?? "draft",
   cta_join_label: challenge?.cta_join_label ?? "",
   cta_join_href: challenge?.cta_join_href ?? "",
+  cta_resources_label: challenge?.cta_resources_label ?? "",
+  cta_resources_href: challenge?.cta_resources_href ?? "",
   partner_name: challenge?.partner_name ?? "",
   image_url: challenge?.image_url ?? "",
   days:
@@ -337,6 +341,28 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
             <input {...register("cta_join_href")} className={inputClass} placeholder="https://..." />
             {errors.cta_join_href ? (
               <span className="text-xs text-destructive">{errors.cta_join_href.message}</span>
+            ) : null}
+          </label>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className={labelClass}>
+            Additional resources link label (optional)
+            <input
+              {...register("cta_resources_label")}
+              className={inputClass}
+              placeholder="View resources"
+            />
+          </label>
+          <label className={labelClass}>
+            Additional resources link
+            <input
+              {...register("cta_resources_href")}
+              className={inputClass}
+              placeholder="https://..."
+            />
+            {errors.cta_resources_href ? (
+              <span className="text-xs text-destructive">{errors.cta_resources_href.message}</span>
             ) : null}
           </label>
         </div>
