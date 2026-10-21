@@ -12,6 +12,8 @@ const FIELD_LABELS: Record<string, string> = {
   status: "Status",
   cta_join_label: "Join button label",
   cta_join_href: "Join button link",
+  cta_resources_label: "Additional resources link label",
+  cta_resources_href: "Additional resources link",
   partner_name: "Partner name",
   lesson_url: "Lesson link",
   summary: "Summary",
