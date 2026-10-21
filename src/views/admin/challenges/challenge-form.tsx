@@ -20,6 +20,7 @@ const dayFormSchema = z.object({
   id: z.string().optional(),
   title: z.string().trim().min(1, "Required"),
   lesson_url: urlSchema,
+  resources_url: urlSchema,
   summary: z.string().trim().optional(),
 });
 
@@ -40,8 +41,6 @@ const challengeFormSchema = z
     status: z.enum(["draft", "published", "archived"]),
     cta_join_label: z.string().trim().optional(),
     cta_join_href: urlSchema,
-    cta_resources_label: z.string().trim().optional(),
-    cta_resources_href: urlSchema,
     partner_name: z.string().trim().optional(),
     image_url: urlSchema,
     days: z.array(dayFormSchema).min(1, "Add at least one day"),
@@ -71,8 +70,6 @@ const toFormValues = (challenge?: ChallengeWithDays): FormValues => ({
   status: challenge?.status ?? "draft",
   cta_join_label: challenge?.cta_join_label ?? "",
   cta_join_href: challenge?.cta_join_href ?? "",
-  cta_resources_label: challenge?.cta_resources_label ?? "",
-  cta_resources_href: challenge?.cta_resources_href ?? "",
   partner_name: challenge?.partner_name ?? "",
   image_url: challenge?.image_url ?? "",
   days:
@@ -81,9 +78,10 @@ const toFormValues = (challenge?: ChallengeWithDays): FormValues => ({
           id: day.id,
           title: day.title,
           lesson_url: day.lesson_url ?? "",
+          resources_url: day.resources_url ?? "",
           summary: day.summary ?? "",
         }))
-      : [{ title: "", lesson_url: "", summary: "" }],
+      : [{ title: "", lesson_url: "", resources_url: "", summary: "" }],
 });
 
 type SavePayload = Omit<FormValues, "member_target"> & {
@@ -159,7 +157,14 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
       setValue("daily_commitment", parsed.daily_commitment, { shouldDirty: true });
     }
     if (parsed.days.length > 0) {
-      replace(parsed.days.map((day) => ({ title: day.title, summary: day.summary, lesson_url: "" })));
+      replace(
+        parsed.days.map((day) => ({
+          title: day.title,
+          summary: day.summary,
+          lesson_url: "",
+          resources_url: "",
+        }))
+      );
     }
     setShowImport(false);
     setImportText("");
@@ -345,28 +350,6 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
           </label>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className={labelClass}>
-            Additional resources link label (optional)
-            <input
-              {...register("cta_resources_label")}
-              className={inputClass}
-              placeholder="View resources"
-            />
-          </label>
-          <label className={labelClass}>
-            Additional resources link
-            <input
-              {...register("cta_resources_href")}
-              className={inputClass}
-              placeholder="https://..."
-            />
-            {errors.cta_resources_href ? (
-              <span className="text-xs text-destructive">{errors.cta_resources_href.message}</span>
-            ) : null}
-          </label>
-        </div>
-
         <label className={labelClass}>
           Partner name (optional)
           <input
@@ -390,7 +373,7 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
           <h2 className="text-lg font-semibold text-foreground">Days</h2>
           <button
             type="button"
-            onClick={() => append({ title: "", lesson_url: "", summary: "" })}
+            onClick={() => append({ title: "", lesson_url: "", resources_url: "", summary: "" })}
             className="inline-flex items-center gap-2 rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary/10"
           >
             <FiPlus className="h-4 w-4" />
@@ -435,19 +418,34 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
                   </span>
                 ) : null}
               </label>
-              <label className={labelClass}>
-                Lesson link (optional)
-                <input
-                  {...register(`days.${index}.lesson_url` as const)}
-                  className={inputClass}
-                  placeholder="https://..."
-                />
-                {errors.days?.[index]?.lesson_url ? (
-                  <span className="text-xs text-destructive">
-                    {errors.days[index]?.lesson_url?.message}
-                  </span>
-                ) : null}
-              </label>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className={labelClass}>
+                  Lesson link (optional)
+                  <input
+                    {...register(`days.${index}.lesson_url` as const)}
+                    className={inputClass}
+                    placeholder="https://..."
+                  />
+                  {errors.days?.[index]?.lesson_url ? (
+                    <span className="text-xs text-destructive">
+                      {errors.days[index]?.lesson_url?.message}
+                    </span>
+                  ) : null}
+                </label>
+                <label className={labelClass}>
+                  Additional resources link (optional)
+                  <input
+                    {...register(`days.${index}.resources_url` as const)}
+                    className={inputClass}
+                    placeholder="https://..."
+                  />
+                  {errors.days?.[index]?.resources_url ? (
+                    <span className="text-xs text-destructive">
+                      {errors.days[index]?.resources_url?.message}
+                    </span>
+                  ) : null}
+                </label>
+              </div>
               <label className={labelClass}>
                 Summary (optional)
                 <textarea

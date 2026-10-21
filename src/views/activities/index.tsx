@@ -347,7 +347,7 @@ export const getServerSideProps: GetServerSideProps<
     supabase
       .from("challenges")
       .select(
-        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, cta_resources_label, cta_resources_href, partner_name, image_url, created_at, updated_at"
+        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, image_url, created_at, updated_at"
       )
       .eq("status", "published")
       .order("start_date", { ascending: false }),

@@ -8,6 +8,7 @@ const daySchema = z.object({
   id: z.string().uuid().optional(),
   title: z.string().trim().min(1),
   lesson_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
+  resources_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
   summary: z.string().trim().optional(),
 });
 
@@ -28,8 +29,6 @@ const challengeSchema = z
     status: z.enum(["draft", "published", "archived"]),
     cta_join_label: z.string().trim().optional(),
     cta_join_href: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
-    cta_resources_label: z.string().trim().optional(),
-    cta_resources_href: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
     partner_name: z.string().trim().optional(),
     image_url: z.string().trim().url("Enter a valid URL, e.g. https://example.com").optional().or(z.literal("")),
     days: z.array(daySchema).min(1, "Add at least one day"),
@@ -58,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { data, error } = await supabase
       .from("challenges")
       .select(
-        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, cta_resources_label, cta_resources_href, partner_name, image_url, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, summary)"
+        "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, image_url, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, resources_url, summary)"
       )
       .eq("id", id)
       .maybeSingle();
@@ -94,8 +93,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         status: challenge.status,
         cta_join_label: challenge.cta_join_label || null,
         cta_join_href: challenge.cta_join_href || null,
-        cta_resources_label: challenge.cta_resources_label || null,
-        cta_resources_href: challenge.cta_resources_href || null,
         partner_name: challenge.partner_name || null,
         image_url: challenge.image_url || null,
       })
@@ -139,6 +136,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             day_number: dayNumber,
             title: day.title,
             lesson_url: day.lesson_url || null,
+            resources_url: day.resources_url || null,
             summary: day.summary || null,
           })
           .eq("id", day.id);
@@ -153,6 +151,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           day_number: dayNumber,
           title: day.title,
           lesson_url: day.lesson_url || null,
+          resources_url: day.resources_url || null,
           summary: day.summary || null,
         });
         if (error) {
