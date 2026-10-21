@@ -6,7 +6,7 @@ import { challengeTabs, ChallengeTabId } from "@/constants/challenge-tabs";
 import type { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FiArrowUpRight, FiUsers } from "react-icons/fi";
+import { FiUsers } from "react-icons/fi";
 import CertificateTab from "./tabs/certificate-tab";
 import CheckInTab from "./tabs/check-in-tab";
 import HomeTab from "./tabs/home-tab";
@@ -93,17 +93,6 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
                 <FiUsers className="h-4 w-4" />
                 {challenge.cta_join_label || "Join the Challenge"}
               </Link>
-              {challenge.cta_resources_href ? (
-                <Link
-                  href={challenge.cta_resources_href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mx-auto inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-                >
-                  {challenge.cta_resources_label || "View resources"}
-                  <FiArrowUpRight className="h-3.5 w-3.5" />
-                </Link>
-              ) : null}
             </div>
 
             <div className="mx-auto flex max-w-xl flex-wrap justify-center gap-2">
@@ -161,7 +150,7 @@ export const getServerSideProps: GetServerSideProps<
   const { data } = await supabase
     .from("challenges")
     .select(
-      "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, cta_resources_label, cta_resources_href, partner_name, image_url, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, summary)"
+      "id, slug, title, subtitle, description, start_date, end_date, daily_commitment, member_target, status, cta_join_label, cta_join_href, partner_name, image_url, created_at, updated_at, challenge_days(id, challenge_id, day_number, title, lesson_url, resources_url, summary)"
     )
     .eq("slug", slug)
     .eq("status", "published")

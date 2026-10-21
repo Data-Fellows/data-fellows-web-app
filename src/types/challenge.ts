@@ -13,8 +13,6 @@ export type Challenge = {
   status: ChallengeStatus;
   cta_join_label: string | null;
   cta_join_href: string | null;
-  cta_resources_label: string | null;
-  cta_resources_href: string | null;
   partner_name: string | null;
   image_url: string | null;
   created_at: string;
@@ -27,6 +25,7 @@ export type ChallengeDay = {
   day_number: number;
   title: string;
   lesson_url: string | null;
+  resources_url: string | null;
   summary: string | null;
 };
 

@@ -63,17 +63,30 @@ const HomeTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
                     </p>
                   ) : null}
                 </div>
-                {day.lesson_url ? (
-                  <a
-                    href={day.lesson_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-primary"
-                  >
-                    Lesson
-                    <FiExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                ) : null}
+                <div className="flex items-center gap-4">
+                  {day.lesson_url ? (
+                    <a
+                      href={day.lesson_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-semibold text-primary"
+                    >
+                      Lesson
+                      <FiExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  ) : null}
+                  {day.resources_url ? (
+                    <a
+                      href={day.resources_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-semibold text-primary"
+                    >
+                      Resources
+                      <FiExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  ) : null}
+                </div>
               </div>
             ))}
           </div>
