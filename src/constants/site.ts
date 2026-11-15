@@ -15,7 +15,8 @@ export const site = {
   email: "hello@datafellowsai.com",
   partnerEmail: "partners@datafellowsai.com",
   communityUrl: "https://bit.ly/m/datafellows",
-  inscendUrl: "https://inscend.io",
+  inscendUrl: "https://www.inscend.io",
+  productHuntUrl: "https://www.producthunt.com/products/data-fellows",
   impactReportUrl: "/documents/data-fellows-impact-report-2026.pdf",
 } as const;
 
@@ -25,7 +26,7 @@ export const site = {
 export const impactStats = [
   { value: 1600, suffix: "+", label: "Community members" },
   { value: 33, suffix: "", label: "Countries represented" },
-  { value: 30, suffix: "+", label: "Ecosystem pilot projects launched" },
+  { value: 50, suffix: "+", label: "Ecosystem pilot projects launched" },
   { value: 1500, suffix: "+", label: "DataCamp scholarships since 2025" },
 ] as const;
 

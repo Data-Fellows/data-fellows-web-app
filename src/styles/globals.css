@@ -5,7 +5,7 @@
 :root {
   /* A fixed deep navy for surfaces that should always read as "dark
      premium showcase" regardless of the site's light/dark theme toggle
-     (e.g. the Inscend product section, impact stat cards) -- unlike
+     (e.g. the products section, impact stat cards) -- unlike
      --primary, which intentionally flips to a light accent color in dark
      mode, this never changes. */
   --navy-deep: hsl(210 55% 12%);
