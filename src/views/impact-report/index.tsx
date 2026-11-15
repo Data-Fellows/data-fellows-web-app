@@ -59,7 +59,7 @@ const ImpactReportPage = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
-                Read the Impact Report
+                Read the 2026 Impact Report
                 <FiDownload className="h-4 w-4" />
               </Link>
             </div>
