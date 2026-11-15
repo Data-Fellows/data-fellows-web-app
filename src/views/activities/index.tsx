@@ -190,7 +190,10 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       external: false,
       ctaLabel: status === "Closed" ? "See recap" : "View challenge",
       imageUrl: challenge.image_url,
-      sortDate: challenge.start_date,
+      // Closed challenges sort most-recently-ended-first, so their sort
+      // key is end_date -- start_date would order them by when they
+      // began instead, which can disagree with when they actually ended.
+      sortDate: status === "Closed" ? challenge.end_date : challenge.start_date,
     };
   });
 
