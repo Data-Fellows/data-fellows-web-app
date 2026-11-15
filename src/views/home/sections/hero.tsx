@@ -82,7 +82,7 @@ export const Hero = () => {
               <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 dark:ring-white/5 bg-card text-card-foreground border border-primary/10">
                 <div className="relative h-64 sm:h-72">
                   <Image
-                    src="/images/inscrenddash.png"
+                    src="/images/data-community-hero.jpg"
                     alt="Data Fellows community"
                     fill
                     priority
@@ -94,11 +94,11 @@ export const Hero = () => {
 
                 <div className="px-6 py-5">
                   <p className="text-sm font-semibold text-card-foreground">
-                    Inscend - The decision layer for founders
+                    A global community of learners and builders
                   </p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Turns your store's data and your own operating context into
-                    the next right action -- no analyst needed.
+                    Fellows learn together, test ideas, and ship real pilots
+                    across the ecosystem.
                   </p>
 
                   <div className="mt-4 flex items-center justify-between">
@@ -108,10 +108,10 @@ export const Hero = () => {
                       </div>
                       <div className="text-sm">
                         <div className="font-medium text-foreground">
-                          Community Pilot
+                          Data Fellows
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          Live now
+                          Open to join
                         </div>
                       </div>
                     </div>
