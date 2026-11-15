@@ -54,9 +54,9 @@ const ContactPage = () => {
                 Inquiries & partnerships.
               </h1>
               <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-                Whether you want to partner with Data Fellows, feature a Fellow,
-                or learn more about Inscend, leave us a detailed message and the
-                right person will reach out within two business days.
+                Whether you want to partner with Data Fellows or feature a
+                Fellow, leave us a detailed message and the right person will
+                reach out within two business days.
               </p>
             </div>
           </div>
