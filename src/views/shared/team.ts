@@ -2,7 +2,7 @@ export const foundingTeam = [
   {
     name: "Tobi Oladimeji",
     role: "CEO & Founder",
-    tagline: "Dreams up the next wave of data tools for small businesses.",
+    tagline: "Dreams up the next wave of data products for businesses.",
     image: "/images/TOBI OLADIMEJI-FOUNDER.jpg",
     linkedin: "https://www.linkedin.com/in/tobioladimeji/",
   },
