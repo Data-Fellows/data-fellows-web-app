@@ -73,9 +73,17 @@ const statusStyles: Record<ActivityStatus, string> = {
   Closed: "border-border bg-muted text-muted-foreground",
 };
 
+type FilterType = "All" | "Challenge" | "Event";
+type FilterTime = "All" | "Ongoing" | "Past";
+
 type ActivityCard = {
   key: string;
   type: string;
+  // Buckets every card's `type` into just the two groups the filter offers
+  // -- "Recurring" activities (Sunday Catchup, DataCamp Learning, etc.)
+  // read as events for filtering purposes even though their badge still
+  // says "Recurring".
+  filterType: Exclude<FilterType, "All">;
   status: ActivityStatus;
   title: string;
   description: string;
@@ -84,6 +92,10 @@ type ActivityCard = {
   external: boolean;
   ctaLabel: string;
   imageUrl?: string | null;
+  // ISO date used to sort the list by time. Open-ended activities with no
+  // fixed date (the "Recurring" ones) leave this unset and sort after
+  // dated cards within the same Ongoing/Past group.
+  sortDate?: string;
   // Present only for sessions using in-app registration -- renders the CTA
   // as a button opening the registration modal instead of a Link.
   onRegisterClick?: () => void;
@@ -93,6 +105,16 @@ type ActivityCard = {
   // shown to visitors rather than silently unused.
   moreInfoHref?: string | null;
 };
+
+const filterTypeOptions: FilterType[] = ["All", "Challenge", "Event"];
+const filterTimeOptions: FilterTime[] = ["All", "Ongoing", "Past"];
+
+const filterPillClass = (active: boolean) =>
+  `rounded-full border px-4 py-2 text-sm font-semibold transition ${
+    active
+      ? "border-primary bg-primary text-primary-foreground"
+      : "border-primary/20 bg-background text-muted-foreground hover:border-primary/40"
+  }`;
 
 const challengeStatus = (challenge: Challenge): ActivityStatus => {
   const today = new Date().toISOString().slice(0, 10);
@@ -137,9 +159,13 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
     title: string;
   } | null>(null);
 
+  const [filterType, setFilterType] = useState<FilterType>("All");
+  const [filterTime, setFilterTime] = useState<FilterTime>("All");
+
   const staticCards: ActivityCard[] = activities.map((activity) => ({
     key: activity.title,
     type: activity.type,
+    filterType: activity.type === "Challenge" ? "Challenge" : "Event",
     status: activity.status,
     title: activity.title,
     description: activity.description,
@@ -155,6 +181,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
     return {
       key: challenge.id,
       type: "Challenge",
+      filterType: "Challenge",
       status,
       title: challenge.title,
       description: challenge.subtitle || challenge.description || "",
@@ -163,6 +190,10 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
       external: false,
       ctaLabel: status === "Closed" ? "See recap" : "View challenge",
       imageUrl: challenge.image_url,
+      // Closed challenges sort most-recently-ended-first, so their sort
+      // key is end_date -- start_date would order them by when they
+      // began instead, which can disagree with when they actually ended.
+      sortDate: status === "Closed" ? challenge.end_date : challenge.start_date,
     };
   });
 
@@ -178,6 +209,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
     return {
       key: session.id,
       type: "Event",
+      filterType: "Event",
       status,
       title: session.title,
       description: session.description || "",
@@ -191,6 +223,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
             ? "Register"
             : "Join",
       imageUrl: session.image_url,
+      sortDate: session.session_date,
       onRegisterClick: usesInternalRegistration
         ? () => setRegisterSession({ id: session.id, title: session.title })
         : undefined,
@@ -198,7 +231,31 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
     };
   });
 
-  const cards = [...challengeCards, ...sessionCards, ...staticCards];
+  const allCards = [...challengeCards, ...sessionCards, ...staticCards];
+
+  const filteredCards = allCards.filter((card) => {
+    if (filterType !== "All" && card.filterType !== filterType) return false;
+    if (filterTime === "Ongoing" && card.status === "Closed") return false;
+    if (filterTime === "Past" && card.status !== "Closed") return false;
+    return true;
+  });
+
+  // Ongoing/upcoming cards first (soonest date first), then past ones
+  // (most recently ended first). Undated cards (the open-ended "Recurring"
+  // activities) sort after dated cards within the same group, keeping
+  // their original relative order.
+  const cards = [...filteredCards].sort((a, b) => {
+    const aClosed = a.status === "Closed";
+    const bClosed = b.status === "Closed";
+    if (aClosed !== bClosed) return aClosed ? 1 : -1;
+
+    if (!a.sortDate && !b.sortDate) return 0;
+    if (!a.sortDate) return 1;
+    if (!b.sortDate) return -1;
+    return aClosed
+      ? b.sortDate.localeCompare(a.sortDate)
+      : a.sortDate.localeCompare(b.sortDate);
+  });
 
   return (
     <LandingPageLayout>
@@ -246,6 +303,42 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
             <h2 id="activities-heading" className="sr-only">
               Current activities
             </h2>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+              <div className="flex flex-wrap gap-2">
+                {filterTypeOptions.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setFilterType(option)}
+                    className={filterPillClass(filterType === option)}
+                  >
+                    {option === "All" ? "All types" : `${option}s`}
+                  </button>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {filterTimeOptions.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setFilterTime(option)}
+                    className={filterPillClass(filterTime === option)}
+                  >
+                    {option === "All" ? "All time" : option}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {cards.length === 0 ? (
+              <div className="rounded-3xl border border-primary/10 bg-background px-6 py-12 text-center">
+                <p className="text-sm text-muted-foreground">
+                  Nothing matches these filters yet -- try a different
+                  combination.
+                </p>
+              </div>
+            ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {cards.map((card) => (
                 <article
@@ -321,6 +414,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                 </article>
               ))}
             </div>
+            )}
           </div>
         </section>
       </div>
