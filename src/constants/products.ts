@@ -89,19 +89,19 @@ export const products: Product[] = [
     ],
     highlights: [
       {
-        title: "Action Board",
+        title: "Home dashboard",
         description:
-          "Explored surfacing a short list of prioritized actions each morning, built from a founder's own data.",
+          "Surfaced each product's key signals -- stock, price, reviews -- plus a queue of proposed fixes each morning.",
       },
       {
-        title: "Impact Dashboard",
+        title: "Evidence, not just suggestions",
         description:
-          "Tracked the outcome of actions taken, from restocks to campaign tweaks.",
+          "Every proposed change came with the reasoning behind it: reviews, comparable products, and sources.",
       },
       {
-        title: "Built with Fellows",
+        title: "Nothing changes without approval",
         description:
-          "Prototyped and stress-tested with the businesses in our ecosystem.",
+          "Proposed fixes, like an updated product description, waited for a founder's explicit approval before going live in Shopify.",
       },
     ],
   },
