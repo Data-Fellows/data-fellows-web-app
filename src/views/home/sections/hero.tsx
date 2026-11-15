@@ -40,7 +40,7 @@ export const Hero = () => {
               <p className="mt-4 text-lg text-muted-foreground">
                 The Data Fellows bring learners, mentors and builders together
                 to ship real products and pilots -- turning insights into
-                measurable growth for small businesses.
+                measurable growth for businesses.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
