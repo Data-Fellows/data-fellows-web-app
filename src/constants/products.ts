@@ -75,16 +75,16 @@ export const products: Product[] = [
     ctaHref: site.inscendUrl,
     slides: [
       {
-        image: "/images/inscend-possible-causes.png",
-        title: "Investigating a product's performance",
+        image: "/images/inscend-dashboard-home.jpg",
+        title: "Daily home dashboard",
         caption:
-          "Inscend surfaced possible causes behind a product's price, stock, and margin signals.",
+          "A morning view of stock, repeat orders, and the work ready for a founder to approve.",
       },
       {
-        image: "/images/inscend-price-detail.png",
-        title: "Clue-by-clue investigation",
+        image: "/images/inscend-work-detail.png",
+        title: "Proposed work, ready to approve",
         caption:
-          "Each clue -- like price -- linked to its sources and a suggested next move.",
+          "Each suggested change -- like a product description -- came with its reasoning and sources, waiting on a founder's approval.",
       },
     ],
     highlights: [
