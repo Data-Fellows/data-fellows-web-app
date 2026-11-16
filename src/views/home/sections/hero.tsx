@@ -19,10 +19,10 @@ export const Hero = () => {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="min-h-screen flex items-center overflow-hidden"
+      className="overflow-hidden"
     >
-      <div className="w-full mx-auto max-w-7xl h-full items-center px-4 pt-24 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center h-full">
+      <div className="w-full mx-auto max-w-7xl px-4 pt-32 pb-12 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left: copy */}
           <div className="lg:col-span-7">
             <div className="max-w-2xl">
