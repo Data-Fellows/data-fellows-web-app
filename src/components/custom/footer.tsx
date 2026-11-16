@@ -98,7 +98,7 @@ export const Footer = () => {
             <h4 className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Quick links
             </h4>
-            <ul className="mt-4 space-y-3 text-sm text-foreground">
+            <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-foreground">
               {quickLinks.map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="transition hover:text-primary">
