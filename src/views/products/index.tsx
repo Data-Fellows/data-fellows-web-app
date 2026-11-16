@@ -38,7 +38,8 @@ const ProductsPage = () => {
         {products.map((product) => (
           <section
             key={product.key}
-            className="px-4"
+            id={product.key}
+            className="px-4 scroll-mt-28"
             aria-labelledby={`${product.key}-heading`}
           >
             <div className="mx-auto max-w-6xl space-y-10">

@@ -11,13 +11,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // /our-community and /services render the exact same content as /community
-  // and /products -- two indexable URLs for identical content splits SEO
-  // ranking signals, so consolidate onto the canonical path.
+  // /our-community renders the exact same content as /community -- two
+  // indexable URLs for identical content splits SEO ranking signals, so
+  // consolidate onto the canonical path. The old /services -> /products
+  // redirect is gone now that /services is a real "What We Do" page in
+  // its own right, distinct from the Products/Work page.
   async redirects() {
     return [
       { source: "/our-community", destination: "/community", permanent: true },
-      { source: "/services", destination: "/products", permanent: true },
     ];
   },
 };

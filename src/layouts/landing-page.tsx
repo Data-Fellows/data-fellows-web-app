@@ -6,15 +6,21 @@ import { useRouter } from "next/router";
 import React, { ReactNode, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
+// Trimmed to the handoff's intended primary nav (Work, What We Do,
+// Approach, Community, About, Insights) plus Home, which the founder
+// explicitly asked to keep after losing their way back to "/" via the
+// logo alone. Activities, Impact and Partners are still real, live
+// pages -- just reached from within Community/About and the footer
+// instead of the top nav, so the bar doesn't grow past what fits on
+// one line as the new pages (Services/Approach) are added.
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/products", label: "Work" },
+  { href: "/services", label: "What We Do" },
+  { href: "/approach", label: "Approach" },
   { href: "/community", label: "Community" },
-  { href: "/activities", label: "Activities" },
-  { href: "/products", label: "Products" },
-  { href: "/impact", label: "Impact" },
-  { href: "/resources", label: "Resources" },
-  { href: "/partners", label: "Partners" },
   { href: "/about", label: "About" },
+  { href: "/resources", label: "Insights" },
 ];
 
 function Navbar() {
@@ -31,6 +37,13 @@ function Navbar() {
   };
 
   return (
+    <>
+    {/* `backdrop-blur-sm` on this header creates a CSS containing block for
+        `position: fixed` descendants (filter/backdrop-filter do this, same
+        as transform), which would collapse the mobile drawer's `h-full`
+        down to the header's own height instead of the viewport's -- so the
+        backdrop overlay and drawer below render as siblings of <header>,
+        not inside it. */}
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
         <div className="flex items-center gap-10">
@@ -83,6 +96,7 @@ function Navbar() {
           </button>
         </div>
       </nav>
+    </header>
 
       {isOpen && (
         <div
@@ -92,7 +106,7 @@ function Navbar() {
       )}
 
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-72 bg-foreground text-background transform transition-transform duration-300 md:hidden ${
+        className={`fixed top-0 right-0 z-50 h-full w-72 overflow-y-auto bg-foreground text-background transform transition-transform duration-300 md:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -128,7 +142,7 @@ function Navbar() {
           </button>
         </div>
       </div>
-    </header>
+    </>
   );
 }
 

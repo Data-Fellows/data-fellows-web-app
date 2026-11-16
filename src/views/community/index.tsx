@@ -289,6 +289,12 @@ const CommunityPage = () => {
                   />
                 ))}
               </div>
+              <Link
+                href="/activities"
+                className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
+              >
+                See all challenges & events
+              </Link>
             </div>
           </div>
         </section>

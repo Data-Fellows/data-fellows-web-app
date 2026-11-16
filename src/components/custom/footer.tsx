@@ -4,13 +4,15 @@ import { FiInstagram, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
 
 const quickLinks = [
   { label: "Home", href: "/" },
+  { label: "Work", href: "/products" },
+  { label: "What We Do", href: "/services" },
+  { label: "Approach", href: "/approach" },
   { label: "Community", href: "/community" },
   { label: "Activities", href: "/activities" },
-  { label: "Products", href: "/products" },
-  { label: "Impact", href: "/impact" },
-  { label: "Resources", href: "/resources" },
-  { label: "Partners", href: "/partners" },
   { label: "About", href: "/about" },
+  { label: "Insights", href: "/resources" },
+  { label: "Impact", href: "/impact" },
+  { label: "Partners", href: "/partners" },
 ];
 
 const partnerHighlights = [
