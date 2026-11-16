@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FiInstagram, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
 
@@ -56,9 +57,18 @@ export const Footer = () => {
           <Link
             href="/"
             aria-label="Go to home"
-            className="font-display text-lg font-bold tracking-tight text-foreground"
+            className="flex items-center gap-2.5"
           >
-            Data Fellows
+            <Image
+              src="/svgs/data-fellow.svg"
+              alt=""
+              width={36}
+              height={37}
+              className="h-9 w-9"
+            />
+            <span className="font-display text-lg font-bold tracking-tight text-foreground">
+              Data Fellows
+            </span>
           </Link>
           <p className="text-sm text-muted-foreground">
             Turning data into clarity for people and businesses. We train,

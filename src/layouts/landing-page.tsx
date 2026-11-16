@@ -1,4 +1,5 @@
 import { Footer } from "@/components";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
@@ -36,9 +37,19 @@ function Navbar() {
           <Link
             href="/"
             aria-label="Go to home"
-            className="font-display text-lg font-bold tracking-tight text-foreground"
+            className="flex items-center gap-2.5"
           >
-            Data Fellows
+            <Image
+              src="/svgs/data-fellow.svg"
+              alt=""
+              width={36}
+              height={37}
+              className="h-8 w-8"
+              priority
+            />
+            <span className="font-display text-lg font-bold tracking-tight text-foreground">
+              Data Fellows
+            </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-7">
