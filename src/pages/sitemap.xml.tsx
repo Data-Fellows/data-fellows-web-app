@@ -15,6 +15,7 @@ const STATIC_PATHS = [
   "/partners",
   "/resources",
   "/about",
+  "/people",
   "/contact",
   "/impact-report",
 ];

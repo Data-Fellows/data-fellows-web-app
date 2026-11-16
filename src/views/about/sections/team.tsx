@@ -90,6 +90,12 @@ const TeamSection = () => {
             Every leader in our ecosystem is grounded in community. They code,
             teach, and build side by side with Fellows.
           </p>
+          <Link
+            href="/people"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-foreground underline underline-offset-4 hover:text-foreground/70"
+          >
+            Meet the full team &amp; advisors
+          </Link>
         </div>
 
         <div className="space-y-6">
