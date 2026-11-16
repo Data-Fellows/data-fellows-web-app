@@ -55,7 +55,7 @@ Things We&apos;ve Explored and Built
                     href={product.ctaHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90"
+                    className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
                   >
                     {product.ctaLabel}
                     <FiArrowUpRight className="h-4 w-4" />

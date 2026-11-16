@@ -163,7 +163,7 @@ export const Hero = () => {
 
                     <button
                       onClick={() => router.push("/contact")}
-                      className="bg-brand-blue px-3 py-2 text-xs font-semibold text-brand-blue-foreground hover:bg-brand-blue/90"
+                      className="bg-brand-blue-fill px-3 py-2 text-xs font-semibold text-brand-blue-foreground hover:bg-brand-blue-fill/90"
                     >
                       Get Involved
                     </button>

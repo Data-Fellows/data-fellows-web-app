@@ -27,7 +27,7 @@ Work With Us
         <div className="flex flex-wrap gap-3">
           <button
             onClick={() => router.push("/contact")}
-            className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90"
+            className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
           >
             Discuss a Problem
           </button>

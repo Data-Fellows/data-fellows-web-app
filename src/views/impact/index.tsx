@@ -62,7 +62,7 @@ const ImpactPage = () => {
               href={site.impactReportUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90"
+              className="mt-8 inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
             >
               Read the 2026 Impact Report
               <FiDownload className="h-4 w-4" />

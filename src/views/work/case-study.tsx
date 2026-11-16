@@ -28,7 +28,7 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
               <span className="border border-border px-2 py-1">
                 {product.workType}
               </span>
-              <span className="border border-brand-blue px-2 py-1 text-brand-blue">
+              <span className="border border-brand-blue-label px-2 py-1 text-brand-blue-label">
                 Status: {product.stage}
               </span>
               {product.capabilities.map((capability) => (

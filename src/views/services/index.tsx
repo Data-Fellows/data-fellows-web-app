@@ -132,7 +132,7 @@ const ServicesPage = () => {
                   ))}
                   <Link
                     href="/contact"
-                    className="ml-auto inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-5 py-2.5 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90"
+                    className="ml-auto inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-5 py-2.5 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
                   >
                     Discuss a Project
                     <FiArrowUpRight className="h-4 w-4" />

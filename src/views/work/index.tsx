@@ -88,7 +88,7 @@ const WorkPage = () => {
                     <span className="border border-border px-2 py-1">
                       {product.workType}
                     </span>
-                    <span className="border border-brand-blue px-2 py-1 text-brand-blue">
+                    <span className="border border-brand-blue-label px-2 py-1 text-brand-blue-label">
                       Status: {product.stage}
                     </span>
                     {product.capabilities.map((capability) => (
@@ -135,7 +135,7 @@ const WorkPage = () => {
             </div>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90"
+              className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
             >
               Discuss a Project
               <FiArrowUpRight className="h-4 w-4" />

@@ -122,7 +122,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
               href="/documents/data-fellows-impact-report-2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90 lg:mt-0"
+              className="mt-6 inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90 lg:mt-0"
             >
               Read the 2026 Impact Report
               <FiDownload className="h-4 w-4" />
