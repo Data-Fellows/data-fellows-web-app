@@ -52,10 +52,10 @@ const RhythmCard = ({ title, cadence, description }: RhythmCardProps) => {
       type="button"
       aria-expanded={isOpen}
       onClick={() => setIsOpen((prev) => !prev)}
-      className={`rounded-2xl border px-5 py-5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+      className={`border px-5 py-5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
         isOpen
-          ? "border-primary bg-secondary/10 shadow-sm"
-          : "border-primary/10 bg-secondary/10 hover:border-primary/40"
+          ? "border-foreground bg-muted/40"
+          : "border-border bg-muted/40 hover:border-foreground/40"
       }`}
     >
       <div className="flex items-center justify-between gap-4">
@@ -64,8 +64,8 @@ const RhythmCard = ({ title, cadence, description }: RhythmCardProps) => {
           <p className="text-xs text-muted-foreground">{cadence}</p>
         </div>
         <span
-          className={`text-xs font-semibold uppercase tracking-wide ${
-            isOpen ? "text-primary" : "text-muted-foreground"
+          className={`font-mono text-xs font-semibold uppercase tracking-wide ${
+            isOpen ? "text-foreground" : "text-muted-foreground"
           }`}
         >
           {isOpen ? "Close" : "Read"}
@@ -192,15 +192,15 @@ const CommunityPage = () => {
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4 sm:px-6" aria-labelledby="community-hero-heading">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-primary/10 bg-secondary/10">
+          <div className="mx-auto max-w-6xl overflow-hidden border border-border bg-muted/40">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
               <div className="space-y-6 px-6 py-12 lg:col-span-6 lg:px-10">
-                <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-                  The Data Fellows community
+                <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  The Data Fellows Community
                 </span>
                 <h1
                   id="community-hero-heading"
-                  className="text-3xl font-semibold text-foreground sm:text-4xl"
+                  className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
                 >
                   Find people who build with data -- and cheer you on.
                 </h1>
@@ -213,10 +213,10 @@ const CommunityPage = () => {
                   href="https://bit.ly/m/datafellows"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                  className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
                 >
                   <FiUsers className="h-4 w-4" />
-                  Join us on Discord
+                  Join the Community
                 </Link>
               </div>
               <div className="relative h-full w-full lg:col-span-6">
@@ -225,10 +225,10 @@ const CommunityPage = () => {
                     src="/images/team.jpg"
                     alt="Data Fellows members at an event"
                     fill
-                    className="object-cover"
+                    className="object-cover grayscale"
                     priority
                   />
-                  <div className="absolute bottom-4 left-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
+                  <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-4 py-3 font-mono text-xs text-muted-foreground backdrop-blur">
                     1,600+ members across 33+ countries and counting.
                   </div>
                 </div>
@@ -242,7 +242,7 @@ const CommunityPage = () => {
             <div className="text-center">
               <h2
                 id="community-programs-heading"
-                className="text-3xl font-semibold text-foreground sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
                 Programs designed to keep you building.
               </h2>
@@ -255,12 +255,12 @@ const CommunityPage = () => {
               {programs.map(({ title, description, icon: Icon }) => (
                 <div
                   key={title}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-primary/10 bg-background px-6 py-6"
+                  className="flex h-full flex-col gap-4 border border-border bg-background px-6 py-6"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <span className="flex h-12 w-12 items-center justify-center border border-foreground/20 text-foreground">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="text-lg font-semibold text-foreground">
+                  <h3 className="font-display text-lg font-semibold text-foreground">
                     {title}
                   </h3>
                   <p className="text-sm text-muted-foreground">{description}</p>
@@ -271,11 +271,11 @@ const CommunityPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="community-rhythm-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
+          <div className="mx-auto max-w-6xl border border-border bg-background px-6 py-10">
             <div className="space-y-6">
               <h2
                 id="community-rhythm-heading"
-                className="text-2xl font-semibold text-foreground sm:text-3xl"
+                className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
               >
                 Our rhythm
               </h2>
@@ -298,7 +298,7 @@ const CommunityPage = () => {
             <div className="text-center">
               <h2
                 id="community-leads-heading"
-                className="text-3xl font-semibold text-foreground sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
                 Meet our founding community leads.
               </h2>
@@ -312,7 +312,7 @@ const CommunityPage = () => {
               {communityLeadGroups.map(({ title, description, leads }) => (
                 <div key={title} className="space-y-6">
                   <div className="space-y-2 text-left">
-                    <h3 className="text-xl font-semibold text-foreground">
+                    <h3 className="font-display text-xl font-semibold text-foreground">
                       {title}
                     </h3>
                     <p className="text-sm text-muted-foreground">

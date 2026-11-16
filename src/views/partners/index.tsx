@@ -52,11 +52,11 @@ const PartnersPage = () => {
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="partners-hero-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-12 lg:px-12">
+          <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
             <div className="flex flex-col gap-6 text-center">
               <h1
                 id="partners-hero-heading"
-                className="text-3xl font-semibold text-foreground sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
                 The strength of Data Fellows is the strength of our partners.
               </h1>
@@ -66,7 +66,7 @@ const PartnersPage = () => {
               </p>
               <Link
                 href="mailto:partners@datafellowsai.com"
-                className="mx-auto inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="mx-auto inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
               >
                 Start a partnership conversation
                 <FiArrowUpRight className="h-4 w-4" />
@@ -89,7 +89,7 @@ const PartnersPage = () => {
           <div className="mx-auto max-w-6xl space-y-10">
             <h2
               id="partner-categories-heading"
-              className="text-3xl font-semibold text-foreground sm:text-4xl"
+              className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
               Partner network at a glance
             </h2>
@@ -98,13 +98,13 @@ const PartnersPage = () => {
                 ({ title, description, partners, icon: Icon }) => (
                   <div
                     key={title}
-                    className="flex h-full flex-col gap-5 rounded-3xl border border-primary/10 bg-background px-6 py-6"
+                    className="flex h-full flex-col gap-5 border border-border bg-background px-6 py-6"
                   >
-                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <span className="flex h-12 w-12 items-center justify-center border border-foreground/20 text-foreground">
                       <Icon className="h-5 w-5" />
                     </span>
                     <div>
-                      <p className="text-lg font-semibold text-foreground">
+                      <p className="font-display text-lg font-semibold text-foreground">
                         {title}
                       </p>
                       <p className="text-sm text-muted-foreground">
@@ -115,7 +115,7 @@ const PartnersPage = () => {
                       {partners.map((partner) => (
                         <span
                           key={partner}
-                          className="rounded-xl border border-primary/10 bg-secondary/10 px-4 py-2 text-sm font-medium text-muted-foreground"
+                          className="border border-border bg-muted/40 px-4 py-2 text-sm font-medium text-muted-foreground"
                         >
                           {partner}
                         </span>
@@ -129,10 +129,10 @@ const PartnersPage = () => {
         </section>
 
         <section className="px-4" aria-labelledby="partner-benefits-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
+          <div className="mx-auto max-w-6xl border border-border bg-background px-6 py-10">
             <h2
               id="partner-benefits-heading"
-              className="text-2xl font-semibold text-foreground sm:text-3xl"
+              className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
             >
               What partners experience
             </h2>
@@ -144,7 +144,7 @@ const PartnersPage = () => {
               ].map((benefit) => (
                 <div
                   key={benefit}
-                  className="rounded-2xl border border-primary/10 bg-secondary/10 px-4 py-4 text-sm text-muted-foreground"
+                  className="border border-border bg-muted/40 px-4 py-4 text-sm text-muted-foreground"
                 >
                   {benefit}
                 </div>
