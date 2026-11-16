@@ -69,18 +69,18 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
           className="px-4 sm:px-6"
           aria-labelledby="resources-hero-heading"
         >
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">
+          <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
             <div className="space-y-6 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-                Resources
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Insights
               </span>
               <h1
                 id="resources-hero-heading"
-                className="text-3xl font-semibold text-foreground sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
                 Stories and lessons from real people building with data.
               </h1>
-              <p className="mx-auto max-w-2xl text-base text-muted-foreground">
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
                 Dive into the guides, reflections, and conversations coming out
                 of the Data Fellows ecosystem. Each piece is meant to be
                 practical enough to use tomorrow.
@@ -88,7 +88,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
               <button
                 type="button"
                 onClick={() => setIsNewsletterOpen(true)}
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-foreground"
               >
                 Subscribe to the newsletter
                 <FiArrowRight className="h-4 w-4" />
@@ -101,18 +101,18 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
           className="px-4 sm:px-6"
           aria-labelledby="impact-report-heading"
         >
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-primary/10 px-6 py-10 lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-12">
+          <div className="mx-auto max-w-6xl border border-gold bg-navy-deep px-6 py-10 text-navy-deep-foreground lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-12">
             <div className="space-y-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
                 Four-year anniversary
               </span>
               <h2
                 id="impact-report-heading"
-                className="text-2xl font-semibold text-foreground sm:text-3xl"
+                className="font-display text-2xl font-semibold tracking-tight sm:text-3xl"
               >
                 The Data Fellows Impact Report is here.
               </h2>
-              <p className="max-w-2xl text-sm text-muted-foreground">
+              <p className="max-w-2xl text-sm text-navy-deep-foreground/70">
                 Four years of turning data into clarity, across 33 countries.
                 See the full story: our community, our programs, Inscend, and
                 what's ahead.
@@ -122,9 +122,9 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
               href="/documents/data-fellows-impact-report-2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 lg:mt-0"
+              className="mt-6 inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90 lg:mt-0"
             >
-              Read the Impact Report
+              Read the 2026 Impact Report
               <FiDownload className="h-4 w-4" />
             </Link>
           </div>
@@ -136,7 +136,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
               <div>
                 <h2
                   id="browse-heading"
-                  className="text-3xl font-semibold text-foreground sm:text-4xl"
+                  className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
                 >
                   Browse resources
                 </h2>
@@ -155,10 +155,10 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                     type="button"
                     onClick={() => setActiveFilter(filter)}
                     aria-pressed={activeFilter === filter}
-                    className={`rounded-full border px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+                    className={`border px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wide transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
                       activeFilter === filter
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-primary/20 bg-background text-muted-foreground hover:border-primary/40"
+                        ? "border-foreground bg-foreground text-background"
+                        : "border-border bg-background text-muted-foreground hover:border-foreground/40"
                     }`}
                   >
                     {filterLabels[filter]}
@@ -174,7 +174,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                   return (
                     <article
                       key={item.id}
-                      className="overflow-hidden rounded-3xl border border-primary/10 bg-background"
+                      className="overflow-hidden border border-border bg-background"
                     >
                       <div className="relative h-48">
                         {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
@@ -183,18 +183,18 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                           alt={item.title}
                           className="absolute inset-0 h-full w-full object-cover object-top"
                         />
-                        <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
+                        <span className="absolute left-4 top-4 inline-flex items-center gap-2 border border-border bg-background/90 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-foreground backdrop-blur">
                           <Icon className="h-3.5 w-3.5" />
                           {item.category}
                         </span>
                       </div>
                       <div className="space-y-3 px-6 py-6">
                         {item.published_date ? (
-                          <p className="text-xs text-muted-foreground">
+                          <p className="font-mono text-xs text-muted-foreground">
                             {formatDate(item.published_date)}
                           </p>
                         ) : null}
-                        <h3 className="text-lg font-semibold text-foreground">
+                        <h3 className="font-display text-lg font-semibold text-foreground">
                           {item.title}
                         </h3>
                         {item.description ? (
@@ -212,7 +212,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                               ? "noopener noreferrer"
                               : undefined
                           }
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-foreground"
                         >
                           Open
                           <FiExternalLink className="h-4 w-4" />
@@ -223,20 +223,20 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                 })}
               </div>
             ) : (
-              <p className="rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10 text-center text-sm text-muted-foreground">
+              <p className="border border-border bg-muted/40 px-6 py-10 text-center text-sm text-muted-foreground">
                 {resources.length === 0
                   ? "No resources yet -- check back soon."
                   : `No ${filterLabels[activeFilter].toLowerCase()} yet -- check back soon.`}
               </p>
             )}
 
-            <div className="rounded-3xl border border-primary/10 bg-background px-6 py-6">
+            <div className="border border-border bg-background px-6 py-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+                  <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Journey so far
                   </p>
-                  <h3 className="text-2xl font-semibold text-foreground">
+                  <h3 className="font-display text-2xl font-semibold text-foreground">
                     Behind the scenes of a Fellow&apos;s success story.
                   </h3>
                   <p className="text-sm text-muted-foreground">
@@ -248,7 +248,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                   href={journeySoFarUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary"
+                  className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
                 >
                   Listen to latest
                   <FiHeadphones className="h-4 w-4" />
@@ -259,14 +259,14 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="newsletter-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:flex lg:items-center lg:gap-12">
+          <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:flex lg:items-center lg:gap-12">
             <div className="space-y-4 lg:w-1/2">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Newsletter
               </span>
               <h2
                 id="newsletter-heading"
-                className="text-3xl font-semibold text-foreground sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
                 Subscribe for Community & Growth ops updates.
               </h2>
@@ -282,7 +282,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
               <button
                 type="button"
                 onClick={() => setIsNewsletterOpen(true)}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="inline-flex w-full items-center justify-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-foreground"
               >
                 Subscribe to the newsletter
                 <FiArrowRight className="h-4 w-4" />
@@ -292,12 +292,12 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="podcast-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
+          <div className="mx-auto max-w-6xl border border-border bg-background px-6 py-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="space-y-3">
                 <h2
                   id="podcast-heading"
-                  className="text-2xl font-semibold text-foreground sm:text-3xl"
+                  className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
                 >
                   Journey So Far -- our monthly audio stories
                 </h2>
@@ -310,7 +310,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                 href={journeySoFarUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10"
+                className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
               >
                 Listen to the latest episode
                 <FiArrowRight className="h-4 w-4" />
