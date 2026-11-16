@@ -26,48 +26,46 @@ export const Hero = () => {
           {/* Left: copy */}
           <div className="lg:col-span-7">
             <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-primary">
-                Turning Data Into Clarity
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Software &middot; Data &middot; AI &middot; Operational Systems
               </span>
 
               <h1
                 id="hero-heading"
-                className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-tight"
+                className="mt-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.08]"
               >
-                Data that people understand. Outcomes that move business.
+                We build technology for problems worth solving.
               </h1>
 
-              <p className="mt-4 text-lg text-muted-foreground">
-                The Data Fellows bring learners, mentors and builders together
-                to ship real products and pilots -- turning insights into
-                measurable growth for businesses.
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                Data Fellows works with organizations to understand difficult
+                operational challenges, develop software and AI systems, and
+                support the solutions in the real world.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
                 <button
-                  onClick={() => router.push("/community")}
-                  className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md hover:bg-primary/90"
+                  onClick={() => router.push("/contact")}
+                  className="inline-flex items-center justify-center bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-foreground/90"
                 >
-                  Join the Ecosystem
+                  Discuss a Problem
                 </button>
 
                 <Link
-                  href="https://www.inscend.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full border border-primary/20 bg-transparent px-5 py-3 text-sm font-medium text-primary hover:bg-primary/5"
+                  href="/products"
+                  className="inline-flex items-center justify-center border border-foreground px-6 py-3 text-sm font-medium text-foreground hover:bg-foreground hover:text-background"
                 >
-                  Explore Inscend
+                  Explore Our Work
                 </Link>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-10 flex flex-wrap gap-6 border-t border-border pt-6">
                 {stats.map((s) => (
-                  <div key={s.label} className="flex items-baseline gap-3">
-                    <span className="text-2xl font-semibold text-primary">
+                  <div key={s.label} className="flex items-baseline gap-2">
+                    <span className="font-display text-2xl font-semibold text-foreground">
                       {s.value}
                     </span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
                       {s.label}
                     </span>
                   </div>
@@ -79,7 +77,7 @@ export const Hero = () => {
           {/* Right: visual card */}
           <div className="lg:col-span-5">
             <div className="relative mx-auto max-w-md lg:max-w-sm">
-              <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 dark:ring-white/5 bg-card text-card-foreground border border-primary/10">
+              <div className="overflow-hidden border border-border bg-card text-card-foreground">
                 <div className="relative h-64 sm:h-72">
                   <Image
                     src="/images/data-community-hero.jpg"
@@ -103,14 +101,14 @@ export const Hero = () => {
 
                   <div className="mt-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-full bg-popover flex items-center justify-center text-sm font-semibold text-popover-foreground">
+                      <div className="h-9 w-9 flex items-center justify-center bg-popover text-sm font-semibold text-popover-foreground">
                         DF
                       </div>
                       <div className="text-sm">
                         <div className="font-medium text-foreground">
                           Data Fellows
                         </div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
                           Open to join
                         </div>
                       </div>
@@ -118,7 +116,7 @@ export const Hero = () => {
 
                     <button
                       onClick={() => router.push("/contact")}
-                      className="rounded-full bg-[#001628] px-3 py-2 text-xs font-semibold text-white hover:bg-[#001628]/90"
+                      className="bg-gold px-3 py-2 text-xs font-semibold text-gold-foreground hover:bg-gold/90"
                     >
                       Get Involved
                     </button>

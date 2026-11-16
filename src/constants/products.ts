@@ -14,6 +14,11 @@ export type ProductHighlight = {
 export type Product = {
   key: string;
   name: string;
+  // Honest stage label for the editorial "status" device (handoff section
+  // 6: Explored/Prototype/Pilot/Shipped/Operating/Archived). Exact date
+  // ranges are intentionally left out until the founder confirms them --
+  // see the redesign content-verification register.
+  stage: string;
   title: string;
   description: string;
   ctaLabel: string;
@@ -28,6 +33,7 @@ export const products: Product[] = [
   {
     key: "bizpilot",
     name: "BizPilot",
+    stage: "Explored",
     title: "Connecting data professionals with real opportunities.",
     description:
       "BizPilot grew from our work helping data professionals build experience and connect with meaningful opportunities. The platform explored how professionals could showcase their skills, discover projects and opportunities, and engage with businesses looking for data expertise.",
@@ -68,6 +74,7 @@ export const products: Product[] = [
   {
     key: "inscend",
     name: "Inscend",
+    stage: "Explored",
     title: "AI-powered product and operating intelligence for ecommerce founders.",
     description:
       "Inscend was developed to help independent ecommerce founders investigate what affects their products, identify improvements, and prepare actions across their business. The venture explored how AI could reduce the operational work involved in running an online store.",

@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+/* Direction A ("Field Notes") redesign type system -- Space Grotesk for
+   display/headline type, Inter for body copy, IBM Plex Mono for the
+   editorial eyebrow/status-label device used throughout (e.g. "STATUS:
+   EXPLORED - 2025"). Replaces Poppins, which the previous design used
+   for everything. */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap");
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
@@ -10,6 +15,13 @@
      mode, this never changes. */
   --navy-deep: hsl(210 55% 12%);
   --navy-deep-foreground: hsl(210 40% 96%);
+
+  /* Direction A type families. --font-sans drives body copy, --font-display
+     is for headlines (apply via the `font-display` utility), --font-mono is
+     for the editorial eyebrow/status-label device (apply via `font-mono`). */
+  --font-sans: "Inter", ui-sans-serif, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 @theme inline {
@@ -53,27 +65,33 @@
   --color-gold-foreground: var(--gold-foreground);
   --color-navy-deep: var(--navy-deep);
   --color-navy-deep-foreground: var(--navy-deep-foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
 }
 
 [data-theme="light"] {
-  --background: hsl(210 33% 98%);
-  --foreground: hsl(213 35% 14%);
+  /* Direction A's "paper and ink" palette -- warm cream background and
+     near-black ink instead of the previous cool blue-grey, with gold and
+     the deep-blue primary preserved exactly from the existing brand. */
+  --background: hsl(43 30% 95%);
+  --foreground: hsl(210 10% 10%);
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(213 35% 14%);
+  --card-foreground: hsl(210 10% 10%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(213 35% 14%);
+  --popover-foreground: hsl(210 10% 10%);
   --primary: hsl(205 48% 26%);
   --primary-foreground: hsl(0 0% 100%);
   --secondary: hsl(165 63% 60%);
   --secondary-foreground: hsl(166 36% 26%);
-  --muted: hsl(212 32% 94%);
-  --muted-foreground: hsl(214 18% 36%);
+  --muted: hsl(42 20% 92%);
+  --muted-foreground: hsl(30 8% 38%);
   --accent: hsl(188 65% 84%);
   --accent-foreground: hsl(199 72% 18%);
   --destructive: hsl(2 78% 57%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(214 32% 86%);
-  --input: hsl(214 32% 86%);
+  --border: hsl(42 18% 82%);
+  --input: hsl(42 18% 82%);
   --ring: hsl(205 70% 40%);
   --chart-1: hsl(205 78% 38%);
   --chart-2: hsl(188 65% 48%);
@@ -132,7 +150,7 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
   background-color: var(--background);
   color: var(--foreground);
