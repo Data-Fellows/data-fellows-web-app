@@ -30,7 +30,7 @@ const CommunityPulse = () => {
 
   if (data.checkedInToday > 0) {
     return (
-      <div className="mx-auto flex max-w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+      <div className="mx-auto flex max-w-fit items-center gap-2 border border-foreground/20 bg-background px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wide text-foreground">
         <FiActivity className="h-4 w-4" />
         {data.checkedInToday} check-in{data.checkedInToday === 1 ? "" : "s"} today
         {data.activeChallenges > 0
@@ -42,7 +42,7 @@ const CommunityPulse = () => {
 
   if (data.distinctMembers > 0) {
     return (
-      <div className="mx-auto flex max-w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+      <div className="mx-auto flex max-w-fit items-center gap-2 border border-foreground/20 bg-background px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wide text-foreground">
         <FiUsers className="h-4 w-4" />
         {data.distinctMembers}+ Fellows have completed a challenge
       </div>

@@ -98,13 +98,13 @@ const SessionRegisterModal = ({ session, onClose }: SessionRegisterModalProps) =
       aria-label={`Register for ${session.title}`}
     >
       <div
-        className="relative w-full max-w-md rounded-3xl border border-primary/10 bg-background p-6 shadow-2xl sm:p-8"
+        className="relative w-full max-w-md border border-border bg-background p-6 shadow-2xl sm:p-8"
         onClick={stopPropagation}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-foreground transition hover:bg-muted"
+          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-muted"
           aria-label="Close registration form"
         >
           <FiX className="h-4 w-4" />
@@ -112,8 +112,8 @@ const SessionRegisterModal = ({ session, onClose }: SessionRegisterModalProps) =
 
         {mutation.isSuccess ? (
           <div className="pt-4 text-center">
-            <FiCheckCircle className="mx-auto mb-3 h-8 w-8 text-primary" />
-            <h2 className="text-xl font-semibold text-foreground">You&apos;re registered!</h2>
+            <FiCheckCircle className="mx-auto mb-3 h-8 w-8 text-foreground" />
+            <h2 className="font-display text-xl font-semibold text-foreground">You&apos;re registered!</h2>
             <p className="mx-auto mt-2 max-w-xs text-sm text-muted-foreground">
               We&apos;ll see you at {session.title}.
             </p>
@@ -124,7 +124,7 @@ const SessionRegisterModal = ({ session, onClose }: SessionRegisterModalProps) =
             className="space-y-4 pt-2"
           >
             <div>
-              <h2 className="text-lg font-semibold text-foreground">Register</h2>
+              <h2 className="font-display text-lg font-semibold text-foreground">Register</h2>
               <p className="text-sm text-muted-foreground">{session.title}</p>
             </div>
 
@@ -138,12 +138,12 @@ const SessionRegisterModal = ({ session, onClose }: SessionRegisterModalProps) =
             />
 
             <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <label className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Name
               </label>
               <input
                 {...register("name")}
-                className="w-full rounded-full border border-primary/20 bg-background px-4 py-2.5 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                className="w-full border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                 placeholder="Your name"
               />
               {errors.name ? (
@@ -152,13 +152,13 @@ const SessionRegisterModal = ({ session, onClose }: SessionRegisterModalProps) =
             </div>
 
             <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <label className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Email
               </label>
               <input
                 type="email"
                 {...register("email")}
-                className="w-full rounded-full border border-primary/20 bg-background px-4 py-2.5 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                className="w-full border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                 placeholder="you@email.com"
               />
               {errors.email ? (
@@ -173,7 +173,7 @@ const SessionRegisterModal = ({ session, onClose }: SessionRegisterModalProps) =
             <button
               type="submit"
               disabled={isSubmitting || mutation.isPending}
-              className="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+              className="w-full border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 disabled:opacity-60"
             >
               {mutation.isPending ? "Registering..." : "Register"}
             </button>
