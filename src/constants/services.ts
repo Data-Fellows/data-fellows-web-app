@@ -34,7 +34,7 @@ export const services: ServiceOffering[] = [
     ],
     deliveryMode: "Scoped project or build-and-operate engagement",
     relatedWork: [
-      { name: "BizPilot", stage: "Explored", href: "/products#bizpilot" },
+      { name: "BizPilot", stage: "Explored", href: "/work/bizpilot" },
     ],
   },
   {
@@ -79,7 +79,7 @@ export const services: ServiceOffering[] = [
     ],
     deliveryMode: "Scoped project or pilot",
     relatedWork: [
-      { name: "Inscend", stage: "Explored", href: "/products#inscend" },
+      { name: "Inscend", stage: "Explored", href: "/work/inscend" },
     ],
   },
   {

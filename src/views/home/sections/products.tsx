@@ -4,8 +4,8 @@ import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 
 // Concise homepage previews -- the fuller feature breakdown per product
-// lives on /products so this section stays a quick overview, not a second
-// products page.
+// lives on /work so this section stays a quick overview, not a second
+// work index.
 const Products = () => {
   return (
     <section
@@ -50,15 +50,24 @@ const Products = () => {
                 <p className="text-base leading-relaxed text-navy-deep-foreground/70">
                   {product.description}
                 </p>
-                <Link
-                  href={product.ctaHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
-                >
-                  {product.ctaLabel}
-                  <FiArrowUpRight className="h-4 w-4" />
-                </Link>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href={product.ctaHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+                  >
+                    {product.ctaLabel}
+                    <FiArrowUpRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href={`/work/${product.key}`}
+                    className="inline-flex items-center gap-2 border border-navy-deep-foreground/20 px-6 py-3 text-sm font-semibold text-navy-deep-foreground transition hover:bg-navy-deep-foreground/10"
+                  >
+                    View case study
+                    <FiArrowUpRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
 
               <div className="lg:col-span-7">

@@ -52,7 +52,7 @@ export const Hero = () => {
                 </button>
 
                 <Link
-                  href="/products"
+                  href="/work"
                   className="inline-flex items-center justify-center border border-foreground px-6 py-3 text-sm font-medium text-foreground hover:bg-foreground hover:text-background"
                 >
                   Explore Our Work

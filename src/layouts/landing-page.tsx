@@ -14,7 +14,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 // one line as the new pages (Services/Approach) are added.
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/products", label: "Work" },
+  { href: "/work", label: "Work" },
   { href: "/services", label: "What We Do" },
   { href: "/approach", label: "Approach" },
   { href: "/community", label: "Community" },
