@@ -73,27 +73,28 @@
 }
 
 [data-theme="light"] {
-  /* Direction A's "paper and ink" palette -- warm cream background and
-     near-black ink instead of the previous cool blue-grey, with gold and
-     the deep-blue primary preserved exactly from the existing brand. */
-  --background: hsl(43 30% 95%);
-  --foreground: hsl(210 10% 10%);
+  /* Direction A's light palette -- back to the brand's cool blue-grey
+     base (the "ink" is still the mono/display type system, not a warm
+     cream background) after an earlier pass swapped in a warm cream
+     tone that read as losing the brand's blue identity. */
+  --background: hsl(210 33% 98%);
+  --foreground: hsl(213 35% 14%);
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(210 10% 10%);
+  --card-foreground: hsl(213 35% 14%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(210 10% 10%);
+  --popover-foreground: hsl(213 35% 14%);
   --primary: hsl(205 48% 26%);
   --primary-foreground: hsl(0 0% 100%);
   --secondary: hsl(165 63% 60%);
   --secondary-foreground: hsl(166 36% 26%);
-  --muted: hsl(42 20% 92%);
-  --muted-foreground: hsl(30 8% 38%);
+  --muted: hsl(212 32% 94%);
+  --muted-foreground: hsl(214 18% 36%);
   --accent: hsl(188 65% 84%);
   --accent-foreground: hsl(199 72% 18%);
   --destructive: hsl(2 78% 57%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(42 18% 82%);
-  --input: hsl(42 18% 82%);
+  --border: hsl(214 32% 86%);
+  --input: hsl(214 32% 86%);
   --ring: hsl(205 70% 40%);
   --chart-1: hsl(205 78% 38%);
   --chart-2: hsl(188 65% 48%);
@@ -114,39 +115,39 @@
 }
 
 [data-theme="dark"] {
-  /* Direction A's dark mode: a warm ink-black "notebook at night," not a
-     recolored blue-navy. The old dark palette (cool blue-grey background,
-     bright royal-blue primary, saturated badge-gold) reads as the same
-     navy + gold already used across the existing Instagram templates --
-     this palette intentionally breaks from that: a neutral warm charcoal
-     base, paper-cream text (echoing the light theme's ink-on-paper
-     pairing), and a deeper, more antique gold accent. */
-  --background: hsl(30 8% 8%);
-  --foreground: hsl(43 20% 90%);
-  --card: hsl(30 7% 12%);
-  --card-foreground: hsl(43 20% 90%);
-  --popover: hsl(30 7% 13%);
-  --popover-foreground: hsl(43 20% 90%);
-  --primary: hsl(205 35% 82%);
-  --primary-foreground: hsl(30 8% 10%);
-  --secondary: hsl(165 25% 15%);
-  --secondary-foreground: hsl(165 20% 85%);
-  --muted: hsl(30 6% 16%);
-  --muted-foreground: hsl(36 10% 62%);
-  --accent: hsl(188 28% 24%);
-  --accent-foreground: hsl(189 35% 88%);
-  --destructive: hsl(2 60% 52%);
+  /* Direction A's dark mode: back to a cool blue-grey/slate base (close
+     to the brand's original dark palette) after an earlier pass swapped
+     in a warm ink-charcoal tone that read as losing the brand's blue
+     identity entirely. Still deliberately a notch more muted/desaturated
+     than the old dark palette's vivid royal-blue primary and bright
+     badge-gold, which is what read as a recolor of the existing
+     Instagram templates -- this keeps the blue, just quieter. */
+  --background: hsl(217 24% 11%);
+  --foreground: hsl(210 30% 92%);
+  --card: hsl(219 20% 15%);
+  --card-foreground: hsl(210 30% 92%);
+  --popover: hsl(219 20% 16%);
+  --popover-foreground: hsl(210 30% 92%);
+  --primary: hsl(205 55% 78%);
+  --primary-foreground: hsl(217 30% 12%);
+  --secondary: hsl(165 40% 16%);
+  --secondary-foreground: hsl(165 25% 85%);
+  --muted: hsl(217 16% 18%);
+  --muted-foreground: hsl(214 12% 68%);
+  --accent: hsl(188 45% 28%);
+  --accent-foreground: hsl(189 40% 90%);
+  --destructive: hsl(2 65% 54%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(32 8% 22%);
-  --input: hsl(32 8% 22%);
-  --ring: hsl(205 45% 60%);
+  --border: hsl(218 18% 26%);
+  --input: hsl(218 18% 26%);
+  --ring: hsl(205 55% 62%);
   --chart-1: hsl(205 70% 62%);
   --chart-2: hsl(188 62% 52%);
   --chart-3: hsl(37 92% 60%);
   --chart-4: hsl(325 70% 60%);
   --chart-5: hsl(50 95% 65%);
-  --gold: hsl(38 62% 50%);
-  --gold-foreground: hsl(30 8% 8%);
+  --gold: hsl(38 68% 52%);
+  --gold-foreground: hsl(217 30% 10%);
   --radius: 0.6rem;
   --sidebar-background: hsl(215 28% 12%);
   --sidebar-foreground: hsl(210 33% 92%);
