@@ -1,3 +1,4 @@
+import { site } from "@/constants/site";
 import LandingPageLayout from "@/layouts/landing-page";
 import { easeOut, motion } from "framer-motion";
 import Head from "next/head";
@@ -56,14 +57,14 @@ export default function TermsAndConditions() {
                   variants={fadeUp}
                   className="text-center mb-12"
                 >
-                  <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                  <h1 className="font-display text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-6">
                     Terms and Conditions
                   </h1>
                   <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                     Please read these terms and conditions carefully before
                     using our platform.
                   </p>
-                  <div className="text-sm text-muted-foreground mt-4">
+                  <div className="font-mono text-xs uppercase tracking-wide text-muted-foreground mt-4">
                     Last updated:{" "}
                     {new Date().toLocaleDateString("en-US", {
                       year: "numeric",
@@ -86,7 +87,7 @@ export default function TermsAndConditions() {
                 >
                   <div className="space-y-8">
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         1. Acceptance of Terms
                       </h2>
                       <p className="text-muted-foreground">
@@ -98,7 +99,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         2. Description of Service
                       </h2>
                       <p className="text-muted-foreground">
@@ -110,7 +111,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         3. User Accounts
                       </h2>
                       <div className="space-y-3 text-muted-foreground">
@@ -134,7 +135,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         4. User Responsibilities
                       </h2>
                       <div className="space-y-3 text-muted-foreground">
@@ -162,7 +163,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         5. Platform Services
                       </h2>
                       <div className="space-y-3 text-muted-foreground">
@@ -186,7 +187,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         6. Privacy and Data Protection
                       </h2>
                       <p className="text-muted-foreground">
@@ -199,7 +200,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         7. Intellectual Property
                       </h2>
                       <div className="space-y-3 text-muted-foreground">
@@ -219,7 +220,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         8. Limitation of Liability
                       </h2>
                       <p className="text-muted-foreground">
@@ -232,7 +233,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         9. Termination
                       </h2>
                       <div className="space-y-3 text-muted-foreground">
@@ -252,7 +253,7 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         10. Changes to Terms
                       </h2>
                       <p className="text-muted-foreground">
@@ -264,22 +265,19 @@ export default function TermsAndConditions() {
                     </div>
 
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-4">
+                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         11. Contact Information
                       </h2>
                       <p className="text-muted-foreground">
                         If you have any questions about these Terms and
                         Conditions, please contact us at:
                       </p>
-                      <div className="mt-4 p-4 bg-muted rounded-lg">
+                      <div className="mt-4 p-4 bg-muted border border-border">
                         <p className="text-foreground font-medium">
                           Data Fellows
                         </p>
                         <p className="text-muted-foreground">
-                          Email: legal@datafellows.com
-                        </p>
-                        <p className="text-muted-foreground">
-                          Address: [Your Company Address]
+                          Email: {site.email}
                         </p>
                       </div>
                     </div>
