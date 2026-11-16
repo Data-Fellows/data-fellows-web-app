@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
+  // Vercel sets VERCEL_ENV ("production" | "preview" | "development")
+  // server-side only -- re-expose it under a NEXT_PUBLIC_ name so
+  // lib/supabase/env.ts can also read it from browser-bundled code (the
+  // browser Supabase client), not just from getServerSideProps/API routes.
+  env: {
+    NEXT_PUBLIC_APP_ENV: process.env.VERCEL_ENV ?? "development",
+  },
   images: {
     remotePatterns: [
       {
