@@ -1,3 +1,4 @@
+import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
 import {
   engagementTimeline,
@@ -53,21 +54,20 @@ const ApproachPage = () => {
               How a project actually moves.
             </h2>
             <div className="grid gap-4 md:grid-cols-5">
-              {processSteps.map((item) => (
-                <div
-                  key={item.step}
-                  className="border border-border bg-background p-5"
-                >
-                  <div className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                    {item.step}
+              {processSteps.map((item, index) => (
+                <Reveal key={item.step} delay={index * 0.1}>
+                  <div className="border border-border bg-background p-5">
+                    <div className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                      {item.step}
+                    </div>
+                    <p className="mt-2 font-display text-base font-semibold text-foreground">
+                      {item.title}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
                   </div>
-                  <p className="mt-2 font-display text-base font-semibold text-foreground">
-                    {item.title}
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -82,18 +82,17 @@ const ApproachPage = () => {
               What we hold to on every engagement.
             </h2>
             <div className="grid gap-6 md:grid-cols-2">
-              {principles.map((item) => (
-                <div
-                  key={item.title}
-                  className="border border-border bg-muted/40 p-6"
-                >
-                  <p className="font-display text-lg font-semibold text-foreground">
-                    {item.title}
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
+              {principles.map((item, index) => (
+                <Reveal key={item.title} delay={(index % 2) * 0.08}>
+                  <div className="border border-border bg-muted/40 p-6">
+                    <p className="font-display text-lg font-semibold text-foreground">
+                      {item.title}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>

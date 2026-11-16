@@ -1,8 +1,9 @@
+import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
 import { services, servicesFaq } from "@/constants/services";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowRight, FiArrowUpRight, FiCheck, FiMinus } from "react-icons/fi";
 
 const procurementSteps = [
   {
@@ -67,80 +68,144 @@ const ServicesPage = () => {
             <h2 id="services-list-heading" className="sr-only">
               Service families
             </h2>
-            <div className="space-y-10">
-              {services.map((service, index) => (
-                <div
-                  key={service.key}
-                  className="border border-border bg-background p-6 lg:p-10"
-                >
-                  <div className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                    0{index + 1}
-                  </div>
-                  <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                    {service.name}
-                  </h3>
-                  <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-                    <span className="font-semibold text-foreground">
-                      The problem:{" "}
-                    </span>
-                    {service.buyerProblem}
-                  </p>
 
-                  <div className="mt-8 grid gap-8 lg:grid-cols-3">
-                    <div>
-                      <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        Included
-                      </p>
-                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                        {service.included.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        Not included
-                      </p>
-                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                        {service.excluded.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        Deliverables
-                      </p>
-                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                        {service.deliverables.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+            {/* Lead service: the one most buyers start a conversation about,
+                given a full dark feature treatment instead of blending into
+                the same box as the other three. */}
+            {services[0] ? (
+              <Reveal className="border border-gold bg-navy-deep p-6 text-navy-deep-foreground lg:p-12">
+                <span className="font-mono text-xs uppercase tracking-wide text-gold">
+                  Where most conversations start
+                </span>
+                <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                  {services[0].name}
+                </h3>
+                <p className="mt-4 max-w-2xl border-l-2 border-gold pl-4 text-lg leading-relaxed text-navy-deep-foreground/80">
+                  {services[0].buyerProblem}
+                </p>
 
-                  <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-border pt-6">
-                    <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                      {service.deliveryMode}
-                    </span>
-                    {service.relatedWork?.map((work) => (
-                      <Link
-                        key={work.name}
-                        href={work.href}
-                        className="font-mono text-xs uppercase tracking-wide text-foreground underline underline-offset-4 hover:text-foreground/70"
-                      >
-                        Related: {work.name} (Status: {work.stage})
-                      </Link>
-                    ))}
-                    <Link
-                      href="/contact"
-                      className="ml-auto inline-flex items-center gap-2 border border-foreground px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
-                    >
-                      Discuss a Project
-                      <FiArrowUpRight className="h-4 w-4" />
-                    </Link>
+                <div className="mt-10 grid gap-8 lg:grid-cols-3">
+                  <div>
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-gold">
+                      Included
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm text-navy-deep-foreground/80">
+                      {services[0].included.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-gold">
+                      Not included
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm text-navy-deep-foreground/80">
+                      {services[0].excluded.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-gold">
+                      Deliverables
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm text-navy-deep-foreground/80">
+                      {services[0].deliverables.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
+
+                <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-navy-deep-foreground/15 pt-6">
+                  <span className="font-mono text-xs uppercase tracking-wide text-navy-deep-foreground/60">
+                    {services[0].deliveryMode}
+                  </span>
+                  {services[0].relatedWork?.map((work) => (
+                    <Link
+                      key={work.name}
+                      href={work.href}
+                      className="font-mono text-xs uppercase tracking-wide text-gold underline underline-offset-4 hover:text-gold/70"
+                    >
+                      Related: {work.name} (Status: {work.stage})
+                    </Link>
+                  ))}
+                  <Link
+                    href="/contact"
+                    className="ml-auto inline-flex items-center gap-2 border border-gold bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+                  >
+                    Discuss a Project
+                    <FiArrowUpRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </Reveal>
+            ) : null}
+
+            {/* The remaining services as a single unified spec sheet instead
+                of three more near-identical boxes -- same information, a
+                deliberately different, more compact rhythm. */}
+            <div className="border border-border bg-background">
+              {services.slice(1).map((service, index) => (
+                <Reveal
+                  key={service.key}
+                  className={`grid gap-6 p-6 lg:grid-cols-12 lg:gap-10 lg:p-10 ${
+                    index > 0 ? "border-t border-border" : ""
+                  }`}
+                >
+                  <div className="lg:col-span-4">
+                    <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
+                      {service.name}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {service.buyerProblem}
+                    </p>
+                    <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                      <span>{service.deliveryMode}</span>
+                      {service.relatedWork?.map((work) => (
+                        <Link
+                          key={work.name}
+                          href={work.href}
+                          className="text-foreground underline underline-offset-4 hover:text-foreground/70"
+                        >
+                          {work.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-6">
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {service.included.map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <FiCheck className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-foreground" />
+                          {item}
+                        </li>
+                      ))}
+                      {service.deliverables.map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <FiArrowRight className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-foreground" />
+                          {item}
+                        </li>
+                      ))}
+                      {service.excluded.map((item) => (
+                        <li key={item} className="flex items-start gap-2 text-muted-foreground/70">
+                          <FiMinus className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="lg:col-span-2 lg:text-right">
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-2 border border-foreground px-4 py-2 text-xs font-semibold uppercase tracking-wide text-foreground transition hover:bg-foreground hover:text-background"
+                    >
+                      Discuss
+                      <FiArrowUpRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>

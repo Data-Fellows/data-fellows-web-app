@@ -49,7 +49,7 @@ const Partners = () => {
       <div className="mx-auto max-w-6xl space-y-8 border border-border bg-background px-6 py-12 lg:px-10 lg:py-16">
         <div className="space-y-4 text-center">
           <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            06 &mdash; Partners
+Partners
           </span>
           <h2
             id="partners-heading"

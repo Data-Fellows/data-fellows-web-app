@@ -14,7 +14,7 @@ const Impact = () => {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl space-y-3">
             <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              04 &mdash; Measured Impact
+Measured Impact
             </span>
             <h2
               id="impact-heading"

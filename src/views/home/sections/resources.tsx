@@ -67,7 +67,7 @@ const Resources = () => {
       <div className="mx-auto max-w-6xl space-y-12">
         <div className="space-y-4 text-left">
           <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            07 &mdash; Insights
+Insights
           </span>
           <h2
             id="resources-heading"

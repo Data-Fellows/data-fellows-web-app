@@ -60,7 +60,7 @@ const Community = () => {
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14">
           <div className="space-y-6 lg:col-span-6">
             <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              05 &mdash; Community
+Community
             </span>
             <h2
               id="community-heading"

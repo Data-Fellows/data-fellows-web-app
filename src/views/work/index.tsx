@@ -1,4 +1,5 @@
 import ProductSlideshow from "@/components/custom/product-slideshow";
+import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
 import { products } from "@/constants/products";
 import LandingPageLayout from "@/layouts/landing-page";
@@ -77,9 +78,9 @@ const WorkPage = () => {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2">
-              {visible.map((product) => (
+              {visible.map((product, index) => (
+                <Reveal key={product.key} delay={index * 0.08}>
                 <article
-                  key={product.key}
                   className="flex h-full flex-col gap-5 border border-border bg-background p-6"
                 >
                   <ProductSlideshow slides={product.slides} />
@@ -112,6 +113,7 @@ const WorkPage = () => {
                     <FiArrowUpRight className="h-4 w-4" />
                   </Link>
                 </article>
+                </Reveal>
               ))}
             </div>
           </div>

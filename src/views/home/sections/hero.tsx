@@ -1,7 +1,9 @@
 import { formatCompactStat, impactStats } from "@/constants/site";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 // Short labels for the tight hero card -- numbers are still derived from
 // impactStats (the canonical source) so they can't drift from the fuller
@@ -12,8 +14,30 @@ const stats = [
   { label: "Pilots", value: formatCompactStat(impactStats[2]) },
 ];
 
+const container: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+};
+
 export const Hero = () => {
   const router = useRouter();
+  // Default to the SSR-safe "motion allowed" behavior and only switch to
+  // the reduced-motion behavior after mount -- useReducedMotion() can
+  // resolve synchronously to the real device preference on the client's
+  // very first render while SSR always assumes motion is allowed, and
+  // feeding that straight into `initial`/`animate` produces a client/server
+  // markup mismatch (same issue already fixed in Reveal and
+  // animated-counter.tsx).
+  const prefersReduced = useReducedMotion();
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    setReduced(Boolean(prefersReduced));
+  }, [prefersReduced]);
 
   return (
     <section
@@ -25,25 +49,40 @@ export const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left: copy */}
           <div className="lg:col-span-7">
-            <div className="max-w-2xl">
-              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Software &middot; Data &middot; AI &middot; Operational Systems
-              </span>
+            <motion.div
+              className="max-w-2xl"
+              initial={reduced ? undefined : "hidden"}
+              animate={reduced ? undefined : "visible"}
+              variants={container}
+            >
+              <motion.span
+                variants={item}
+                className="block font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground"
+              >
+                Where software, data and AI meet real operations.
+              </motion.span>
 
-              <h1
+              <motion.h1
+                variants={item}
                 id="hero-heading"
                 className="mt-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.08]"
               >
                 We build technology for problems worth solving.
-              </h1>
+              </motion.h1>
 
-              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+              <motion.p
+                variants={item}
+                className="mt-5 text-lg leading-relaxed text-muted-foreground"
+              >
                 Data Fellows works with organizations to understand difficult
                 operational challenges, develop software and AI systems, and
                 support the solutions in the real world.
-              </p>
+              </motion.p>
 
-              <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+              <motion.div
+                variants={item}
+                className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4"
+              >
                 <button
                   onClick={() => router.push("/contact")}
                   className="inline-flex items-center justify-center bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-foreground/90"
@@ -57,9 +96,12 @@ export const Hero = () => {
                 >
                   Explore Our Work
                 </Link>
-              </div>
+              </motion.div>
 
-              <div className="mt-10 flex flex-wrap gap-6 border-t border-border pt-6">
+              <motion.div
+                variants={item}
+                className="mt-10 flex flex-wrap gap-6 border-t border-border pt-6"
+              >
                 {stats.map((s) => (
                   <div key={s.label} className="flex items-baseline gap-2">
                     <span className="font-display text-2xl font-semibold text-foreground">
@@ -70,12 +112,17 @@ export const Hero = () => {
                     </span>
                   </div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* Right: visual card */}
-          <div className="lg:col-span-5">
+          <motion.div
+            className="lg:col-span-5"
+            initial={reduced ? undefined : { opacity: 0, y: 14 }}
+            animate={reduced ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.25, ease: "easeOut" }}
+          >
             <div className="relative mx-auto max-w-md lg:max-w-sm">
               <div className="overflow-hidden border border-border bg-card text-card-foreground">
                 <div className="relative h-64 sm:h-72">
@@ -124,7 +171,7 @@ export const Hero = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ const Cta = () => {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 border border-gold bg-navy-deep px-6 py-14 text-navy-deep-foreground sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-14">
         <div className="max-w-2xl space-y-3">
           <p className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
-            08 &mdash; Work With Us
+Work With Us
           </p>
           <h2
             id="cta-heading"

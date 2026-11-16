@@ -16,7 +16,7 @@ const Products = () => {
       <div className="mx-auto max-w-6xl space-y-10 bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-10 lg:py-16">
         <div className="max-w-3xl space-y-4">
           <span className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
-            02 &mdash; Things We&apos;ve Explored and Built
+Things We&apos;ve Explored and Built
           </span>
           <h2
             id="products-heading"

@@ -5,6 +5,7 @@ import {
   communityAdmins,
   foundingTeam,
 } from "@/views/shared/team";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -22,6 +23,7 @@ type Person = {
 
 const PersonCard = ({ person }: { person: Person }) => {
   const [expanded, setExpanded] = useState(false);
+  const reduced = useReducedMotion();
   const { name, role, tagline, image, linkedin, objectPosition } = person;
 
   return (
@@ -68,14 +70,26 @@ const PersonCard = ({ person }: { person: Person }) => {
         >
           {expanded ? "Hide" : "More about"} {name.split(" ")[0]}
         </button>
-        {expanded ? (
-          <p className="border-l-2 border-gold pl-3 text-xs italic leading-relaxed text-muted-foreground">
-            We're collecting {name.split(" ")[0]}&apos;s full story directly
-            from the team -- how they joined, what they&apos;re working on
-            day to day, and what led them here. This section will be filled
-            in once that interview is done, rather than guessed at.
-          </p>
-        ) : null}
+        <AnimatePresence initial={false}>
+          {expanded ? (
+            <motion.div
+              key="bio"
+              initial={reduced ? false : { height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={reduced ? undefined : { height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              style={{ overflow: "hidden" }}
+            >
+              <p className="border-l-2 border-gold pl-3 pt-1 text-xs italic leading-relaxed text-muted-foreground">
+                We're collecting {name.split(" ")[0]}&apos;s full story
+                directly from the team -- how they joined, what they&apos;re
+                working on day to day, and what led them here. This section
+                will be filled in once that interview is done, rather than
+                guessed at.
+              </p>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -143,7 +157,9 @@ const PeoplePage = () => {
               >
                 Community leadership
               </h2>
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div
+                className={`grid gap-6 ${communityAdmins.length > 1 ? "sm:grid-cols-2" : "max-w-xs"}`}
+              >
                 {communityAdmins.map((person) => (
                   <PersonCard key={person.name} person={person} />
                 ))}
@@ -153,7 +169,9 @@ const PeoplePage = () => {
               <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
                 Advisors
               </h2>
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div
+                className={`grid gap-6 ${advisors.length > 1 ? "sm:grid-cols-2" : "max-w-xs"}`}
+              >
                 {advisors.map((person) => (
                   <PersonCard key={person.name} person={person} />
                 ))}

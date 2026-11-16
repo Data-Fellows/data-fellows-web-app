@@ -46,7 +46,7 @@ const WhoWeAre = () => {
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
           <div className="space-y-6 lg:col-span-6">
             <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              03 &mdash; Where This Started
+Where This Started
             </span>
             <h2
               id="who-we-are-heading"
