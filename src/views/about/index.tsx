@@ -33,11 +33,11 @@ const AboutUs = () => {
         <About />
 
         <section className="px-4" aria-labelledby="values-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-background px-6 py-10">
+          <div className="mx-auto max-w-6xl border border-border bg-background px-6 py-10">
             <div className="space-y-6">
               <h2
                 id="values-heading"
-                className="text-2xl font-semibold text-foreground sm:text-3xl"
+                className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
               >
                 How we work together
               </h2>
@@ -45,9 +45,9 @@ const AboutUs = () => {
                 {values.map(({ title, description }) => (
                   <div
                     key={title}
-                    className="rounded-2xl border border-primary/10 bg-secondary/10 px-5 py-5 text-sm text-muted-foreground"
+                    className="border border-border bg-muted/40 px-5 py-5 text-sm text-muted-foreground"
                   >
-                    <p className="text-base font-semibold text-foreground">
+                    <p className="font-display text-base font-semibold text-foreground">
                       {title}
                     </p>
                     <p className="mt-2">{description}</p>
