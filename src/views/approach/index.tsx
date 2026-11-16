@@ -147,8 +147,8 @@ const ApproachPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="approach-timeline-heading">
-          <div className="mx-auto max-w-6xl border border-gold bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-12">
-            <span className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
+          <div className="mx-auto max-w-6xl border border-brand-blue bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-12">
+            <span className="font-mono text-xs font-medium uppercase tracking-wide text-brand-blue">
               Engagement Timeline
             </span>
             <h2
@@ -163,7 +163,7 @@ const ApproachPage = () => {
                   key={item}
                   className="flex items-center gap-2 border border-navy-deep-foreground/20 px-4 py-2 font-mono text-xs uppercase tracking-wide"
                 >
-                  <span className="text-gold">0{index + 1}</span>
+                  <span className="text-brand-blue">0{index + 1}</span>
                   {item}
                 </li>
               ))}

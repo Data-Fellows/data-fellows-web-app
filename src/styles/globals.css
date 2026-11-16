@@ -63,8 +63,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-gold: var(--gold);
-  --color-gold-foreground: var(--gold-foreground);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-foreground: var(--brand-blue-foreground);
   --color-navy-deep: var(--navy-deep);
   --color-navy-deep-foreground: var(--navy-deep-foreground);
   --font-sans: var(--font-sans);
@@ -101,8 +101,11 @@
   --chart-3: hsl(37 92% 55%);
   --chart-4: hsl(330 70% 52%);
   --chart-5: hsl(50 100% 48%);
-  --gold: hsl(39 78% 54%);
-  --gold-foreground: hsl(213 35% 14%);
+  /* The brand's own bright blue (sampled from the brand palette), used as
+     the site's single highlight/CTA accent in place of the earlier gold --
+     the founder asked for only brand colors, no gold, anywhere. */
+  --brand-blue: hsl(204 78% 43%);
+  --brand-blue-foreground: hsl(0 0% 100%);
   --radius: 0.6rem;
   --sidebar-background: hsl(210 33% 99%);
   --sidebar-foreground: hsl(213 35% 16%);
@@ -146,8 +149,10 @@
   --chart-3: hsl(37 92% 60%);
   --chart-4: hsl(325 70% 60%);
   --chart-5: hsl(50 95% 65%);
-  --gold: hsl(38 68% 52%);
-  --gold-foreground: hsl(217 30% 10%);
+  /* Same fixed brand blue as the light theme -- a brand color, not a
+     theme-adaptive semantic one. */
+  --brand-blue: hsl(204 78% 43%);
+  --brand-blue-foreground: hsl(0 0% 100%);
   --radius: 0.6rem;
   --sidebar-background: hsl(215 28% 12%);
   --sidebar-foreground: hsl(210 33% 92%);

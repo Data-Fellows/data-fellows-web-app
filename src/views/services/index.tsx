@@ -73,20 +73,20 @@ const ServicesPage = () => {
                 given a full dark feature treatment instead of blending into
                 the same box as the other three. */}
             {services[0] ? (
-              <Reveal className="border border-gold bg-navy-deep p-6 text-navy-deep-foreground lg:p-12">
-                <span className="font-mono text-xs uppercase tracking-wide text-gold">
+              <Reveal className="border border-brand-blue bg-navy-deep p-6 text-navy-deep-foreground lg:p-12">
+                <span className="font-mono text-xs uppercase tracking-wide text-brand-blue">
                   Where most conversations start
                 </span>
                 <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                   {services[0].name}
                 </h3>
-                <p className="mt-4 max-w-2xl border-l-2 border-gold pl-4 text-lg leading-relaxed text-navy-deep-foreground/80">
+                <p className="mt-4 max-w-2xl border-l-2 border-brand-blue pl-4 text-lg leading-relaxed text-navy-deep-foreground/80">
                   {services[0].buyerProblem}
                 </p>
 
                 <div className="mt-10 grid gap-8 lg:grid-cols-3">
                   <div>
-                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-gold">
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue">
                       Included
                     </p>
                     <ul className="mt-3 space-y-2 text-sm text-navy-deep-foreground/80">
@@ -96,7 +96,7 @@ const ServicesPage = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-gold">
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue">
                       Not included
                     </p>
                     <ul className="mt-3 space-y-2 text-sm text-navy-deep-foreground/80">
@@ -106,7 +106,7 @@ const ServicesPage = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-gold">
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue">
                       Deliverables
                     </p>
                     <ul className="mt-3 space-y-2 text-sm text-navy-deep-foreground/80">
@@ -125,14 +125,14 @@ const ServicesPage = () => {
                     <Link
                       key={work.name}
                       href={work.href}
-                      className="font-mono text-xs uppercase tracking-wide text-gold underline underline-offset-4 hover:text-gold/70"
+                      className="font-mono text-xs uppercase tracking-wide text-brand-blue underline underline-offset-4 hover:text-brand-blue/70"
                     >
                       Related: {work.name} (Status: {work.stage})
                     </Link>
                   ))}
                   <Link
                     href="/contact"
-                    className="ml-auto inline-flex items-center gap-2 border border-gold bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+                    className="ml-auto inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-5 py-2.5 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90"
                   >
                     Discuss a Project
                     <FiArrowUpRight className="h-4 w-4" />
@@ -212,8 +212,8 @@ const ServicesPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="procurement-heading">
-          <div className="mx-auto max-w-6xl border border-gold bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-12">
-            <span className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
+          <div className="mx-auto max-w-6xl border border-brand-blue bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-12">
+            <span className="font-mono text-xs font-medium uppercase tracking-wide text-brand-blue">
               Getting Started
             </span>
             <h2
@@ -225,7 +225,7 @@ const ServicesPage = () => {
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {procurementSteps.map((step, index) => (
                 <div key={step.title} className="border border-navy-deep-foreground/15 p-5">
-                  <div className="font-mono text-xs uppercase tracking-wide text-gold">
+                  <div className="font-mono text-xs uppercase tracking-wide text-brand-blue">
                     0{index + 1}
                   </div>
                   <p className="mt-2 font-display text-base font-semibold">

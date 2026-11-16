@@ -69,7 +69,7 @@ const CardDescription = ({ text }: { text: string }) => {
 const statusStyles: Record<ActivityStatus, string> = {
   Open: "border-foreground text-foreground",
   Ongoing: "border-foreground text-foreground",
-  Upcoming: "border-gold text-gold bg-gold/10",
+  Upcoming: "border-brand-blue text-brand-blue bg-brand-blue/10",
   Closed: "border-border bg-muted text-muted-foreground",
 };
 

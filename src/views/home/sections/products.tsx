@@ -15,7 +15,7 @@ const Products = () => {
     >
       <div className="mx-auto max-w-6xl space-y-10 bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-10 lg:py-16">
         <div className="max-w-3xl space-y-4">
-          <span className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
+          <span className="font-mono text-xs font-medium uppercase tracking-wide text-brand-blue">
 Things We&apos;ve Explored and Built
           </span>
           <h2
@@ -41,7 +41,7 @@ Things We&apos;ve Explored and Built
               }`}
             >
               <div className="space-y-5 lg:col-span-5">
-                <div className="font-mono text-[11px] uppercase tracking-wide text-gold">
+                <div className="font-mono text-[11px] uppercase tracking-wide text-brand-blue">
                   Status: {product.stage}
                 </div>
                 <h3 className="font-display text-2xl font-semibold text-white sm:text-3xl">
@@ -55,7 +55,7 @@ Things We&apos;ve Explored and Built
                     href={product.ctaHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+                    className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue/90"
                   >
                     {product.ctaLabel}
                     <FiArrowUpRight className="h-4 w-4" />
