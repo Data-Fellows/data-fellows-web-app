@@ -45,14 +45,14 @@ export type Product = {
 export const products: Product[] = [
   {
     key: "bizpilot",
-    name: "BizPilot",
+    name: "BizPilot AI",
     stage: "Explored",
     workType: "Product Exploration",
-    capabilities: ["Software", "Data"],
+    capabilities: ["Software", "Data", "AI"],
     title: "Connecting data professionals with real opportunities.",
     goal: "Help data professionals get discovered for real opportunities, and give businesses a faster way to find vetted data talent for a scoped problem.",
     description:
-      "BizPilot grew from our work helping data professionals build experience and connect with meaningful opportunities. The platform explored how professionals could showcase their skills, discover projects and opportunities, and engage with businesses looking for data expertise.",
+      "BizPilot AI grew from our work helping data professionals build experience and connect with meaningful opportunities. The platform explored how professionals could showcase their skills, discover projects and opportunities, and engage with businesses looking for data expertise.",
     ctaLabel: "View our Product Hunt launch",
     ctaHref: site.productHuntUrl,
     slides: [

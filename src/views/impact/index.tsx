@@ -43,8 +43,8 @@ const ImpactPage = () => {
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4 sm:px-6" aria-labelledby="impact-hero-heading">
-          <div className="mx-auto max-w-6xl border border-gold bg-navy-deep px-6 py-14 text-navy-deep-foreground lg:px-12 lg:py-20">
-            <p className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
+          <div className="mx-auto max-w-6xl border border-brand-blue bg-navy-deep px-6 py-14 text-navy-deep-foreground lg:px-12 lg:py-20">
+            <p className="font-mono text-xs font-medium uppercase tracking-wide text-brand-blue">
               2022 &mdash; 2026
             </p>
             <h1
@@ -62,7 +62,7 @@ const ImpactPage = () => {
               href={site.impactReportUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+              className="mt-8 inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
             >
               Read the 2026 Impact Report
               <FiDownload className="h-4 w-4" />

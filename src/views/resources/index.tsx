@@ -101,9 +101,9 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
           className="px-4 sm:px-6"
           aria-labelledby="impact-report-heading"
         >
-          <div className="mx-auto max-w-6xl border border-gold bg-navy-deep px-6 py-10 text-navy-deep-foreground lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-12">
+          <div className="mx-auto max-w-6xl border border-brand-blue bg-navy-deep px-6 py-10 text-navy-deep-foreground lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-12">
             <div className="space-y-3">
-              <span className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-brand-blue">
                 Four-year anniversary
               </span>
               <h2
@@ -122,7 +122,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
               href="/documents/data-fellows-impact-report-2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90 lg:mt-0"
+              className="mt-6 inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90 lg:mt-0"
             >
               Read the 2026 Impact Report
               <FiDownload className="h-4 w-4" />
@@ -229,32 +229,6 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                   : `No ${filterLabels[activeFilter].toLowerCase()} yet -- check back soon.`}
               </p>
             )}
-
-            <div className="border border-border bg-background px-6 py-6">
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Journey so far
-                  </p>
-                  <h3 className="font-display text-2xl font-semibold text-foreground">
-                    Behind the scenes of a Fellow&apos;s success story.
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Get to know the prompts, pivots, and partnerships that made
-                    the launch possible.
-                  </p>
-                </div>
-                <Link
-                  href={journeySoFarUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
-                >
-                  Listen to latest
-                  <FiHeadphones className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
           </div>
         </section>
 

@@ -63,8 +63,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-gold: var(--gold);
-  --color-gold-foreground: var(--gold-foreground);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-fill: var(--brand-blue-fill);
+  --color-brand-blue-foreground: var(--brand-blue-foreground);
+  --color-brand-blue-label: var(--brand-blue-label);
   --color-navy-deep: var(--navy-deep);
   --color-navy-deep-foreground: var(--navy-deep-foreground);
   --font-sans: var(--font-sans);
@@ -101,8 +103,26 @@
   --chart-3: hsl(37 92% 55%);
   --chart-4: hsl(330 70% 52%);
   --chart-5: hsl(50 100% 48%);
-  --gold: hsl(39 78% 54%);
-  --gold-foreground: hsl(213 35% 14%);
+  /* The brand's own blue (sampled from the brand palette), used as the
+     site's single highlight/CTA accent in place of the earlier gold -- the
+     founder asked for only brand colors, no gold, anywhere. Three roles,
+     not theme-split, because --navy-deep (the fixed dark showcase surface
+     almost all of these sit on) never changes with the theme toggle
+     either:
+     --brand-blue: text/border labels on navy-deep (contrast-checked
+       against navy-deep specifically: 5.02:1).
+     --brand-blue-fill: solid button backgrounds paired with white text
+       (needs to be darker so white stays readable on it: 5.32:1) --
+       lighter than --brand-blue, so a button's border+fill reads as a
+       deliberate two-tone edge rather than a contrast bug.
+     --brand-blue-label: the few badges that sit directly on the page's
+       own light/dark-adaptive background instead of navy-deep (the
+       work-index and case-study "Status" badges, the activities
+       "Upcoming" badge) -- this one DOES need to flip with the theme. */
+  --brand-blue: hsl(204 78% 48%);
+  --brand-blue-fill: hsl(204 78% 38%);
+  --brand-blue-foreground: hsl(0 0% 100%);
+  --brand-blue-label: hsl(204 78% 38%);
   --radius: 0.6rem;
   --sidebar-background: hsl(210 33% 99%);
   --sidebar-foreground: hsl(213 35% 16%);
@@ -146,8 +166,14 @@
   --chart-3: hsl(37 92% 60%);
   --chart-4: hsl(325 70% 60%);
   --chart-5: hsl(50 95% 65%);
-  --gold: hsl(38 68% 52%);
-  --gold-foreground: hsl(217 30% 10%);
+  /* --brand-blue and --brand-blue-fill stay the same as the light theme --
+     both are contrast-checked against --navy-deep, which is fixed and
+     doesn't change with this toggle. --brand-blue-label flips lighter
+     here because it sits on THIS theme's own (dark) page background. */
+  --brand-blue: hsl(204 78% 48%);
+  --brand-blue-fill: hsl(204 78% 38%);
+  --brand-blue-foreground: hsl(0 0% 100%);
+  --brand-blue-label: hsl(204 78% 48%);
   --radius: 0.6rem;
   --sidebar-background: hsl(215 28% 12%);
   --sidebar-foreground: hsl(210 33% 92%);

@@ -109,6 +109,7 @@ export const PartnerLogoCarousel = ({
                   fill
                   sizes="(max-width: 1024px) 220px, 260px"
                   className="object-contain"
+                  loading="eager"
                 />
               </div>
             </div>

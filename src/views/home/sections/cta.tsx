@@ -7,9 +7,9 @@ const Cta = () => {
 
   return (
     <section className="px-4 sm:px-6" aria-labelledby="cta-heading">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 border border-gold bg-navy-deep px-6 py-14 text-navy-deep-foreground sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-14">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 border border-brand-blue bg-navy-deep px-6 py-14 text-navy-deep-foreground sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-14">
         <div className="max-w-2xl space-y-3">
-          <p className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
+          <p className="font-mono text-xs font-medium uppercase tracking-wide text-brand-blue">
 Work With Us
           </p>
           <h2
@@ -27,7 +27,7 @@ Work With Us
         <div className="flex flex-wrap gap-3">
           <button
             onClick={() => router.push("/contact")}
-            className="inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+            className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
           >
             Discuss a Problem
           </button>

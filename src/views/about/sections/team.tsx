@@ -1,10 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  advisors,
-  communityAdmins,
-  foundingTeam,
-} from "@/views/shared/team";
+import { foundingTeam } from "@/views/shared/team";
 import { FiLinkedin } from "react-icons/fi";
 
 const TeamCard = ({
@@ -106,29 +102,6 @@ const TeamSection = () => {
             {foundingTeam.map((person) => (
               <TeamCard key={person.name} {...person} />
             ))}
-          </div>
-        </div>
-
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div className="space-y-6">
-            <h3 className="font-display text-xl font-semibold text-foreground">
-              Community leadership
-            </h3>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {communityAdmins.map((person) => (
-                <TeamCard key={person.name} {...person} />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-6">
-            <h3 className="font-display text-xl font-semibold text-foreground">
-              Advisors
-            </h3>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {advisors.map((person) => (
-                <TeamCard key={person.name} {...person} />
-              ))}
-            </div>
           </div>
         </div>
       </div>

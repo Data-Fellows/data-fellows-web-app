@@ -34,7 +34,7 @@ export const services: ServiceOffering[] = [
     ],
     deliveryMode: "Scoped project or build-and-operate engagement",
     relatedWork: [
-      { name: "BizPilot", stage: "Explored", href: "/work/bizpilot" },
+      { name: "BizPilot AI", stage: "Explored", href: "/work/bizpilot" },
     ],
   },
   {

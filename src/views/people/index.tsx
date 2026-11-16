@@ -80,7 +80,7 @@ const PersonCard = ({ person }: { person: Person }) => {
               transition={{ duration: 0.25, ease: "easeInOut" }}
               style={{ overflow: "hidden" }}
             >
-              <p className="border-l-2 border-gold pl-3 pt-1 text-xs italic leading-relaxed text-muted-foreground">
+              <p className="border-l-2 border-brand-blue pl-3 pt-1 text-xs italic leading-relaxed text-muted-foreground">
                 We're collecting {name.split(" ")[0]}&apos;s full story
                 directly from the team -- how they joined, what they&apos;re
                 working on day to day, and what led them here. This section
@@ -181,7 +181,7 @@ const PeoplePage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="people-cta-heading">
-          <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-gold bg-navy-deep px-6 py-10 text-navy-deep-foreground sm:flex-row sm:items-center sm:justify-between lg:px-12">
+          <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-brand-blue bg-navy-deep px-6 py-10 text-navy-deep-foreground sm:flex-row sm:items-center sm:justify-between lg:px-12">
             <div className="max-w-xl space-y-2">
               <h2
                 id="people-cta-heading"
@@ -203,7 +203,7 @@ const PeoplePage = () => {
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+                className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
               >
                 Work With Us
                 <FiArrowUpRight className="h-4 w-4" />

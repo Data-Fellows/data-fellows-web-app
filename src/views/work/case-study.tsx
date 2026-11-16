@@ -28,7 +28,7 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
               <span className="border border-border px-2 py-1">
                 {product.workType}
               </span>
-              <span className="border border-gold px-2 py-1 text-gold-foreground">
+              <span className="border border-brand-blue-label px-2 py-1 text-brand-blue-label">
                 Status: {product.stage}
               </span>
               {product.capabilities.map((capability) => (
@@ -48,7 +48,7 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
               {product.title}
             </p>
 
-            <p className="border-l-2 border-gold pl-4 text-sm italic leading-relaxed text-muted-foreground">
+            <p className="border-l-2 border-brand-blue pl-4 text-sm italic leading-relaxed text-muted-foreground">
               This is a self-initiated product exploration, not a delivered
               client engagement -- written up honestly, at the depth we can
               currently document. We'll add more as it's documented further.

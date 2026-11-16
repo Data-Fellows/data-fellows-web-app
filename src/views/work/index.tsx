@@ -88,7 +88,7 @@ const WorkPage = () => {
                     <span className="border border-border px-2 py-1">
                       {product.workType}
                     </span>
-                    <span className="border border-gold px-2 py-1 text-gold-foreground">
+                    <span className="border border-brand-blue-label px-2 py-1 text-brand-blue-label">
                       Status: {product.stage}
                     </span>
                     {product.capabilities.map((capability) => (
@@ -120,7 +120,7 @@ const WorkPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="work-cta-heading">
-          <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-gold bg-navy-deep px-6 py-10 text-navy-deep-foreground sm:flex-row sm:items-center sm:justify-between lg:px-12">
+          <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-brand-blue bg-navy-deep px-6 py-10 text-navy-deep-foreground sm:flex-row sm:items-center sm:justify-between lg:px-12">
             <div className="max-w-xl space-y-2">
               <h2
                 id="work-cta-heading"
@@ -135,7 +135,7 @@ const WorkPage = () => {
             </div>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+              className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
             >
               Discuss a Project
               <FiArrowUpRight className="h-4 w-4" />

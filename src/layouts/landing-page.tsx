@@ -114,7 +114,9 @@ function Navbar() {
                 href={href}
                 onClick={() => setIsOpen(false)}
                 className={`px-2 py-3.5 text-left text-lg font-medium ${
-                  pathname === href ? "text-gold" : "text-background/90"
+                  pathname === href
+                    ? "bg-brand-blue-fill text-brand-blue-foreground"
+                    : "text-background/90"
                 }`}
               >
                 {label}
@@ -127,7 +129,7 @@ function Navbar() {
               router.push("/contact");
               setIsOpen(false);
             }}
-            className="flex w-full items-center justify-center bg-gold px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wide text-gold-foreground"
+            className="flex w-full items-center justify-center bg-brand-blue-fill px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue-foreground"
           >
             Discuss a Problem
           </button>

@@ -33,6 +33,7 @@ const ProductSlideshow = ({ slides }: { slides: ProductSlide[] }) => {
             priority={index === 0}
             className="object-cover"
             sizes="(min-width: 1024px) 560px, 100vw"
+            quality={100}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
           <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-background/90 px-4 py-3 text-xs text-muted-foreground backdrop-blur">
