@@ -57,21 +57,14 @@ export const Footer = () => {
     <footer className="mt-16 border-t border-border bg-background">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-14 md:flex-row md:items-start md:justify-between lg:px-0">
         <div className="space-y-5 md:max-w-sm">
-          <Link
-            href="/"
-            aria-label="Go to home"
-            className="flex items-center gap-2.5"
-          >
+          <Link href="/" aria-label="Go to home" className="inline-block">
             <Image
               src="/svgs/data-fellow.svg"
-              alt=""
-              width={36}
-              height={37}
-              className="h-9 w-9"
+              alt="Data Fellows"
+              width={106}
+              height={109}
+              className="h-14 w-auto"
             />
-            <span className="font-display text-lg font-bold tracking-tight text-foreground">
-              Data Fellows
-            </span>
           </Link>
           <p className="text-sm text-muted-foreground">
             Turning data into clarity for people and businesses. We train,
