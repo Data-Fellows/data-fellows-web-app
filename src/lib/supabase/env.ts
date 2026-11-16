@@ -27,6 +27,16 @@ export const getSupabaseEnv = () => {
     return { url, anonKey };
   }
 
+  // Only one of the two was set explicitly -- almost certainly a
+  // half-finished override (e.g. a staging URL with no matching key).
+  // Never fall back to the production pair in that case: it would
+  // silently point a developer's "staging" setup at real production
+  // data. Fail the same way "no Supabase connected" is already handled
+  // everywhere else, rather than guessing which default to pair it with.
+  if (url || anonKey) {
+    return null;
+  }
+
   // A preview deployment with no staging credentials set must never
   // silently fall back to the production project -- that would let
   // anyone testing a preview branch read and write real community data.
