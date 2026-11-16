@@ -46,14 +46,14 @@ const Partners = () => {
       className="px-4 sm:px-6"
       aria-labelledby="partners-heading"
     >
-      <div className="mx-auto max-w-6xl space-y-8 rounded-3xl border border-primary/10 bg-background px-6 py-12 lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-6xl space-y-8 border border-border bg-background px-6 py-12 lg:px-10 lg:py-16">
         <div className="space-y-4 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-            Partners
+          <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            06 &mdash; Partners
           </span>
           <h2
             id="partners-heading"
-            className="text-3xl font-semibold text-foreground sm:text-4xl"
+            className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
           >
             We build with strong partners.
           </h2>
@@ -71,13 +71,13 @@ const Partners = () => {
             ({ title, description, partners, icon: Icon }) => (
               <div
                 key={title}
-                className="flex flex-col gap-5 rounded-2xl border border-primary/10 bg-secondary/10 p-6"
+                className="flex flex-col gap-5 border border-border bg-muted/40 p-6"
               >
                 <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <span className="flex h-10 w-10 items-center justify-center border border-foreground/20 text-foreground">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="text-lg font-semibold text-foreground">
+                  <h3 className="font-display text-lg font-semibold text-foreground">
                     {title}
                   </h3>
                 </div>
@@ -86,7 +86,7 @@ const Partners = () => {
                   {partners.map((partner) => (
                     <span
                       key={partner}
-                      className="rounded-xl border border-primary/10 bg-background px-4 py-3 text-sm font-medium text-muted-foreground"
+                      className="border border-border bg-background px-4 py-3 text-sm font-medium text-muted-foreground"
                     >
                       {partner}
                     </span>

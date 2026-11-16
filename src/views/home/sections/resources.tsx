@@ -66,12 +66,12 @@ const Resources = () => {
     >
       <div className="mx-auto max-w-6xl space-y-12">
         <div className="space-y-4 text-left">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-            Resources
+          <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            07 &mdash; Insights
           </span>
           <h2
             id="resources-heading"
-            className="text-3xl font-semibold text-foreground sm:text-4xl"
+            className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
           >
             Stories, guides, and highlights from Fellows.
           </h2>
@@ -83,7 +83,7 @@ const Resources = () => {
 
         {featuredStory ? (
           <div className="grid gap-8 lg:grid-cols-12">
-            <article className="group overflow-hidden rounded-3xl border border-primary/10 bg-background lg:col-span-7">
+            <article className="group overflow-hidden border border-border bg-background lg:col-span-7">
               <div className="relative h-80">
                 {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
                 <img
@@ -91,12 +91,12 @@ const Resources = () => {
                   alt={featuredStory.title}
                   className="absolute inset-0 h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
+                <div className="absolute left-4 top-4 inline-flex items-center gap-2 border border-border bg-background/90 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-foreground backdrop-blur">
                   <FiBookOpen className="h-3.5 w-3.5" />
                   Story
                 </div>
                 {featuredStory.published_date ? (
-                  <div className="absolute bottom-4 left-4 rounded-full bg-background/90 px-4 py-1 text-xs uppercase tracking-wide text-muted-foreground backdrop-blur">
+                  <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-4 py-1 font-mono text-xs uppercase tracking-wide text-muted-foreground backdrop-blur">
                     {formatDate(featuredStory.published_date)}
                   </div>
                 ) : null}
@@ -125,9 +125,9 @@ const Resources = () => {
               {storyHighlights.map((item) => (
                 <article
                   key={item.id}
-                  className="flex gap-4 rounded-3xl border border-primary/10 bg-background p-4"
+                  className="flex gap-4 border border-border bg-background p-4"
                 >
-                  <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl">
+                  <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
                     <img
                       src={item.image_url || "/images/data-community-hero.jpg"}
@@ -156,8 +156,8 @@ const Resources = () => {
                 </article>
               ))}
 
-              <div className="rounded-3xl border border-primary/10 bg-primary/5 px-5 py-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+              <div className="border border-border bg-muted/40 px-5 py-5">
+                <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   Journey so far
                 </p>
                 <h3 className="mt-2 text-lg font-semibold text-foreground">
@@ -179,7 +179,7 @@ const Resources = () => {
 
               <Link
                 href="/resources"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-primary px-5 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10"
+                className="inline-flex w-full items-center justify-center gap-2 border border-foreground px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
               >
                 Check previous stories & highlights
                 <FiExternalLink className="h-4 w-4" />
@@ -212,7 +212,7 @@ const Resources = () => {
               {guidesAndLessons.map((card) => (
                 <article
                   key={card.id}
-                  className="overflow-hidden rounded-3xl border border-primary/10 bg-background"
+                  className="overflow-hidden border border-border bg-background"
                 >
                   <div className="relative h-48">
                     {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
@@ -221,7 +221,7 @@ const Resources = () => {
                       alt={card.title}
                       className="absolute inset-0 h-full w-full object-cover object-top"
                     />
-                    <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary backdrop-blur">
+                    <span className="absolute left-4 top-4 inline-flex items-center gap-2 border border-border bg-background/90 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-foreground backdrop-blur">
                       {card.category}
                     </span>
                   </div>
@@ -254,9 +254,9 @@ const Resources = () => {
           </div>
         ) : null}
 
-        <div className="rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-10 lg:flex lg:items-center lg:gap-10">
+        <div className="border border-border bg-muted/40 px-6 py-10 lg:flex lg:items-center lg:gap-10">
           <div className="space-y-4 lg:w-1/2">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+            <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
               Newsletter
             </span>
             <h3 className="text-2xl font-semibold text-foreground">
@@ -274,7 +274,7 @@ const Resources = () => {
             <button
               type="button"
               onClick={() => setIsNewsletterOpen(true)}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex w-full items-center justify-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-foreground"
             >
               Subscribe to the newsletter
               <FiArrowRight className="h-4 w-4" />

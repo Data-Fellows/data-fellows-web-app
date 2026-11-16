@@ -5,7 +5,7 @@ type Theme = { mode: "light" | "dark" | "system"; color: string };
 
 export function ThemeProvider({
   children,
-  defaultTheme = { mode: "dark", color: "yellow" },
+  defaultTheme = { mode: "light", color: "yellow" },
 }: {
   children: ReactNode;
   defaultTheme?: Theme;

@@ -13,19 +13,19 @@ const Impact = () => {
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl space-y-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-              Measured impact
+            <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              04 &mdash; Measured Impact
             </span>
             <h2
               id="impact-heading"
-              className="text-3xl font-semibold text-foreground sm:text-4xl"
+              className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
               The proof is stronger than the pitch.
             </h2>
           </div>
           <Link
             href="/impact"
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+            className="inline-flex items-center gap-2 border border-foreground px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
           >
             Open impact dashboard
             <FiArrowRight className="h-4 w-4" />
