@@ -101,7 +101,7 @@ const PeoplePage = () => {
     <LandingPageLayout>
       <PageSeo
         title="People -- Data Fellows"
-        description="Meet the people behind Data Fellows -- the founding team, community operations, and the collaborators who helped shape Inscend's early work."
+        description="Meet the people behind Data Fellows -- the founding team, community operations, and the advisors who came in through Inscend and still contribute today."
         path="/people"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -169,11 +169,11 @@ const PeoplePage = () => {
             <div className="space-y-6">
               <div>
                 <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
-                  Earlier Collaborators
+                  Advisors
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Contributed to Inscend&apos;s early work. Not current Data
-                  Fellows staff or advisors.
+                  Came in through Inscend and still advise Data Fellows from
+                  time to time today.
                 </p>
               </div>
               <div
