@@ -88,7 +88,7 @@ const WorkPage = () => {
                     <span className="border border-border px-2 py-1">
                       {product.workType}
                     </span>
-                    <span className="border border-gold px-2 py-1 text-gold-foreground">
+                    <span className="border border-gold px-2 py-1 text-gold">
                       Status: {product.stage}
                     </span>
                     {product.capabilities.map((capability) => (
