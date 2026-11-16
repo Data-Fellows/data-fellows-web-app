@@ -4,13 +4,16 @@ import { FiInstagram, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
 
 const quickLinks = [
   { label: "Home", href: "/" },
+  { label: "Work", href: "/work" },
+  { label: "What We Do", href: "/services" },
+  { label: "Approach", href: "/approach" },
   { label: "Community", href: "/community" },
   { label: "Activities", href: "/activities" },
-  { label: "Products", href: "/products" },
-  { label: "Impact", href: "/impact" },
-  { label: "Resources", href: "/resources" },
-  { label: "Partners", href: "/partners" },
   { label: "About", href: "/about" },
+  { label: "People", href: "/people" },
+  { label: "Insights", href: "/resources" },
+  { label: "Impact", href: "/impact" },
+  { label: "Partners", href: "/partners" },
 ];
 
 const partnerHighlights = [
@@ -51,24 +54,30 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-16 border-t border-border bg-secondary/10">
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-12 md:flex-row md:items-start md:justify-between lg:px-0">
+    <footer className="mt-16 border-t border-border bg-background">
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-14 md:flex-row md:items-start md:justify-between lg:px-0">
         <div className="space-y-5 md:max-w-sm">
-          <Link href="/" aria-label="Go to home">
+          <Link
+            href="/"
+            aria-label="Go to home"
+            className="flex items-center gap-2.5"
+          >
             <Image
               src="/svgs/data-fellow.svg"
-              alt="Data Fellows Logo"
-              width={140}
-              height={48}
-              className="h-12 w-auto"
-              priority
+              alt=""
+              width={36}
+              height={37}
+              className="h-9 w-9"
             />
+            <span className="font-display text-lg font-bold tracking-tight text-foreground">
+              Data Fellows
+            </span>
           </Link>
           <p className="text-sm text-muted-foreground">
             Turning data into clarity for people and businesses. We train,
             build, and launch tools that make data feel human.
           </p>
-          <div className="flex items-center gap-3 text-primary">
+          <div className="flex items-center gap-3 text-foreground">
             {socialLinks.map(({ label, href, icon: Icon }) => (
               <Link
                 key={label}
@@ -76,7 +85,7 @@ export const Footer = () => {
                 aria-label={label}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background text-lg transition hover:bg-primary hover:text-primary-foreground"
+                className="inline-flex h-9 w-9 items-center justify-center border border-border text-sm transition hover:border-foreground hover:bg-foreground hover:text-background"
               >
                 <Icon />
               </Link>
@@ -86,10 +95,10 @@ export const Footer = () => {
 
         <div className="grid w-full max-w-3xl grid-cols-1 gap-12 sm:grid-cols-2">
           <div>
-            <h4 className="text-base font-semibold text-foreground">
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Quick links
             </h4>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+            <ul className="mt-4 space-y-3 text-sm text-foreground">
               {quickLinks.map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="transition hover:text-primary">
@@ -101,7 +110,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-base font-semibold text-foreground">
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Partner network
             </h4>
             <p className="mt-4 text-sm text-muted-foreground">
@@ -112,7 +121,7 @@ export const Footer = () => {
               {partnerHighlights.map((name) => (
                 <span
                   key={name}
-                  className="rounded-xl border border-border/60 bg-background px-3 py-2"
+                  className="border border-border px-3 py-2"
                 >
                   {name}
                 </span>
@@ -122,10 +131,10 @@ export const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t border-border/70 bg-background/70">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-6 text-sm text-muted-foreground md:flex-row md:justify-between lg:px-0">
+      <div className="border-t border-border">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-6 font-mono text-xs uppercase tracking-wide text-muted-foreground md:flex-row md:justify-between lg:px-0">
           <span>&copy; {year} Data Fellows Inc. All rights reserved.</span>
-          <span className="font-medium text-foreground">
+          <span className="text-foreground">
             Built by Data Fellows Inc.
           </span>
         </div>

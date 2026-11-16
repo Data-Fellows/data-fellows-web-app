@@ -16,7 +16,7 @@ export default function NotFound() {
             className="w-full h-auto max-w-[400px] sm:max-w-[600px] mx-auto"
           />
         </div>
-        <div className="text-3xl sm:text-5xl mt-[60px] sm:mt-[-60px] font-bold text-primary">
+        <div className="font-display text-3xl sm:text-5xl mt-[60px] sm:mt-[-60px] font-bold tracking-tight text-foreground">
           Oops...
         </div>
         <p className="text-base sm:text-lg mb-6 sm:mb-8 text-muted-foreground">

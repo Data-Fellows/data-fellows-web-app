@@ -45,15 +45,18 @@ const ContactPage = () => {
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4" aria-labelledby="contact-hero-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">
+          <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
             <div className="space-y-4 text-center">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Discuss a Problem
+              </span>
               <h1
                 id="contact-hero-heading"
-                className="text-3xl font-semibold text-foreground sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
                 Inquiries & partnerships.
               </h1>
-              <p className="mx-auto max-w-2xl text-base text-muted-foreground">
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
                 Whether you want to partner with Data Fellows or feature a
                 Fellow, leave us a detailed message and the right person will
                 reach out within two business days.
@@ -64,10 +67,10 @@ const ContactPage = () => {
 
         <section className="px-4" aria-labelledby="contact-details-heading">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
-            <div className="space-y-6 rounded-3xl border border-primary/10 bg-background px-6 py-8 lg:col-span-5">
+            <div className="space-y-6 border border-border bg-background px-6 py-8 lg:col-span-5">
               <h2
                 id="contact-details-heading"
-                className="text-2xl font-semibold text-foreground sm:text-3xl"
+                className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
               >
                 Reach the team
               </h2>
@@ -82,9 +85,9 @@ const ContactPage = () => {
                     href={href}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-4 rounded-2xl border border-primary/10 bg-secondary/10 px-5 py-4 text-sm text-muted-foreground transition hover:border-primary/30"
+                    className="flex items-center gap-4 border border-border bg-muted/40 px-5 py-4 text-sm text-muted-foreground transition hover:border-foreground/40"
                   >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <span className="flex h-10 w-10 items-center justify-center border border-foreground/20 text-foreground">
                       <Icon className="h-5 w-5" />
                     </span>
                     <div>
@@ -101,17 +104,20 @@ const ContactPage = () => {
             <form
               onSubmit={(event) => {
                 event.preventDefault();
+                // There is no backend wired up to this form yet -- rather
+                // than fake a "message sent" state, hand off to the
+                // visitor's own email client with the details pre-filled
+                // so the message actually goes somewhere.
+                const subject = `[${message.topic}] Message from ${message.name}`;
+                const body = `${message.notes}\n\n-- \n${message.name} (${message.email})`;
+                window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+                  subject
+                )}&body=${encodeURIComponent(body)}`;
                 setSubmitted(true);
-                setMessage({
-                  name: "",
-                  email: "",
-                  topic: "General inquiry",
-                  notes: "",
-                });
               }}
-              className="space-y-5 rounded-3xl border border-primary/10 bg-background px-6 py-8 lg:col-span-7"
+              className="space-y-5 border border-border bg-background px-6 py-8 lg:col-span-7"
             >
-              <h2 className="text-xl font-semibold text-foreground">
+              <h2 className="font-display text-xl font-semibold text-foreground">
                 Send us a message
               </h2>
               <div className="grid gap-4 md:grid-cols-2">
@@ -128,7 +134,7 @@ const ContactPage = () => {
                         name: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                     placeholder="Your name"
                   />
                 </label>
@@ -145,7 +151,7 @@ const ContactPage = () => {
                         email: event.target.value,
                       }));
                     }}
-                    className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    className="h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                     placeholder="you@email.com"
                   />
                 </label>
@@ -161,7 +167,7 @@ const ContactPage = () => {
                       topic: event.target.value,
                     }));
                   }}
-                  className="h-11 rounded-full border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  className="h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                 >
                   <option>General inquiry</option>
                   <option>Partnership</option>
@@ -182,25 +188,28 @@ const ContactPage = () => {
                       notes: event.target.value,
                     }));
                   }}
-                  className="rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  className="border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                   placeholder="Tell us how we can support you."
                 />
               </label>
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
               >
                 <FiSend className="h-4 w-4" />
                 Send message
               </button>
               {submitted ? (
-                <p className="text-xs font-medium text-primary">
-                  Thank you! We will respond as soon as possible.
+                <p className="text-xs font-medium text-foreground">
+                  Opening your email app with this message pre-filled --
+                  send it from there and we&apos;ll reply within two
+                  business days.
                 </p>
               ) : (
                 <p className="text-xs text-muted-foreground">
-                  We keep your information private and only use it to follow up
-                  on your request.
+                  This opens your email app with your message pre-filled to{" "}
+                  {site.email}. We keep your information private and only use
+                  it to follow up on your request.
                 </p>
               )}
             </form>

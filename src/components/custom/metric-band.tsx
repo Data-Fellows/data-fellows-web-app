@@ -19,11 +19,11 @@ const MetricBand = ({ metrics, className = "" }: MetricBandProps) => (
   <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 ${className}`}>
     {metrics.map((metric, index) => (
       <Reveal key={metric.label} delay={index * 0.05}>
-        <div className="h-full rounded-3xl bg-navy-deep px-6 py-7 text-navy-deep-foreground">
-          <div className="text-4xl font-semibold tracking-tight text-gold">
+        <div className="h-full border border-border bg-navy-deep px-6 py-7 text-navy-deep-foreground">
+          <div className="font-display text-4xl font-semibold tracking-tight text-gold">
             <AnimatedCounter value={metric.value} suffix={metric.suffix} />
           </div>
-          <p className="mt-3 text-sm leading-6 text-navy-deep-foreground/70">
+          <p className="mt-3 font-mono text-xs uppercase tracking-wide text-navy-deep-foreground/70">
             {metric.label}
           </p>
         </div>

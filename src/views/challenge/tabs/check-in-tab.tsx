@@ -96,9 +96,9 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
 
   if (availableDays.length === 0) {
     return (
-      <div className="rounded-3xl border border-primary/10 bg-background px-6 py-12 text-center">
-        <FiClock className="mx-auto mb-3 h-8 w-8 text-primary" />
-        <h2 className="text-xl font-semibold text-foreground">
+      <div className="border border-border bg-background px-6 py-12 text-center">
+        <FiClock className="mx-auto mb-3 h-8 w-8 text-foreground" />
+        <h2 className="font-display text-xl font-semibold text-foreground">
           Check-in is opening soon.
         </h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
@@ -111,9 +111,9 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
 
   if (submittedDay !== null) {
     return (
-      <div className="rounded-3xl border border-primary/10 bg-background px-6 py-12 text-center">
-        <FiCheckCircle className="mx-auto mb-3 h-8 w-8 text-primary" />
-        <h2 className="text-xl font-semibold text-foreground">
+      <div className="border border-border bg-background px-6 py-12 text-center">
+        <FiCheckCircle className="mx-auto mb-3 h-8 w-8 text-foreground" />
+        <h2 className="font-display text-xl font-semibold text-foreground">
           Day {submittedDay} checked in!
         </h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
@@ -123,7 +123,7 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         <button
           type="button"
           onClick={() => setSubmittedDay(null)}
-          className="mt-6 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+          className="mt-6 border border-foreground bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition hover:bg-foreground/90"
         >
           Check in for another day
         </button>
@@ -134,10 +134,10 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   return (
     <form
       onSubmit={handleSubmit((values) => mutation.mutate(values))}
-      className="mx-auto max-w-xl space-y-5 rounded-3xl border border-primary/10 bg-background px-6 py-8"
+      className="mx-auto max-w-xl space-y-5 border border-border bg-background px-6 py-8"
     >
       <div className="space-y-2 text-center">
-        <h2 className="text-xl font-semibold text-foreground">
+        <h2 className="font-display text-xl font-semibold text-foreground">
           Daily check-in
         </h2>
         <p className="text-sm text-muted-foreground">
@@ -155,12 +155,12 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       />
 
       <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <label className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Day
         </label>
         <select
           {...register("dayId")}
-          className="w-full rounded-full border border-primary/20 bg-background px-4 py-2.5 text-sm text-foreground"
+          className="w-full border border-border bg-background px-4 py-2.5 text-sm text-foreground"
         >
           {availableDays.map((day) => (
             <option key={day.id} value={day.id}>
@@ -171,12 +171,12 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       </div>
 
       <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <label className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Name
         </label>
         <input
           {...register("memberName")}
-          className="w-full rounded-full border border-primary/20 bg-background px-4 py-2.5 text-sm text-foreground"
+          className="w-full border border-border bg-background px-4 py-2.5 text-sm text-foreground"
           placeholder="Your name"
         />
         {errors.memberName ? (
@@ -187,13 +187,13 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       </div>
 
       <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <label className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Email
         </label>
         <input
           type="email"
           {...register("memberEmail")}
-          className="w-full rounded-full border border-primary/20 bg-background px-4 py-2.5 text-sm text-foreground"
+          className="w-full border border-border bg-background px-4 py-2.5 text-sm text-foreground"
           placeholder="you@email.com"
         />
         {errors.memberEmail ? (
@@ -207,13 +207,13 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       </div>
 
       <div>
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <label className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           What did you learn? (optional)
         </label>
         <textarea
           {...register("learningNote")}
           rows={3}
-          className="w-full rounded-2xl border border-primary/20 bg-background px-4 py-2.5 text-sm text-foreground"
+          className="w-full border border-border bg-background px-4 py-2.5 text-sm text-foreground"
           placeholder="Share a takeaway with the cohort..."
         />
       </div>
@@ -227,7 +227,7 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       <button
         type="submit"
         disabled={isSubmitting || mutation.isPending}
-        className="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+        className="w-full border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 disabled:opacity-60"
       >
         {mutation.isPending ? "Checking in..." : "Check in"}
       </button>

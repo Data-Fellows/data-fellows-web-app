@@ -32,7 +32,7 @@ const TeamCard = ({
 
   return (
     <div
-      className={`flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-background ${cardWidthClass}`}
+      className={`flex h-full flex-col overflow-hidden border border-border bg-background ${cardWidthClass}`}
     >
       <div className={`relative ${imageHeightClass}`}>
         <Image
@@ -40,15 +40,17 @@ const TeamCard = ({
           alt={name}
           fill
           sizes={imageSizes}
-          className="object-cover object-top"
+          className="object-cover object-top grayscale"
           style={objectPosition ? { objectPosition } : undefined}
         />
       </div>
       <div className="flex flex-1 flex-col gap-2 px-5 py-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-base font-semibold text-foreground">{name}</p>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            <p className="font-display text-base font-semibold text-foreground">
+              {name}
+            </p>
+            <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
               {role}
             </p>
           </div>
@@ -57,7 +59,7 @@ const TeamCard = ({
               href={linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/20 text-primary transition hover:bg-primary hover:text-primary-foreground"
+              className="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
               aria-label={`LinkedIn profile of ${name}`}
             >
               <FiLinkedin className="h-4 w-4" />
@@ -75,9 +77,12 @@ const TeamSection = () => {
     <section className="px-4" aria-labelledby="team-heading">
       <div className="mx-auto max-w-6xl space-y-16">
         <div className="space-y-4 text-center">
+          <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            02 &mdash; People
+          </span>
           <h2
             id="team-heading"
-            className="text-3xl font-semibold text-foreground sm:text-4xl"
+            className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
           >
             Meet the people who keep Data Fellows moving.
           </h2>
@@ -85,10 +90,16 @@ const TeamSection = () => {
             Every leader in our ecosystem is grounded in community. They code,
             teach, and build side by side with Fellows.
           </p>
+          <Link
+            href="/people"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-foreground underline underline-offset-4 hover:text-foreground/70"
+          >
+            Meet the full team &amp; advisors
+          </Link>
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold text-foreground">
+          <h3 className="font-display text-xl font-semibold text-foreground">
             Founding team
           </h3>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -100,7 +111,7 @@ const TeamSection = () => {
 
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-foreground">
+            <h3 className="font-display text-xl font-semibold text-foreground">
               Community leadership
             </h3>
             <div className="grid gap-6 sm:grid-cols-2">
@@ -110,7 +121,9 @@ const TeamSection = () => {
             </div>
           </div>
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-foreground">Advisors</h3>
+            <h3 className="font-display text-xl font-semibold text-foreground">
+              Advisors
+            </h3>
             <div className="grid gap-6 sm:grid-cols-2">
               {advisors.map((person) => (
                 <TeamCard key={person.name} {...person} />

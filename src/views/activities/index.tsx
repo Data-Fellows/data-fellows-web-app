@@ -67,9 +67,9 @@ const CardDescription = ({ text }: { text: string }) => {
 };
 
 const statusStyles: Record<ActivityStatus, string> = {
-  Open: "border-primary/30 bg-primary/10 text-primary",
-  Ongoing: "border-primary/30 bg-primary/10 text-primary",
-  Upcoming: "border-accent/30 bg-accent/10 text-accent-foreground",
+  Open: "border-foreground text-foreground",
+  Ongoing: "border-foreground text-foreground",
+  Upcoming: "border-gold text-gold-foreground bg-gold/10",
   Closed: "border-border bg-muted text-muted-foreground",
 };
 
@@ -110,10 +110,10 @@ const filterTypeOptions: FilterType[] = ["All", "Challenge", "Event"];
 const filterTimeOptions: FilterTime[] = ["All", "Ongoing", "Past"];
 
 const filterPillClass = (active: boolean) =>
-  `rounded-full border px-4 py-2 text-sm font-semibold transition ${
+  `border px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wide transition ${
     active
-      ? "border-primary bg-primary text-primary-foreground"
-      : "border-primary/20 bg-background text-muted-foreground hover:border-primary/40"
+      ? "border-foreground bg-foreground text-background"
+      : "border-border bg-background text-muted-foreground hover:border-foreground/40"
   }`;
 
 const challengeStatus = (challenge: Challenge): ActivityStatus => {
@@ -269,18 +269,18 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
           className="px-4 sm:px-6"
           aria-labelledby="activities-hero-heading"
         >
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">
+          <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
             <div className="space-y-6 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Activities
               </span>
               <h1
                 id="activities-hero-heading"
-                className="text-3xl font-semibold text-foreground sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
                 Everything happening in the community right now.
               </h1>
-              <p className="mx-auto max-w-2xl text-base text-muted-foreground">
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
                 Challenges, events, and recurring sessions Fellows can join --
                 register below to take part.
               </p>
@@ -288,7 +288,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                 href="https://bit.ly/m/datafellows"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mx-auto inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="mx-auto inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
               >
                 <FiUsers className="h-4 w-4" />
                 Join the Community
@@ -332,7 +332,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
             </div>
 
             {cards.length === 0 ? (
-              <div className="rounded-3xl border border-primary/10 bg-background px-6 py-12 text-center">
+              <div className="border border-border bg-background px-6 py-12 text-center">
                 <p className="text-sm text-muted-foreground">
                   Nothing matches these filters yet -- try a different
                   combination.
@@ -343,7 +343,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
               {cards.map((card) => (
                 <article
                   key={card.key}
-                  className="flex h-full flex-col gap-4 overflow-hidden rounded-3xl border border-primary/10 bg-background px-6 py-6"
+                  className="flex h-full flex-col gap-4 overflow-hidden border border-border bg-background px-6 py-6"
                 >
                   {card.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs from arbitrary hosts (Canva exports, etc.), can't allowlist every domain for next/image
@@ -354,11 +354,11 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                     />
                   ) : null}
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center rounded-full border border-primary/10 bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <span className="inline-flex items-center border border-border bg-muted/40 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       {card.type}
                     </span>
                     <span
-                      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
+                      className={`inline-flex items-center border px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide ${
                         statusStyles[card.status]
                       }`}
                     >
@@ -366,12 +366,12 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                     </span>
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-foreground">
+                    <h3 className="font-display text-lg font-semibold text-foreground">
                       {card.title}
                     </h3>
                     <CardDescription text={card.description} />
                   </div>
-                  <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <div className="flex items-center gap-2 font-mono text-xs font-medium text-muted-foreground">
                     <FiCalendar className="h-4 w-4" />
                     {card.cadence}
                   </div>
@@ -380,7 +380,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                       <button
                         type="button"
                         onClick={card.onRegisterClick}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                        className="inline-flex items-center justify-center gap-2 border border-foreground bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-foreground/90"
                       >
                         {card.ctaLabel}
                       </button>
@@ -401,10 +401,10 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
                       href={card.href}
                       target={card.external ? "_blank" : undefined}
                       rel={card.external ? "noopener noreferrer" : undefined}
-                      className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                      className={`mt-auto inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-sm font-semibold transition ${
                         card.status === "Closed"
-                          ? "border border-border text-muted-foreground hover:bg-muted"
-                          : "bg-primary text-primary-foreground hover:bg-primary/90"
+                          ? "border-border text-muted-foreground hover:bg-muted"
+                          : "border-foreground bg-foreground text-background hover:bg-foreground/90"
                       }`}
                     >
                       {card.ctaLabel}

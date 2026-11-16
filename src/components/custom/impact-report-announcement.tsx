@@ -73,21 +73,21 @@ const ImpactReportAnnouncement = () => {
       aria-label="Data Fellows Impact Report announcement"
     >
       <div
-        className="relative w-full max-w-md rounded-3xl border border-primary/10 bg-background p-6 text-center shadow-2xl sm:p-8"
+        className="relative w-full max-w-md border border-border bg-background p-6 text-center shadow-2xl sm:p-8"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={handleClose}
-          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-foreground transition hover:bg-muted"
+          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-muted"
           aria-label="Close announcement"
         >
           <FiX className="h-4 w-4" />
         </button>
-        <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+        <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
           Four-year anniversary
         </span>
-        <h2 className="mt-4 text-2xl font-semibold text-foreground">
+        <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground">
           Data Fellows is 4! Read our Impact Report.
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -99,9 +99,9 @@ const ImpactReportAnnouncement = () => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleClose}
-          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
         >
-          Read the Impact Report
+          Read the 2026 Impact Report
           <FiDownload className="h-4 w-4" />
         </Link>
         <button

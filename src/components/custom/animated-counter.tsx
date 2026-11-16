@@ -68,10 +68,25 @@ const AnimatedCounter = ({ value, suffix = "" }: AnimatedCounterProps) => {
   }, [value, reduced]);
 
   return (
-    <span ref={ref}>
-      {shown.toLocaleString()}
-      {suffix}
-    </span>
+    <>
+      <span ref={ref} className="af-animated-counter">
+        {shown.toLocaleString()}
+        {suffix}
+      </span>
+      {/* A no-JS visitor (or a crawler/link-preview bot that reads raw HTML
+          without executing JavaScript) never runs the effect above, so the
+          span above is stuck showing the SSR-rendered "0" forever. This
+          <noscript> block is only rendered by the browser when scripting is
+          disabled/unavailable -- in that case it hides the "0" span via a
+          plain CSS rule and shows the real final value instead. When JS is
+          enabled, browsers never parse a <noscript> element's contents at
+          all, so this has zero effect on the normal animated behavior. */}
+      <noscript>
+        <style>{`.af-animated-counter { display: none; }`}</style>
+        {value.toLocaleString()}
+        {suffix}
+      </noscript>
+    </>
   );
 };
 

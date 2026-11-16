@@ -43,13 +43,13 @@ const ImpactPage = () => {
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
         <section className="px-4 sm:px-6" aria-labelledby="impact-hero-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl bg-navy-deep px-6 py-14 text-navy-deep-foreground lg:px-12 lg:py-20">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
-              2022 -- 2026
+          <div className="mx-auto max-w-6xl border border-gold bg-navy-deep px-6 py-14 text-navy-deep-foreground lg:px-12 lg:py-20">
+            <p className="font-mono text-xs font-medium uppercase tracking-wide text-gold">
+              2022 &mdash; 2026
             </p>
             <h1
               id="impact-hero-heading"
-              className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl"
+              className="mt-4 max-w-3xl font-display text-4xl font-semibold tracking-tight sm:text-5xl"
             >
               Four years of turning data into clarity.
             </h1>
@@ -62,7 +62,7 @@ const ImpactPage = () => {
               href={site.impactReportUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
+              className="mt-8 inline-flex items-center gap-2 border border-gold bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition hover:bg-gold/90"
             >
               Read the 2026 Impact Report
               <FiDownload className="h-4 w-4" />
@@ -72,7 +72,7 @@ const ImpactPage = () => {
 
         <section className="px-4 sm:px-6" aria-labelledby="impact-glance-heading">
           <div className="mx-auto max-w-6xl space-y-4">
-            <h2 id="impact-glance-heading" className="text-3xl font-semibold text-foreground sm:text-4xl">
+            <h2 id="impact-glance-heading" className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               Scale, participation and proof.
             </h2>
             <MetricBand metrics={impactStats} className="mt-8" />
@@ -80,12 +80,12 @@ const ImpactPage = () => {
               {extendedStats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-3xl border border-primary/10 bg-secondary/10 p-6"
+                  className="border border-border bg-muted/40 p-6"
                 >
-                  <div className="text-2xl font-semibold text-foreground">
+                  <div className="font-display text-2xl font-semibold text-foreground">
                     {stat.value}
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground">
+                  <p className="mt-2 font-mono text-xs uppercase tracking-wide text-muted-foreground">
                     {stat.label}
                   </p>
                 </div>
@@ -96,18 +96,18 @@ const ImpactPage = () => {
 
         <section className="px-4 sm:px-6" aria-labelledby="impact-timeline-heading">
           <div className="mx-auto max-w-4xl space-y-10">
-            <h2 id="impact-timeline-heading" className="text-3xl font-semibold text-foreground sm:text-4xl">
+            <h2 id="impact-timeline-heading" className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               How we got here.
             </h2>
-            <ol className="space-y-6 border-l border-primary/15 pl-6">
+            <ol className="space-y-6 border-l border-border pl-6">
               {timeline.map((item, index) => (
                 <Reveal key={item.year} delay={index * 0.05}>
                   <li className="relative">
-                    <span className="absolute -left-[1.95rem] top-1.5 h-3 w-3 rounded-full border-2 border-primary bg-background" />
-                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                    <span className="absolute -left-[1.95rem] top-1.5 h-3 w-3 border-2 border-foreground bg-background" />
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       {item.year}
                     </p>
-                    <h3 className="mt-2 text-lg font-semibold text-foreground">
+                    <h3 className="mt-2 font-display text-lg font-semibold text-foreground">
                       {item.title}
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-muted-foreground">
@@ -121,8 +121,8 @@ const ImpactPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="impact-survey-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">
-            <h2 id="impact-survey-heading" className="max-w-2xl text-3xl font-semibold text-foreground sm:text-4xl">
+          <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
+            <h2 id="impact-survey-heading" className="max-w-2xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               What members told us.
             </h2>
             <p className="mt-3 max-w-2xl text-base text-muted-foreground">
@@ -135,9 +135,9 @@ const ImpactPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="impact-cta-heading">
-          <div className="mx-auto flex max-w-6xl flex-col gap-6 rounded-3xl border border-primary/10 bg-background px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-12">
+          <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-border bg-background px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-12">
             <div className="max-w-xl space-y-2">
-              <h2 id="impact-cta-heading" className="text-2xl font-semibold text-foreground sm:text-3xl">
+              <h2 id="impact-cta-heading" className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                 Want the full picture?
               </h2>
               <p className="text-sm text-muted-foreground">
@@ -150,14 +150,14 @@ const ImpactPage = () => {
                 href={site.impactReportUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
               >
                 Read the 2026 Impact Report
                 <FiDownload className="h-4 w-4" />
               </Link>
               <Link
                 href="/partners"
-                className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-3 text-sm font-semibold text-foreground transition hover:border-primary/40"
+                className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
               >
                 Partner with us
                 <FiArrowUpRight className="h-4 w-4" />

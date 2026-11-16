@@ -52,9 +52,9 @@ const TrackerTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
 
   if (!identity) {
     return (
-      <div className="rounded-3xl border border-primary/10 bg-background px-6 py-12 text-center">
-        <FiCircle className="mx-auto mb-3 h-8 w-8 text-primary" />
-        <h2 className="text-xl font-semibold text-foreground">
+      <div className="border border-border bg-background px-6 py-12 text-center">
+        <FiCircle className="mx-auto mb-3 h-8 w-8 text-foreground" />
+        <h2 className="font-display text-xl font-semibold text-foreground">
           No check-ins yet
         </h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
@@ -63,7 +63,7 @@ const TrackerTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         <button
           type="button"
           onClick={goToCheckIn}
-          className="mt-6 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+          className="mt-6 border border-foreground bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition hover:bg-foreground/90"
         >
           Go to check-in
         </button>
@@ -85,7 +85,7 @@ const TrackerTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-xl font-semibold text-foreground">
+        <h2 className="font-display text-xl font-semibold text-foreground">
           Daily Challenge Tracker
         </h2>
         <p className="text-sm text-muted-foreground">
@@ -94,11 +94,11 @@ const TrackerTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
             : "Your progress across the challenge."}
         </p>
       </div>
-      <div className="rounded-3xl border border-primary/10 bg-background px-6 py-6 text-center">
-        <p className="text-4xl font-semibold text-primary">
+      <div className="border border-border bg-background px-6 py-6 text-center">
+        <p className="font-display text-4xl font-semibold text-foreground">
           {isLoading ? "--" : `${completedCount}/${totalDays}`} days
         </p>
-        <p className="mt-1 text-xs uppercase tracking-wide text-muted-foreground">
+        <p className="mt-1 font-mono text-xs uppercase tracking-wide text-muted-foreground">
           completed
         </p>
       </div>
@@ -106,10 +106,10 @@ const TrackerTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         {days.map((day) => (
           <div
             key={day.id}
-            className="flex items-center justify-between gap-3 rounded-2xl border border-primary/10 bg-background px-5 py-4"
+            className="flex items-center justify-between gap-3 border border-border bg-background px-5 py-4"
           >
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+              <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Day {day.dayNumber}
               </p>
               <p className="text-sm font-semibold text-foreground">
@@ -117,7 +117,7 @@ const TrackerTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
               </p>
             </div>
             {day.completed ? (
-              <FiCheckCircle className="h-5 w-5 text-primary" />
+              <FiCheckCircle className="h-5 w-5 text-foreground" />
             ) : (
               <FiCircle className="h-5 w-5 text-muted-foreground" />
             )}

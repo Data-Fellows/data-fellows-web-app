@@ -39,8 +39,8 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
     return (
       <LandingPageLayout>
         <div className="px-4 pt-28 sm:px-6 md:pt-32">
-          <div className="mx-auto max-w-3xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-16 text-center">
-            <h1 className="text-2xl font-semibold text-foreground">
+          <div className="mx-auto max-w-3xl border border-border bg-muted/40 px-6 py-16 text-center">
+            <h1 className="font-display text-2xl font-semibold text-foreground">
               This challenge isn&apos;t available.
             </h1>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -48,7 +48,7 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
             </p>
             <Link
               href="/activities"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+              className="mt-6 inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
             >
               See all activities
             </Link>
@@ -71,12 +71,12 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
       />
       <div className="space-y-10 pt-28 md:pt-32">
         <section className="px-4 sm:px-6">
-          <div className="mx-auto max-w-5xl space-y-6 rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">
+          <div className="mx-auto max-w-5xl space-y-6 border border-border bg-muted/40 px-6 py-12 lg:px-12">
             <div className="space-y-4 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Challenge
               </span>
-              <h1 className="text-3xl font-semibold text-foreground sm:text-4xl">
+              <h1 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
                 {challenge.title}
               </h1>
               {challenge.subtitle ? (
@@ -88,7 +88,7 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
                 href={challenge.cta_join_href || "https://bit.ly/m/datafellows"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mx-auto inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="mx-auto inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
               >
                 <FiUsers className="h-4 w-4" />
                 {challenge.cta_join_label || "Join the Challenge"}
@@ -101,10 +101,10 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
                   key={tab.id}
                   type="button"
                   onClick={() => setTab(tab.id)}
-                  className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                  className={`border px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wide transition ${
                     activeTab === tab.id
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-primary/20 bg-background text-muted-foreground hover:border-primary/40"
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border bg-background text-muted-foreground hover:border-foreground/40"
                   }`}
                 >
                   {tab.label}

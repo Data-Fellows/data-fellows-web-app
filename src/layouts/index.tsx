@@ -39,10 +39,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
   return (
     <div data-theme={theme.mode}>
-      <main>
-        {children}
-        <ThemeToggleButton />
-      </main>
+      {/* Not a <main> here -- each page's own layout (e.g. LandingPageLayout)
+          already renders the real <main> landmark; wrapping it in a second
+          one produced invalid nested <main><main>...</main></main> markup
+          that confuses screen-reader landmark navigation. */}
+      {children}
+      <ThemeToggleButton />
     </div>
   );
 };
