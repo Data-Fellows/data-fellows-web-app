@@ -56,7 +56,7 @@ function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-7">
+          <div className="hidden lg:flex items-center gap-7">
             {navLinks.map(({ href, label }) => (
               <Link key={href} href={href} className={getNavLinkClass(href)}>
                 {label}
@@ -65,7 +65,7 @@ function Navbar() {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <button
             onClick={() => {
               router.push("/contact");
@@ -77,7 +77,7 @@ function Navbar() {
           </button>
         </div>
 
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <button
             onClick={() => setIsOpen(true)}
             aria-label="Open menu"
@@ -91,13 +91,13 @@ function Navbar() {
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/40 md:hidden"
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-72 overflow-y-auto bg-foreground text-background transform transition-transform duration-300 md:hidden ${
+        className={`fixed top-0 right-0 z-50 h-full w-72 overflow-y-auto bg-foreground text-background transform transition-transform duration-300 lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

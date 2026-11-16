@@ -54,22 +54,22 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
       aria-label="Subscribe to the newsletter"
     >
       <div
-        className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-background shadow-2xl"
+        className="relative w-full max-w-3xl overflow-hidden border border-border bg-background shadow-2xl"
         onClick={stopPropagation}
       >
         <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Newsletter
             </p>
-            <p className="text-base font-medium text-foreground">
+            <p className="font-display text-base font-medium text-foreground">
               Community & Growth operations updates
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground transition hover:bg-muted"
+            className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition hover:bg-muted"
             aria-label="Close newsletter modal"
           >
             <FiX className="h-5 w-5" />

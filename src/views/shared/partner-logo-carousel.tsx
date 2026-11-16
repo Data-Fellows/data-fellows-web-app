@@ -74,7 +74,7 @@ export const PartnerLogoCarousel = ({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-3xl border border-primary/15 bg-primary/5 px-4 py-10 sm:px-8 sm:py-12 ${className}`}
+      className={`relative overflow-hidden border border-border bg-muted/40 px-4 py-10 sm:px-8 sm:py-12 ${className}`}
     >
       <Image
         src="/svgs/landing-page/partner-spiral.svg"
@@ -84,7 +84,7 @@ export const PartnerLogoCarousel = ({
         aria-hidden="true"
       />
       <div className="relative z-10 space-y-3 text-center">
-        <h3 className="text-2xl font-semibold text-foreground sm:text-3xl">
+        <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
           {title}
         </h3>
         <p className="mx-auto max-w-3xl text-sm text-muted-foreground sm:text-base">
@@ -100,7 +100,7 @@ export const PartnerLogoCarousel = ({
           {duplicatedLogos.map((partner, index) => (
             <div
               key={`${partner.id}-${index}`}
-              className={`mx-3 flex h-24 w-40 items-center justify-center rounded-2xl bg-white p-4 text-sm shadow-md transition-colors sm:mx-4 sm:h-32 sm:w-52 sm:rounded-3xl sm:p-6 md:h-36 md:w-60 ${partner.className ?? ""}`}
+              className={`mx-3 flex h-24 w-40 items-center justify-center border border-border bg-white p-4 text-sm shadow-md transition-colors sm:mx-4 sm:h-32 sm:w-52 sm:p-6 md:h-36 md:w-60 ${partner.className ?? ""}`}
             >
               <div className="relative h-full w-full">
                 <Image

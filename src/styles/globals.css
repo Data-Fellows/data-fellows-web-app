@@ -159,6 +159,17 @@
   --sidebar-ring: hsl(205 72% 66%);
 }
 
+html {
+  /* body's own overflow-x: hidden doesn't constrain document.documentElement
+     (the real root scroller) -- a `position: fixed` element (like the
+     mobile nav drawer, parked off-canvas at right-0 + translate-x-full)
+     is positioned relative to the viewport, not body's box, so it can
+     still enlarge the <html> element's scrollWidth and create a few
+     pixels of real horizontal scroll even though nothing visibly
+     overflows. Needs clipping at the html level too. */
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-sans);
   overflow-x: hidden;

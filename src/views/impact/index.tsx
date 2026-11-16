@@ -121,8 +121,8 @@ const ImpactPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="impact-survey-heading">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-primary/10 bg-secondary/10 px-6 py-12 lg:px-12">
-            <h2 id="impact-survey-heading" className="max-w-2xl text-3xl font-semibold text-foreground sm:text-4xl">
+          <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
+            <h2 id="impact-survey-heading" className="max-w-2xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               What members told us.
             </h2>
             <p className="mt-3 max-w-2xl text-base text-muted-foreground">
@@ -135,9 +135,9 @@ const ImpactPage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="impact-cta-heading">
-          <div className="mx-auto flex max-w-6xl flex-col gap-6 rounded-3xl border border-primary/10 bg-background px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-12">
+          <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-border bg-background px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-12">
             <div className="max-w-xl space-y-2">
-              <h2 id="impact-cta-heading" className="text-2xl font-semibold text-foreground sm:text-3xl">
+              <h2 id="impact-cta-heading" className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                 Want the full picture?
               </h2>
               <p className="text-sm text-muted-foreground">
@@ -150,14 +150,14 @@ const ImpactPage = () => {
                 href={site.impactReportUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
               >
                 Read the 2026 Impact Report
                 <FiDownload className="h-4 w-4" />
               </Link>
               <Link
                 href="/partners"
-                className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-3 text-sm font-semibold text-foreground transition hover:border-primary/40"
+                className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
               >
                 Partner with us
                 <FiArrowUpRight className="h-4 w-4" />
