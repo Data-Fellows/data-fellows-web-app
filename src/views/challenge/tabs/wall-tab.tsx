@@ -56,7 +56,7 @@ const WallTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-xl font-semibold text-foreground">
+        <h2 className="font-display text-xl font-semibold text-foreground">
           What the cohort is learning
         </h2>
         <p className="text-sm text-muted-foreground">
@@ -68,10 +68,10 @@ const WallTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         <button
           type="button"
           onClick={() => handleFilterChange("all")}
-          className={`rounded-full border px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition ${
+          className={`border px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wide transition ${
             dayFilter === "all"
-              ? "border-primary bg-primary text-primary-foreground"
-              : "border-primary/20 bg-background text-muted-foreground hover:border-primary/40"
+              ? "border-foreground bg-foreground text-background"
+              : "border-border bg-background text-muted-foreground hover:border-foreground/40"
           }`}
         >
           All
@@ -81,10 +81,10 @@ const WallTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
             key={day.id}
             type="button"
             onClick={() => handleFilterChange(day.day_number)}
-            className={`rounded-full border px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition ${
+            className={`border px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wide transition ${
               dayFilter === day.day_number
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-primary/20 bg-background text-muted-foreground hover:border-primary/40"
+                ? "border-foreground bg-foreground text-background"
+                : "border-border bg-background text-muted-foreground hover:border-foreground/40"
             }`}
           >
             Day {day.day_number}
@@ -94,21 +94,21 @@ const WallTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
 
       <div className="space-y-3">
         {items.length === 0 && !isLoading ? (
-          <div className="rounded-2xl border border-primary/10 bg-background px-6 py-10 text-center text-sm text-muted-foreground">
-            <FiMessageCircle className="mx-auto mb-2 h-6 w-6 text-primary" />
+          <div className="border border-border bg-background px-6 py-10 text-center text-sm text-muted-foreground">
+            <FiMessageCircle className="mx-auto mb-2 h-6 w-6 text-foreground" />
             No check-ins yet -- be the first to share what you learned.
           </div>
         ) : null}
         {items.map((entry) => (
           <article
             key={entry.id}
-            className="rounded-2xl border border-primary/10 bg-background px-5 py-4"
+            className="border border-border bg-background px-5 py-4"
           >
             <div className="flex items-center justify-between gap-3">
               <p className="text-sm font-semibold text-foreground">
                 {entry.member_name}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="font-mono text-xs text-muted-foreground">
                 Day {entry.day_number} &middot; {formatTimestamp(entry.created_at)}
               </p>
             </div>
@@ -126,7 +126,7 @@ const WallTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
           <button
             type="button"
             onClick={handleLoadMore}
-            className="rounded-full border border-primary px-6 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/10"
+            className="border border-foreground px-6 py-2.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
           >
             Load more
           </button>

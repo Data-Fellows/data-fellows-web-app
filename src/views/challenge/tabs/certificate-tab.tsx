@@ -76,9 +76,9 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
     const completedDays = data?.completedDays ?? 0;
     const totalDays = data?.totalDays ?? challenge.challenge_days.length;
     return (
-      <div className="rounded-3xl border border-primary/10 bg-background px-6 py-12 text-center">
-        <FiAward className="mx-auto mb-3 h-8 w-8 text-primary" />
-        <h2 className="text-xl font-semibold text-foreground">
+      <div className="border border-border bg-background px-6 py-12 text-center">
+        <FiAward className="mx-auto mb-3 h-8 w-8 text-foreground" />
+        <h2 className="font-display text-xl font-semibold text-foreground">
           Your Certificate of Participation
         </h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
@@ -89,7 +89,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         <button
           type="button"
           onClick={() => goToTab("check-in")}
-          className="mt-6 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+          className="mt-6 border border-foreground bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition hover:bg-foreground/90"
         >
           Go to check-in
         </button>
@@ -258,7 +258,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
           type="button"
           onClick={downloadImage}
           disabled={isDownloadingImage}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:opacity-60"
+          className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition hover:bg-foreground/90 disabled:opacity-60"
         >
           <FiDownload className="h-4 w-4" />
           {isDownloadingImage ? "Generating..." : "Download image"}
@@ -266,7 +266,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         <button
           type="button"
           onClick={() => window.print()}
-          className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+          className="inline-flex items-center gap-2 border border-border bg-background px-6 py-2.5 text-sm font-semibold text-foreground transition hover:border-foreground/40"
         >
           <FiPrinter className="h-4 w-4" />
           Print / Save as PDF
@@ -274,21 +274,21 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         <button
           type="button"
           onClick={() => goToTab("tracker")}
-          className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-6 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+          className="inline-flex items-center gap-2 border border-border bg-background px-6 py-2.5 text-sm font-semibold text-foreground transition hover:border-foreground/40"
         >
           Back to tracker
         </button>
       </div>
 
       <div className="space-y-3 print:hidden">
-        <p className="text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <p className="text-center font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Share your achievement
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <button
             type="button"
             onClick={shareToTwitter}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+            className="inline-flex items-center gap-2 border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-foreground/40"
           >
             <FaXTwitter className="h-4 w-4" />
             Share on X
@@ -296,7 +296,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
           <button
             type="button"
             onClick={shareToLinkedIn}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+            className="inline-flex items-center gap-2 border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-foreground/40"
           >
             <FaLinkedin className="h-4 w-4" />
             Share on LinkedIn
@@ -304,7 +304,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
           <button
             type="button"
             onClick={copyLink}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary/40"
+            className="inline-flex items-center gap-2 border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-foreground/40"
           >
             <FiLink className="h-4 w-4" />
             Copy link
