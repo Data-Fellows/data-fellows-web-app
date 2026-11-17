@@ -39,17 +39,6 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
               ))}
             </div>
 
-            {product.logo ? (
-              <div className="inline-block border border-border p-2">
-                <Image
-                  src={product.logo.src}
-                  alt={`${product.name} logo`}
-                  width={product.logo.width}
-                  height={product.logo.height}
-                  className="h-10 w-auto"
-                />
-              </div>
-            ) : null}
             <h1
               id="case-study-heading"
               className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-5xl"
