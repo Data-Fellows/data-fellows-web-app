@@ -67,8 +67,9 @@ export const Footer = () => {
             />
           </Link>
           <p className="text-sm text-muted-foreground">
-            Turning data into clarity for people and businesses. We train,
-            build, and launch tools that make data feel human.
+            An independent automation studio solving recurring operational
+            problems with software, data and AI, grown from a community of
+            data learners and builders that's still going strong.
           </p>
           <div className="flex items-center gap-3 text-foreground">
             {socialLinks.map(({ label, href, icon: Icon }) => (
