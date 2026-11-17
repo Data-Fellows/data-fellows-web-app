@@ -25,7 +25,7 @@ const WorkPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="Work | Data Fellows"
-        description="Product experiments and future client engagements from Data Fellows, labeled honestly by stage and capability."
+        description="In-house products, individual professional experience, engineering demonstrations, community initiatives, and future client engagements from Data Fellows, labeled honestly by stage and capability."
         path="/work"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -38,23 +38,32 @@ const WorkPage = () => {
               id="work-hero-heading"
               className="mx-auto mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              Earlier experiments, and the work still to come.
+              Five different kinds of work, kept honestly distinct.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              This page shows our own product explorations so far. As client
-              engagements go through a real scoping process and get
-              permission to be shown publicly, they'll be added here too --
-              labeled by the same honest stage and capability model, never
-              mixed in as if they were the same kind of work.
+              In-house products, individual professional experience,
+              engineering demonstrations, community initiatives, and
+              commercial client engagements aren't the same kind of work, so
+              we don't present them as if they were. As client engagements go
+              through a real scoping process and get permission to be shown
+              publicly, they'll be added below.
             </p>
           </div>
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="work-list-heading">
           <div className="mx-auto max-w-6xl space-y-8">
-            <h2 id="work-list-heading" className="sr-only">
-              Projects
-            </h2>
+            <div className="space-y-2">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                In-house products
+              </span>
+              <h2
+                id="work-list-heading"
+                className="font-display text-2xl font-semibold tracking-tight text-foreground"
+              >
+                Our own product explorations
+              </h2>
+            </div>
             <div
               className="flex flex-wrap gap-2"
               role="group"
@@ -115,6 +124,104 @@ const WorkPage = () => {
                 </article>
                 </Reveal>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 sm:px-6" aria-labelledby="work-experience-heading">
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
+            <div className="space-y-3 border border-border bg-background p-6">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Individual professional experience
+              </span>
+              <h2
+                id="work-experience-heading"
+                className="font-display text-xl font-semibold tracking-tight text-foreground"
+              >
+                Backgrounds our team brings with them
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Several Fellows bring direct experience from PwC, Cohere and
+                Andela, spanning enterprise consulting, software engineering,
+                data infrastructure and AI. That's each person's own
+                professional history, not a Data Fellows client engagement --
+                see whose background connects to which company on the People
+                page.
+              </p>
+              <Link
+                href="/people"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+              >
+                Meet the people behind the work
+                <FiArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="space-y-3 border border-border bg-background p-6">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Engineering demonstrations & research
+              </span>
+              <h2 className="font-display text-xl font-semibold tracking-tight text-foreground">
+                Technical experiments outside client work
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Individual engineers on the team also build and publish their
+                own technical experiments, from systems tooling to AI
+                evaluation projects, outside of anything commissioned by a
+                client. Their public profiles are the source for specifics.
+              </p>
+              <Link
+                href="/people"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+              >
+                See individual profiles
+                <FiArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="space-y-3 border border-border bg-background p-6">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Community initiatives & impact
+              </span>
+              <h2 className="font-display text-xl font-semibold tracking-tight text-foreground">
+                What the Data Fellows community has built together
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Learning sprints, mentorship circles and ecosystem pilots
+                across 1,600+ members in 33+ countries, documented in our
+                annual impact report rather than repeated here.
+              </p>
+              <div className="flex flex-wrap gap-x-5 gap-y-2">
+                <Link
+                  href="/community"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+                >
+                  Visit the community
+                  <FiArrowUpRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/impact-report"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+                >
+                  Read the Impact Report
+                  <FiArrowUpRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="space-y-3 border border-dashed border-border bg-muted/40 p-6">
+              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Commercial client engagements
+              </span>
+              <h2 className="font-display text-xl font-semibold tracking-tight text-foreground">
+                None published yet
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                We don't have a client engagement we can show publicly yet.
+                As that changes, with a real scoping process behind each one
+                and the client's permission to be named, engagements will
+                appear here rather than anywhere else on the site.
+              </p>
             </div>
           </div>
         </section>

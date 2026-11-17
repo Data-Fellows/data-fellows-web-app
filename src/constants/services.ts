@@ -14,10 +14,31 @@ export type ServiceOffering = {
 
 export const services: ServiceOffering[] = [
   {
-    key: "software",
-    name: "Software Engineering & Product Development",
+    key: "workflow",
+    name: "Workflow Automation",
     buyerProblem:
-      "An operational workflow still runs on spreadsheets, email threads, or a system that was never built to do what you're asking of it now.",
+      "A recurring process, like intake, approvals, or status updates, still runs on manual steps, spreadsheets, or email threads, and it costs your team real hours every week.",
+    included: [
+      "Mapping the process as it actually runs today, not as the org chart says it should",
+      "Automating the repetitive steps, with a clear point where a person reviews and approves",
+      "Handling the exceptions a fully manual process currently absorbs quietly",
+    ],
+    excluded: [
+      "Reselling or licensing a no-code platform as the deliverable itself",
+      "Open-ended process work outside an agreed scope without a new agreement",
+    ],
+    deliverables: [
+      "A documented process map",
+      "A working automated workflow",
+      "A handover plan for your team",
+    ],
+    deliveryMode: "Scoped project or pilot",
+  },
+  {
+    key: "integration",
+    name: "Software & Systems Integration",
+    buyerProblem:
+      "An operational workflow still runs on a system that was never built to do what you're asking of it now, or depends on systems that don't talk to each other.",
     included: [
       "Custom software and internal tools designed around your actual workflow",
       "Integrations between systems you already use",
@@ -38,44 +59,26 @@ export const services: ServiceOffering[] = [
     ],
   },
   {
-    key: "data",
-    name: "Data Platforms, Integration & Reporting",
+    key: "data-ai",
+    name: "Data & AI Automation",
     buyerProblem:
-      "Your data lives across several systems and nobody fully trusts the numbers in the reports built from it.",
+      "Your data lives across several systems, nobody fully trusts the reports built from it, and you want AI to help close that gap without losing a person's say over what changes.",
     included: [
       "Pipelines that connect your existing systems",
       "Dashboards and reports built around decisions you actually make",
-      "Data cleanup and modeling work",
+      "AI-assisted workflows with a human-approval step before anything goes live",
+      "An honest assessment of where AI is a good fit for your problem, and where it isn't",
     ],
     excluded: [
       "Enterprise data-warehouse migrations at a scale we haven't yet supported",
       "Compliance certifications we don't currently hold; we'll tell you plainly if a requirement is outside what we can support today",
+      "Fully autonomous systems with no human review on consequential decisions",
     ],
     deliverables: [
       "A documented data model",
       "Working pipelines and reports",
-      "A plan for who maintains it after handover",
-    ],
-    deliveryMode: "Scoped project or recurring support",
-  },
-  {
-    key: "ai",
-    name: "Applied AI & Automation",
-    buyerProblem:
-      "You want AI to help with a real operational task, but a person needs to stay in control of what actually changes.",
-    included: [
-      "AI-assisted workflows with a human-approval step before anything goes live",
-      "Automation of repetitive operational tasks",
-      "An honest assessment of where AI is a good fit for your problem, and where it isn't",
-    ],
-    excluded: [
-      "Fully autonomous systems with no human review on consequential decisions",
-      "Guarantees of model accuracy across every possible use case",
-    ],
-    deliverables: [
       "A working automation or AI-assisted feature",
       "Clear documentation of what the system does and doesn't decide on its own",
-      "An approval and oversight workflow",
     ],
     deliveryMode: "Scoped project or pilot",
     relatedWork: [
@@ -83,8 +86,8 @@ export const services: ServiceOffering[] = [
     ],
   },
   {
-    key: "operations",
-    name: "Implementation, Operations & Support",
+    key: "managed",
+    name: "Managed Automation",
     buyerProblem:
       "A system, ours or someone else's, needs to actually stay running, get used, and get better over time.",
     included: [

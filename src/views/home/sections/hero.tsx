@@ -59,7 +59,7 @@ export const Hero = () => {
                 variants={item}
                 className="block font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground"
               >
-                Where software, data and AI meet real operations.
+                Independent automation studio
               </motion.span>
 
               <motion.h1
@@ -67,16 +67,17 @@ export const Hero = () => {
                 id="hero-heading"
                 className="mt-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.08]"
               >
-                We build technology for problems worth solving.
+                We solve recurring operational problems with software, data and AI.
               </motion.h1>
 
               <motion.p
                 variants={item}
                 className="mt-5 text-lg leading-relaxed text-muted-foreground"
               >
-                Data Fellows works with organizations to understand difficult
-                operational challenges, develop software and AI systems, and
-                support the solutions in the real world.
+                Data Fellows designs, builds, integrates and manages the
+                automation systems complex organizations run on. We&apos;re
+                starting with healthcare and insurance, and built to extend
+                wherever the same kind of operational problem shows up next.
               </motion.p>
 
               <motion.div
