@@ -15,7 +15,7 @@ export const site = {
   email: "hello@datafellowsai.com",
   partnerEmail: "partners@datafellowsai.com",
   communityUrl: "https://bit.ly/m/datafellows",
-  inscendUrl: "https://www.inscend.io",
+  inscendUrl: "https://www.producthunt.com/products/inscend",
   productHuntUrl: "https://www.producthunt.com/products/data-fellows",
   impactReportUrl: "/documents/data-fellows-impact-report-2026.pdf",
 } as const;
