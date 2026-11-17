@@ -131,8 +131,8 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
                   Advisors to {product.name}
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Advised on {product.name} specifically -- not Data Fellows
-                  team members or company advisors.
+                  Also Data Fellows advisors today -- shown here for the role
+                  they played specifically on {product.name}.
                 </p>
               </div>
               <div className="grid gap-6 sm:grid-cols-2">
