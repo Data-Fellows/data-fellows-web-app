@@ -11,6 +11,14 @@ export type ProductHighlight = {
   description: string;
 };
 
+export type ProductAdvisor = {
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+  linkedin?: string;
+};
+
 export type Product = {
   key: string;
   name: string;
@@ -27,6 +35,10 @@ export type Product = {
   workType: "Product Exploration";
   capabilities: string[];
   title: string;
+  // The product's own logo, cropped from its real product screenshots when
+  // one exists there (not a generated substitute) -- so visitors get
+  // visually acquainted with the brand itself, not just its name as text.
+  logo?: { src: string; width: number; height: number };
   // What the project actually set out to do -- the "brief" on the /work
   // case study page -- kept distinct from `description` (the fuller
   // context/history) so the case study template can show both without
@@ -37,6 +49,9 @@ export type Product = {
   ctaHref: string;
   slides: ProductSlide[];
   highlights: ProductHighlight[];
+  // Advisors to this specific product -- not Data Fellows team members or
+  // company advisors. Keep that distinction explicit wherever this renders.
+  advisors?: ProductAdvisor[];
 };
 
 // Screenshots and copy shared between the homepage products section, the
@@ -94,9 +109,10 @@ export const products: Product[] = [
     workType: "Product Exploration",
     capabilities: ["Software", "Data", "AI"],
     title: "AI-powered product and operating intelligence for ecommerce founders.",
+    logo: { src: "/images/inscend-logo.png", width: 280, height: 85 },
     goal: "Give an independent ecommerce founder one place to see what needs attention each morning, with AI doing the investigation and the founder keeping the final call.",
     description:
-      "Inscend was developed to help independent ecommerce founders investigate what affects their products, identify improvements, and prepare actions across their business. The venture explored how AI could reduce the operational work involved in running an online store.",
+      "Inscend helps independent ecommerce founders investigate what affects their products, identify improvements, and prepare actions across their business. It's an active venture, exploring how AI can reduce the operational work involved in running an online store.",
     ctaLabel: "View our Product Hunt launch",
     ctaHref: site.inscendUrl,
     slides: [
@@ -128,6 +144,24 @@ export const products: Product[] = [
         title: "Nothing changes without approval",
         description:
           "Proposed fixes, like an updated product description, waited for a founder's explicit approval before going live in Shopify.",
+      },
+    ],
+    advisors: [
+      {
+        name: "Nnamdi Oboli",
+        role: "Inscend Advisor · Co-Founder, Dioni Visions",
+        description:
+          "Brought an operator's perspective from building consumer businesses and producing film and media, advising on market strategy and partnerships.",
+        image: "/images/Mr_Nnamdi Oboli-Co-Founder.jpg",
+        linkedin: "https://www.linkedin.com/in/nnamdi-o-247a991a7/",
+      },
+      {
+        name: "Oyeta Kokoroko",
+        role: "Inscend Advisor · Founder, Maison OKOKO",
+        description:
+          "Advised on brand positioning and product understanding, drawing on her experience founding one of Canada's best-known clean beauty brands.",
+        image: "/images/advisor.webp",
+        linkedin: "https://www.linkedin.com/in/oy%C3%A9ta-kokoroko-9b52b6160",
       },
     ],
   },

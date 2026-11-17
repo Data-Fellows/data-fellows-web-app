@@ -1,10 +1,6 @@
 import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
-import {
-  advisors,
-  communityAdmins,
-  foundingTeam,
-} from "@/views/shared/team";
+import { advisors, communityAdmins, foundingTeam } from "@/views/shared/team";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +11,7 @@ type Person = {
   name: string;
   role: string;
   tagline: string;
+  bio: string;
   image: string;
   linkedin?: string;
   featured?: boolean;
@@ -24,7 +21,9 @@ type Person = {
 const PersonCard = ({ person }: { person: Person }) => {
   const [expanded, setExpanded] = useState(false);
   const reduced = useReducedMotion();
-  const { name, role, tagline, image, linkedin, objectPosition } = person;
+  const { name, role, tagline, bio, image, linkedin, objectPosition } =
+    person;
+  const bioParagraphs = bio.split("\n\n");
 
   return (
     <div className="flex h-full flex-col overflow-hidden border border-border bg-background">
@@ -80,13 +79,11 @@ const PersonCard = ({ person }: { person: Person }) => {
               transition={{ duration: 0.25, ease: "easeInOut" }}
               style={{ overflow: "hidden" }}
             >
-              <p className="border-l-2 border-brand-blue pl-3 pt-1 text-xs italic leading-relaxed text-muted-foreground">
-                We're collecting {name.split(" ")[0]}&apos;s full story
-                directly from the team -- how they joined, what they&apos;re
-                working on day to day, and what led them here. This section
-                will be filled in once that interview is done, rather than
-                guessed at.
-              </p>
+              <div className="space-y-3 border-l-2 border-brand-blue pl-3 pt-1 text-sm leading-relaxed text-muted-foreground">
+                {bioParagraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -100,7 +97,7 @@ const PeoplePage = () => {
     <LandingPageLayout>
       <PageSeo
         title="People -- Data Fellows"
-        description="Meet the people behind Data Fellows -- the founding team, community leadership, and advisors building technology and community together."
+        description="Meet the people behind Data Fellows -- the founding team, community operations, and the advisors who guide go-to-market, brand, and partnerships."
         path="/people"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -117,10 +114,10 @@ const PeoplePage = () => {
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
               Every person here codes, teaches, or builds alongside Fellows.
-              Full biographies -- how each person joined, what they're
-              working on, and the problem they care most about -- are being
-              written up directly with the team and will fill in here over
-              time.
+              The stories below are specific on purpose -- how each person
+              joined, what they've built, and a little of what they're like
+              outside the work. More fills in as each person signs off on
+              their full story.
             </p>
             <Link
               href="/contact"
