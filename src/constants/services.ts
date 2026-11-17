@@ -49,7 +49,7 @@ export const services: ServiceOffering[] = [
     ],
     excluded: [
       "Enterprise data-warehouse migrations at a scale we haven't yet supported",
-      "Compliance certifications we don't currently hold -- we'll tell you plainly if a requirement is outside what we can support today",
+      "Compliance certifications we don't currently hold; we'll tell you plainly if a requirement is outside what we can support today",
     ],
     deliverables: [
       "A documented data model",
@@ -66,7 +66,7 @@ export const services: ServiceOffering[] = [
     included: [
       "AI-assisted workflows with a human-approval step before anything goes live",
       "Automation of repetitive operational tasks",
-      "An honest assessment of where AI is a good fit for your problem -- and where it isn't",
+      "An honest assessment of where AI is a good fit for your problem, and where it isn't",
     ],
     excluded: [
       "Fully autonomous systems with no human review on consequential decisions",
@@ -86,7 +86,7 @@ export const services: ServiceOffering[] = [
     key: "operations",
     name: "Implementation, Operations & Support",
     buyerProblem:
-      "A system -- ours or someone else's -- needs to actually stay running, get used, and get better over time.",
+      "A system, ours or someone else's, needs to actually stay running, get used, and get better over time.",
     included: [
       "Deployment and rollout support",
       "Training for your team",
@@ -124,7 +124,7 @@ export const servicesFaq: { question: string; answer: string }[] = [
   {
     question: "How is our data handled?",
     answer:
-      "We take access control and data minimization seriously on every engagement. We don't currently hold specific compliance certifications -- if your organization requires one, tell us early and we'll be direct about whether we can meet it.",
+      "We take access control and data minimization seriously on every engagement. We don't currently hold specific compliance certifications; if your organization requires one, tell us early and we'll be direct about whether we can meet it.",
   },
   {
     question: "Who owns the code and IP?",

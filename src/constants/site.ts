@@ -2,7 +2,7 @@ export const SITE_URL = "https://www.datafellowsai.com";
 export const SITE_NAME = "Data Fellows";
 export const DEFAULT_OG_IMAGE = "/images/data-community-hero.jpg";
 export const DEFAULT_DESCRIPTION =
-  "Data Fellows trains, builds, and launches tools that turn data into clarity -- for people and businesses across 33+ countries.";
+  "Data Fellows trains, builds, and launches tools that turn data into clarity, for people and businesses across 33+ countries.";
 
 // Centralized outbound destinations and public claims, so numbers and links
 // don't drift between pages -- extend this rather than hardcoding a new

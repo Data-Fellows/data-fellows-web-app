@@ -15,8 +15,8 @@ const Home: React.FC = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Data Fellows -- Turning Data Into Clarity"
-        description="We train, build, and launch tools that make data feel human -- for individuals and businesses across 33+ countries. Join our community of data fellows."
+        title="Data Fellows | Turning Data Into Clarity"
+        description="We train, build, and launch tools that make data feel human, for individuals and businesses across 33+ countries. Join our community of data fellows."
         path="/"
       />
       <ImpactReportAnnouncement />

@@ -27,7 +27,7 @@ export const processSteps = [
     step: "05",
     title: "Support & Learn",
     description:
-      "Where it's part of the agreement, we stay involved -- monitoring, fixing, and improving what we shipped.",
+      "Where it's part of the agreement, we stay involved: monitoring, fixing, and improving what we shipped.",
   },
 ];
 
@@ -40,22 +40,22 @@ export const principles = [
   {
     title: "The smallest responsible solution",
     description:
-      "We scope narrowly -- the smallest thing that actually solves the problem, with its own timeline, risks and price, not a maximal rebuild nobody asked for.",
+      "We scope narrowly: the smallest thing that actually solves the problem, with its own timeline, risks and price, not a maximal rebuild nobody asked for.",
   },
   {
     title: "Direct technical collaboration",
     description:
-      "You work directly with the person building it. We'll name the lead once one is assigned -- not every Fellow in the community is staffed on your project.",
+      "You work directly with the person building it. We'll name the lead once one is assigned; not every Fellow in the community is staffed on your project.",
   },
   {
     title: "Implementation & handover, not an afterthought",
     description:
-      "Deployment, training, documentation and support are part of the work when they're part of the agreement -- not something we figure out after launch.",
+      "Deployment, training, documentation and support are part of the work when they're part of the agreement, not something we figure out after launch.",
   },
   {
     title: "Security and privacy by default",
     description:
-      "Access control and data minimization are part of how we build, not a checkbox at the end. If a requirement -- like a specific compliance certification -- is outside what we currently support, we'll say so plainly.",
+      "Access control and data minimization are part of how we build, not a checkbox at the end. If a requirement, like a specific compliance certification, is outside what we currently support, we'll say so plainly.",
   },
 ];
 

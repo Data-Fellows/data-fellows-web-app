@@ -121,14 +121,14 @@ export const products: Product[] = [
         image: "/images/inscend-work-detail.png",
         title: "Proposed work, ready to approve",
         caption:
-          "Each suggested change -- like a product description -- came with its reasoning and sources, waiting on a founder's approval.",
+          "Each suggested change, like a product description, came with its reasoning and sources, waiting on a founder's approval.",
       },
     ],
     highlights: [
       {
         title: "Home dashboard",
         description:
-          "Surfaced each product's key signals -- stock, price, reviews -- plus a queue of proposed fixes each morning.",
+          "Surfaced each product's key signals (stock, price, reviews) plus a queue of proposed fixes each morning.",
       },
       {
         title: "Evidence, not just suggestions",

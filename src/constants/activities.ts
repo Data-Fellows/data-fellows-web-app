@@ -18,7 +18,7 @@ export const activities: Activity[] = [
     status: "Ongoing",
     cadence: "Every two weeks",
     description:
-      "Our recurring community call -- check in, share progress, ask for help, and stay connected between bigger events.",
+      "Our recurring community call: check in, share progress, ask for help, and stay connected between bigger events.",
     registerHref: "https://twitter.com/DatafellowsInfo",
   },
   {
@@ -27,7 +27,7 @@ export const activities: Activity[] = [
     status: "Open",
     cadence: "Self-paced",
     description:
-      "Free access to DataCamp's courses and certifications -- build data, AI, and analytics skills at your own pace.",
+      "Free access to DataCamp's courses and certifications: build data, AI, and analytics skills at your own pace.",
     registerHref: "https://forms.gle/NoGwPBVBM3Fq3Pi86",
   },
   {
@@ -45,7 +45,7 @@ export const activities: Activity[] = [
     status: "Closed",
     cadence: "One-week sprint",
     description:
-      "A one-week AI fluency sprint built with Anthropic's Claude -- prompting fundamentals, Projects and Artifacts, and real use cases across roles.",
+      "A one-week AI fluency sprint built with Anthropic's Claude: prompting fundamentals, Projects and Artifacts, and real use cases across roles.",
     registerHref: "https://claude-community-challenge.lovable.app/",
   },
 ];

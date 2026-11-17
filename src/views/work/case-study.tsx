@@ -10,7 +10,7 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title={`${product.name} -- Data Fellows`}
+        title={`${product.name} | Data Fellows`}
         description={product.goal}
         path={`/work/${product.key}`}
       />
@@ -114,7 +114,7 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
                   Advisors to {product.name}
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Also Data Fellows advisors today -- shown here for the role
+                  Also Data Fellows advisors today, shown here for the role
                   they played specifically on {product.name}.
                 </p>
               </div>

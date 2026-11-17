@@ -96,7 +96,7 @@ const WallTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         {items.length === 0 && !isLoading ? (
           <div className="border border-border bg-background px-6 py-10 text-center text-sm text-muted-foreground">
             <FiMessageCircle className="mx-auto mb-2 h-6 w-6 text-foreground" />
-            No check-ins yet -- be the first to share what you learned.
+            No check-ins yet. Be the first to share what you learned.
           </div>
         ) : null}
         {items.map((entry) => (

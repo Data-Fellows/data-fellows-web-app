@@ -22,7 +22,7 @@ const HomeTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <FiCalendar className="h-5 w-5 text-foreground" />
-            {formatDate(challenge.start_date)} -- {formatDate(challenge.end_date)}
+            {formatDate(challenge.start_date)} to {formatDate(challenge.end_date)}
           </div>
           {challenge.daily_commitment ? (
             <div className="flex items-center gap-3 text-sm text-muted-foreground">

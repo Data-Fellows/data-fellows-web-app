@@ -24,7 +24,7 @@ const WorkPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Work -- Data Fellows"
+        title="Work | Data Fellows"
         description="Product experiments and future client engagements from Data Fellows, labeled honestly by stage and capability."
         path="/work"
       />

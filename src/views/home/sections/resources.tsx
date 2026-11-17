@@ -267,7 +267,7 @@ Insights
               Subscribe to get the same notes shared during Sunday catch-ups.
             </p>
             <p className="text-xs text-muted-foreground">
-              Powered by MailerLite -- unsubscribe anytime.
+              Powered by MailerLite. Unsubscribe anytime.
             </p>
           </div>
           <div className="mt-8 w-full lg:mt-0 lg:w-1/2">

@@ -240,9 +240,9 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
           {showImport ? (
             <div className="mt-4 space-y-3">
               <p className="text-xs text-muted-foreground">
-                Paste the whole write-up -- title, intro, and each day as &quot;Day 1 -- Title&quot;,
-                &quot;Day 2 -- Title&quot;, etc. Fills in the title, subtitle, and one row per day below.
-                Review everything before saving -- this is a best-effort parse, not magic.
+                Paste the whole write-up: title, intro, and each day as &quot;Day 1: Title&quot;,
+                &quot;Day 2: Title&quot;, etc. Fills in the title, subtitle, and one row per day below.
+                Review everything before saving. This is a best-effort parse, not magic.
               </p>
               <textarea
                 value={importText}
@@ -278,7 +278,7 @@ const ChallengeForm = ({ mode, challengeId, initialChallenge }: ChallengeFormPro
               <span className="text-xs text-destructive">{errors.slug.message}</span>
             ) : (
               <span className="text-xs text-muted-foreground">
-                Used in the URL -- changing it breaks old links.
+                Used in the URL. Changing it breaks old links.
               </span>
             )}
           </label>

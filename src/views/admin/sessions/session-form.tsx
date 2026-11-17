@@ -157,7 +157,7 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
           <input
             {...register("title")}
             className={inputClass}
-            placeholder="Fireside: Jane Doe -- Building a career in data"
+            placeholder="Fireside: Jane Doe, Building a career in data"
           />
           {errors.title ? (
             <span className="text-xs text-destructive">{errors.title.message}</span>
@@ -235,7 +235,7 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
                   Register here
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  "Register" opens a name/email form on the site -- export who signed up as a CSV.
+                  "Register" opens a name/email form on the site. Export who signed up as a CSV.
                 </span>
               </span>
             </label>
@@ -256,8 +256,8 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
           ) : (
             <span className="text-xs text-muted-foreground">
               {registrationMode === "internal"
-                ? "Optional -- shown as a secondary link if people want more detail before registering."
-                : 'Where "Register" sends people before the session -- your sign-up form.'}
+                ? "Optional. Shown as a secondary link if people want more detail before registering."
+                : 'Where "Register" sends people before the session: your sign-up form.'}
             </span>
           )}
         </label>
@@ -274,7 +274,7 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
           ) : (
             <span className="text-xs text-muted-foreground">
               Add this once the recording is up. Once the session date has passed, "See recap"
-              sends people here instead -- falls back to the registration link if left blank.
+              sends people here instead. Falls back to the registration link if left blank.
             </span>
           )}
         </label>
@@ -284,7 +284,7 @@ const SessionForm = ({ mode, sessionId, initialSession }: SessionFormProps) => {
           value={watch("image_url") ?? ""}
           onChange={(url) => setValue("image_url", url, { shouldDirty: true })}
           error={errors.image_url?.message}
-          helpText="The speaker flyer/graphic -- shown as the card preview on /activities. Leave blank for a plain text card."
+          helpText="The speaker flyer/graphic. Shown as the card preview on /activities. Leave blank for a plain text card."
         />
       </div>
 

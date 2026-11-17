@@ -40,7 +40,7 @@ const rhythm = [
   },
   {
     title: "Journey So Far",
-    cadence: "Stories from members -- last Friday monthly",
+    cadence: "Stories from members, last Friday monthly",
     description:
       "A rotating spotlight on a Fellow showing the behind-the-scenes of a recent success.",
   },

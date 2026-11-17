@@ -39,7 +39,7 @@ const ContactPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Contact -- Data Fellows"
+        title="Contact | Data Fellows"
         description="Get in touch with Data Fellows for general inquiries, partnerships, or press."
         path="/contact"
       />
