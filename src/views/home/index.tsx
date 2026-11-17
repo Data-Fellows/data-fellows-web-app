@@ -9,19 +9,21 @@ import Impact from "./sections/impact";
 import Partners from "./sections/partners";
 import Products from "./sections/products";
 import Resources from "./sections/resources";
+import StudioCredibility from "./sections/studio-credibility";
 import WhoWeAre from "./sections/who-we-are";
 
 const Home: React.FC = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Data Fellows | Turning Data Into Clarity"
-        description="We train, build, and launch tools that make data feel human, for individuals and businesses across 33+ countries. Join our community of data fellows."
+        title="Data Fellows | Independent Automation Studio"
+        description="Data Fellows is an independent automation studio helping organizations solve recurring operational challenges through software, data and AI, starting with healthcare and insurance."
         path="/"
       />
       <ImpactReportAnnouncement />
       <div className="space-y-24 md:space-y-28">
         <Hero />
+        <StudioCredibility />
         <WhoWeAre />
         <Impact />
         <Products />

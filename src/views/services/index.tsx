@@ -33,7 +33,7 @@ const ServicesPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="What We Do | Data Fellows"
-        description="Data Fellows investigates, builds and supports software, data and AI systems for organizations with real operational problems."
+        description="Data Fellows designs, builds, integrates and manages the automation systems organizations run on: workflow automation, systems integration, data and AI automation, and managed automation."
         path="/services"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -46,7 +46,7 @@ const ServicesPage = () => {
               id="services-hero-heading"
               className="mx-auto mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              We investigate, build and support software for complex work.
+              Less manual work. Systems that hold up. A person still in control.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
               We take responsibility for the parts of the work we agree to --

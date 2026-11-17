@@ -1,4 +1,6 @@
+import AffiliationMarks from "@/components/custom/affiliation-marks";
 import PageSeo from "@/components/seo/page-seo";
+import type { AffiliationKey } from "@/constants/affiliations";
 import LandingPageLayout from "@/layouts/landing-page";
 import { advisors, communityAdmins, foundingTeam } from "@/views/shared/team";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -16,12 +18,13 @@ type Person = {
   linkedin?: string;
   featured?: boolean;
   objectPosition?: string;
+  affiliations?: readonly AffiliationKey[];
 };
 
 const PersonCard = ({ person }: { person: Person }) => {
   const [expanded, setExpanded] = useState(false);
   const reduced = useReducedMotion();
-  const { name, role, tagline, bio, image, linkedin, objectPosition } =
+  const { name, role, tagline, bio, image, linkedin, objectPosition, affiliations } =
     person;
   const bioParagraphs = bio.split("\n\n");
 
@@ -59,6 +62,9 @@ const PersonCard = ({ person }: { person: Person }) => {
             </Link>
           ) : null}
         </div>
+        {affiliations && affiliations.length > 0 ? (
+          <AffiliationMarks keys={[...affiliations]} />
+        ) : null}
         <p className="text-sm text-muted-foreground">{tagline}</p>
 
         <button
