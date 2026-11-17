@@ -187,7 +187,7 @@ const ResourceForm = ({ mode, resourceId, initialResource }: ResourceFormProps) 
             <span className="text-xs text-destructive">{errors.href.message}</span>
           ) : (
             <span className="text-xs text-muted-foreground">
-              Where "Open" sends people -- the article, video, or post itself.
+              Where "Open" sends people: the article, video, or post itself.
             </span>
           )}
         </label>

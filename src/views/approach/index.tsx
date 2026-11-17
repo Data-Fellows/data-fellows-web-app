@@ -14,8 +14,8 @@ const ApproachPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Our Approach -- Data Fellows"
-        description="How Data Fellows scopes, builds and supports software, data and AI work -- evidence before commitment, the smallest responsible solution, and direct technical collaboration."
+        title="Our Approach | Data Fellows"
+        description="How Data Fellows scopes, builds and supports software, data and AI work: evidence before commitment, the smallest responsible solution, and direct technical collaboration."
         path="/approach"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">

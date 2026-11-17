@@ -60,8 +60,8 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Resources -- Data Fellows"
-        description="Guides, lessons, and story spotlights from the Data Fellows community -- practical resources for learning data and AI skills."
+        title="Resources | Data Fellows"
+        description="Guides, lessons, and story spotlights from the Data Fellows community: practical resources for learning data and AI skills."
         path="/resources"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -225,8 +225,8 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
             ) : (
               <p className="border border-border bg-muted/40 px-6 py-10 text-center text-sm text-muted-foreground">
                 {resources.length === 0
-                  ? "No resources yet -- check back soon."
-                  : `No ${filterLabels[activeFilter].toLowerCase()} yet -- check back soon.`}
+                  ? "No resources yet. Check back soon."
+                  : `No ${filterLabels[activeFilter].toLowerCase()} yet. Check back soon.`}
               </p>
             )}
           </div>
@@ -273,7 +273,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                   id="podcast-heading"
                   className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
                 >
-                  Journey So Far -- our monthly audio stories
+                  Journey So Far: our monthly audio stories
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   Listen to Fellows share what they are building, the setbacks

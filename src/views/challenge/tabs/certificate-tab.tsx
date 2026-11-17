@@ -40,7 +40,7 @@ const formatDateRange = (start: string, end: string) =>
     month: "long",
     day: "numeric",
     timeZone: "UTC",
-  }).format(new Date(`${start}T00:00:00Z`))} -- ${new Intl.DateTimeFormat("en-US", {
+  }).format(new Date(`${start}T00:00:00Z`))} to ${new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
@@ -115,7 +115,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
       await navigator.clipboard.writeText(challengeUrl);
       showToast("Link copied to clipboard", "success");
     } catch {
-      showToast("Couldn't copy the link -- copy it from your address bar instead.", "error");
+      showToast("Couldn't copy the link. Copy it from your address bar instead.", "error");
     }
   };
 
@@ -186,7 +186,7 @@ const CertificateTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         img.style.width = "100%";
         img.style.height = "auto";
         doc.body.appendChild(img);
-        showToast("Opened in a new tab -- press and hold (or right-click) the image to save it.", "success");
+        showToast("Opened in a new tab. Press and hold (or right-click) the image to save it.", "success");
       } else {
         const link = document.createElement("a");
         link.download = `${challenge.slug}-certificate.png`;

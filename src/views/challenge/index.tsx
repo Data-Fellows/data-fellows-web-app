@@ -61,7 +61,7 @@ const ChallengePage = ({ challenge }: ChallengePageProps) => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title={`${challenge.title} -- Data Fellows`}
+        title={`${challenge.title} | Data Fellows`}
         description={
           challenge.subtitle ||
           challenge.description ||

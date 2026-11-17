@@ -25,7 +25,7 @@ const AboutUs = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="About -- Data Fellows"
+        title="About | Data Fellows"
         description="Data Fellows trains, builds, and launches tools that make data feel human. Here's who we are and what we value."
         path="/about"
       />

@@ -164,7 +164,7 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
         >
           {availableDays.map((day) => (
             <option key={day.id} value={day.id}>
-              Day {day.day_number} -- {day.title}
+              Day {day.day_number}: {day.title}
             </option>
           ))}
         </select>
@@ -202,7 +202,7 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
           </p>
         ) : null}
         <p className="mt-1 text-xs text-muted-foreground">
-          Used to track your progress across days -- never shown publicly.
+          Used to track your progress across days. Never shown publicly.
         </p>
       </div>
 

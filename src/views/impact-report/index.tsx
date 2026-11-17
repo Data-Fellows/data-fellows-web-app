@@ -8,7 +8,7 @@ const SITE_URL = "https://www.datafellowsai.com";
 const PDF_PATH = "/documents/data-fellows-impact-report-2026.pdf";
 const OG_IMAGE_PATH = "/images/impact-report-og.jpg";
 
-const PAGE_TITLE = "Data Fellows Impact Report -- Four Years of Clarity";
+const PAGE_TITLE = "Data Fellows Impact Report | Four Years of Clarity";
 const PAGE_DESCRIPTION =
   "Four years of turning data into clarity, across 33 countries. See our community, our programs, Inscend, and what's ahead.";
 

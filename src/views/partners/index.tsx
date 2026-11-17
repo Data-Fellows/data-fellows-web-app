@@ -47,7 +47,7 @@ const PartnersPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Partners -- Data Fellows"
+        title="Partners | Data Fellows"
         description="Training, ecosystem, and community partners who help Data Fellows deliver real outcomes for our members worldwide."
         path="/partners"
       />
@@ -63,7 +63,7 @@ const PartnersPage = () => {
               </h1>
               <p className="mx-auto max-w-2xl text-base text-muted-foreground">
                 We partner with organisations who believe data can unlock
-                opportunity for everyone -- from classrooms to boardrooms.
+                opportunity for everyone, from classrooms to boardrooms.
               </p>
               <Link
                 href="mailto:partners@datafellowsai.com"

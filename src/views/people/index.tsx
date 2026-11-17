@@ -96,8 +96,8 @@ const PeoplePage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="People -- Data Fellows"
-        description="Meet the people behind Data Fellows -- the founding team, community operations, and the advisors who guide go-to-market, brand, and partnerships."
+        title="People | Data Fellows"
+        description="Meet the people behind Data Fellows: the founding team, community operations, and the advisors who guide go-to-market, brand, and partnerships."
         path="/people"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -114,7 +114,7 @@ const PeoplePage = () => {
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
               Every person here codes, teaches, or builds alongside Fellows.
-              The stories below are specific on purpose -- how each person
+              The stories below are specific on purpose: how each person
               joined, what they've built, and a little of what they're like
               outside the work. More fills in as each person signs off on
               their full story.

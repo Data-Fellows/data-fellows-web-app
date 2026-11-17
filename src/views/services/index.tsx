@@ -24,7 +24,7 @@ const procurementSteps = [
   {
     title: "Contracting & support",
     description:
-      "Terms, IP and support arrangements set out plainly before work starts -- including what's outside what we can currently support.",
+      "Terms, IP and support arrangements set out plainly before work starts, including what's outside what we can currently support.",
   },
 ];
 
@@ -32,7 +32,7 @@ const ServicesPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="What We Do -- Data Fellows"
+        title="What We Do | Data Fellows"
         description="Data Fellows investigates, builds and supports software, data and AI systems for organizations with real operational problems."
         path="/services"
       />

@@ -100,7 +100,7 @@ const programs = [
   {
     title: "Showcase nights",
     description:
-      "Celebrate Fellows shipping something new -- from analytics dashboards to AI copilots.",
+      "Celebrate Fellows shipping something new, from analytics dashboards to AI copilots.",
     icon: FiAward,
   },
 ];
@@ -186,8 +186,8 @@ const CommunityPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Community -- Data Fellows"
-        description="Join a global community of data fellows -- recurring calls, mentorship, challenges, and real support as you build your data and AI skills."
+        title="Community | Data Fellows"
+        description="Join a global community of data fellows: recurring calls, mentorship, challenges, and real support as you build your data and AI skills."
         path="/community"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -202,7 +202,7 @@ const CommunityPage = () => {
                   id="community-hero-heading"
                   className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
                 >
-                  Find people who build with data -- and cheer you on.
+                  Find people who build with data, and cheer you on.
                 </h1>
                 <p className="text-base leading-relaxed text-muted-foreground">
                   Whether you are a student experimenting, a professional
@@ -310,7 +310,7 @@ const CommunityPage = () => {
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
                 These are the Fellows who helped shape Data Fellows from day
-                one -- hosting conversations, unblocking projects, and
+                one: hosting conversations, unblocking projects, and
                 cheering Fellows on across every discipline.
               </p>
             </div>

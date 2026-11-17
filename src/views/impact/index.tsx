@@ -37,7 +37,7 @@ const ImpactPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Impact -- Data Fellows"
+        title="Impact | Data Fellows"
         description="Four years of Data Fellows in numbers: members, countries, pilot projects, scholarships and what the community told us in the 2026 survey."
         path="/impact"
       />
@@ -129,7 +129,7 @@ const ImpactPage = () => {
               In the 2026 community survey, members asked for more job
               opportunities, peer study groups, live events, stronger
               discipline groups, physical meetups and more follow-up with
-              past cohorts -- the roadmap follows this feedback.
+              past cohorts. The roadmap follows this feedback.
             </p>
           </div>
         </section>

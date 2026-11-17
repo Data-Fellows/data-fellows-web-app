@@ -128,7 +128,7 @@ const formatDateRange = (start: string, end: string) =>
     month: "short",
     day: "numeric",
     timeZone: "UTC",
-  }).format(new Date(`${start}T00:00:00Z`))} -- ${new Intl.DateTimeFormat("en-US", {
+  }).format(new Date(`${start}T00:00:00Z`))} to ${new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
     timeZone: "UTC",
@@ -260,8 +260,8 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Activities -- Data Fellows"
-        description="Challenges, recurring sessions, and community events at Data Fellows -- join a cohort, check in daily, and track your progress."
+        title="Activities | Data Fellows"
+        description="Challenges, recurring sessions, and community events at Data Fellows: join a cohort, check in daily, and track your progress."
         path="/activities"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -334,7 +334,7 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
             {cards.length === 0 ? (
               <div className="border border-border bg-background px-6 py-12 text-center">
                 <p className="text-sm text-muted-foreground">
-                  Nothing matches these filters yet -- try a different
+                  Nothing matches these filters yet. Try a different
                   combination.
                 </p>
               </div>
