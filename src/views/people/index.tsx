@@ -1,10 +1,6 @@
 import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
-import {
-  collaborators,
-  communityAdmins,
-  foundingTeam,
-} from "@/views/shared/team";
+import { communityAdmins, foundingTeam } from "@/views/shared/team";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -101,7 +97,7 @@ const PeoplePage = () => {
     <LandingPageLayout>
       <PageSeo
         title="People -- Data Fellows"
-        description="Meet the people behind Data Fellows -- the founding team, community operations, and the advisors who came in through Inscend and still contribute today."
+        description="Meet the people behind Data Fellows -- the founding team and the community operations that keep it running."
         path="/people"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -150,39 +146,19 @@ const PeoplePage = () => {
         </section>
 
         <section className="px-4 sm:px-6" aria-labelledby="people-community-heading">
-          <div className="mx-auto max-w-6xl grid gap-10 lg:grid-cols-2">
-            <div className="space-y-6">
-              <h2
-                id="people-community-heading"
-                className="font-display text-2xl font-semibold tracking-tight text-foreground"
-              >
-                Community leadership
-              </h2>
-              <div
-                className={`grid gap-6 ${communityAdmins.length > 1 ? "sm:grid-cols-2" : "max-w-xs"}`}
-              >
-                {communityAdmins.map((person) => (
-                  <PersonCard key={person.name} person={person} />
-                ))}
-              </div>
-            </div>
-            <div className="space-y-6">
-              <div>
-                <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
-                  Advisors
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Came in through Inscend and still advise Data Fellows from
-                  time to time today.
-                </p>
-              </div>
-              <div
-                className={`grid gap-6 ${collaborators.length > 1 ? "sm:grid-cols-2" : "max-w-xs"}`}
-              >
-                {collaborators.map((person) => (
-                  <PersonCard key={person.name} person={person} />
-                ))}
-              </div>
+          <div className="mx-auto max-w-6xl space-y-6">
+            <h2
+              id="people-community-heading"
+              className="font-display text-2xl font-semibold tracking-tight text-foreground"
+            >
+              Community leadership
+            </h2>
+            <div
+              className={`grid gap-6 ${communityAdmins.length > 1 ? "sm:grid-cols-2 lg:grid-cols-4" : "max-w-xs"}`}
+            >
+              {communityAdmins.map((person) => (
+                <PersonCard key={person.name} person={person} />
+              ))}
             </div>
           </div>
         </section>

@@ -2,8 +2,9 @@ import ProductSlideshow from "@/components/custom/product-slideshow";
 import PageSeo from "@/components/seo/page-seo";
 import type { Product } from "@/constants/products";
 import LandingPageLayout from "@/layouts/landing-page";
+import Image from "next/image";
 import Link from "next/link";
-import { FiArrowLeft, FiArrowUpRight } from "react-icons/fi";
+import { FiArrowLeft, FiArrowUpRight, FiLinkedin } from "react-icons/fi";
 
 const CaseStudyPage = ({ product }: { product: Product }) => {
   return (
@@ -107,6 +108,67 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
             </div>
           </div>
         </section>
+
+        {product.advisors && product.advisors.length > 0 ? (
+          <section className="px-4 sm:px-6" aria-labelledby="case-study-advisors">
+            <div className="mx-auto max-w-4xl space-y-6">
+              <div>
+                <p className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Advisors
+                </p>
+                <h2 id="case-study-advisors" className="sr-only">
+                  Advisors to {product.name}
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Advised on {product.name} specifically -- not Data Fellows
+                  team members or company advisors.
+                </p>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                {product.advisors.map((advisor) => (
+                  <div
+                    key={advisor.name}
+                    className="flex gap-4 border border-border bg-background p-5"
+                  >
+                    <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden">
+                      <Image
+                        src={advisor.image}
+                        alt={advisor.name}
+                        fill
+                        sizes="80px"
+                        className="object-cover object-top grayscale"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="font-display text-base font-semibold text-foreground">
+                          {advisor.name}
+                        </p>
+                        {advisor.linkedin ? (
+                          <Link
+                            href={advisor.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`LinkedIn profile of ${advisor.name}`}
+                            className="inline-flex h-7 w-7 flex-shrink-0 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
+                          >
+                            <FiLinkedin className="h-3.5 w-3.5" />
+                          </Link>
+                        ) : null}
+                      </div>
+                      <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                        {advisor.role}
+                      </p>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        {advisor.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         <section className="px-4 sm:px-6" aria-labelledby="case-study-cta">
           <div className="mx-auto flex max-w-4xl flex-col gap-6 border border-foreground bg-background px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
