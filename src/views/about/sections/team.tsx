@@ -90,7 +90,7 @@ const TeamSection = () => {
             href="/people"
             className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-foreground underline underline-offset-4 hover:text-foreground/70"
           >
-            Meet the full team
+            Meet the full team &amp; advisors
           </Link>
         </div>
 
