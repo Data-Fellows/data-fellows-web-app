@@ -1,10 +1,6 @@
 import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
-import {
-  collaborators,
-  communityAdmins,
-  foundingTeam,
-} from "@/views/shared/team";
+import { advisors, communityAdmins, foundingTeam } from "@/views/shared/team";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -101,7 +97,7 @@ const PeoplePage = () => {
     <LandingPageLayout>
       <PageSeo
         title="People -- Data Fellows"
-        description="Meet the people behind Data Fellows -- the founding team, community operations, and the collaborators who helped shape Inscend's early work."
+        description="Meet the people behind Data Fellows -- the founding team, community operations, and the advisors who guide go-to-market, brand, and partnerships."
         path="/people"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -167,19 +163,13 @@ const PeoplePage = () => {
               </div>
             </div>
             <div className="space-y-6">
-              <div>
-                <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
-                  Earlier Collaborators
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Contributed to Inscend&apos;s early work. Not current Data
-                  Fellows staff or advisors.
-                </p>
-              </div>
+              <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+                Advisors
+              </h2>
               <div
-                className={`grid gap-6 ${collaborators.length > 1 ? "sm:grid-cols-2" : "max-w-xs"}`}
+                className={`grid gap-6 ${advisors.length > 1 ? "sm:grid-cols-2" : "max-w-xs"}`}
               >
-                {collaborators.map((person) => (
+                {advisors.map((person) => (
                   <PersonCard key={person.name} person={person} />
                 ))}
               </div>

@@ -52,27 +52,27 @@ export const communityAdmins = [
   },
 ];
 
-// Earlier Inscend collaborators -- deliberately kept separate from the core
-// Data Fellows team. Their contribution to Inscend's early work is real and
-// documented, but neither has a confirmed CURRENT Data Fellows advisory
-// role, so every tagline/bio here stays in the past tense about Inscend
-// specifically rather than implying an ongoing Data Fellows appointment.
-export const collaborators = [
+// Both came in through Inscend and both hold vested equity in the company,
+// so per the founder they remain Data Fellows advisors through the pivot
+// unless they choose to end it -- not merely an Inscend-era relationship.
+// See also their Inscend-scoped advisor entries in constants/products.ts,
+// which cover the same people from the angle of that specific product.
+export const advisors = [
   {
     name: "Nnamdi Oboli",
-    role: "Earlier Inscend Collaborator · Co-Founder, Dioni Visions",
+    role: "Advisor · Market & Partnerships",
     tagline:
-      "Nnamdi brought an operator's perspective to Inscend's early work, drawing on years building consumer businesses and producing film and media. Outside of that, he's also an author and relationship coach who has spoken about how much he reads and watches films.",
-    bio: "Nnamdi trained in optometry at the University of Benin and spent years in eye-care practice before moving into building consumer-facing businesses and producing film and media work, including through Dioni Visions. That operator's experience -- what it takes to run services, manage partnerships and earn trust -- is what he brought to Inscend's early work, contributing to discussions about market strategy, partnerships and how a new product finds its way into people's working lives.\n\nThere's another side to his story: Nnamdi is also an author, coach and content creator focused on relationships. In an August 2026 interview, he spoke about moving from optometry into writing and coaching, and described reading, listening to audio and watching films as how he spends time outside work.\n\nHis contribution to Inscend was as a strategic collaborator during its early work, not a current Data Fellows role.",
+      "Nnamdi advises Data Fellows on market strategy and partnerships, bringing years of experience building consumer businesses and producing film and media. Outside of that, he's also an author and relationship coach who has spoken about how much he reads and watches films.",
+    bio: "Nnamdi trained in optometry at the University of Benin and spent years in eye-care practice before moving into building consumer-facing businesses and producing film and media work, including through Dioni Visions. That operator's experience -- what it takes to run services, manage partnerships and earn trust -- is what he first brought to Inscend's early work, contributing to discussions about market strategy, partnerships and how a new product finds its way into people's working lives.\n\nThere's another side to his story: Nnamdi is also an author, coach and content creator focused on relationships. In an August 2026 interview, he spoke about moving from optometry into writing and coaching, and described reading, listening to audio and watching films as how he spends time outside work.\n\nThat market-strategy and partnerships lens is what he brings to Data Fellows today as an advisor, a relationship that grew out of his early involvement with Inscend.",
     image: "/images/Mr_Nnamdi Oboli-Co-Founder.jpg",
     linkedin: "https://www.linkedin.com/in/nnamdi-o-247a991a7/",
   },
   {
     name: "Oyeta Kokoroko",
-    role: "Earlier Inscend Collaborator · Founder, Maison OKOKO",
+    role: "Advisor · GTM & Brand",
     tagline:
-      "Oyeta advised on brand positioning and product understanding during Inscend's early work, drawing on her experience founding one of Canada's best-known clean beauty brands. Her own path started with soap-making experiments years before the business had a name.",
-    bio: "Oyeta founded OKOKO Cosmétiques and grew it into Maison OKOKO -- a business built on cosmetic formulation, research and close attention to how a product actually feels to use. She's also built an editorial platform, IKONIK.\n\nHer path started well before any of that had a name. In public interviews, she's described exploring natural ingredients, attending soap-making workshops, and making early formulations for herself and people close to her -- curiosity that became a career, and still shows in how she works: caring about both the substance of a product and the experience around it.\n\nThat operator's perspective is what she brought to Inscend's early work, advising on brand positioning, product understanding, customer relationships and founder education. Her work beyond the beauty company includes editorial projects, workshops and mentorship for emerging entrepreneurs.\n\nHer contribution to Inscend was as a strategic collaborator during its early work, not a current Data Fellows role.",
+      "Oyeta advises Data Fellows on go-to-market and brand, drawing on her experience founding one of Canada's best-known clean beauty brands. Her own path started with soap-making experiments years before the business had a name.",
+    bio: "Oyeta founded OKOKO Cosmétiques and grew it into Maison OKOKO -- a business built on cosmetic formulation, research and close attention to how a product actually feels to use. She's also built an editorial platform, IKONIK.\n\nHer path started well before any of that had a name. In public interviews, she's described exploring natural ingredients, attending soap-making workshops, and making early formulations for herself and people close to her -- curiosity that became a career, and still shows in how she works: caring about both the substance of a product and the experience around it.\n\nThat go-to-market and brand perspective is what she first brought to Inscend's early work, advising on positioning, product understanding, customer relationships and founder education. Her work beyond the beauty company includes editorial projects, workshops and mentorship for emerging entrepreneurs.\n\nThat same perspective is what she brings to Data Fellows today as an advisor, a relationship that grew out of her early involvement with Inscend.",
     image: "/images/advisor.webp",
     linkedin: "https://www.linkedin.com/in/oy%C3%A9ta-kokoroko-9b52b6160",
   },
