@@ -70,4 +70,9 @@ export const partnerLogos: PartnerLogo[] = [
     name: "Cisco Networking Academy",
     logo: "/images/partners/cisco-networking-academy.png",
   },
+  {
+    id: 19,
+    name: "Utiva",
+    logo: "/images/partners/utiva.png",
+  },
 ];
