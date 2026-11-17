@@ -1,5 +1,8 @@
 import AffiliationMarks from "@/components/custom/affiliation-marks";
+import AvatarStack from "@/components/custom/avatar-stack";
+import Highlight from "@/components/custom/highlight";
 import { affiliationOrder } from "@/constants/affiliations";
+import { foundingTeam } from "@/views/shared/team";
 import Link from "next/link";
 
 // This is deliberately not headed "Trusted by" or "Our clients" -- PwC,
@@ -21,21 +24,25 @@ const StudioCredibility = () => {
           id="studio-credibility-heading"
           className="mx-auto max-w-2xl font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
         >
-          Our team brings together experience from PwC, Cohere and Andela,
-          spanning enterprise consulting, software engineering, data
-          infrastructure and artificial intelligence.
+          Our team brings together experience from{" "}
+          <Highlight>PwC, Cohere and Andela</Highlight>, spanning enterprise
+          consulting, software engineering, data infrastructure and
+          artificial intelligence.
         </h2>
         <div className="flex justify-center">
           <AffiliationMarks keys={affiliationOrder} size="md" />
         </div>
-        <p className="mx-auto max-w-xl text-xs text-muted-foreground">
-          Professional backgrounds our team members bring with them, not
-          client or partner relationships.{" "}
-          <Link href="/people" className="underline hover:text-foreground">
-            Meet the people behind Data Fellows
-          </Link>
-          .
-        </p>
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <AvatarStack people={foundingTeam} />
+          <p className="max-w-xl text-xs text-muted-foreground">
+            Professional backgrounds our team members bring with them, not
+            client or partner relationships.{" "}
+            <Link href="/people" className="underline hover:text-foreground">
+              Meet the people behind Data Fellows
+            </Link>
+            .
+          </p>
+        </div>
       </div>
     </section>
   );

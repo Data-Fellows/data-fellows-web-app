@@ -1,3 +1,4 @@
+import Highlight from "@/components/custom/highlight";
 import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight, FiLinkedin } from "react-icons/fi";
@@ -69,7 +70,7 @@ const About = () => {
               id="about-heading"
               className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              Our story and the people behind it.
+              Our story and <Highlight>the people</Highlight> behind it.
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
               Data Fellows started in 2022 as a small group of people learning

@@ -1,3 +1,4 @@
+import Highlight from "@/components/custom/highlight";
 import { formatCompactStat, impactStats } from "@/constants/site";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Image from "next/image";
@@ -67,7 +68,7 @@ export const Hero = () => {
                 id="hero-heading"
                 className="mt-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.08]"
               >
-                We solve recurring operational problems with software, data and AI.
+                We solve <Highlight>recurring operational problems</Highlight> with software, data and AI.
               </motion.h1>
 
               <motion.p

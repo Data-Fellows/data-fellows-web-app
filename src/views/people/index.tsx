@@ -1,4 +1,5 @@
 import AffiliationMarks from "@/components/custom/affiliation-marks";
+import Highlight from "@/components/custom/highlight";
 import PageSeo from "@/components/seo/page-seo";
 import type { AffiliationKey } from "@/constants/affiliations";
 import LandingPageLayout from "@/layouts/landing-page";
@@ -116,7 +117,7 @@ const PeoplePage = () => {
               id="people-hero-heading"
               className="mx-auto mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              Meet the people behind the work.
+              Meet <Highlight>the people</Highlight> behind the work.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
               Every person here codes, teaches, or builds alongside Fellows.

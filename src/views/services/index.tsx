@@ -77,7 +77,7 @@ const ServicesPage = () => {
                 <span className="font-mono text-xs uppercase tracking-wide text-brand-blue">
                   Where most conversations start
                 </span>
-                <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                <h3 className="mt-3 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
                   {services[0].name}
                 </h3>
                 <p className="mt-4 max-w-2xl border-l-2 border-brand-blue pl-4 text-lg leading-relaxed text-navy-deep-foreground/80">
