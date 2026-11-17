@@ -39,6 +39,17 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
               ))}
             </div>
 
+            {product.logo ? (
+              <div className="inline-block border border-border p-2">
+                <Image
+                  src={product.logo.src}
+                  alt={`${product.name} logo`}
+                  width={product.logo.width}
+                  height={product.logo.height}
+                  className="h-10 w-auto"
+                />
+              </div>
+            ) : null}
             <h1
               id="case-study-heading"
               className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-5xl"
@@ -120,8 +131,8 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
                   Advisors to {product.name}
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Advised on {product.name} specifically -- not Data Fellows
-                  team members or company advisors.
+                  Also Data Fellows advisors today -- shown here for the role
+                  they played specifically on {product.name}.
                 </p>
               </div>
               <div className="grid gap-6 sm:grid-cols-2">

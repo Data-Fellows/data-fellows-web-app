@@ -1,5 +1,6 @@
 import ProductSlideshow from "@/components/custom/product-slideshow";
 import { products } from "@/constants/products";
+import Image from "next/image";
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 
@@ -44,6 +45,15 @@ Things We&apos;ve Explored and Built
                 <div className="font-mono text-[11px] uppercase tracking-wide text-brand-blue">
                   Status: {product.stage}
                 </div>
+                {product.logo ? (
+                  <Image
+                    src={product.logo.src}
+                    alt={`${product.name} logo`}
+                    width={product.logo.width}
+                    height={product.logo.height}
+                    className="h-9 w-auto border border-white/10"
+                  />
+                ) : null}
                 <h3 className="font-display text-2xl font-semibold text-white sm:text-3xl">
                   {product.name}
                 </h3>

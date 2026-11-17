@@ -3,6 +3,7 @@ import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
 import { products } from "@/constants/products";
 import LandingPageLayout from "@/layouts/landing-page";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
@@ -98,9 +99,20 @@ const WorkPage = () => {
                     ))}
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-display text-xl font-semibold text-foreground">
-                      {product.name}
-                    </h3>
+                    <div className="flex items-center gap-3">
+                      {product.logo ? (
+                        <Image
+                          src={product.logo.src}
+                          alt={`${product.name} logo`}
+                          width={product.logo.width}
+                          height={product.logo.height}
+                          className="h-8 w-auto border border-border"
+                        />
+                      ) : null}
+                      <h3 className="font-display text-xl font-semibold text-foreground">
+                        {product.name}
+                      </h3>
+                    </div>
                     <p className="text-sm leading-relaxed text-muted-foreground">
                       {product.goal}
                     </p>
