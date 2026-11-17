@@ -12,6 +12,7 @@ const partnerCategories = [
       "Vatebra Academy",
       "Cisco Networking Academy",
       "Data Rango",
+      "Utiva",
     ],
   },
   {
