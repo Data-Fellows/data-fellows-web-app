@@ -35,6 +35,10 @@ export type Product = {
   workType: "Product Exploration";
   capabilities: string[];
   title: string;
+  // The product's own logo, cropped from its real product screenshots when
+  // one exists there (not a generated substitute) -- so visitors get
+  // visually acquainted with the brand itself, not just its name as text.
+  logo?: { src: string; width: number; height: number };
   // What the project actually set out to do -- the "brief" on the /work
   // case study page -- kept distinct from `description` (the fuller
   // context/history) so the case study template can show both without
@@ -105,6 +109,7 @@ export const products: Product[] = [
     workType: "Product Exploration",
     capabilities: ["Software", "Data", "AI"],
     title: "AI-powered product and operating intelligence for ecommerce founders.",
+    logo: { src: "/images/inscend-logo.png", width: 280, height: 85 },
     goal: "Give an independent ecommerce founder one place to see what needs attention each morning, with AI doing the investigation and the founder keeping the final call.",
     description:
       "Inscend helps independent ecommerce founders investigate what affects their products, identify improvements, and prepare actions across their business. It's an active venture, exploring how AI can reduce the operational work involved in running an online store.",
