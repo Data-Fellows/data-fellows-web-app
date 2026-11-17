@@ -48,12 +48,6 @@ const CaseStudyPage = ({ product }: { product: Product }) => {
             <p className="text-lg leading-relaxed text-muted-foreground">
               {product.title}
             </p>
-
-            <p className="border-l-2 border-brand-blue pl-4 text-sm italic leading-relaxed text-muted-foreground">
-              This is a self-initiated product exploration, not a delivered
-              client engagement -- written up honestly, at the depth we can
-              currently document. We'll add more as it's documented further.
-            </p>
           </div>
         </section>
 
