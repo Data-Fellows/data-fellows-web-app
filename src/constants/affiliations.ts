@@ -11,10 +11,20 @@
 // actually work there.
 export type AffiliationKey = "pwc" | "cohere" | "andela";
 
-export const affiliations: Record<AffiliationKey, { name: string }> = {
-  pwc: { name: "PwC" },
-  cohere: { name: "Cohere" },
-  andela: { name: "Andela" },
+// Logo files are each company's current official wordmark, sourced directly
+// from their own site (cohere.com, andela.com) or, for PwC, the current
+// 2025-rebrand mark via Wikimedia Commons after PwC's own site blocked
+// automated fetches -- not a third-party "logo dump" site. Andela's source
+// file is white-only (designed for their own dark site), so it renders
+// inverted (invertOnLight) to read as a dark mark against our light chip
+// background, and un-inverted again in dark mode.
+export const affiliations: Record<
+  AffiliationKey,
+  { name: string; logo: string; invertOnLight?: boolean }
+> = {
+  pwc: { name: "PwC", logo: "/images/logos/pwc.svg" },
+  cohere: { name: "Cohere", logo: "/images/logos/cohere.svg" },
+  andela: { name: "Andela", logo: "/images/logos/andela.svg", invertOnLight: true },
 };
 
 export const affiliationOrder: AffiliationKey[] = ["pwc", "cohere", "andela"];
