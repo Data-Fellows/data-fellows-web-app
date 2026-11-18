@@ -35,8 +35,7 @@ const StudioCredibility = () => {
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <AvatarStack people={foundingTeam} />
           <p className="max-w-xl text-xs text-muted-foreground">
-            Professional backgrounds our team members bring with them, not
-            client or partner relationships.{" "}
+            Professional background our team comes with.{" "}
             <Link href="/people" className="underline hover:text-foreground">
               Meet the people behind Data Fellows
             </Link>
