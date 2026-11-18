@@ -1,3 +1,4 @@
+import Highlight from "@/components/custom/highlight";
 import ProductSlideshow from "@/components/custom/product-slideshow";
 import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
@@ -38,7 +39,7 @@ const WorkPage = () => {
               id="work-hero-heading"
               className="mx-auto mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              Five different kinds of work, kept honestly distinct.
+              Five different kinds of work, kept <Highlight>honestly distinct</Highlight>.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
               In-house products, individual professional experience,
