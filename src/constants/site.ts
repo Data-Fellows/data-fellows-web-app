@@ -2,7 +2,7 @@ export const SITE_URL = "https://www.datafellowsai.com";
 export const SITE_NAME = "Data Fellows";
 export const DEFAULT_OG_IMAGE = "/images/data-community-hero.jpg";
 export const DEFAULT_DESCRIPTION =
-  "Data Fellows is an independent automation studio helping organizations solve recurring operational challenges through software, data and AI, starting with healthcare and insurance.";
+  "Data Fellows is an independent automation studio helping organizations solve recurring operational challenges through software, data and AI.";
 
 // Centralized outbound destinations and public claims, so numbers and links
 // don't drift between pages -- extend this rather than hardcoding a new

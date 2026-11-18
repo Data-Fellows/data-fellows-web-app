@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     <LandingPageLayout>
       <PageSeo
         title="Data Fellows | Independent Automation Studio"
-        description="Data Fellows is an independent automation studio helping organizations solve recurring operational challenges through software, data and AI, starting with healthcare and insurance."
+        description="Data Fellows is an independent automation studio helping organizations solve recurring operational challenges through software, data and AI."
         path="/"
       />
       <ImpactReportAnnouncement />
