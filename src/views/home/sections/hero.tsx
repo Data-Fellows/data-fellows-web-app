@@ -76,9 +76,8 @@ export const Hero = () => {
                 className="mt-5 text-lg leading-relaxed text-muted-foreground"
               >
                 Data Fellows designs, builds, integrates and manages the
-                automation systems complex organizations run on. We&apos;re
-                starting with healthcare and insurance, and built to extend
-                wherever the same kind of operational problem shows up next.
+                automation systems complex organizations run on, wherever
+                that kind of operational problem shows up.
               </motion.p>
 
               <motion.div
