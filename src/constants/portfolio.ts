@@ -198,7 +198,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "An independently developed HR platform exploring how employee management, payroll and access control can be organized into separate software services rather than one monolithic system.",
     capabilities: ["Software engineering", "Systems integration"],
     projectOrigin: "Independent project",
-    projectStatus: "In progress — core services implemented, some modules still work in progress",
+    projectStatus: "Active development",
     timePeriod: "2026",
     contributors: [{ name: "Elijah Soladoye", role: "Author", teamSlug: "elijah-soladoye" }],
     problem:
