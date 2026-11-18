@@ -1,4 +1,3 @@
-import Highlight from "@/components/custom/highlight";
 import ProductSlideshow from "@/components/custom/product-slideshow";
 import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
@@ -34,7 +33,7 @@ const WorkPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="Work | Data Fellows"
-        description="In-house products, individual professional experience, engineering demonstrations, community initiatives, and future client engagements from Data Fellows, labeled honestly by stage and capability."
+        description="In-house products, individual professional experience, engineering demonstrations, community initiatives, and future client engagements from Data Fellows."
         path="/work"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -47,7 +46,7 @@ const WorkPage = () => {
               id="work-hero-heading"
               className="mx-auto mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              Five different kinds of work, kept <Highlight>honestly distinct</Highlight>.
+              Five different kinds of work.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
               In-house products, individual professional experience,

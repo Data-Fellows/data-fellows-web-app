@@ -66,21 +66,16 @@ const SelectedWork = () => {
             <Link
               key={item.slug}
               href={`/work/${item.slug}`}
-              className="group flex h-full flex-col gap-4 border border-border bg-background p-6 transition hover:border-foreground/40"
+              className="group flex h-full flex-col gap-3 border border-border bg-background p-6 transition hover:border-foreground/40"
             >
-              <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                <span className="border border-border px-2 py-1">{item.origin}</span>
-                <span className="border border-brand-blue-label px-2 py-1 text-brand-blue-label">
-                  {item.status}
-                </span>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-display text-xl font-semibold text-foreground">
-                  {item.name}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{item.headline}</p>
-              </div>
-              <span className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+              <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                {item.origin}
+              </span>
+              <h3 className="font-display text-xl font-semibold text-foreground">
+                {item.name}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{item.headline}</p>
+              <span className="mt-auto inline-flex items-center gap-2 pt-2 text-sm font-semibold text-foreground">
                 View case study
                 <FiArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
