@@ -2,11 +2,19 @@ import Highlight from "@/components/custom/highlight";
 import ProductSlideshow from "@/components/custom/product-slideshow";
 import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
+import { portfolioProjects, type ProjectOrigin } from "@/constants/portfolio";
 import { products } from "@/constants/products";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
+
+const originOrder: ProjectOrigin[] = [
+  "Independent project",
+  "Open-source contribution",
+  "Individual professional experience",
+  "Research and experiment",
+];
 
 const capabilityFilters = ["All", "Software", "Data", "AI"] as const;
 type CapabilityFilter = (typeof capabilityFilters)[number];
@@ -129,57 +137,76 @@ const WorkPage = () => {
           </div>
         </section>
 
-        <section className="px-4 sm:px-6" aria-labelledby="work-experience-heading">
-          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
-            <div className="space-y-3 border border-border bg-background p-6">
+        <section className="px-4 sm:px-6" aria-labelledby="work-individual-heading">
+          <div className="mx-auto max-w-6xl space-y-8">
+            <div className="space-y-2">
               <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Individual professional experience
+                Individual projects & open-source
               </span>
               <h2
-                id="work-experience-heading"
-                className="font-display text-xl font-semibold tracking-tight text-foreground"
+                id="work-individual-heading"
+                className="font-display text-2xl font-semibold tracking-tight text-foreground"
               >
-                Backgrounds our team brings with them
+                What individual Fellows build on their own
               </h2>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                Several Fellows bring direct experience from PwC, Cohere and
-                Andela, spanning enterprise consulting, software engineering,
-                data infrastructure and AI. That's each person's own
-                professional history, not a Data Fellows client engagement --
-                see whose background connects to which company on the People
-                page.
+              <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                Independent projects, open-source tools and professional
+                background from across the team -- each one is a person&apos;s
+                own work, not a Data Fellows client engagement. See whose
+                professional background connects to which company on the{" "}
+                <Link href="/people" className="underline hover:text-foreground">
+                  People page
+                </Link>
+                .
               </p>
-              <Link
-                href="/people"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
-              >
-                Meet the people behind the work
-                <FiArrowUpRight className="h-4 w-4" />
-              </Link>
             </div>
 
-            <div className="space-y-3 border border-border bg-background p-6">
-              <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Engineering demonstrations & research
-              </span>
-              <h2 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                Technical experiments outside client work
-              </h2>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                Individual engineers on the team also build and publish their
-                own technical experiments, from systems tooling to AI
-                evaluation projects, outside of anything commissioned by a
-                client. Their public profiles are the source for specifics.
-              </p>
-              <Link
-                href="/people"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
-              >
-                See individual profiles
-                <FiArrowUpRight className="h-4 w-4" />
-              </Link>
+            <div className="grid gap-6 md:grid-cols-2">
+              {originOrder.flatMap((origin) =>
+                portfolioProjects
+                  .filter((project) => project.projectOrigin === origin)
+                  .map((project, index) => (
+                    <Reveal key={project.slug} delay={index * 0.06}>
+                      <article className="flex h-full flex-col gap-4 border border-border bg-background p-6">
+                        <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                          <span className="border border-border px-2 py-1">{project.projectOrigin}</span>
+                          <span className="border border-brand-blue-label px-2 py-1 text-brand-blue-label">
+                            {project.projectStatus}
+                          </span>
+                          {project.capabilities.map((capability) => (
+                            <span key={capability} className="border border-border px-2 py-1">
+                              {capability}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="space-y-2">
+                          <h3 className="font-display text-lg font-semibold text-foreground">
+                            {project.name}
+                          </h3>
+                          <p className="text-sm leading-relaxed text-muted-foreground">
+                            {project.headline}
+                          </p>
+                        </div>
+                        <Link
+                          href={`/work/${project.slug}`}
+                          className="mt-auto inline-flex items-center gap-2 border border-foreground px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
+                        >
+                          View case study
+                          <FiArrowUpRight className="h-4 w-4" />
+                        </Link>
+                      </article>
+                    </Reveal>
+                  ))
+              )}
             </div>
+          </div>
+        </section>
 
+        <section className="px-4 sm:px-6" aria-labelledby="work-other-heading">
+          <h2 id="work-other-heading" className="sr-only">
+            Community and client work
+          </h2>
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
             <div className="space-y-3 border border-border bg-background p-6">
               <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Community initiatives & impact

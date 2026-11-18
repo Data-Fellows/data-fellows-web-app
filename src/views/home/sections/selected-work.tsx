@@ -1,0 +1,105 @@
+import { products } from "@/constants/products";
+import { portfolioProjects } from "@/constants/portfolio";
+import Link from "next/link";
+import { FiArrowUpRight } from "react-icons/fi";
+
+// Four flagship projects: one Data Fellows product (Inscend) plus three
+// independently verified engineering projects from the team. See the
+// engineering-portfolio audit for why these four and not others -- the
+// fourth AI-infrastructure slot (pi-jev vs. pi-ampersand) is still pending
+// confirmation of an attribution question, so this uses the confirmed-safe
+// choice (pi-ampersand) rather than the stronger but unconfirmed one.
+const flagshipSlugs = ["ont-communities", "inscend", "hr-platform", "pi-ampersand"];
+
+const flagships = flagshipSlugs
+  .map((slug) => {
+    const product = products.find((item) => item.key === slug);
+    if (product) {
+      return {
+        slug: product.key,
+        name: product.name,
+        headline: product.goal,
+        origin: "Data Fellows product",
+        status: product.stage,
+      };
+    }
+    const project = portfolioProjects.find((item) => item.slug === slug);
+    if (project) {
+      return {
+        slug: project.slug,
+        name: project.name,
+        headline: project.headline,
+        origin: project.projectOrigin,
+        status: project.projectStatus,
+      };
+    }
+    return null;
+  })
+  .filter((item): item is NonNullable<typeof item> => Boolean(item));
+
+const SelectedWork = () => {
+  return (
+    <section
+      id="selected-work"
+      className="px-4 sm:px-6"
+      aria-labelledby="selected-work-heading"
+    >
+      <div className="mx-auto max-w-6xl space-y-10">
+        <div className="max-w-2xl space-y-4">
+          <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Selected Work
+          </span>
+          <h2
+            id="selected-work-heading"
+            className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+          >
+            Engineering that solves real problems.
+          </h2>
+          <p className="text-base leading-relaxed text-muted-foreground">
+            Explore selected systems, products and technical projects from
+            across our team.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          {flagships.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/work/${item.slug}`}
+              className="group flex h-full flex-col gap-4 border border-border bg-background p-6 transition hover:border-foreground/40"
+            >
+              <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                <span className="border border-border px-2 py-1">{item.origin}</span>
+                <span className="border border-brand-blue-label px-2 py-1 text-brand-blue-label">
+                  {item.status}
+                </span>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-display text-xl font-semibold text-foreground">
+                  {item.name}
+                </h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{item.headline}</p>
+              </div>
+              <span className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                View case study
+                <FiArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
+          >
+            Explore all work
+            <FiArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SelectedWork;

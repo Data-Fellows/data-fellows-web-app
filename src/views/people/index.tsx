@@ -2,6 +2,7 @@ import AffiliationMarks from "@/components/custom/affiliation-marks";
 import Highlight from "@/components/custom/highlight";
 import PageSeo from "@/components/seo/page-seo";
 import type { AffiliationKey } from "@/constants/affiliations";
+import { portfolioProjects } from "@/constants/portfolio";
 import LandingPageLayout from "@/layouts/landing-page";
 import { advisors, communityAdmins, foundingTeam } from "@/views/shared/team";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -20,14 +21,18 @@ type Person = {
   featured?: boolean;
   objectPosition?: string;
   affiliations?: readonly AffiliationKey[];
+  projects?: readonly string[];
 };
 
 const PersonCard = ({ person }: { person: Person }) => {
   const [expanded, setExpanded] = useState(false);
   const reduced = useReducedMotion();
-  const { name, role, tagline, bio, image, linkedin, objectPosition, affiliations } =
+  const { name, role, tagline, bio, image, linkedin, objectPosition, affiliations, projects } =
     person;
   const bioParagraphs = bio.split("\n\n");
+  const selectedWork = (projects ?? [])
+    .map((slug) => portfolioProjects.find((project) => project.slug === slug))
+    .filter((project): project is NonNullable<typeof project> => Boolean(project));
 
   return (
     <div className="flex h-full flex-col overflow-hidden border border-border bg-background">
@@ -90,6 +95,25 @@ const PersonCard = ({ person }: { person: Person }) => {
                 {bioParagraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
+                {selectedWork.length > 0 ? (
+                  <div className="space-y-2 pt-1">
+                    <p className="font-mono text-xs font-semibold uppercase tracking-wide text-foreground">
+                      Selected work
+                    </p>
+                    <ul className="space-y-1">
+                      {selectedWork.map((project) => (
+                        <li key={project.slug}>
+                          <Link
+                            href={`/work/${project.slug}`}
+                            className="underline hover:text-foreground"
+                          >
+                            {project.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </div>
             </motion.div>
           ) : null}
