@@ -22,13 +22,11 @@ Things We&apos;ve Explored and Built
             id="products-heading"
             className="font-display text-3xl font-semibold tracking-tight sm:text-4xl"
           >
-            Product experiments, labeled honestly by stage.
+            Built while we learned what works.
           </h2>
           <p className="text-base leading-relaxed text-navy-deep-foreground/70">
-            These are capability areas and questions we&apos;ve wanted to
-            investigate, not a claim that every case has already shipped for
-            a paying customer. Here are the products we&apos;ve explored
-            along the way.
+            A look at the products we&apos;ve explored along the way, each at
+            its own stage.
           </p>
         </div>
 

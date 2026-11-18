@@ -98,7 +98,7 @@ export const portfolioProjects: PortfolioProject[] = [
           "About 47% of projects report a literal $0 budget in the source data. Rather than treating that as a real value or silently dropping it, it's flagged with an explicit budget_undisclosed indicator so analysis can't mistake \"not reported\" for \"free.\"",
       },
       {
-        title: "Imprecise dates modeled honestly",
+        title: "Imprecise dates kept at their real precision",
         description:
           "Roughly 96% of completion dates in the source lack day-level precision. Instead of forcing them into a plain DATE column (which would fabricate a precision the data doesn't have), each date carries a precision field alongside an upper-bound value.",
       },
