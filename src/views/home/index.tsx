@@ -9,6 +9,7 @@ import Impact from "./sections/impact";
 import Partners from "./sections/partners";
 import Products from "./sections/products";
 import Resources from "./sections/resources";
+import SelectedWork from "./sections/selected-work";
 import StudioCredibility from "./sections/studio-credibility";
 import WhoWeAre from "./sections/who-we-are";
 
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
         <StudioCredibility />
         <WhoWeAre />
         <Impact />
+        <SelectedWork />
         <Products />
         <Community />
         <Partners />

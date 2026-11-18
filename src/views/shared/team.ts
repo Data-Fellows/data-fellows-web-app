@@ -8,6 +8,7 @@ export const foundingTeam = [
     image: "/images/TOBI OLADIMEJI-FOUNDER.jpg",
     linkedin: "https://www.linkedin.com/in/tobioladimeji/",
     affiliations: ["pwc", "cohere"] as const,
+    projects: ["ont-communities", "inscend-source-agent"],
   },
   {
     name: "Oyindamola Victor",
@@ -29,6 +30,7 @@ export const foundingTeam = [
     linkedin: "https://www.linkedin.com/in/elijah-soladoye/",
     objectPosition: "center 50%",
     affiliations: ["pwc"] as const,
+    projects: ["xodocs", "hr-platform"],
   },
   {
     name: "Sami Ansari",
@@ -39,6 +41,7 @@ export const foundingTeam = [
     image: "/images/Sami_Founding_AI_ENGINEER.png",
     linkedin: "https://www.linkedin.com/in/samiansari99/",
     affiliations: ["cohere"] as const,
+    projects: ["pi-ampersand"],
   },
 ];
 
