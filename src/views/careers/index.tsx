@@ -13,7 +13,7 @@ const principles = [
   {
     title: "Real operational problems",
     description:
-      "The work is scoping and building software, data and AI systems for organizations with genuine operational complexity, starting with healthcare and insurance.",
+      "The work is scoping and building software, data and AI systems for organizations with genuine operational complexity.",
   },
   {
     title: "Grown from a community",
