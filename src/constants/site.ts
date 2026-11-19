@@ -14,6 +14,10 @@ export const site = {
   foundingYear: "2022",
   email: "hello@datafellowsai.com",
   partnerEmail: "partners@datafellowsai.com",
+  // Where consulting/business enquiries from the /contact form are
+  // delivered -- kept distinct from the general `email` above per the
+  // brief's explicit requirement.
+  enquiryEmail: "info@datafellowsai.com",
   communityUrl: "https://bit.ly/m/datafellows",
   inscendUrl: "https://www.producthunt.com/products/inscend",
   productHuntUrl: "https://www.producthunt.com/products/data-fellows",

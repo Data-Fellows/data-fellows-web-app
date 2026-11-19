@@ -23,6 +23,14 @@ const FIELD_LABELS: Record<string, string> = {
   memberName: "Name",
   memberEmail: "Email",
   learningNote: "Learning note",
+  fullName: "Full name",
+  workEmail: "Work email",
+  organization: "Organization",
+  enquiryType: "Enquiry type",
+  problemDescription: "Description of the problem",
+  existingSystems: "Relevant existing systems or tools",
+  timeframe: "Desired project timeframe",
+  heardAbout: "How they heard about Data Fellows",
 };
 
 // The generic "Please check the form and try again." told an admin nothing

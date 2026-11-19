@@ -1,9 +1,13 @@
 import PageSeo from "@/components/seo/page-seo";
-import LandingPageLayout from "@/layouts/landing-page";
 import { site } from "@/constants/site";
+import { enquirySchema, type EnquiryFormValues } from "@/lib/validation/enquiry-schema";
+import { ENQUIRY_TYPES } from "@/types/enquiry";
+import LandingPageLayout from "@/layouts/landing-page";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
-import { FiMail, FiMessageCircle, FiSend, FiUsers } from "react-icons/fi";
+import { useForm } from "react-hook-form";
+import { FiCheckCircle, FiMail, FiMessageCircle, FiSend, FiUsers } from "react-icons/fi";
 
 const contactChannels = [
   {
@@ -20,27 +24,82 @@ const contactChannels = [
     href: `mailto:${site.partnerEmail}`,
   },
   {
-    title: "General inquiries & press",
+    title: "General inquiries, media & press",
     detail: site.email,
     icon: FiMail,
     href: `mailto:${site.email}`,
   },
 ];
 
+const inputClass =
+  "h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30";
+const textareaClass =
+  "border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30";
+const labelClass = "flex flex-col gap-2 text-sm font-medium text-foreground";
+const errorClass = "text-xs font-medium text-destructive";
+
+const defaultValues: EnquiryFormValues = {
+  fullName: "",
+  workEmail: "",
+  organization: "",
+  enquiryType: ENQUIRY_TYPES[0],
+  problemDescription: "",
+  existingSystems: "",
+  timeframe: "",
+  heardAbout: "",
+  website: "",
+};
+
 const ContactPage = () => {
-  const [message, setMessage] = useState({
-    name: "",
-    email: "",
-    topic: "General inquiry",
-    notes: "",
+  const [submitState, setSubmitState] = useState<
+    | { status: "idle" }
+    | { status: "success"; referenceId: string }
+    | { status: "error"; message: string }
+  >({ status: "idle" });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<EnquiryFormValues>({
+    resolver: zodResolver(enquirySchema),
+    defaultValues,
   });
-  const [submitted, setSubmitted] = useState(false);
+
+  const onSubmit = async (values: EnquiryFormValues) => {
+    setSubmitState({ status: "idle" });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const body = await response.json();
+
+      if (!response.ok || !body.success) {
+        setSubmitState({
+          status: "error",
+          message: body.error || "Something went wrong. Please try again or email us directly.",
+        });
+        return;
+      }
+
+      setSubmitState({ status: "success", referenceId: body.referenceId });
+      reset(defaultValues);
+    } catch {
+      setSubmitState({
+        status: "error",
+        message: "Something went wrong. Please check your connection and try again.",
+      });
+    }
+  };
 
   return (
     <LandingPageLayout>
       <PageSeo
         title="Contact | Data Fellows"
-        description="Get in touch with Data Fellows for general inquiries, partnerships, or press."
+        description="Tell Data Fellows what you're trying to solve. We'll review the request and discuss whether we're a good fit."
         path="/contact"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -54,12 +113,13 @@ const ContactPage = () => {
                 id="contact-hero-heading"
                 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
-                Inquiries & partnerships.
+                Tell us what you&apos;re trying to solve.
               </h1>
               <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
-                Whether you want to partner with Data Fellows or feature a
-                Fellow, leave us a detailed message and the right person will
-                reach out within two business days.
+                Whether you&apos;re dealing with disconnected systems, manual
+                processes, unreliable reporting or a software problem, tell
+                us what you&apos;re working through. We&apos;ll review the
+                request and discuss whether Data Fellows is a good fit.
               </p>
             </div>
           </div>
@@ -75,8 +135,8 @@ const ContactPage = () => {
                 Reach the team
               </h2>
               <p className="text-sm text-muted-foreground">
-                Drop a note to any of the channels below and someone from Data
-                Fellows will get back within two business days.
+                Business problem? Use the form. For community, partnerships,
+                media or anything else, use the channels below.
               </p>
               <div className="space-y-4">
                 {contactChannels.map(({ title, detail, icon: Icon, href, external }) => (
@@ -102,116 +162,165 @@ const ContactPage = () => {
             </div>
 
             <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                // There is no backend wired up to this form yet -- rather
-                // than fake a "message sent" state, hand off to the
-                // visitor's own email client with the details pre-filled
-                // so the message actually goes somewhere.
-                const subject = `[${message.topic}] Message from ${message.name}`;
-                const body = `${message.notes}\n\n-- \n${message.name} (${message.email})`;
-                window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-                  subject
-                )}&body=${encodeURIComponent(body)}`;
-                setSubmitted(true);
-              }}
+              onSubmit={handleSubmit(onSubmit)}
+              noValidate
               className="space-y-5 border border-border bg-background px-6 py-8 lg:col-span-7"
             >
               <h2 className="font-display text-xl font-semibold text-foreground">
-                Send us a message
+                Tell us about the problem
               </h2>
+
               <div className="grid gap-4 md:grid-cols-2">
-                <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                  Name
+                <label className={labelClass}>
+                  Full name
                   <input
-                    type="text"
-                    required
-                    value={message.name}
-                    onChange={(event) => {
-                      setSubmitted(false);
-                      setMessage((prev) => ({
-                        ...prev,
-                        name: event.target.value,
-                      }));
-                    }}
-                    className="h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    {...register("fullName")}
+                    maxLength={200}
+                    className={inputClass}
                     placeholder="Your name"
+                    autoComplete="name"
                   />
+                  {errors.fullName ? (
+                    <span className={errorClass}>{errors.fullName.message}</span>
+                  ) : null}
                 </label>
-                <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                  Email
+                <label className={labelClass}>
+                  Work email
                   <input
+                    {...register("workEmail")}
                     type="email"
-                    required
-                    value={message.email}
-                    onChange={(event) => {
-                      setSubmitted(false);
-                      setMessage((prev) => ({
-                        ...prev,
-                        email: event.target.value,
-                      }));
-                    }}
-                    className="h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
-                    placeholder="you@email.com"
+                    maxLength={254}
+                    className={inputClass}
+                    placeholder="you@company.com"
+                    autoComplete="email"
                   />
+                  {errors.workEmail ? (
+                    <span className={errorClass}>{errors.workEmail.message}</span>
+                  ) : null}
                 </label>
               </div>
-              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                Topic
-                <select
-                  value={message.topic}
-                  onChange={(event) => {
-                    setSubmitted(false);
-                    setMessage((prev) => ({
-                      ...prev,
-                      topic: event.target.value,
-                    }));
-                  }}
-                  className="h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
-                >
-                  <option>General inquiry</option>
-                  <option>Partnership</option>
-                  <option>Media or press</option>
-                  <option>Support</option>
-                </select>
-              </label>
-              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                Message body
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className={labelClass}>
+                  Organization (optional)
+                  <input
+                    {...register("organization")}
+                    maxLength={200}
+                    className={inputClass}
+                    placeholder="Company or team name"
+                    autoComplete="organization"
+                  />
+                  {errors.organization ? (
+                    <span className={errorClass}>{errors.organization.message}</span>
+                  ) : null}
+                </label>
+                <label className={labelClass}>
+                  Enquiry type
+                  <select {...register("enquiryType")} className={inputClass}>
+                    {ENQUIRY_TYPES.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.enquiryType ? (
+                    <span className={errorClass}>{errors.enquiryType.message}</span>
+                  ) : null}
+                </label>
+              </div>
+
+              <label className={labelClass}>
+                Description of the problem
                 <textarea
+                  {...register("problemDescription")}
                   rows={4}
-                  required
-                  value={message.notes}
-                  onChange={(event) => {
-                    setSubmitted(false);
-                    setMessage((prev) => ({
-                      ...prev,
-                      notes: event.target.value,
-                    }));
-                  }}
-                  className="border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
-                  placeholder="Tell us how we can support you."
+                  maxLength={4000}
+                  className={textareaClass}
+                  placeholder="What's happening, and what have you tried so far?"
                 />
+                {errors.problemDescription ? (
+                  <span className={errorClass}>{errors.problemDescription.message}</span>
+                ) : null}
               </label>
+
+              <label className={labelClass}>
+                Relevant existing systems or tools (optional)
+                <input
+                  {...register("existingSystems")}
+                  maxLength={2000}
+                  className={inputClass}
+                  placeholder="e.g. Shopify, Postgres, Zapier"
+                />
+                {errors.existingSystems ? (
+                  <span className={errorClass}>{errors.existingSystems.message}</span>
+                ) : null}
+              </label>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className={labelClass}>
+                  Desired project timeframe (optional)
+                  <input
+                    {...register("timeframe")}
+                    maxLength={200}
+                    className={inputClass}
+                    placeholder="e.g. Within a month"
+                  />
+                  {errors.timeframe ? (
+                    <span className={errorClass}>{errors.timeframe.message}</span>
+                  ) : null}
+                </label>
+                <label className={labelClass}>
+                  How did you hear about us? (optional)
+                  <input
+                    {...register("heardAbout")}
+                    maxLength={200}
+                    className={inputClass}
+                    placeholder="e.g. Referral, LinkedIn, search"
+                  />
+                  {errors.heardAbout ? (
+                    <span className={errorClass}>{errors.heardAbout.message}</span>
+                  ) : null}
+                </label>
+              </div>
+
+              {/* Honeypot -- hidden from sighted and keyboard users via
+                  CSS (not type="hidden", so a bot that only skips hidden
+                  inputs still fills it in), and never announced to screen
+                  readers. Real visitors never see or touch this field. */}
+              <div className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
+                <label>
+                  Website
+                  <input {...register("website")} tabIndex={-1} autoComplete="off" />
+                </label>
+              </div>
+
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
+                disabled={isSubmitting}
+                className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <FiSend className="h-4 w-4" />
-                Send message
+                {isSubmitting ? "Sending..." : "Send message"}
               </button>
-              {submitted ? (
-                <p className="text-xs font-medium text-foreground">
-                  Opening your email app with this message pre-filled --
-                  send it from there and we&apos;ll reply within two
-                  business days.
-                </p>
-              ) : (
-                <p className="text-xs text-muted-foreground">
-                  This opens your email app with your message pre-filled to{" "}
-                  {site.email}. We keep your information private and only use
-                  it to follow up on your request.
-                </p>
-              )}
+
+              <div role="status" aria-live="polite">
+                {submitState.status === "success" ? (
+                  <p className="flex items-start gap-2 text-sm font-medium text-foreground">
+                    <FiCheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-foreground" />
+                    <span>
+                      Message received. Reference ID: {submitState.referenceId}.
+                      We&apos;ll review it and get back to you.
+                    </span>
+                  </p>
+                ) : submitState.status === "error" ? (
+                  <p className={errorClass}>{submitState.message}</p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    We keep your information private and only use it to
+                    follow up on your request.
+                  </p>
+                )}
+              </div>
             </form>
           </div>
         </section>
