@@ -25,7 +25,7 @@ const stats = [
   { value: formatCompactStat(impactStats[1]), label: "Countries" },
   {
     value: formatCompactStat(impactStats[2]),
-    label: "Pilot projects launched",
+    label: "Projects & business engagements",
   },
 ];
 
@@ -64,7 +64,8 @@ Where This Started
               Today it has grown to over {impactStats[0].value.toLocaleString()}
               {impactStats[0].suffix} members across {impactStats[1].value}
               {impactStats[1].suffix} countries, with {impactStats[2].value}
-              {impactStats[2].suffix} pilot projects launched along the way.
+              {impactStats[2].suffix} ecosystem projects and business
+              engagements along the way.
             </p>
             <div className="space-y-4">
               {quotes.map((item) => (
