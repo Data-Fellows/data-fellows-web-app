@@ -100,5 +100,6 @@ export const engineers = [
     bio: "Nerat Dazam is a Senior Engineer at Data Fellows, working across data science, machine learning and software development. She's been with the community since its earliest days, as one of its founding administrators.\n\nHer connection to Data Fellows' founders goes back to Landmark University, where she served as Academic Director of the Computer Science department association alongside Tobi Oladimeji, who was Assistant Academic Director at the time.\n\nHer technical work includes research into natural language processing, including PidginNuance, a project investigating sentiment and emotion classification in Nigerian Pidgin, and a Springer-published study applying machine learning techniques to lung cancer classification.",
     image: "/images/community/Nerat.jpeg",
     linkedin: "https://www.linkedin.com/in/nerat-dazam",
+    projects: ["pidginnuance"],
   },
 ];

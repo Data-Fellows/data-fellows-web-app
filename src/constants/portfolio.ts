@@ -277,6 +277,36 @@ export const portfolioProjects: PortfolioProject[] = [
     upstreamProjects: [{ label: "earendil-works/pi", href: "https://github.com/earendil-works/pi" }],
     relatedProjects: ["ont-communities"],
   },
+  {
+    id: "pidginnuance",
+    slug: "pidginnuance",
+    name: "PidginNuance",
+    headline: "Sentiment and emotion classification for Nigerian Pidgin",
+    summary:
+      "An end-to-end NLP pipeline that classifies sentiment and emotion in Nigerian Pidgin text, pairing fine-tuned transformer models with an LLM-assisted labeling agent.",
+    capabilities: ["Applied AI", "Data engineering"],
+    projectOrigin: "Research and experiment",
+    projectStatus: "Working prototype",
+    timePeriod: "Not dated in the source repository",
+    contributors: [{ name: "Nerat Dazam", role: "Author", teamSlug: "nerat-dazam" }],
+    problem:
+      "Most sentiment-analysis models are trained on standard English and miss the tone, sarcasm and cultural context carried in Nigerian Pidgin, a widely spoken language that mainstream NLP tooling largely ignores.",
+    approach:
+      "A sentiment classifier (positive, negative, neutral), built on the Davlan/naija-twitter-sentiment-afriberta-large baseline, is paired with an emotion classifier fine-tuned from Davlan/afro-xlmr-base across 16 culturally specific categories (such as hustle_fatigue, market_energy and forming). Emotion is fed into the sentiment model as extra context, since tone and sarcasm often change a sentence's real meaning. An AI agent, built with smolagents, uses an LLM to propose an emotion label for new text, asks the user to confirm or correct it, and then runs the sentiment classifier — with a Streamlit dashboard and a terminal demo for trying it directly.",
+    implementedFeatures: [
+      "Sentiment classification (positive/negative/neutral) on a fine-tuned AfriBERTa baseline",
+      "Emotion classification across 16 Pidgin-specific categories, fine-tuned from AFRO-XLM-R",
+      "Context-aware sentiment that factors in the predicted emotion",
+      "An smolagents-based LLM agent for interactive, human-confirmed emotion labeling",
+      "Streamlit dashboard and terminal demo",
+    ],
+    verifiedResults:
+      "A research pipeline, not a deployed product — no accuracy or usage figures are claimed here beyond what the repository documents. Verified directly from the source: a working end-to-end pipeline across two Hugging Face datasets published by Wazobia Labs (500 training rows, 253 evaluation rows, CC-BY-4.0) and 28 commits of real implementation.",
+    technologies: ["Python", "Hugging Face Transformers", "AfriBERTa", "AFRO-XLM-R", "smolagents", "Streamlit"],
+    sourceLinks: [{ label: "GitHub", href: "https://github.com/Elilora/PidginNuance" }],
+    attribution: "Built by Nerat Dazam.",
+    relatedProjects: ["hr-platform"],
+  },
 ];
 
 export const getPortfolioProject = (slug: string) =>
