@@ -10,7 +10,7 @@ const OG_IMAGE_PATH = "/images/impact-report-og.jpg";
 
 const PAGE_TITLE = "Data Fellows Impact Report | Four Years of Clarity";
 const PAGE_DESCRIPTION =
-  "Four years of turning data into clarity, across 33 countries. See our community, our programs, Inscend, and what's ahead.";
+  "Four years of turning data into clarity, across 33+ countries. See our community, our programs, Inscend, and what's ahead.";
 
 const ImpactReportPage = () => {
   return (
