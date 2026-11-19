@@ -22,7 +22,9 @@ export default async function handler(
 
   const { data, error } = await supabase
     .from("resources")
-    .select("id, title, description, category, href, image_url, published_date, status, created_at, updated_at")
+    .select(
+      "id, title, description, category, href, image_url, published_date, status, author_name, author_people_slug, original_publisher, topic, featured, is_external_article, editorial_track, created_at, updated_at"
+    )
     .eq("status", "published")
     .order("published_date", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false });
