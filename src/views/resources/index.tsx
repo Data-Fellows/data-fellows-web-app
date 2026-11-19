@@ -102,7 +102,10 @@ const ResourceCard = ({ item }: { item: Resource }) => {
           <p className="text-xs text-muted-foreground">
             By{" "}
             {item.author_people_slug ? (
-              <Link href="/people" className="underline hover:text-foreground">
+              <Link
+                href={`/people#${item.author_people_slug}`}
+                className="underline hover:text-foreground"
+              >
                 {attribution}
               </Link>
             ) : (
