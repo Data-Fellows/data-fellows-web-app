@@ -4,12 +4,17 @@ import PageSeo from "@/components/seo/page-seo";
 import type { AffiliationKey } from "@/constants/affiliations";
 import { portfolioProjects } from "@/constants/portfolio";
 import LandingPageLayout from "@/layouts/landing-page";
-import { advisors, communityAdmins, foundingTeam } from "@/views/shared/team";
+import {
+  advisors,
+  communityAdmins,
+  engineers,
+  foundingTeam,
+} from "@/views/shared/team";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { FiArrowUpRight, FiLinkedin } from "react-icons/fi";
+import { FiArrowUpRight, FiExternalLink, FiLinkedin } from "react-icons/fi";
 
 type Person = {
   name: string;
@@ -18,6 +23,7 @@ type Person = {
   bio: string;
   image: string;
   linkedin?: string;
+  portfolio?: string;
   featured?: boolean;
   objectPosition?: string;
   affiliations?: readonly AffiliationKey[];
@@ -27,8 +33,18 @@ type Person = {
 const PersonCard = ({ person }: { person: Person }) => {
   const [expanded, setExpanded] = useState(false);
   const reduced = useReducedMotion();
-  const { name, role, tagline, bio, image, linkedin, objectPosition, affiliations, projects } =
-    person;
+  const {
+    name,
+    role,
+    tagline,
+    bio,
+    image,
+    linkedin,
+    portfolio,
+    objectPosition,
+    affiliations,
+    projects,
+  } = person;
   const bioParagraphs = bio.split("\n\n");
   const selectedWork = (projects ?? [])
     .map((slug) => portfolioProjects.find((project) => project.slug === slug))
@@ -56,17 +72,30 @@ const PersonCard = ({ person }: { person: Person }) => {
               {role}
             </p>
           </div>
-          {linkedin ? (
-            <Link
-              href={linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 flex-shrink-0 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
-              aria-label={`LinkedIn profile of ${name}`}
-            >
-              <FiLinkedin className="h-4 w-4" />
-            </Link>
-          ) : null}
+          <div className="flex flex-shrink-0 items-center gap-2">
+            {portfolio ? (
+              <Link
+                href={portfolio}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
+                aria-label={`Portfolio website of ${name}`}
+              >
+                <FiExternalLink className="h-4 w-4" />
+              </Link>
+            ) : null}
+            {linkedin ? (
+              <Link
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
+                aria-label={`LinkedIn profile of ${name}`}
+              >
+                <FiLinkedin className="h-4 w-4" />
+              </Link>
+            ) : null}
+          </div>
         </div>
         {affiliations && affiliations.length > 0 ? (
           <AffiliationMarks keys={[...affiliations]} />
@@ -170,6 +199,22 @@ const PeoplePage = () => {
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {foundingTeam.map((person) => (
+                <PersonCard key={person.name} person={person} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 sm:px-6" aria-labelledby="people-engineers-heading">
+          <div className="mx-auto max-w-6xl space-y-6">
+            <h2
+              id="people-engineers-heading"
+              className="font-display text-2xl font-semibold tracking-tight text-foreground"
+            >
+              Engineers
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {engineers.map((person) => (
                 <PersonCard key={person.name} person={person} />
               ))}
             </div>
