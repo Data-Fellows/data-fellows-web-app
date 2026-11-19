@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 const stats = [
   { label: "Members", value: formatCompactStat(impactStats[0]) },
   { label: "Countries", value: formatCompactStat(impactStats[1]) },
-  { label: "Pilots", value: formatCompactStat(impactStats[2]) },
+  { label: "Projects", value: formatCompactStat(impactStats[2]) },
 ];
 
 const container: Variants = {

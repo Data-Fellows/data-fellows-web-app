@@ -38,7 +38,7 @@ const ImpactPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="Impact | Data Fellows"
-        description="Four years of Data Fellows in numbers: members, countries, pilot projects, scholarships and what the community told us in the 2026 survey."
+        description="Four years of Data Fellows in numbers: members, countries, ecosystem projects & business engagements, scholarships and what the community told us in the 2026 survey."
         path="/impact"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">

@@ -23,10 +23,19 @@ export const site = {
 // Public proof points -- keep every homepage/impact-page claim sourced from
 // here instead of re-typing numbers per section, so they can't drift.
 // as-of the 2026 Impact Report (four years, 2022-2026).
+//
+// Source note (internal, 2026-11-19): the August 2026 Impact Report
+// documented 30+ ecosystem pilot projects; since then Inscend has onboarded
+// 20+ businesses. Those are different activity categories that may overlap,
+// so 40+ is the founder-approved combined public figure for "ecosystem
+// projects & business engagements" -- not a precise deduplicated count, and
+// not the same thing as a completed paid consulting engagement. Reconciling
+// the underlying unique count is tracked internally, not blocking this
+// public figure. See PR that introduced this note for the full brief.
 export const impactStats = [
   { value: 1600, suffix: "+", label: "Community members" },
   { value: 33, suffix: "+", label: "Countries represented" },
-  { value: 50, suffix: "+", label: "Ecosystem pilot projects launched" },
+  { value: 40, suffix: "+", label: "Ecosystem projects & business engagements" },
   { value: 1500, suffix: "+", label: "DataCamp scholarships since 2025" },
 ] as const;
 
