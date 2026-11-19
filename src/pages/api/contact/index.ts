@@ -1,5 +1,5 @@
 import { describeZodError } from "@/lib/api/zod-error";
-import { checkEnquiryRateLimit, getClientIp } from "@/lib/api/rate-limit";
+import { getClientIp } from "@/lib/api/rate-limit";
 import {
   buildEnquiryAcknowledgementEmail,
   buildEnquiryNotificationEmail,
@@ -49,44 +49,75 @@ export default async function handler(
 
   const ipAddress = getClientIp(req);
 
-  const { limited, retryAfterMinutes } = await checkEnquiryRateLimit(supabase, ipAddress);
-  if (limited) {
-    return res.status(429).json({
-      success: false,
-      error: `You've sent several messages recently. Please try again in about ${retryAfterMinutes} minutes, or email us directly.`,
-    });
-  }
+  // Rate-limit check, insert, and reference-ID generation all happen
+  // atomically inside this one Postgres function (migration
+  // 0014_enquiry_rpc_functions.sql). This isn't just tidier than a
+  // separate select-then-insert -- it's required: the anon-key client
+  // this route runs as has only INSERT on public.enquiries (see
+  // 0012_enquiries.sql's RLS policy), so a plain .select()/.update()
+  // against the table would be denied outright. A SECURITY DEFINER
+  // function scoped to exactly this operation avoids widening the
+  // table's RLS or needing a service-role key in application code.
+  const { data: submitResult, error: submitError } = await supabase.rpc("submit_enquiry", {
+    p_full_name: values.fullName,
+    p_work_email: values.workEmail,
+    p_organization: values.organization || null,
+    p_enquiry_type: values.enquiryType,
+    p_problem_description: values.problemDescription,
+    p_existing_systems: values.existingSystems || null,
+    p_timeframe: values.timeframe || null,
+    p_heard_about: values.heardAbout || null,
+    p_ip_address: ipAddress,
+  });
 
-  // Durable write first -- this is "enquiry received." Everything after
-  // this point (email notification, acknowledgement, HubSpot) is
-  // best-effort follow-up that must never cause a successfully-stored
-  // enquiry to be reported back to the visitor as failed.
-  const { data: created, error: insertError } = await supabase
-    .from("enquiries")
-    .insert({
-      full_name: values.fullName,
-      work_email: values.workEmail,
-      organization: values.organization || null,
-      enquiry_type: values.enquiryType,
-      problem_description: values.problemDescription,
-      existing_systems: values.existingSystems || null,
-      timeframe: values.timeframe || null,
-      heard_about: values.heardAbout || null,
-      ip_address: ipAddress,
-    })
-    .select(
-      "id, full_name, work_email, organization, enquiry_type, problem_description, existing_systems, timeframe, heard_about, notification_status, notification_error, notification_attempted_at, acknowledgement_status, hubspot_synced_at, hubspot_contact_id, created_at, updated_at"
-    )
-    .single();
-
-  if (insertError || !created) {
-    console.error("[api/contact] failed to insert enquiry:", insertError);
+  if (submitError) {
+    console.error("[api/contact] submit_enquiry RPC failed:", submitError);
     return res
       .status(500)
       .json({ success: false, error: "Something went wrong. Please try again or email us directly." });
   }
 
-  const enquiry = created as Enquiry;
+  // Supabase's .rpc() on a function returning `table(...)` comes back as
+  // an array of rows (always exactly one here, since submit_enquiry
+  // either inserts one row or returns one rate_limited row).
+  const result = Array.isArray(submitResult) ? submitResult[0] : submitResult;
+
+  if (!result) {
+    console.error("[api/contact] submit_enquiry RPC returned no row");
+    return res
+      .status(500)
+      .json({ success: false, error: "Something went wrong. Please try again or email us directly." });
+  }
+
+  if (result.rate_limited) {
+    return res.status(429).json({
+      success: false,
+      error: "You've sent several messages recently. Please try again in about 15 minutes, or email us directly.",
+    });
+  }
+
+  // Built from the already-validated input plus the id/timestamp the RPC
+  // handed back -- not re-read from the database, since the anon-key
+  // client has no SELECT on this table (by design; see migration 0012).
+  const enquiry: Enquiry = {
+    id: result.id,
+    full_name: values.fullName,
+    work_email: values.workEmail,
+    organization: values.organization || null,
+    enquiry_type: values.enquiryType,
+    problem_description: values.problemDescription,
+    existing_systems: values.existingSystems || null,
+    timeframe: values.timeframe || null,
+    heard_about: values.heardAbout || null,
+    notification_status: "pending",
+    notification_error: null,
+    notification_attempted_at: null,
+    acknowledgement_status: "pending",
+    hubspot_synced_at: null,
+    hubspot_contact_id: null,
+    created_at: result.created_at,
+    updated_at: result.created_at,
+  };
 
   // From this point on, the visitor's "enquiry received" response is
   // already guaranteed. Email delivery is attempted but its outcome only
@@ -97,26 +128,23 @@ export default async function handler(
 
   if (provider) {
     const notification = buildEnquiryNotificationEmail(enquiry, site.enquiryEmail, fromAddress);
-    const result = await provider.send(notification);
+    const sendResult = await provider.send(notification);
 
-    await supabase
-      .from("enquiries")
-      .update({
-        notification_status: result.ok ? "sent" : "failed",
-        notification_error: result.ok ? null : result.error,
-        notification_attempted_at: new Date().toISOString(),
-      })
-      .eq("id", enquiry.id);
+    await supabase.rpc("update_enquiry_notification", {
+      p_id: enquiry.id,
+      p_notification_status: sendResult.ok ? "sent" : "failed",
+      p_notification_error: sendResult.ok ? null : sendResult.error,
+    });
 
-    if (result.ok) {
+    if (sendResult.ok) {
       // Acknowledgement is a courtesy, not a promise -- failure here never
       // affects the response or the notification_status above.
       const ack = buildEnquiryAcknowledgementEmail(enquiry, fromAddress);
       const ackResult = await provider.send(ack);
-      await supabase
-        .from("enquiries")
-        .update({ acknowledgement_status: ackResult.ok ? "sent" : "failed" })
-        .eq("id", enquiry.id);
+      await supabase.rpc("update_enquiry_notification", {
+        p_id: enquiry.id,
+        p_acknowledgement_status: ackResult.ok ? "sent" : "failed",
+      });
     }
   } else {
     // No provider configured -- record this honestly rather than silently
@@ -128,10 +156,10 @@ export default async function handler(
       enquiry.id,
       "stored but no notification was sent."
     );
-    await supabase
-      .from("enquiries")
-      .update({ acknowledgement_status: "skipped" })
-      .eq("id", enquiry.id);
+    await supabase.rpc("update_enquiry_notification", {
+      p_id: enquiry.id,
+      p_acknowledgement_status: "skipped",
+    });
   }
 
   // HubSpot sync is intentionally not implemented here -- see the PR

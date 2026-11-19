@@ -175,6 +175,7 @@ const ContactPage = () => {
                   Full name
                   <input
                     {...register("fullName")}
+                    maxLength={200}
                     className={inputClass}
                     placeholder="Your name"
                     autoComplete="name"
@@ -188,6 +189,7 @@ const ContactPage = () => {
                   <input
                     {...register("workEmail")}
                     type="email"
+                    maxLength={254}
                     className={inputClass}
                     placeholder="you@company.com"
                     autoComplete="email"
@@ -203,10 +205,14 @@ const ContactPage = () => {
                   Organization (optional)
                   <input
                     {...register("organization")}
+                    maxLength={200}
                     className={inputClass}
                     placeholder="Company or team name"
                     autoComplete="organization"
                   />
+                  {errors.organization ? (
+                    <span className={errorClass}>{errors.organization.message}</span>
+                  ) : null}
                 </label>
                 <label className={labelClass}>
                   Enquiry type
@@ -228,6 +234,7 @@ const ContactPage = () => {
                 <textarea
                   {...register("problemDescription")}
                   rows={4}
+                  maxLength={4000}
                   className={textareaClass}
                   placeholder="What's happening, and what have you tried so far?"
                 />
@@ -240,9 +247,13 @@ const ContactPage = () => {
                 Relevant existing systems or tools (optional)
                 <input
                   {...register("existingSystems")}
+                  maxLength={2000}
                   className={inputClass}
                   placeholder="e.g. Shopify, Postgres, Zapier"
                 />
+                {errors.existingSystems ? (
+                  <span className={errorClass}>{errors.existingSystems.message}</span>
+                ) : null}
               </label>
 
               <div className="grid gap-4 md:grid-cols-2">
@@ -250,17 +261,25 @@ const ContactPage = () => {
                   Desired project timeframe (optional)
                   <input
                     {...register("timeframe")}
+                    maxLength={200}
                     className={inputClass}
                     placeholder="e.g. Within a month"
                   />
+                  {errors.timeframe ? (
+                    <span className={errorClass}>{errors.timeframe.message}</span>
+                  ) : null}
                 </label>
                 <label className={labelClass}>
                   How did you hear about us? (optional)
                   <input
                     {...register("heardAbout")}
+                    maxLength={200}
                     className={inputClass}
                     placeholder="e.g. Referral, LinkedIn, search"
                   />
+                  {errors.heardAbout ? (
+                    <span className={errorClass}>{errors.heardAbout.message}</span>
+                  ) : null}
                 </label>
               </div>
 

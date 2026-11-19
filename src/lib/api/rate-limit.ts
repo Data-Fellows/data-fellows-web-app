@@ -1,56 +1,11 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
-
-// Durable, DB-backed rate limiting rather than an in-memory counter -- a
-// Vercel serverless function has no guaranteed warm instance between
-// requests, so an in-memory map would silently reset and stop limiting
-// anything. Reusing the enquiries table itself (already durable, already
-// has ip_address + created_at) avoids a second store or a new dependency.
-//
-// This is best-effort, not a security boundary: it limits submissions per
-// IP, and a visitor behind a shared/proxied IP (corporate NAT, VPN) can be
-// affected by others' traffic. Good enough to blunt casual scripted abuse
-// alongside the honeypot field; a dedicated service (Upstash, Cloudflare)
-// would be needed for anything stronger.
-const WINDOW_MINUTES = 15;
-const MAX_PER_WINDOW = 5;
-
-export type RateLimitResult = {
-  limited: boolean;
-  retryAfterMinutes?: number;
-};
-
-export const checkEnquiryRateLimit = async (
-  supabase: SupabaseClient,
-  ipAddress: string | null
-): Promise<RateLimitResult> => {
-  // No IP to key off of (e.g. test/local environments) -- don't block, but
-  // don't pretend to have rate-limited anything either.
-  if (!ipAddress) {
-    return { limited: false };
-  }
-
-  const windowStart = new Date(Date.now() - WINDOW_MINUTES * 60 * 1000).toISOString();
-
-  const { count, error } = await supabase
-    .from("enquiries")
-    .select("id", { count: "exact", head: true })
-    .eq("ip_address", ipAddress)
-    .gte("created_at", windowStart);
-
-  if (error) {
-    // Fail open on a counting error -- we'd rather risk an occasional
-    // extra submission than lose a legitimate one because the rate-limit
-    // check itself broke.
-    console.error("[rate-limit] failed to count recent enquiries:", error);
-    return { limited: false };
-  }
-
-  if ((count ?? 0) >= MAX_PER_WINDOW) {
-    return { limited: true, retryAfterMinutes: WINDOW_MINUTES };
-  }
-
-  return { limited: false };
-};
+// Rate limiting for /api/contact lives in the submit_enquiry Postgres
+// function (migration 0014_enquiry_rpc_functions.sql), not here -- the
+// anon-key client this route runs as has no SELECT on public.enquiries
+// (see 0012_enquiries.sql's RLS policy), so counting recent submissions
+// has to happen inside a SECURITY DEFINER function, atomically with the
+// insert itself (which also closes the check-then-insert race a
+// separate query would have). This file just extracts the request IP,
+// which both that RPC call and abuse review need.
 
 // Vercel/most proxies set x-forwarded-for as "client, proxy1, proxy2" --
 // the first entry is the original client. Falls back to the raw socket

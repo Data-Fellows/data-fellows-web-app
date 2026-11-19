@@ -13,56 +13,39 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getEmailProvider } from "@/lib/email";
 import handler from "@/pages/api/contact/index";
 
+type SubmitRpcResult = { id: string; created_at: string; rate_limited: boolean };
+
 type MockSupabaseOptions = {
-  rateLimitCount?: number;
-  rateLimitError?: { message: string } | null;
-  insertResult?: { data: unknown; error: unknown };
+  submitResult?: { data: SubmitRpcResult[] | SubmitRpcResult | null; error: unknown };
 };
 
-const VALID_ENQUIRY = {
+const SUBMIT_ROW: SubmitRpcResult = {
   id: "11111111-1111-1111-1111-111111111111",
-  full_name: "Jordan Lee",
-  work_email: "jordan@example.com",
-  organization: "Example Co",
-  enquiry_type: "Discuss a business problem",
-  problem_description: "Our reporting pipeline breaks every week.",
-  existing_systems: null,
-  timeframe: null,
-  heard_about: null,
-  notification_status: "pending",
-  notification_error: null,
-  notification_attempted_at: null,
-  acknowledgement_status: "pending",
-  hubspot_synced_at: null,
-  hubspot_contact_id: null,
   created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
+  rate_limited: false,
+};
+
+const RATE_LIMITED_ROW: SubmitRpcResult = {
+  id: null as unknown as string,
+  created_at: null as unknown as string,
+  rate_limited: true,
 };
 
 const createMockSupabase = (opts: MockSupabaseOptions = {}) => {
-  const updateCalls: Record<string, unknown>[] = [];
+  const rpcCalls: { fn: string; args: Record<string, unknown> }[] = [];
 
-  const from = vi.fn(() => ({
-    select: vi.fn(() => ({
-      eq: vi.fn(() => ({
-        gte: vi.fn(async () => ({
-          count: opts.rateLimitCount ?? 0,
-          error: opts.rateLimitError ?? null,
-        })),
-      })),
-    })),
-    insert: vi.fn(() => ({
-      select: vi.fn(() => ({
-        single: vi.fn(async () => opts.insertResult ?? { data: VALID_ENQUIRY, error: null }),
-      })),
-    })),
-    update: vi.fn((payload: Record<string, unknown>) => {
-      updateCalls.push(payload);
-      return { eq: vi.fn(async () => ({ data: null, error: null })) };
-    }),
-  }));
+  const rpc = vi.fn(async (fn: string, args: Record<string, unknown>) => {
+    rpcCalls.push({ fn, args });
+    if (fn === "submit_enquiry") {
+      return opts.submitResult ?? { data: [SUBMIT_ROW], error: null };
+    }
+    if (fn === "update_enquiry_notification") {
+      return { data: null, error: null };
+    }
+    return { data: null, error: null };
+  });
 
-  return { from, updateCalls };
+  return { rpc, rpcCalls };
 };
 
 const buildReqRes = (body: unknown, method = "POST") => {
@@ -114,7 +97,7 @@ describe("POST /api/contact", () => {
     );
   });
 
-  it("silently no-ops a honeypot-filled submission without touching the database", async () => {
+  it("silently no-ops a honeypot-filled submission without calling the database", async () => {
     const mockSupabase = createMockSupabase();
     vi.mocked(createSupabaseServerClient).mockReturnValue(mockSupabase as never);
     vi.mocked(getEmailProvider).mockReturnValue(null);
@@ -125,10 +108,10 @@ describe("POST /api/contact", () => {
 
     expect(status).toHaveBeenCalledWith(201);
     expect(json).toHaveBeenCalledWith(expect.objectContaining({ success: true }));
-    expect(mockSupabase.from).not.toHaveBeenCalled();
+    expect(mockSupabase.rpc).not.toHaveBeenCalled();
   });
 
-  it("persists a valid submission and returns a reference ID, even with no email provider configured", async () => {
+  it("persists a valid submission via the submit_enquiry RPC and returns a reference ID, even with no email provider configured", async () => {
     const mockSupabase = createMockSupabase();
     vi.mocked(createSupabaseServerClient).mockReturnValue(mockSupabase as never);
     vi.mocked(getEmailProvider).mockReturnValue(null);
@@ -139,12 +122,18 @@ describe("POST /api/contact", () => {
 
     expect(status).toHaveBeenCalledWith(201);
     expect(json).toHaveBeenCalledWith(
-      expect.objectContaining({ success: true, referenceId: VALID_ENQUIRY.id })
+      expect.objectContaining({ success: true, referenceId: SUBMIT_ROW.id })
+    );
+    expect(mockSupabase.rpcCalls[0]).toEqual(
+      expect.objectContaining({ fn: "submit_enquiry" })
     );
     // Enquiry received (received + persisted) must not depend on email
     // being configured at all.
-    expect(mockSupabase.updateCalls).toContainEqual(
-      expect.objectContaining({ acknowledgement_status: "skipped" })
+    expect(mockSupabase.rpcCalls).toContainEqual(
+      expect.objectContaining({
+        fn: "update_enquiry_notification",
+        args: expect.objectContaining({ p_acknowledgement_status: "skipped" }),
+      })
     );
   });
 
@@ -166,13 +155,21 @@ describe("POST /api/contact", () => {
     // the visitor as their enquiry failing.
     expect(status).toHaveBeenCalledWith(201);
     expect(json).toHaveBeenCalledWith(expect.objectContaining({ success: true }));
-    expect(mockSupabase.updateCalls).toContainEqual(
-      expect.objectContaining({ notification_status: "failed", notification_error: "provider down" })
+    expect(mockSupabase.rpcCalls).toContainEqual(
+      expect.objectContaining({
+        fn: "update_enquiry_notification",
+        args: expect.objectContaining({
+          p_notification_status: "failed",
+          p_notification_error: "provider down",
+        }),
+      })
     );
   });
 
-  it("rejects submissions once the per-IP rate limit is exceeded", async () => {
-    const mockSupabase = createMockSupabase({ rateLimitCount: 5 });
+  it("rejects submissions the RPC reports as rate-limited", async () => {
+    const mockSupabase = createMockSupabase({
+      submitResult: { data: [RATE_LIMITED_ROW], error: null },
+    });
     vi.mocked(createSupabaseServerClient).mockReturnValue(mockSupabase as never);
     vi.mocked(getEmailProvider).mockReturnValue(null);
 
@@ -182,6 +179,8 @@ describe("POST /api/contact", () => {
 
     expect(status).toHaveBeenCalledWith(429);
     expect(json).toHaveBeenCalledWith(expect.objectContaining({ success: false }));
+    // Rate-limited means nothing was ever written -- no follow-up RPC call.
+    expect(mockSupabase.rpcCalls).toHaveLength(1);
   });
 
   it("returns 503 when Supabase isn't configured, without pretending the enquiry was received", async () => {
@@ -196,9 +195,9 @@ describe("POST /api/contact", () => {
     expect(json).toHaveBeenCalledWith(expect.objectContaining({ success: false }));
   });
 
-  it("returns 500 and never fabricates a reference ID when the database insert itself fails", async () => {
+  it("returns 500 and never fabricates a reference ID when the RPC call itself fails", async () => {
     const mockSupabase = createMockSupabase({
-      insertResult: { data: null, error: { message: "db down" } },
+      submitResult: { data: null, error: { message: "db down" } },
     });
     vi.mocked(createSupabaseServerClient).mockReturnValue(mockSupabase as never);
     vi.mocked(getEmailProvider).mockReturnValue(null);
