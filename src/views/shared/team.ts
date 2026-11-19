@@ -101,5 +101,6 @@ export const engineers = [
     image: "/images/community/Nerat.jpeg",
     linkedin: "https://www.linkedin.com/in/nerat-dazam",
     portfolio: "https://nerat-portfolio.vercel.app/",
+    projects: ["pidginnuance"],
   },
 ];

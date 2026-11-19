@@ -14,6 +14,7 @@ const STATIC_PATHS = [
   "/work/xodocs",
   "/work/hr-platform",
   "/work/pi-ampersand",
+  "/work/pidginnuance",
   "/services",
   "/approach",
   "/impact",
