@@ -29,7 +29,7 @@ const timeline = [
     year: "2026",
     title: "Four years, measured",
     description:
-      "1,600+ members across 33 countries, 600+ more DataCamp scholarships, the Claude 101 Challenge, and the community's first four-year Impact Report.",
+      "1,600+ members across 33+ countries, 600+ more DataCamp scholarships, the Claude 101 Challenge, and the community's first four-year Impact Report.",
   },
 ] as const;
 

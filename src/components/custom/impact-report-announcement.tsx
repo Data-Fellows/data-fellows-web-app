@@ -91,7 +91,7 @@ const ImpactReportAnnouncement = () => {
           Data Fellows is 4! Read our Impact Report.
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Four years of turning data into clarity, across 33 countries. See
+          Four years of turning data into clarity, across 33+ countries. See
           the full story.
         </p>
         <Link

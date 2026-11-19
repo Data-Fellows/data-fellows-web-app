@@ -25,7 +25,7 @@ export const site = {
 // as-of the 2026 Impact Report (four years, 2022-2026).
 export const impactStats = [
   { value: 1600, suffix: "+", label: "Community members" },
-  { value: 33, suffix: "", label: "Countries represented" },
+  { value: 33, suffix: "+", label: "Countries represented" },
   { value: 50, suffix: "+", label: "Ecosystem pilot projects launched" },
   { value: 1500, suffix: "+", label: "DataCamp scholarships since 2025" },
 ] as const;

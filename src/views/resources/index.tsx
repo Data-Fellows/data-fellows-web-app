@@ -113,7 +113,7 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
                 The Data Fellows Impact Report is here.
               </h2>
               <p className="max-w-2xl text-sm text-navy-deep-foreground/70">
-                Four years of turning data into clarity, across 33 countries.
+                Four years of turning data into clarity, across 33+ countries.
                 See the full story: our community, our programs, Inscend, and
                 what's ahead.
               </p>
