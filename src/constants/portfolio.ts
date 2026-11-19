@@ -307,6 +307,37 @@ export const portfolioProjects: PortfolioProject[] = [
     attribution: "Built by Nerat Dazam.",
     relatedProjects: ["hr-platform"],
   },
+  {
+    id: "xetra-etl-pipeline",
+    slug: "xetra-etl-pipeline",
+    name: "Xetra ETL Pipeline",
+    headline: "A tested, containerized ETL pipeline for public trading data",
+    summary:
+      "A Python ETL pipeline that extracts, transforms and loads Deutsche Börse's public Xetra trading data, built incrementally with unit tests at every stage and packaged into a Docker image.",
+    capabilities: ["Data engineering"],
+    projectOrigin: "Independent project",
+    projectStatus: "Working prototype",
+    timePeriod: "2024",
+    contributors: [{ name: "Oyindamola Victor", role: "Author", teamSlug: "oyindamola-victor" }],
+    problem:
+      "Deutsche Börse publishes a non-commercial dataset of minute-level Xetra and Eurex trading data on a public AWS S3 bucket, through AWS's Open Data program, but it arrives as raw daily CSVs rather than anything shaped for analysis.",
+    approach:
+      "A Python pipeline reads the relevant files directly from the public deutsche-boerse-xetra-pds S3 bucket, tracks what's already been processed through a metadata step, and runs the data through transform and report stages before writing results back out to S3. Each stage was built and unit-tested incrementally, commit by commit, with the full pipeline wired behind a single entrypoint, profiled for memory use, linted, and packaged into a Docker image.",
+    implementedFeatures: [
+      "CSV extraction from Deutsche Börse's public Xetra S3 bucket",
+      "An update_meta_process step to track what's already been processed",
+      "Extract, transform_report1 and etl_report1 pipeline stages, each with unit tests",
+      "A single entrypoint wired up with Pipenv for dependency management",
+      "Code profiling with memory_profiler and linting with pylint",
+      "Dockerized for packaged execution",
+    ],
+    verifiedResults:
+      "An independent practice pipeline, not a production system or client engagement — no business outcome is claimed here. The repository's own README documents nothing beyond the project name, so this case study is deliberately limited to what the commit history and file structure confirm: 14 commits building the pipeline incrementally between August 1-20, 2024, each implementation step paired with its own unit tests, and a working, Dockerized entrypoint.",
+    technologies: ["Python", "pandas", "AWS S3", "Docker", "Pipenv", "pylint"],
+    sourceLinks: [{ label: "GitHub", href: "https://github.com/Oyindamola-victor/xetra_stock" }],
+    attribution:
+      "Built by Oyindamola Victor. Works against Deutsche Börse's public, non-commercial Xetra trading dataset on AWS Open Data — a widely used public dataset for data-engineering practice, not a commercial or client dataset.",
+  },
 ];
 
 export const getPortfolioProject = (slug: string) =>

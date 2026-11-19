@@ -19,6 +19,7 @@ export const foundingTeam = [
     image: "/images/Oyindamola_Victor_cto.JPG",
     linkedin: "https://www.linkedin.com/in/oyindamolavictor/",
     affiliations: ["andela"] as const,
+    projects: ["xetra-etl-pipeline"],
   },
   {
     name: "Elijah Soladoye",

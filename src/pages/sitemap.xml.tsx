@@ -15,6 +15,7 @@ const STATIC_PATHS = [
   "/work/hr-platform",
   "/work/pi-ampersand",
   "/work/pidginnuance",
+  "/work/xetra-etl-pipeline",
   "/services",
   "/approach",
   "/impact",
