@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { foundingTeam } from "@/views/shared/team";
-import { FiLinkedin } from "react-icons/fi";
+import { engineers, foundingTeam } from "@/views/shared/team";
+import { FiExternalLink, FiLinkedin } from "react-icons/fi";
 
 const TeamCard = ({
   name,
@@ -9,6 +9,7 @@ const TeamCard = ({
   tagline,
   image,
   linkedin,
+  portfolio,
   featured,
   objectPosition,
 }: {
@@ -17,6 +18,7 @@ const TeamCard = ({
   tagline: string;
   image: string;
   linkedin?: string;
+  portfolio?: string;
   featured?: boolean;
   objectPosition?: string;
 }) => {
@@ -50,17 +52,30 @@ const TeamCard = ({
               {role}
             </p>
           </div>
-          {linkedin ? (
-            <Link
-              href={linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
-              aria-label={`LinkedIn profile of ${name}`}
-            >
-              <FiLinkedin className="h-4 w-4" />
-            </Link>
-          ) : null}
+          <div className="flex flex-shrink-0 items-center gap-2">
+            {portfolio ? (
+              <Link
+                href={portfolio}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
+                aria-label={`Portfolio website of ${name}`}
+              >
+                <FiExternalLink className="h-4 w-4" />
+              </Link>
+            ) : null}
+            {linkedin ? (
+              <Link
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:bg-foreground hover:text-background"
+                aria-label={`LinkedIn profile of ${name}`}
+              >
+                <FiLinkedin className="h-4 w-4" />
+              </Link>
+            ) : null}
+          </div>
         </div>
         <p className="text-sm text-muted-foreground">{tagline}</p>
       </div>
@@ -100,6 +115,17 @@ const TeamSection = () => {
           </h3>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {foundingTeam.map((person) => (
+              <TeamCard key={person.name} {...person} />
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="font-display text-xl font-semibold text-foreground">
+            Engineers
+          </h3>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {engineers.map((person) => (
               <TeamCard key={person.name} {...person} />
             ))}
           </div>
