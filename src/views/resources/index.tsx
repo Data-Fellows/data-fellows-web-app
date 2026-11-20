@@ -3,7 +3,7 @@ import PageSeo from "@/components/seo/page-seo";
 import { journeySoFarUrl } from "@/constants/resources";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
-import type { Resource, ResourceCategory } from "@/types/resource";
+import { EDITORIAL_TRACKS, type EditorialTrack, type Resource, type ResourceCategory } from "@/types/resource";
 import type { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -15,6 +15,18 @@ import {
   FiHeadphones,
   FiPenTool,
 } from "react-icons/fi";
+
+const UNTRACKED_LABEL = "More from the community";
+
+const TRACK_DESCRIPTIONS: Record<EditorialTrack | typeof UNTRACKED_LABEL, string> = {
+  "Business Insights":
+    "Practical analysis of operational problems, business data, reporting, automation and decision-making.",
+  "Engineering Notes":
+    "Real technical writing from Data Fellows engineers: software design, deployment, integrations and reliability.",
+  "Research & Community":
+    "Research publications, data-learning resources, community reports and other technical contributions.",
+  [UNTRACKED_LABEL]: "Earlier stories, guides and lessons from the community.",
+};
 
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat("en-US", {
@@ -44,6 +56,78 @@ type ResourcesPageProps = {
   resources: Resource[];
 };
 
+const ResourceCard = ({ item }: { item: Resource }) => {
+  const Icon = typeIcon[item.category];
+  const attribution = [
+    item.author_name,
+    item.is_external_article && item.original_publisher
+      ? `for ${item.original_publisher}`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <article className="flex h-full flex-col overflow-hidden border border-border bg-background">
+      <div className="relative h-48">
+        {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
+        <img
+          src={item.image_url || FALLBACK_IMAGE}
+          alt={item.title}
+          className="absolute inset-0 h-full w-full object-cover object-top"
+        />
+        <span className="absolute left-4 top-4 inline-flex items-center gap-2 border border-border bg-background/90 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-foreground backdrop-blur">
+          <Icon className="h-3.5 w-3.5" />
+          {item.category}
+        </span>
+        {item.featured ? (
+          <span className="absolute right-4 top-4 border border-brand-blue bg-brand-blue-fill px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue-foreground">
+            Featured
+          </span>
+        ) : null}
+      </div>
+      <div className="flex flex-1 flex-col gap-3 px-6 py-6">
+        {item.published_date ? (
+          <p className="font-mono text-xs text-muted-foreground">
+            {formatDate(item.published_date)}
+          </p>
+        ) : null}
+        <h3 className="font-display text-lg font-semibold text-foreground">
+          {item.title}
+        </h3>
+        {item.description ? (
+          <p className="text-sm text-muted-foreground">{item.description}</p>
+        ) : null}
+        {attribution ? (
+          <p className="text-xs text-muted-foreground">
+            By{" "}
+            {item.author_people_slug ? (
+              <Link
+                href={`/people#${item.author_people_slug}`}
+                className="underline hover:text-foreground"
+              >
+                {attribution}
+              </Link>
+            ) : (
+              attribution
+            )}
+            {item.topic ? ` · ${item.topic}` : ""}
+          </p>
+        ) : null}
+        <Link
+          href={item.href}
+          target={item.href.startsWith("http") ? "_blank" : undefined}
+          rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+          className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-foreground"
+        >
+          Read {item.is_external_article ? `on ${item.original_publisher || "the original site"}` : "article"}
+          <FiExternalLink className="h-4 w-4" />
+        </Link>
+      </div>
+    </article>
+  );
+};
+
 const ResourcesPage = ({ resources }: ResourcesPageProps) => {
   const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
   const [activeFilter, setActiveFilter] =
@@ -56,6 +140,20 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
         : resources.filter((item) => item.category === activeFilter),
     [resources, activeFilter]
   );
+
+  const trackSections = useMemo(() => {
+    const allTracks: (EditorialTrack | typeof UNTRACKED_LABEL)[] = [
+      ...EDITORIAL_TRACKS,
+      UNTRACKED_LABEL,
+    ];
+    const groups = allTracks.map((track) => ({
+      track,
+      items: visibleResources.filter((item) =>
+        track === UNTRACKED_LABEL ? !item.editorial_track : item.editorial_track === track
+      ),
+    }));
+    return groups.filter((group) => group.items.length > 0);
+  }, [visibleResources]);
 
   return (
     <LandingPageLayout>
@@ -167,60 +265,25 @@ const ResourcesPage = ({ resources }: ResourcesPageProps) => {
               </div>
             </div>
 
-            {visibleResources.length > 0 ? (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {visibleResources.map((item) => {
-                  const Icon = typeIcon[item.category];
-                  return (
-                    <article
-                      key={item.id}
-                      className="overflow-hidden border border-border bg-background"
-                    >
-                      <div className="relative h-48">
-                        {/* eslint-disable-next-line @next/next/no-img-element -- admin-provided URLs (Supabase Storage uploads or arbitrary links), can't allowlist every domain for next/image */}
-                        <img
-                          src={item.image_url || FALLBACK_IMAGE}
-                          alt={item.title}
-                          className="absolute inset-0 h-full w-full object-cover object-top"
-                        />
-                        <span className="absolute left-4 top-4 inline-flex items-center gap-2 border border-border bg-background/90 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-foreground backdrop-blur">
-                          <Icon className="h-3.5 w-3.5" />
-                          {item.category}
-                        </span>
-                      </div>
-                      <div className="space-y-3 px-6 py-6">
-                        {item.published_date ? (
-                          <p className="font-mono text-xs text-muted-foreground">
-                            {formatDate(item.published_date)}
-                          </p>
-                        ) : null}
-                        <h3 className="font-display text-lg font-semibold text-foreground">
-                          {item.title}
-                        </h3>
-                        {item.description ? (
-                          <p className="text-sm text-muted-foreground">
-                            {item.description}
-                          </p>
-                        ) : null}
-                        <Link
-                          href={item.href}
-                          target={
-                            item.href.startsWith("http") ? "_blank" : undefined
-                          }
-                          rel={
-                            item.href.startsWith("http")
-                              ? "noopener noreferrer"
-                              : undefined
-                          }
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-foreground"
-                        >
-                          Open
-                          <FiExternalLink className="h-4 w-4" />
-                        </Link>
-                      </div>
-                    </article>
-                  );
-                })}
+            {trackSections.length > 0 ? (
+              <div className="space-y-12">
+                {trackSections.map(({ track, items }) => (
+                  <div key={track} className="space-y-4">
+                    <div>
+                      <h3 className="font-display text-xl font-semibold text-foreground">
+                        {track}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {TRACK_DESCRIPTIONS[track]}
+                      </p>
+                    </div>
+                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                      {items.map((item) => (
+                        <ResourceCard key={item.id} item={item} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : (
               <p className="border border-border bg-muted/40 px-6 py-10 text-center text-sm text-muted-foreground">
@@ -311,7 +374,9 @@ export const getServerSideProps: GetServerSideProps<
 
   const { data, error } = await supabase
     .from("resources")
-    .select("id, title, description, category, href, image_url, published_date, status, created_at, updated_at")
+    .select(
+      "id, title, description, category, href, image_url, published_date, status, author_name, author_people_slug, original_publisher, topic, featured, is_external_article, editorial_track, created_at, updated_at"
+    )
     .eq("status", "published")
     .order("published_date", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false });

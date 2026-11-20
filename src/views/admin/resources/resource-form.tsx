@@ -21,6 +21,16 @@ const formSchema = z.object({
     .or(z.literal("")),
   published_date: z.string().trim().optional().or(z.literal("")),
   status: z.enum(["draft", "published", "archived"]),
+  author_name: z.string().trim().max(200).optional().or(z.literal("")),
+  author_people_slug: z.string().trim().max(200).optional().or(z.literal("")),
+  original_publisher: z.string().trim().max(200).optional().or(z.literal("")),
+  topic: z.string().trim().max(200).optional().or(z.literal("")),
+  editorial_track: z
+    .enum(["Business Insights", "Engineering Notes", "Research & Community"])
+    .optional()
+    .or(z.literal("")),
+  featured: z.boolean().optional(),
+  is_external_article: z.boolean().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -39,6 +49,13 @@ const toFormValues = (resource?: Resource): FormValues => ({
   image_url: resource?.image_url ?? "",
   published_date: resource?.published_date ?? "",
   status: resource?.status ?? "draft",
+  author_name: resource?.author_name ?? "",
+  author_people_slug: resource?.author_people_slug ?? "",
+  original_publisher: resource?.original_publisher ?? "",
+  topic: resource?.topic ?? "",
+  editorial_track: resource?.editorial_track ?? "",
+  featured: resource?.featured ?? false,
+  is_external_article: resource?.is_external_article ?? true,
 });
 
 const saveResource = async (mode: "create" | "edit", id: string | undefined, values: FormValues) => {
@@ -188,9 +205,79 @@ const ResourceForm = ({ mode, resourceId, initialResource }: ResourceFormProps) 
           ) : (
             <span className="text-xs text-muted-foreground">
               Where "Open" sends people: the article, video, or post itself.
+              Also used as the original URL for attribution.
             </span>
           )}
         </label>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className={labelClass}>
+            Author name (optional)
+            <input
+              {...register("author_name")}
+              className={inputClass}
+              placeholder="e.g. Tobi Oladimeji"
+            />
+          </label>
+          <label className={labelClass}>
+            Author's People-page slug (optional)
+            <input
+              {...register("author_people_slug")}
+              className={inputClass}
+              placeholder="e.g. tobi-oladimeji"
+            />
+            <span className="text-xs text-muted-foreground">
+              Links the card to that person's profile. Leave blank if they
+              don't have one, or the name doesn't match exactly.
+            </span>
+          </label>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className={labelClass}>
+            Original publisher (optional)
+            <input
+              {...register("original_publisher")}
+              className={inputClass}
+              placeholder="e.g. IKONIK Magazine, Medium, LinkedIn"
+            />
+            <span className="text-xs text-muted-foreground">
+              Leave blank for original Data Fellows content.
+            </span>
+          </label>
+          <label className={labelClass}>
+            Topic (optional)
+            <input
+              {...register("topic")}
+              className={inputClass}
+              placeholder="e.g. Business Data Strategy"
+            />
+          </label>
+        </div>
+
+        <label className={labelClass}>
+          Editorial track (optional)
+          <select {...register("editorial_track")} className={inputClass}>
+            <option value="">No track (shown separately)</option>
+            <option value="Business Insights">Business Insights</option>
+            <option value="Engineering Notes">Engineering Notes</option>
+            <option value="Research & Community">Research &amp; Community</option>
+          </select>
+          <span className="text-xs text-muted-foreground">
+            Which of the three Insights sections this appears under.
+          </span>
+        </label>
+
+        <div className="flex flex-wrap gap-6">
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <input type="checkbox" {...register("featured")} className="h-4 w-4" />
+            Featured
+          </label>
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <input type="checkbox" {...register("is_external_article")} className="h-4 w-4" />
+            External article (published elsewhere, not on this site)
+          </label>
+        </div>
 
         <label className={labelClass}>
           Published date (optional)

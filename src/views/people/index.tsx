@@ -30,6 +30,17 @@ type Person = {
   projects?: readonly string[];
 };
 
+// Matches the author_people_slug values set on resources in
+// supabase/migrations/0013_resource_attribution.sql (e.g.
+// "tobi-oladimeji") so an Insights card's byline link can land on this
+// exact person instead of just the top of the page.
+const slugify = (name: string) =>
+  name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-");
+
 const PersonCard = ({ person }: { person: Person }) => {
   const [expanded, setExpanded] = useState(false);
   const reduced = useReducedMotion();
@@ -51,7 +62,10 @@ const PersonCard = ({ person }: { person: Person }) => {
     .filter((project): project is NonNullable<typeof project> => Boolean(project));
 
   return (
-    <div className="flex h-full flex-col overflow-hidden border border-border bg-background">
+    <div
+      id={slugify(name)}
+      className="flex h-full flex-col overflow-hidden border border-border bg-background scroll-mt-28"
+    >
       <div className="relative h-72">
         <Image
           src={image}
