@@ -5,6 +5,7 @@ import React from "react";
 import Community from "./sections/community";
 import Cta from "./sections/cta";
 import Hero from "./sections/hero";
+import HowItWorks from "./sections/how-it-works";
 import Impact from "./sections/impact";
 import Partners from "./sections/partners";
 import Products from "./sections/products";
@@ -32,6 +33,7 @@ const Home: React.FC = () => {
         <Community />
         <Partners />
         <Resources />
+        <HowItWorks />
         <Cta />
       </div>
     </LandingPageLayout>

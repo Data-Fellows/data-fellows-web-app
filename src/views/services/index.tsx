@@ -1,32 +1,10 @@
 import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
+import { clientJourney } from "@/constants/approach";
 import { services, servicesFaq } from "@/constants/services";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
 import { FiArrowRight, FiArrowUpRight, FiCheck, FiMinus } from "react-icons/fi";
-
-const procurementSteps = [
-  {
-    title: "Discovery call",
-    description:
-      "You describe the problem. We ask questions and tell you honestly whether it's something we're set up to help with.",
-  },
-  {
-    title: "Technical review",
-    description:
-      "We look at your existing systems, data and constraints closely enough to scope real work, not a guess.",
-  },
-  {
-    title: "Delivery plan",
-    description:
-      "A scoped proposal: what we'll build, what it depends on, a timeline, and what it costs.",
-  },
-  {
-    title: "Contracting & support",
-    description:
-      "Terms, IP and support arrangements set out plainly before work starts, including what's outside what we can currently support.",
-  },
-];
 
 const ServicesPage = () => {
   return (
@@ -222,11 +200,11 @@ const ServicesPage = () => {
             >
               What a first engagement actually looks like.
             </h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {procurementSteps.map((step, index) => (
-                <div key={step.title} className="border border-navy-deep-foreground/15 p-5">
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {clientJourney.map((step) => (
+                <div key={step.step} className="border border-navy-deep-foreground/15 p-5">
                   <div className="font-mono text-xs uppercase tracking-wide text-brand-blue">
-                    0{index + 1}
+                    {step.step}
                   </div>
                   <p className="mt-2 font-display text-base font-semibold">
                     {step.title}
