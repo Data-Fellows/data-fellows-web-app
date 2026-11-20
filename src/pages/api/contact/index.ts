@@ -124,7 +124,15 @@ export default async function handler(
   // affects internal status columns for staff to retry -- never the
   // response already owed to the visitor.
   const provider = getEmailProvider();
-  const fromAddress = process.env.CONTACT_FROM_EMAIL || `Data Fellows <${site.enquiryEmail}>`;
+  // EMAIL_FROM is the name Inscend's own Azure Communication Services setup
+  // already uses (see node/src/services/email.service.ts in the Inscend
+  // monorepo) -- recognized here too so setting it up the same way on this
+  // project doesn't require remembering a different variable name.
+  // CONTACT_FROM_EMAIL wins if both happen to be set.
+  const fromAddress =
+    process.env.CONTACT_FROM_EMAIL ||
+    process.env.EMAIL_FROM ||
+    `Data Fellows <${site.enquiryEmail}>`;
 
   if (provider) {
     const notification = buildEnquiryNotificationEmail(enquiry, site.enquiryEmail, fromAddress);
