@@ -94,7 +94,7 @@ const programs = [
   {
     title: "Products in public",
     description:
-      "Collaborate with builders on Inscend and other pilot tools born from the community.",
+      "Build alongside Fellows shipping their own pilot tools, the same way Inscend and other past community products got their start.",
     icon: FiServer,
   },
   {
