@@ -37,7 +37,10 @@ export const activities: Activity[] = [
     cadence: "Ongoing",
     description:
       "Job opportunities and paid earning surveys for the Data Fellows community, powered by Propel.",
-    registerHref: "https://datafellows.propel.community/auth",
+    // The /auth path 404s as of Nov 2026; the root domain is confirmed
+    // live and Data Fellows-branded. Pointing there instead of guessing
+    // an internal route that might also be stale.
+    registerHref: "https://datafellows.propel.community",
   },
   {
     title: "Claude 101 Challenge",

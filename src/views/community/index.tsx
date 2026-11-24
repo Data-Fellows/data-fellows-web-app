@@ -1,5 +1,6 @@
 import { CommunityLeadCard } from "@/components";
 import PageSeo from "@/components/seo/page-seo";
+import { communityRhythm } from "@/constants/community";
 import LandingPageLayout from "@/layouts/landing-page";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,33 +12,6 @@ import {
   FiServer,
   FiUsers,
 } from "react-icons/fi";
-
-const rhythm = [
-  {
-    title: "Community Sunday Catchup",
-    cadence: "Every two weeks",
-    description:
-      "Interactive stand-ups featuring demos, open asks, and a quick celebration of weekly wins.",
-  },
-  {
-    title: "Fireside Sessions",
-    cadence: "Once a month",
-    description:
-      "Cozy, video-first chats with mentors unpacking a challenge and sharing actionable templates.",
-  },
-  {
-    title: "Newsletter",
-    cadence: "Every two weeks",
-    description:
-      "Inbox roundups that stitch together member stories, new guides, and curated opportunities.",
-  },
-  {
-    title: "Journey So Far",
-    cadence: "Last Friday of every month",
-    description:
-      "An audio-first spotlight revealing the behind-the-scenes of a Fellow's latest success.",
-  },
-];
 
 type RhythmCardProps = {
   title: string;
@@ -280,7 +254,7 @@ const CommunityPage = () => {
                 Our rhythm
               </h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                {rhythm.map(({ title, cadence, description }) => (
+                {communityRhythm.map(({ title, cadence, description }) => (
                   <RhythmCard
                     key={title}
                     title={title}
