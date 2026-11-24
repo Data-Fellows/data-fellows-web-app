@@ -129,9 +129,15 @@ export const Footer = () => {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-6 font-mono text-xs uppercase tracking-wide text-muted-foreground md:flex-row md:justify-between lg:px-0">
           <span>&copy; {year} Data Fellows Inc. All rights reserved.</span>
-          <span className="text-foreground">
-            Built by Data Fellows Inc.
-          </span>
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="transition hover:text-foreground">
+              Terms
+            </Link>
+            <Link href="/privacy" className="transition hover:text-foreground">
+              Privacy
+            </Link>
+            <span className="text-foreground">Built by Data Fellows Inc.</span>
+          </div>
         </div>
       </div>
     </footer>
