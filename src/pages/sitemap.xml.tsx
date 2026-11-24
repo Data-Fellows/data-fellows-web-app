@@ -27,6 +27,7 @@ const STATIC_PATHS = [
   "/contact",
   "/impact-report",
   "/terms",
+  "/privacy",
 ];
 
 const buildSitemap = (paths: string[]) => `<?xml version="1.0" encoding="UTF-8"?>
