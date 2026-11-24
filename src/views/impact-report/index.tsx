@@ -1,10 +1,9 @@
+import PageSeo from "@/components/seo/page-seo";
 import LandingPageLayout from "@/layouts/landing-page";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { FiDownload } from "react-icons/fi";
 
-const SITE_URL = "https://www.datafellowsai.com";
 const PDF_PATH = "/documents/data-fellows-impact-report-2026.pdf";
 const OG_IMAGE_PATH = "/images/impact-report-og.jpg";
 
@@ -15,21 +14,12 @@ const PAGE_DESCRIPTION =
 const ImpactReportPage = () => {
   return (
     <LandingPageLayout>
-      <Head>
-        <title>{PAGE_TITLE}</title>
-        <meta name="description" content={PAGE_DESCRIPTION} />
-        <meta property="og:title" content={PAGE_TITLE} />
-        <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${SITE_URL}/impact-report`} />
-        <meta property="og:image" content={`${SITE_URL}${OG_IMAGE_PATH}`} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={PAGE_TITLE} />
-        <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-        <meta name="twitter:image" content={`${SITE_URL}${OG_IMAGE_PATH}`} />
-      </Head>
+      <PageSeo
+        title={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        path="/impact-report"
+        image={OG_IMAGE_PATH}
+      />
 
       <div className="pt-28 md:pt-32">
         <section className="px-4 sm:px-6">
