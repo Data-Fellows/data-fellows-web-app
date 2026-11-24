@@ -26,6 +26,7 @@ const STATIC_PATHS = [
   "/careers",
   "/contact",
   "/impact-report",
+  "/terms",
   "/privacy",
 ];
 

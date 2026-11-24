@@ -1,4 +1,5 @@
 import PageSeo from "@/components/seo/page-seo";
+import { clientJourney } from "@/constants/approach";
 import { site } from "@/constants/site";
 import { enquirySchema, type EnquiryFormValues } from "@/lib/validation/enquiry-schema";
 import { ENQUIRY_TYPES } from "@/types/enquiry";
@@ -158,6 +159,22 @@ const ContactPage = () => {
                     </div>
                   </Link>
                 ))}
+              </div>
+
+              <div className="space-y-3 border-t border-border pt-6">
+                <p className="font-mono text-xs font-semibold uppercase tracking-wide text-foreground">
+                  What happens after you submit
+                </p>
+                <ol className="space-y-2 text-sm text-muted-foreground">
+                  {clientJourney.slice(1).map((item) => (
+                    <li key={item.step} className="flex gap-2">
+                      <span className="font-mono text-xs text-muted-foreground/70">
+                        {item.step}
+                      </span>
+                      {item.title}
+                    </li>
+                  ))}
+                </ol>
               </div>
             </div>
 
