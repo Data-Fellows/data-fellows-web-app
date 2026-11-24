@@ -1,44 +1,10 @@
+import { partnerCategories } from "@/constants/partners";
 import { FiGlobe, FiGrid, FiHeart } from "react-icons/fi";
 import { PartnerLogoCarousel } from "../../shared/partner-logo-carousel";
 
-const partnerCategories = [
-  {
-    title: "Training Partners",
-    description: "Programs that power our learning journey.",
-    icon: FiGrid,
-    partners: [
-      "DataCamp Classroom",
-      "Zummit Africa",
-      "Vatebra Academy",
-      "Cisco Networking Academy",
-      "Data Rango",
-      "Utiva",
-    ],
-  },
-  {
-    title: "Ecosystem Partners",
-    description: "Global communities that accelerate our reach.",
-    icon: FiGlobe,
-    partners: [
-      "AWS Startups",
-      "Microsoft for Startups",
-      "Communitech",
-      "Accelerator Centre",
-      "TBDC",
-      "Bhive",
-      "Innovation Factory",
-      "League of Innovators",
-      "Vector Institute AI (Fastlane)",
-      "LVLUP Ventures",
-    ],
-  },
-  {
-    title: "Community Partners",
-    description: "Allies who amplify stories and opportunities.",
-    icon: FiHeart,
-    partners: ["Everything Analytics", "Propel", "DaElites"],
-  },
-];
+// Matches partnerCategories' order in src/constants/partners.ts
+// (Training & Education, Accelerator & Startup, Community Allies).
+const categoryIcons = [FiGrid, FiGlobe, FiHeart];
 
 const Partners = () => {
   return (
@@ -56,12 +22,12 @@ Partners
             id="partners-heading"
             className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
           >
-            We build with strong partners.
+            A network that's helped us learn, build, and grow.
           </h2>
           <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-            Our partners help us train people, connect communities, and build
-            products faster. Their trust keeps Data Fellows grounded in real
-            impact.
+            Training academies, startup programs, and community allies
+            Data Fellows has been part of, not every relationship is the
+            same kind.
           </p>
         </div>
 
@@ -69,32 +35,35 @@ Partners
 
         <div className="grid gap-8 lg:grid-cols-3">
           {partnerCategories.map(
-            ({ title, description, partners, icon: Icon }) => (
-              <div
-                key={title}
-                className="flex flex-col gap-5 border border-border bg-muted/40 p-6"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center border border-foreground/20 text-foreground">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <h3 className="font-display text-lg font-semibold text-foreground">
-                    {title}
-                  </h3>
-                </div>
-                <p className="text-sm text-muted-foreground">{description}</p>
-                <div className="grid gap-3">
-                  {partners.map((partner) => (
-                    <span
-                      key={partner}
-                      className="border border-border bg-background px-4 py-3 text-sm font-medium text-muted-foreground"
-                    >
-                      {partner}
+            ({ title, description, partners }, index) => {
+              const Icon = categoryIcons[index] ?? FiGrid;
+              return (
+                <div
+                  key={title}
+                  className="flex flex-col gap-5 border border-border bg-muted/40 p-6"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center border border-foreground/20 text-foreground">
+                      <Icon className="h-5 w-5" />
                     </span>
-                  ))}
+                    <h3 className="font-display text-lg font-semibold text-foreground">
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{description}</p>
+                  <div className="grid gap-3">
+                    {partners.map((partner) => (
+                      <span
+                        key={partner}
+                        className="border border-border bg-background px-4 py-3 text-sm font-medium text-muted-foreground"
+                      >
+                        {partner}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )
+              );
+            }
           )}
         </div>
       </div>

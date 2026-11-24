@@ -11,8 +11,8 @@ type PartnerLogoCarouselProps = {
 };
 
 export const PartnerLogoCarousel = ({
-  title = "Our partner network",
-  description = "Discover the partners powering our reach, credibility, and shared pilots across continents.",
+  title = "Our wider network",
+  description = "Training academies, startup programs and community allies Data Fellows has been part of.",
   className = "",
 }: PartnerLogoCarouselProps) => {
   const logoRowRef = useRef<HTMLDivElement | null>(null);
