@@ -1,54 +1,20 @@
 import PageSeo from "@/components/seo/page-seo";
+import { partnerCategories } from "@/constants/partners";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
 import { FiArrowUpRight, FiGlobe, FiHeart, FiLayers } from "react-icons/fi";
 import { PartnerLogoCarousel } from "../shared/partner-logo-carousel";
 
-const partnerCategories = [
-  {
-    title: "Training Partners",
-    description: "Curriculum and mentorship programs we run together.",
-    icon: FiLayers,
-    partners: [
-      "DataCamp Classroom",
-      "Zummit Africa",
-      "Vatebra Academy",
-      "Cisco Networking Academy",
-      "Data Rango",
-      "Utiva",
-    ],
-  },
-  {
-    title: "Ecosystem Partners",
-    description: "Start-up communities who help us scale globally.",
-    icon: FiGlobe,
-    partners: [
-      "AWS Startups",
-      "Microsoft for Startups",
-      "Communitech",
-      "Accelerator Centre",
-      "TBDC",
-      "Bhive",
-      "Innovation Factory",
-      "League of Innovators",
-      "Vector Institute AI (Fastlane)",
-      "LVLUP Ventures",
-    ],
-  },
-  {
-    title: "Community Partners",
-    description: "Allies amplifying our stories, sessions, and talent.",
-    icon: FiHeart,
-    partners: ["Everything Analytics", "Propel", "DaElites"],
-  },
-];
+// Matches partnerCategories' order in src/constants/partners.ts
+// (Training & Education, Accelerator & Startup, Community Allies).
+const categoryIcons = [FiLayers, FiGlobe, FiHeart];
 
 const PartnersPage = () => {
   return (
     <LandingPageLayout>
       <PageSeo
         title="Partners | Data Fellows"
-        description="Training, ecosystem, and community partners who help Data Fellows deliver real outcomes for our members worldwide."
+        description="Training academies, startup programs, and community allies that make up the wider network Data Fellows has been part of."
         path="/partners"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -59,11 +25,13 @@ const PartnersPage = () => {
                 id="partners-hero-heading"
                 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
-                The strength of Data Fellows is the strength of our partners.
+                A network that's helped Data Fellows learn, build, and grow.
               </h1>
               <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-                We partner with organisations who believe data can unlock
-                opportunity for everyone, from classrooms to boardrooms.
+                From training academies to startup programs and community
+                allies, here's the wider network Data Fellows has been part
+                of, not every relationship below is the same, and we've
+                tried to be clear about which is which.
               </p>
               <Link
                 href="mailto:partners@datafellowsai.com"
@@ -79,8 +47,8 @@ const PartnersPage = () => {
         <section className="px-4" aria-labelledby="partner-logos-heading">
           <div className="mx-auto max-w-6xl">
             <PartnerLogoCarousel
-              title="Partners across ecosystems"
-              description="From training labs to global accelerators, these logos represent the organisations co-building Data Fellows."
+              title="Our wider network"
+              description="Training academies, startup programs and community allies Data Fellows has been part of -- see the breakdown below for what kind of relationship each represents."
               className="bg-background"
             />
           </div>
@@ -95,8 +63,9 @@ const PartnersPage = () => {
               Partner network at a glance
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
-              {partnerCategories.map(
-                ({ title, description, partners, icon: Icon }) => (
+              {partnerCategories.map(({ title, description, partners }, index) => {
+                const Icon = categoryIcons[index] ?? FiLayers;
+                return (
                   <div
                     key={title}
                     className="flex h-full flex-col gap-5 border border-border bg-background px-6 py-6"
@@ -123,8 +92,8 @@ const PartnersPage = () => {
                       ))}
                     </div>
                   </div>
-                )
-              )}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -135,7 +104,7 @@ const PartnersPage = () => {
               id="partner-benefits-heading"
               className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
             >
-              What partners experience
+              What a new partnership can look like
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {[
