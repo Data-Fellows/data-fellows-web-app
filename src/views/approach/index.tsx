@@ -1,11 +1,6 @@
 import Reveal from "@/components/custom/reveal";
 import PageSeo from "@/components/seo/page-seo";
-import {
-  engagementTimeline,
-  principles,
-  processSteps,
-  transparency,
-} from "@/constants/approach";
+import { clientJourney, principles, transparency } from "@/constants/approach";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
@@ -39,7 +34,7 @@ const ApproachPage = () => {
               href="/contact"
               className="mx-auto mt-6 inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
             >
-              Start a Conversation
+              Discuss a Problem
               <FiArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -53,9 +48,9 @@ const ApproachPage = () => {
             >
               How a project actually moves.
             </h2>
-            <div className="grid gap-4 md:grid-cols-5">
-              {processSteps.map((item, index) => (
-                <Reveal key={item.step} delay={index * 0.1}>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {clientJourney.map((item, index) => (
+                <Reveal key={item.step} delay={index * 0.08}>
                   <div className="border border-border bg-background p-5">
                     <div className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
                       {item.step}
@@ -146,31 +141,6 @@ const ApproachPage = () => {
           </div>
         </section>
 
-        <section className="px-4 sm:px-6" aria-labelledby="approach-timeline-heading">
-          <div className="mx-auto max-w-6xl border border-brand-blue bg-navy-deep px-6 py-12 text-navy-deep-foreground lg:px-12">
-            <span className="font-mono text-xs font-medium uppercase tracking-wide text-brand-blue">
-              Engagement Timeline
-            </span>
-            <h2
-              id="approach-timeline-heading"
-              className="mt-3 font-display text-2xl font-semibold tracking-tight sm:text-3xl"
-            >
-              From first conversation to ongoing support.
-            </h2>
-            <ol className="mt-8 flex flex-wrap gap-3">
-              {engagementTimeline.map((item, index) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2 border border-navy-deep-foreground/20 px-4 py-2 font-mono text-xs uppercase tracking-wide"
-                >
-                  <span className="text-brand-blue">0{index + 1}</span>
-                  {item}
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
         <section className="px-4 sm:px-6" aria-labelledby="approach-cta-heading">
           <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-foreground bg-background px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-12">
             <div className="max-w-xl space-y-2">
@@ -189,7 +159,7 @@ const ApproachPage = () => {
               href="/contact"
               className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
             >
-              Start a Conversation
+              Discuss a Problem
               <FiArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
