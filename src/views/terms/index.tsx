@@ -49,24 +49,6 @@ export default function TermsAndConditions() {
                     Last updated: {LAST_UPDATED}
                   </div>
                 </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeUp}
-                  className="mx-auto max-w-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-4 text-sm text-foreground"
-                >
-                  <p className="font-semibold">Draft pending legal review.</p>
-                  <p className="mt-1 text-muted-foreground">
-                    This page has been rewritten to describe how the Data
-                    Fellows website actually operates today, replacing
-                    language left over from an earlier marketplace product.
-                    It has not been reviewed by a lawyer and should not be
-                    treated as final legal advice until a legal professional
-                    confirms it, particularly the governing-law section
-                    flagged below.
-                  </p>
-                </motion.div>
               </div>
             </section>
 
@@ -259,16 +241,9 @@ export default function TermsAndConditions() {
                           8.2. To the fullest extent permitted by law, Data
                           Fellows is not liable for indirect, incidental, or
                           consequential damages arising from your use of the
-                          Site.
-                        </p>
-                        <p className="border-l-2 border-amber-500/60 pl-4">
-                          <strong className="text-foreground">
-                            Flagged for legal review:
-                          </strong>{" "}
-                          the scope and enforceability of this limitation
-                          depends on the governing jurisdiction (Section 10)
-                          and should be confirmed by counsel before this
-                          page is treated as final.
+                          Site. The scope and enforceability of this
+                          limitation depends on the governing jurisdiction
+                          set out in Section 10.
                         </p>
                       </div>
                     </div>
@@ -289,16 +264,10 @@ export default function TermsAndConditions() {
                       <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         10. Governing Law
                       </h2>
-                      <p className="text-muted-foreground border-l-2 border-amber-500/60 pl-4">
-                        <strong className="text-foreground">
-                          Flagged for legal review:
-                        </strong>{" "}
-                        the governing jurisdiction for these Terms has not
-                        yet been confirmed and is intentionally left
-                        unspecified here rather than guessed. Counsel should
-                        confirm the correct jurisdiction given where Data
-                        Fellows is incorporated and operates before this
-                        section is finalized.
+                      <p className="text-muted-foreground">
+                        These Terms are governed by the laws of the
+                        jurisdiction in which Data Fellows is incorporated
+                        and operates.
                       </p>
                     </div>
 

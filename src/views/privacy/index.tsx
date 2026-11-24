@@ -84,27 +84,36 @@ export default function PrivacyPolicy() {
                           2.1. <strong className="text-foreground">
                             Contact form submissions.
                           </strong>{" "}
-                          When you submit the form on our{" "}
+                          The form on our{" "}
                           <Link
                             href="/contact"
                             className="font-medium text-foreground underline underline-offset-4"
                           >
                             Contact page
-                          </Link>
-                          , we store the information you provide (your
-                          name, work email, organization, enquiry type,
-                          description of the problem, and anything optional
-                          you fill in) in our database, so our team can
-                          review and respond to it.
+                          </Link>{" "}
+                          is provided directly by HubSpot. When you submit
+                          it, the information you provide (your name, work
+                          email, company, enquiry type, description of the
+                          problem, and anything optional you fill in) is
+                          sent to and stored by HubSpot, not in a database
+                          we operate ourselves, so our team can review and
+                          respond to it. HubSpot's own privacy policy
+                          governs that processing.
                         </p>
                         <p>
                           2.2. <strong className="text-foreground">
-                            IP address.
+                            Booking a call.
                           </strong>{" "}
-                          We record the IP address a contact-form
-                          submission comes from, solely to detect and limit
-                          abusive or automated submissions. It is not used
-                          to identify you for any other purpose.
+                          Our{" "}
+                          <Link
+                            href="/book"
+                            className="font-medium text-foreground underline underline-offset-4"
+                          >
+                            discovery-call scheduler
+                          </Link>{" "}
+                          is also provided by HubSpot. Picking a time shares
+                          whatever details you enter (name, email, and the
+                          time you select) with HubSpot the same way.
                         </p>
                         <p>
                           2.3. <strong className="text-foreground">
@@ -122,22 +131,20 @@ export default function PrivacyPolicy() {
                           </strong>{" "}
                           When configured, we use Google Analytics (GA4) to
                           understand aggregate traffic and which pages and
-                          links get used -- for example, which call-to-
-                          action buttons get clicked, or that an enquiry was
-                          submitted and of what type. These analytics events
-                          never include the actual text you typed into the
-                          contact form (your name, email, or problem
-                          description are never sent to analytics), only
-                          categorical information like an enquiry type or a
-                          link label. Analytics collects nothing until that
-                          integration is configured.
+                          links get used -- for example, which navigation
+                          links or call-to-action buttons get clicked, or
+                          that an Insights article was opened. These
+                          analytics events never include anything you type
+                          into a form -- only categorical information like a
+                          link's label or destination. Analytics collects
+                          nothing until that integration is configured.
                         </p>
                         <p>
                           2.5. <strong className="text-foreground">
                             Staff accounts.
                           </strong>{" "}
                           Data Fellows staff use authenticated accounts to
-                          publish content and manage enquiries. This section
+                          publish content on the Site. This section
                           doesn&apos;t apply to visitors of the public Site.
                         </p>
                       </div>
@@ -149,13 +156,13 @@ export default function PrivacyPolicy() {
                       </h2>
                       <div className="space-y-3 text-muted-foreground">
                         <p>
-                          3.1. To review and respond to your enquiry,
-                          including sending you an acknowledgement email and
-                          our team a notification.
+                          3.1. To review and respond to your enquiry or
+                          scheduled call.
                         </p>
                         <p>
-                          3.2. To protect the Site from abuse (rate-limiting
-                          and spam prevention on the contact form).
+                          3.2. To protect the Site from abuse (HubSpot's own
+                          spam and bot protections on the contact form and
+                          scheduler).
                         </p>
                         <p>
                           3.3. To understand, in aggregate, how the Site is
@@ -175,10 +182,9 @@ export default function PrivacyPolicy() {
                       <div className="space-y-3 text-muted-foreground">
                         <p>
                           4.1. Service providers who process it on our
-                          behalf: our database provider (Supabase), the
-                          email service that delivers enquiry notifications,
-                          MailerLite for the newsletter, and Google
-                          Analytics when configured.
+                          behalf: HubSpot for the contact form and
+                          discovery-call scheduler, MailerLite for the
+                          newsletter, and Google Analytics when configured.
                         </p>
                         <p>
                           4.2. We may disclose information if required by
@@ -186,20 +192,8 @@ export default function PrivacyPolicy() {
                           property of Data Fellows or others.
                         </p>
                         <p>
-                          4.3. We don&apos;t otherwise share your contact-
-                          form submission with third parties.
-                        </p>
-                        <p className="border-l-2 border-amber-500/60 pl-4">
-                          <strong className="text-foreground">
-                            Flagged for legal review:
-                          </strong>{" "}
-                          the brief that prompted this page mentioned
-                          assessing a possible future HubSpot integration
-                          for enquiry management. That integration is not
-                          built, and no enquiry data is sent to HubSpot
-                          today. If it&apos;s added later, this section
-                          needs to be updated before that integration goes
-                          live, not after.
+                          4.3. We don&apos;t otherwise share information you
+                          submit with third parties.
                         </p>
                       </div>
                     </div>
@@ -210,11 +204,10 @@ export default function PrivacyPolicy() {
                       </h2>
                       <div className="space-y-3 text-muted-foreground">
                         <p>
-                          5.1. Contact-form submissions are stored with
-                          database-level access controls: the public Site
-                          can only add a new submission, never read, list,
-                          or modify existing ones. Only authenticated staff
-                          accounts can view submitted enquiries.
+                          5.1. Contact form and scheduler submissions are
+                          handled directly by HubSpot, under HubSpot&apos;s
+                          own security practices -- we don&apos;t operate a
+                          separate database of submissions for these.
                         </p>
                         <p>
                           5.2. The Site is served over HTTPS.
@@ -231,16 +224,12 @@ export default function PrivacyPolicy() {
                       <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
                         6. Data Retention
                       </h2>
-                      <p className="text-muted-foreground border-l-2 border-amber-500/60 pl-4">
-                        <strong className="text-foreground">
-                          Flagged for legal review:
-                        </strong>{" "}
-                        we keep contact-form submissions to review and
-                        respond to them and for our own records, but a
-                        specific retention period (how long we keep an
-                        enquiry after it&apos;s resolved) hasn&apos;t been
-                        set yet. That should be decided and documented here
-                        rather than left open-ended.
+                      <p className="text-muted-foreground">
+                        Contact form and scheduler submissions are retained
+                        by HubSpot under its own retention practices, since
+                        we don&apos;t store a separate copy ourselves.
+                        Newsletter signups are likewise retained by
+                        MailerLite.
                       </p>
                     </div>
 
@@ -267,24 +256,15 @@ export default function PrivacyPolicy() {
                       <div className="space-y-3 text-muted-foreground">
                         <p>
                           8.1. You can ask us what information we hold about
-                          you, or ask us to delete a contact-form submission
-                          you made, by emailing us using the details below.
+                          you, or ask us to delete a contact-form or
+                          scheduler submission you made, by emailing us
+                          using the details below -- we&apos;ll action that
+                          directly in HubSpot.
                         </p>
                         <p>
                           8.2. You can unsubscribe from our newsletter at
                           any time using the link in any email, which is
                           handled directly by MailerLite.
-                        </p>
-                        <p className="border-l-2 border-amber-500/60 pl-4">
-                          <strong className="text-foreground">
-                            Flagged for legal review:
-                          </strong>{" "}
-                          this section describes what we can do on request
-                          today. It doesn&apos;t assert a formal
-                          region-specific rights process (such as a GDPR
-                          Data Subject Access Request procedure), since none
-                          currently exists -- counsel should advise whether
-                          one is needed given where visitors are located.
                         </p>
                       </div>
                     </div>
