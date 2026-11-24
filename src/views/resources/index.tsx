@@ -1,6 +1,7 @@
 import NewsletterModal from "@/components/custom/newsletter-modal";
 import PageSeo from "@/components/seo/page-seo";
 import { journeySoFarUrl } from "@/constants/resources";
+import { trackEvent } from "@/lib/analytics/track";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LandingPageLayout from "@/layouts/landing-page";
 import { EDITORIAL_TRACKS, type EditorialTrack, type Resource, type ResourceCategory } from "@/types/resource";
@@ -118,6 +119,13 @@ const ResourceCard = ({ item }: { item: Resource }) => {
           href={item.href}
           target={item.href.startsWith("http") ? "_blank" : undefined}
           rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+          onClick={() =>
+            trackEvent("insights_article_click", {
+              title: item.title,
+              category: item.category,
+              track: item.editorial_track ?? "untracked",
+            })
+          }
           className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-foreground"
         >
           Read {item.is_external_article ? `on ${item.original_publisher || "the original site"}` : "article"}

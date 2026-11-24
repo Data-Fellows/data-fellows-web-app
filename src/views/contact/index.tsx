@@ -1,5 +1,6 @@
 import PageSeo from "@/components/seo/page-seo";
 import { site } from "@/constants/site";
+import { trackEvent } from "@/lib/analytics/track";
 import { enquirySchema, type EnquiryFormValues } from "@/lib/validation/enquiry-schema";
 import { ENQUIRY_TYPES } from "@/types/enquiry";
 import LandingPageLayout from "@/layouts/landing-page";
@@ -78,6 +79,7 @@ const ContactPage = () => {
       const body = await response.json();
 
       if (!response.ok || !body.success) {
+        trackEvent("enquiry_submission_failed", { reason: "server" });
         setSubmitState({
           status: "error",
           message: body.error || "Something went wrong. Please try again or email us directly.",
@@ -85,14 +87,25 @@ const ContactPage = () => {
         return;
       }
 
+      trackEvent("enquiry_received", { enquiry_type: values.enquiryType });
       setSubmitState({ status: "success", referenceId: body.referenceId });
       reset(defaultValues);
     } catch {
+      trackEvent("enquiry_submission_failed", { reason: "network" });
       setSubmitState({
         status: "error",
         message: "Something went wrong. Please check your connection and try again.",
       });
     }
+  };
+
+  // Fires only on a client-side Zod validation failure (react-hook-form's
+  // handleSubmit calls this instead of onSubmit when validation fails) --
+  // tracks which fields failed, never the values the visitor typed.
+  const onInvalid = (formErrors: typeof errors) => {
+    trackEvent("enquiry_validation_failed", {
+      fields: Object.keys(formErrors).join(","),
+    });
   };
 
   return (
@@ -162,7 +175,7 @@ const ContactPage = () => {
             </div>
 
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(onSubmit, onInvalid)}
               noValidate
               className="space-y-5 border border-border bg-background px-6 py-8 lg:col-span-7"
             >
