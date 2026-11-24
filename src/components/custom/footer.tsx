@@ -1,12 +1,22 @@
+import { site } from "@/constants/site";
 import Image from "next/image";
 import Link from "next/link";
-import { FiInstagram, FiLinkedin, FiTwitter, FiYoutube } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiCalendar,
+  FiInstagram,
+  FiLinkedin,
+  FiMail,
+  FiTwitter,
+  FiYoutube,
+} from "react-icons/fi";
 
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "Work", href: "/work" },
   { label: "What We Do", href: "/services" },
   { label: "Approach", href: "/approach" },
+  { label: "Contact", href: "/contact" },
   { label: "Community", href: "/community" },
   { label: "Activities", href: "/activities" },
   { label: "About", href: "/about" },
@@ -85,6 +95,25 @@ export const Footer = () => {
                 <Icon />
               </Link>
             ))}
+          </div>
+
+          <div className="space-y-2">
+            <Link
+              href="/book"
+              className="flex items-center gap-2 border border-foreground bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition hover:bg-foreground/90"
+            >
+              <FiCalendar className="h-4 w-4" />
+              Book a Discovery Call
+              <FiArrowUpRight className="ml-auto h-4 w-4" />
+            </Link>
+            <Link
+              href="/contact"
+              className="flex items-center gap-2 border border-border px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-foreground/40"
+            >
+              <FiMail className="h-4 w-4" />
+              Contact Us
+            </Link>
+            <p className="pt-1 text-sm text-muted-foreground">{site.email}</p>
           </div>
         </div>
 

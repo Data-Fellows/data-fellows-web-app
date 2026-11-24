@@ -1,15 +1,10 @@
+import { HubSpotFormEmbed } from "@/components/custom/hubspot-form-embed";
 import PageSeo from "@/components/seo/page-seo";
 import { clientJourney } from "@/constants/approach";
-import { site } from "@/constants/site";
-import { trackEvent } from "@/lib/analytics/track";
-import { enquirySchema, type EnquiryFormValues } from "@/lib/validation/enquiry-schema";
-import { ENQUIRY_TYPES } from "@/types/enquiry";
+import { hubspot, site } from "@/constants/site";
 import LandingPageLayout from "@/layouts/landing-page";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { FiCheckCircle, FiMail, FiMessageCircle, FiSend, FiUsers } from "react-icons/fi";
+import { FiArrowUpRight, FiCalendar, FiMail, FiMessageCircle, FiUsers } from "react-icons/fi";
 
 const contactChannels = [
   {
@@ -33,87 +28,12 @@ const contactChannels = [
   },
 ];
 
-const inputClass =
-  "h-11 border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30";
-const textareaClass =
-  "border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30";
-const labelClass = "flex flex-col gap-2 text-sm font-medium text-foreground";
-const errorClass = "text-xs font-medium text-destructive";
-
-const defaultValues: EnquiryFormValues = {
-  fullName: "",
-  workEmail: "",
-  organization: "",
-  enquiryType: ENQUIRY_TYPES[0],
-  problemDescription: "",
-  existingSystems: "",
-  timeframe: "",
-  heardAbout: "",
-  website: "",
-};
-
 const ContactPage = () => {
-  const [submitState, setSubmitState] = useState<
-    | { status: "idle" }
-    | { status: "success"; referenceId: string }
-    | { status: "error"; message: string }
-  >({ status: "idle" });
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<EnquiryFormValues>({
-    resolver: zodResolver(enquirySchema),
-    defaultValues,
-  });
-
-  const onSubmit = async (values: EnquiryFormValues) => {
-    setSubmitState({ status: "idle" });
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      const body = await response.json();
-
-      if (!response.ok || !body.success) {
-        trackEvent("enquiry_submission_failed", { reason: "server" });
-        setSubmitState({
-          status: "error",
-          message: body.error || "Something went wrong. Please try again or email us directly.",
-        });
-        return;
-      }
-
-      trackEvent("enquiry_received", { enquiry_type: values.enquiryType });
-      setSubmitState({ status: "success", referenceId: body.referenceId });
-      reset(defaultValues);
-    } catch {
-      trackEvent("enquiry_submission_failed", { reason: "network" });
-      setSubmitState({
-        status: "error",
-        message: "Something went wrong. Please check your connection and try again.",
-      });
-    }
-  };
-
-  // Fires only on a client-side Zod validation failure (react-hook-form's
-  // handleSubmit calls this instead of onSubmit when validation fails) --
-  // tracks which fields failed, never the values the visitor typed.
-  const onInvalid = (formErrors: typeof errors) => {
-    trackEvent("enquiry_validation_failed", {
-      fields: Object.keys(formErrors).join(","),
-    });
-  };
-
   return (
     <LandingPageLayout>
       <PageSeo
         title="Contact | Data Fellows"
-        description="Tell Data Fellows what you're trying to solve. We'll review the request and discuss whether we're a good fit."
+        description="Tell Data Fellows what you're working on. Share a few details and our team will review your inquiry."
         path="/contact"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -121,20 +41,29 @@ const ContactPage = () => {
           <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
             <div className="space-y-4 text-center">
               <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Discuss a Problem
+                Contact
               </span>
               <h1
                 id="contact-hero-heading"
                 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
-                Tell us what you&apos;re trying to solve.
+                Let&apos;s Talk About Your Project
               </h1>
               <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
-                Whether you&apos;re dealing with disconnected systems, manual
-                processes, unreliable reporting or a software problem, tell
-                us what you&apos;re working through. We&apos;ll review the
-                request and discuss whether Data Fellows is a good fit.
+                Tell us what you&apos;re working on, whether it&apos;s
+                connecting business systems, reducing repetitive work,
+                improving reporting or building new software. Share a few
+                details and our team will review your inquiry.
               </p>
+              <div className="pt-2">
+                <Link
+                  href="/book"
+                  className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
+                >
+                  <FiCalendar className="h-4 w-4" />
+                  Prefer to talk live? Book a Discovery Call
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -173,6 +102,21 @@ const ContactPage = () => {
                   </Link>
                 ))}
               </div>
+              <Link
+                href="/book"
+                className="flex items-center gap-4 border border-foreground bg-foreground/5 px-5 py-4 text-sm text-foreground transition hover:bg-foreground/10"
+              >
+                <span className="flex h-10 w-10 items-center justify-center border border-foreground/20 text-foreground">
+                  <FiCalendar className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">
+                    Book a Discovery Call
+                  </p>
+                  <p>Pick a time directly on our calendar.</p>
+                </div>
+                <FiArrowUpRight className="ml-auto h-4 w-4" />
+              </Link>
 
               <div className="space-y-3 border-t border-border pt-6">
                 <p className="font-mono text-xs font-semibold uppercase tracking-wide text-foreground">
@@ -191,167 +135,17 @@ const ContactPage = () => {
               </div>
             </div>
 
-            <form
-              onSubmit={handleSubmit(onSubmit, onInvalid)}
-              noValidate
-              className="space-y-5 border border-border bg-background px-6 py-8 lg:col-span-7"
-            >
+            <div className="space-y-5 border border-border bg-background px-6 py-8 lg:col-span-7">
               <h2 className="font-display text-xl font-semibold text-foreground">
-                Tell us about the problem
+                Tell us about your project
               </h2>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <label className={labelClass}>
-                  Full name
-                  <input
-                    {...register("fullName")}
-                    maxLength={200}
-                    className={inputClass}
-                    placeholder="Your name"
-                    autoComplete="name"
-                  />
-                  {errors.fullName ? (
-                    <span className={errorClass}>{errors.fullName.message}</span>
-                  ) : null}
-                </label>
-                <label className={labelClass}>
-                  Work email
-                  <input
-                    {...register("workEmail")}
-                    type="email"
-                    maxLength={254}
-                    className={inputClass}
-                    placeholder="you@company.com"
-                    autoComplete="email"
-                  />
-                  {errors.workEmail ? (
-                    <span className={errorClass}>{errors.workEmail.message}</span>
-                  ) : null}
-                </label>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <label className={labelClass}>
-                  Organization (optional)
-                  <input
-                    {...register("organization")}
-                    maxLength={200}
-                    className={inputClass}
-                    placeholder="Company or team name"
-                    autoComplete="organization"
-                  />
-                  {errors.organization ? (
-                    <span className={errorClass}>{errors.organization.message}</span>
-                  ) : null}
-                </label>
-                <label className={labelClass}>
-                  Enquiry type
-                  <select {...register("enquiryType")} className={inputClass}>
-                    {ENQUIRY_TYPES.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.enquiryType ? (
-                    <span className={errorClass}>{errors.enquiryType.message}</span>
-                  ) : null}
-                </label>
-              </div>
-
-              <label className={labelClass}>
-                Description of the problem
-                <textarea
-                  {...register("problemDescription")}
-                  rows={4}
-                  maxLength={4000}
-                  className={textareaClass}
-                  placeholder="What's happening, and what have you tried so far?"
-                />
-                {errors.problemDescription ? (
-                  <span className={errorClass}>{errors.problemDescription.message}</span>
-                ) : null}
-              </label>
-
-              <label className={labelClass}>
-                Relevant existing systems or tools (optional)
-                <input
-                  {...register("existingSystems")}
-                  maxLength={2000}
-                  className={inputClass}
-                  placeholder="e.g. Shopify, Postgres, Zapier"
-                />
-                {errors.existingSystems ? (
-                  <span className={errorClass}>{errors.existingSystems.message}</span>
-                ) : null}
-              </label>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <label className={labelClass}>
-                  Desired project timeframe (optional)
-                  <input
-                    {...register("timeframe")}
-                    maxLength={200}
-                    className={inputClass}
-                    placeholder="e.g. Within a month"
-                  />
-                  {errors.timeframe ? (
-                    <span className={errorClass}>{errors.timeframe.message}</span>
-                  ) : null}
-                </label>
-                <label className={labelClass}>
-                  How did you hear about us? (optional)
-                  <input
-                    {...register("heardAbout")}
-                    maxLength={200}
-                    className={inputClass}
-                    placeholder="e.g. Referral, LinkedIn, search"
-                  />
-                  {errors.heardAbout ? (
-                    <span className={errorClass}>{errors.heardAbout.message}</span>
-                  ) : null}
-                </label>
-              </div>
-
-              {/* Honeypot -- hidden from sighted and keyboard users via
-                  CSS (not type="hidden", so a bot that only skips hidden
-                  inputs still fills it in), and never announced to screen
-                  readers. Real visitors never see or touch this field. */}
-              <div className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
-                <label>
-                  Website
-                  <input {...register("website")} tabIndex={-1} autoComplete="off" />
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <FiSend className="h-4 w-4" />
-                {isSubmitting ? "Sending..." : "Send message"}
-              </button>
-
-              <div role="status" aria-live="polite">
-                {submitState.status === "success" ? (
-                  <p className="flex items-start gap-2 text-sm font-medium text-foreground">
-                    <FiCheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-foreground" />
-                    <span>
-                      Message received. Reference ID: {submitState.referenceId}.
-                      We&apos;ll review it and get back to you.
-                    </span>
-                  </p>
-                ) : submitState.status === "error" ? (
-                  <p className={errorClass}>{submitState.message}</p>
-                ) : (
-                  <p className="text-xs text-muted-foreground">
-                    We keep your information private and only use it to
-                    follow up on your request.
-                  </p>
-                )}
-              </div>
-            </form>
+              <HubSpotFormEmbed
+                portalId={hubspot.portalId}
+                formId={hubspot.contactFormId}
+                region={hubspot.formRegion}
+                fallbackEmail={site.enquiryEmail}
+              />
+            </div>
           </div>
         </section>
       </div>

@@ -12,7 +12,9 @@ import { FiMenu, FiX } from "react-icons/fi";
 // logo alone. Activities, Impact and Partners are still real, live
 // pages -- just reached from within Community/About and the footer
 // instead of the top nav, so the bar doesn't grow past what fits on
-// one line as the new pages (Services/Approach) are added.
+// one line as the new pages (Services/Approach) are added. Contact was
+// added so it's reachable from the nav directly, now that the header's
+// CTA button points to /book instead of /contact.
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
@@ -21,6 +23,7 @@ const navLinks = [
   { href: "/community", label: "Community" },
   { href: "/about", label: "About" },
   { href: "/resources", label: "Insights" },
+  { href: "/contact", label: "Contact" },
 ];
 
 function Navbar() {
@@ -74,13 +77,13 @@ function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           <button
             onClick={() => {
-              trackEvent("cta_click", { label: "Discuss a Problem", location: "header" });
-              router.push("/contact");
+              trackEvent("cta_click", { label: "Book a Call", location: "header" });
+              router.push("/book");
               setIsOpen(false);
             }}
             className="flex items-center gap-2 border border-foreground px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
           >
-            Discuss a Problem
+            Book a Call
           </button>
         </div>
 
@@ -136,13 +139,13 @@ function Navbar() {
 
           <button
             onClick={() => {
-              trackEvent("cta_click", { label: "Discuss a Problem", location: "header_mobile" });
-              router.push("/contact");
+              trackEvent("cta_click", { label: "Book a Call", location: "header_mobile" });
+              router.push("/book");
               setIsOpen(false);
             }}
             className="flex w-full items-center justify-center bg-brand-blue-fill px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue-foreground"
           >
-            Discuss a Problem
+            Book a Call
           </button>
         </div>
       </div>
