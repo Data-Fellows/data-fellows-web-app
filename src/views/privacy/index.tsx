@@ -48,24 +48,6 @@ export default function PrivacyPolicy() {
                     Last updated: {LAST_UPDATED}
                   </div>
                 </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeUp}
-                  className="mx-auto max-w-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-4 text-sm text-foreground"
-                >
-                  <p className="font-semibold">Draft pending legal review.</p>
-                  <p className="mt-1 text-muted-foreground">
-                    This is a new policy, written to describe what the Data
-                    Fellows website actually does today -- it did not exist
-                    before. It has not been reviewed by a lawyer. It does
-                    not claim compliance with any specific privacy
-                    regulation (GDPR, CCPA, or otherwise); the sections
-                    flagged below need that confirmed by counsel before
-                    this page is treated as final.
-                  </p>
-                </motion.div>
               </div>
             </section>
 
