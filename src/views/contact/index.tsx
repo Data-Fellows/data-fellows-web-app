@@ -136,9 +136,11 @@ const ContactPage = () => {
             </div>
 
             <div className="space-y-5 border border-border bg-background px-6 py-8 lg:col-span-7">
-              <h2 className="font-display text-xl font-semibold text-foreground">
-                Tell us about your project
-              </h2>
+              {/* The HubSpot form itself already renders its own "Tell us
+                  about your project" title and description as part of the
+                  embed -- this sr-only heading keeps a landmark for screen
+                  readers without visually repeating it. */}
+              <h2 className="sr-only">Tell us about your project</h2>
               <HubSpotFormEmbed
                 portalId={hubspot.portalId}
                 formId={hubspot.contactFormId}
