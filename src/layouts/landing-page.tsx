@@ -1,4 +1,5 @@
 import { Footer } from "@/components";
+import { trackEvent } from "@/lib/analytics/track";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
@@ -58,7 +59,12 @@ function Navbar() {
 
           <div className="hidden lg:flex items-center gap-7">
             {navLinks.map(({ href, label }) => (
-              <Link key={href} href={href} className={getNavLinkClass(href)}>
+              <Link
+                key={href}
+                href={href}
+                onClick={() => trackEvent("nav_click", { label, destination: href })}
+                className={getNavLinkClass(href)}
+              >
                 {label}
               </Link>
             ))}
@@ -68,6 +74,7 @@ function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           <button
             onClick={() => {
+              trackEvent("cta_click", { label: "Discuss a Problem", location: "header" });
               router.push("/contact");
               setIsOpen(false);
             }}
@@ -112,7 +119,10 @@ function Navbar() {
               <Link
                 key={href}
                 href={href}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  trackEvent("nav_click", { label, destination: href });
+                  setIsOpen(false);
+                }}
                 className={`px-2 py-3.5 text-left text-lg font-medium ${
                   pathname === href
                     ? "bg-brand-blue-fill text-brand-blue-foreground"
@@ -126,6 +136,7 @@ function Navbar() {
 
           <button
             onClick={() => {
+              trackEvent("cta_click", { label: "Discuss a Problem", location: "header_mobile" });
               router.push("/contact");
               setIsOpen(false);
             }}
