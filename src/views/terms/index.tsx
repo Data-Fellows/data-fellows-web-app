@@ -1,7 +1,7 @@
+import PageSeo from "@/components/seo/page-seo";
 import { site } from "@/constants/site";
 import LandingPageLayout from "@/layouts/landing-page";
 import { easeOut, motion } from "framer-motion";
-import Head from "next/head";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -15,35 +15,11 @@ const fadeUp = {
 export default function TermsAndConditions() {
   return (
     <>
-      <Head>
-        <title>Terms and Conditions - Data Fellows</title>
-        <meta
-          name="description"
-          content="Terms and conditions for using Data Fellows platform. Read our legal terms and user agreements."
-        />
-        <meta
-          name="keywords"
-          content="terms, conditions, legal, agreement, Data Fellows"
-        />
-        <meta
-          property="og:title"
-          content="Terms and Conditions - Data Fellows"
-        />
-        <meta
-          property="og:description"
-          content="Terms and conditions for using Data Fellows platform."
-        />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="Terms and Conditions - Data Fellows"
-        />
-        <meta
-          name="twitter:description"
-          content="Terms and conditions for using Data Fellows platform."
-        />
-      </Head>
+      <PageSeo
+        title="Terms and Conditions | Data Fellows"
+        description="Terms and conditions for using Data Fellows' website and services."
+        path="/terms"
+      />
 
       <LandingPageLayout>
         <div className="min-h-screen bg-background">
