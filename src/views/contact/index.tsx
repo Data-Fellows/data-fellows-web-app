@@ -1,5 +1,6 @@
 import { HubSpotFormEmbed } from "@/components/custom/hubspot-form-embed";
 import PageSeo from "@/components/seo/page-seo";
+import { clientJourney } from "@/constants/approach";
 import { hubspot, site } from "@/constants/site";
 import LandingPageLayout from "@/layouts/landing-page";
 import Link from "next/link";
@@ -116,6 +117,22 @@ const ContactPage = () => {
                 </div>
                 <FiArrowUpRight className="ml-auto h-4 w-4" />
               </Link>
+
+              <div className="space-y-3 border-t border-border pt-6">
+                <p className="font-mono text-xs font-semibold uppercase tracking-wide text-foreground">
+                  What happens after you submit
+                </p>
+                <ol className="space-y-2 text-sm text-muted-foreground">
+                  {clientJourney.slice(1).map((item) => (
+                    <li key={item.step} className="flex gap-2">
+                      <span className="font-mono text-xs text-muted-foreground/70">
+                        {item.step}
+                      </span>
+                      {item.title}
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
 
             <div className="space-y-5 border border-border bg-background px-6 py-8 lg:col-span-7">

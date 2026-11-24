@@ -127,12 +127,17 @@ export const servicesFaq: { question: string; answer: string }[] = [
   {
     question: "How is our data handled?",
     answer:
-      "We take access control and data minimization seriously on every engagement. We don't currently hold specific compliance certifications; if your organization requires one, tell us early and we'll be direct about whether we can meet it.",
+      "We take access control and data minimization seriously on every engagement, and we'll sign a confidentiality agreement or NDA where that's part of how you need to work with us. We don't currently hold specific compliance certifications; if your organization requires one, tell us early and we'll be direct about whether we can meet it.",
   },
   {
     question: "Who owns the code and IP?",
     answer:
       "By default we aim for the work we build for you to stay yours. Exact IP terms are set per contract, since they vary by engagement.",
+  },
+  {
+    question: "Who will I actually work with?",
+    answer:
+      "Someone from our small founding team, listed on our People page, leads every engagement; we'll name that person once one is assigned. Where a project calls for it, we may bring in a Fellow from the wider community under that lead's direct supervision, scoped to exactly what the engagement needs.",
   },
   {
     question: "What does a first conversation look like?",

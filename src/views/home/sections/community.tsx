@@ -1,3 +1,4 @@
+import { communityRhythm } from "@/constants/community";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -16,33 +17,6 @@ const statAccentClasses = [
   {
     card: "border-accent/30 bg-accent/10",
     value: "text-accent-foreground",
-  },
-];
-
-const rhythm = [
-  {
-    title: "Community Sunday Catchup",
-    cadence: "Every two weeks",
-    description:
-      "Live check-ins where Fellows demo what they are building and ask for quick feedback.",
-  },
-  {
-    title: "Fireside Sessions",
-    cadence: "Once a month",
-    description:
-      "Intimate talks with partners and mentors that unpack a single theme with actionable prompts.",
-  },
-  {
-    title: "Newsletter",
-    cadence: "Every two weeks",
-    description:
-      "A curated inbox drop featuring templates, wins, and calls for collaborators.",
-  },
-  {
-    title: "Journey So Far",
-    cadence: "Stories from members, last Friday monthly",
-    description:
-      "A rotating spotlight on a Fellow showing the behind-the-scenes of a recent success.",
   },
 ];
 
@@ -93,7 +67,7 @@ Community
               })}
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              {rhythm.map((item) => {
+              {communityRhythm.map((item) => {
                 const isActive = activeRhythm === item.title;
                 return (
                   <button

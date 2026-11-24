@@ -1,33 +1,47 @@
-export const processSteps = [
+// The single client journey used everywhere it's shown (Home, Services,
+// Approach, Contact) -- previously three different, differently-counted
+// step lists existed across just two pages (this file's old 5-step
+// processSteps and 7-step engagementTimeline, plus services/index.tsx's
+// own separate 4-step procurementSteps), which made "how working with us
+// goes" look different depending on which page you landed on. Content
+// below consolidates them rather than inventing a new claim: each step's
+// wording is carried over from whichever of those three said it best.
+export const clientJourney = [
   {
     step: "01",
-    title: "Listen",
+    title: "Tell us the problem",
     description:
-      "We start with the people living with the problem, not an assumption about what they need.",
+      "You describe what's happening, what's been tried, and what a better outcome would look like.",
   },
   {
     step: "02",
-    title: "Investigate",
+    title: "Discovery conversation",
     description:
-      "We review your existing systems and constraints closely enough to scope real work, not a guess.",
+      "We ask questions and review your existing systems and constraints closely enough to scope real work, not a guess.",
   },
   {
     step: "03",
-    title: "Scope",
+    title: "Scoped proposal",
     description:
       "A narrow, honest proposal: the smallest thing that actually solves the problem, its timeline and its price.",
   },
   {
     step: "04",
-    title: "Build & Launch",
+    title: "Agree on terms",
+    description:
+      "Delivery terms, IP and support arrangements set out plainly before work starts, including what's outside what we can currently support.",
+  },
+  {
+    step: "05",
+    title: "Build, implement & review",
     description:
       "We build directly with you, with clear deliverables and checkpoints along the way, not a black box until the end.",
   },
   {
-    step: "05",
-    title: "Support & Learn",
+    step: "06",
+    title: "Handover or ongoing support",
     description:
-      "Where it's part of the agreement, we stay involved: monitoring, fixing, and improving what we shipped.",
+      "A clean handover, or -- where it's part of the agreement -- we stay involved: monitoring, fixing, and improving what we shipped.",
   },
 ];
 
@@ -78,12 +92,3 @@ export const transparency = {
   ],
 };
 
-export const engagementTimeline = [
-  "Introductory conversation",
-  "Problem review",
-  "Scoping proposal",
-  "Contract",
-  "Work",
-  "Acceptance",
-  "Support",
-];

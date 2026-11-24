@@ -107,7 +107,7 @@ export const products: Product[] = [
     title: "AI-powered product and operating intelligence for ecommerce founders.",
     goal: "Give an independent ecommerce founder one place to see what needs attention each morning, with AI doing the investigation and the founder keeping the final call.",
     description:
-      "Inscend helps independent ecommerce founders investigate what affects their products, identify improvements, and prepare actions across their business. It's an active venture, exploring how AI can reduce the operational work involved in running an online store.",
+      "Inscend helped independent ecommerce founders investigate what affects their products, identify improvements, and prepare actions across their business. It's a past Data Fellows product initiative that explored how AI could reduce the operational work involved in running an online store.",
     ctaLabel: "View our Product Hunt launch",
     ctaHref: site.inscendUrl,
     slides: [

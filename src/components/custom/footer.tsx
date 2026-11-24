@@ -135,11 +135,11 @@ export const Footer = () => {
 
           <div>
             <h4 className="font-mono text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Partner network
+              Our wider network
             </h4>
             <p className="mt-4 text-sm text-muted-foreground">
-              We co-build with accelerators, training partners, and allied
-              communities who keep Data Fellows grounded in real outcomes.
+              Training academies, startup programs, and community allies
+              Data Fellows has been part of.
             </p>
             <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-muted-foreground">
               {partnerHighlights.map((name) => (
@@ -158,9 +158,15 @@ export const Footer = () => {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-6 font-mono text-xs uppercase tracking-wide text-muted-foreground md:flex-row md:justify-between lg:px-0">
           <span>&copy; {year} Data Fellows Inc. All rights reserved.</span>
-          <span className="text-foreground">
-            Built by Data Fellows Inc.
-          </span>
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="transition hover:text-foreground">
+              Terms
+            </Link>
+            <Link href="/privacy" className="transition hover:text-foreground">
+              Privacy
+            </Link>
+            <span className="text-foreground">Built by Data Fellows Inc.</span>
+          </div>
         </div>
       </div>
     </footer>
