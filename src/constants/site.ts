@@ -24,6 +24,22 @@ export const site = {
   impactReportUrl: "/documents/data-fellows-impact-report-2026.pdf",
 } as const;
 
+// HubSpot portal/form/meeting IDs are not secrets -- they're the same
+// public identifiers HubSpot's own embed snippets expose client-side by
+// design, so they're safe here. This portal is shared with other Data
+// Fellows business lines (see HubSpot setup notes in the PR that added
+// this): submissions from this form/meeting link are not automatically
+// tagged as Data Fellows in HubSpot, so a portal-side workflow or hidden
+// field is still needed to classify them -- this file only wires up what
+// the website can control.
+export const hubspot = {
+  portalId: "342968824",
+  contactFormId: "07991f8b-7237-45ad-af05-9e30c8c119cf",
+  formRegion: "na3",
+  meetingsUrl:
+    "https://meetings-na3.hubspot.com/datafellows/data-fellows-discovery-call",
+} as const;
+
 // Public proof points -- keep every homepage/impact-page claim sourced from
 // here instead of re-typing numbers per section, so they can't drift.
 // as-of the 2026 Impact Report (four years, 2022-2026).

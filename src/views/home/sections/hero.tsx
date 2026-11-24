@@ -85,17 +85,17 @@ export const Hero = () => {
                 className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4"
               >
                 <button
-                  onClick={() => router.push("/contact")}
+                  onClick={() => router.push("/book")}
                   className="inline-flex items-center justify-center bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-foreground/90"
                 >
-                  Discuss a Problem
+                  Book a Discovery Call
                 </button>
 
                 <Link
-                  href="/work"
+                  href="/services"
                   className="inline-flex items-center justify-center border border-foreground px-6 py-3 text-sm font-medium text-foreground hover:bg-foreground hover:text-background"
                 >
-                  Explore Our Work
+                  Explore Our Services
                 </Link>
               </motion.div>
 
