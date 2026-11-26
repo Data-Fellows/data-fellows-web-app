@@ -1,4 +1,3 @@
-import { site } from "@/constants/site";
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 
@@ -21,16 +20,7 @@ const StudioSection = () => (
           href="/studio"
           className="inline-flex items-center justify-center gap-2 border border-foreground px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
         >
-          Learn about the Studio
-          <FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
-        </Link>
-        <Link
-          href={site.studioUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 border border-brand-blue-fill bg-brand-blue-fill px-5 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
-        >
-          Visit the Studio
+          Explore the Studio
           <FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </div>

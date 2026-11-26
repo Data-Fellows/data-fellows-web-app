@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { site } from "@/constants/site";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const pillars = [
@@ -21,7 +20,7 @@ const pillars = [
       "People in our community develop software, data systems, AI applications and research projects.",
     links: [
       { href: "/work", label: "Explore projects" },
-      { href: site.studioUrl, label: "Open the Studio", external: true },
+      { href: "/studio", label: "Open the Studio" },
     ],
   },
   {
@@ -77,8 +76,6 @@ const Pillars = () => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
                   className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
                 >
                   {link.label}
