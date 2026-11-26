@@ -15,9 +15,9 @@ const principles = [
       "Community conversations, workshops and member stories make knowledge easier to exchange and build on.",
   },
   {
-    title: "Make room to experiment",
+    title: "Learn by building",
     description:
-      "Members explore ideas through technical projects, research and product experiments, with the status and origin of work described clearly.",
+      "Members develop their skills through software, data, AI and research projects.",
   },
   {
     title: "Collaborate with care",
@@ -46,7 +46,7 @@ const ApproachPage = () => (
             A community for learning, building and exchange.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            We believe communities can play a significant role in how people learn technology and solve problems together. Data Fellows creates space for people to share knowledge, develop professionally and explore ideas through practical work.
+            People learn by asking questions, sharing what they know and working on real projects. Data Fellows brings people together through learning, mentorship, technical work and conversation.
           </p>
         </div>
       </section>

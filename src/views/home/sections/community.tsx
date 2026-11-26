@@ -39,7 +39,7 @@ Community
               A community that keeps learning and building.
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              People are the heart of Data Fellows. Members learn through scholarships, peer support, workshops and community conversations, and explore ways to build together.
+              Members take part in scholarships, workshops, peer support and community conversations. They share what they know and work on projects together.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               {scholarshipStats.map((stat, index) => {
@@ -102,7 +102,7 @@ Community
               <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                 <FiArrowRightCircle className="h-5 w-5 text-foreground" />
                 <span>
-                  Learn together, share what you know and explore collaboration at your own pace.
+                  Join a conversation, attend an event or start with a learning program.
                 </span>
               </div>
             </div>

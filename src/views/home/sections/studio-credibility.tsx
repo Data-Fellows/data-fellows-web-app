@@ -31,9 +31,8 @@ const StudioCredibility = () => {
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <AvatarStack people={foundingTeam} />
           <p className="max-w-xl text-xs text-muted-foreground">
-            These are professional backgrounds, not client or sponsor logos.{" "}
             <Link href="/people" className="underline hover:text-foreground">
-              Meet the people behind Data Fellows
+              Meet the team and read their backgrounds
             </Link>
             .
           </p>

@@ -73,7 +73,7 @@ export const Footer = () => {
             />
           </Link>
           <p className="text-sm text-muted-foreground">
-            A global, community-led technology organization advancing learning, collaboration and innovation across data, AI and software.
+            A global community of 1,600+ people across 33+ countries, learning and building in data, AI and software.
           </p>
           <div className="flex items-center gap-3 text-foreground">
             {socialLinks.map(({ label, href, icon: Icon }) => (

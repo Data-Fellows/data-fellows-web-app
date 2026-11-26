@@ -8,19 +8,19 @@ import { FiArrowUpRight, FiCalendar } from "react-icons/fi";
 const areas = [
   {
     title: "Software and product development",
-    text: "Web applications, product experiments and technical prototypes grounded in a clear problem and user need.",
+    text: "Web applications and internal tools designed around the needs of the people who use them.",
     href: "/work/hr-platform",
     label: "See software work",
   },
   {
     title: "Data systems and analytics",
-    text: "Pipelines, data models, integrations and analytics systems that help people work with information more clearly.",
+    text: "Data pipelines and models that make complex information easier to explore and use.",
     href: "/work/ont-communities",
     label: "See data work",
   },
   {
     title: "AI, automation and integration",
-    text: "Applied AI experiments, workflow automation and system integrations, scoped to a real use case and reviewed by people.",
+    text: "AI features, workflow automation and system integrations built for practical day-to-day use.",
     href: "/work",
     label: "Explore related projects",
   },
@@ -29,8 +29,8 @@ const areas = [
 const StudioPage = () => (
   <LandingPageLayout>
     <PageSeo
-      title="Data Fellows Studio | Technology and Collaboration"
-      description="The Data Fellows Studio explores scoped software, data, AI and automation work with organizations and collaborators, backed by a global technology community."
+      title="Data Fellows Studio | Software, Data and AI"
+      description="Data Fellows Studio helps organizations plan and build software, data systems and AI tools. Book a session to talk through your project."
       path="/studio"
     />
     <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -41,13 +41,13 @@ const StudioPage = () => (
               Data Fellows Studio
             </p>
             <h1 id="studio-hero-heading" className="max-w-4xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              Technology work, built with people who care about the problem.
+              We build software, data systems and AI.
             </h1>
             <p className="max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              The Studio is Data Fellows&apos; path for scoped technology engagements and product experiments across software, data, AI, automation and systems integration. It brings practical project work alongside a global community built on learning and collaboration.
+              Data Fellows Studio works with organizations to solve practical problems with software, data and AI. Our work includes custom applications, analytics, automation and integrations.
             </p>
             <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
-              Organizations can book a session to discuss paid technical work. Any engagement depends on fit and capacity, with scope, responsibilities and contributor compensation agreed before work begins.
+              Have a project in mind? Book a session and tell us what you&apos;re working through. We can discuss the right approach, scope, cost and timeline together.
             </p>
           </div>
           <div className="flex flex-col gap-3 lg:col-span-4">
@@ -59,8 +59,8 @@ const StudioPage = () => (
               Contact the Studio
               <FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </Link>
-            <Link href={site.studioUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary/80">
-              Open the Studio prototype
+            <Link href={site.studioUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 border border-border px-5 py-3 text-sm font-semibold text-foreground transition hover:border-foreground">
+              Visit the Studio
               <FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </Link>
           </div>
@@ -72,12 +72,12 @@ const StudioPage = () => (
       <section className="px-4 sm:px-6" aria-labelledby="studio-areas-heading">
         <div className="mx-auto max-w-6xl space-y-9">
           <div className="max-w-2xl space-y-3">
-            <p className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">Areas of work</p>
+            <p className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">What we work on</p>
             <h2 id="studio-areas-heading" className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              A practical place for technology collaboration.
+              What we can help you build.
             </h2>
             <p className="text-sm leading-6 text-muted-foreground">
-              The project archive shows what has been explored and who contributed. Each engagement is assessed for fit, scope, delivery capacity and a fair contributor plan before it proceeds.
+              From a first conversation to a working system, we bring the right technical skills to each project. Here are examples of related work.
             </p>
           </div>
           <div className="divide-y divide-border border-y border-border">
@@ -94,33 +94,12 @@ const StudioPage = () => (
         </div>
       </section>
 
-      <section className="px-4 sm:px-6" aria-labelledby="studio-prototype-heading">
-        <div className="mx-auto grid max-w-6xl gap-8 border border-border bg-background px-6 py-8 md:grid-cols-12 md:items-center lg:px-10">
-          <div className="space-y-3 md:col-span-8">
-            <p className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">Product experiment</p>
-            <h2 id="studio-prototype-heading" className="font-display text-xl font-semibold text-foreground sm:text-2xl">A prototype for accountable delivery</h2>
-            <p className="text-sm leading-6 text-muted-foreground">
-              The current Studio foundation is a synthetic prototype exploring organization-scoped projects, approved contributor assignments, bounded AI planning, independent review and client acceptance. It is not a production delivery system; real identity, persistent storage and model services remain to be built.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 md:col-span-4">
-            <Link href={site.studioUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 border border-brand-blue-fill bg-brand-blue-fill px-5 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90">
-              Visit Studio
-              <FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
-            </Link>
-            <Link href="/work" className="inline-flex items-center justify-center gap-2 border border-border px-5 py-3 text-sm font-semibold text-foreground hover:border-foreground">
-              Browse the project archive
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <section className="px-4 sm:px-6" aria-labelledby="studio-community-heading">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-brand-blue bg-navy-deep px-6 py-10 text-navy-deep-foreground sm:flex-row sm:items-center sm:justify-between lg:px-12">
           <div className="max-w-2xl space-y-2">
-            <h2 id="studio-community-heading" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">A Studio connected to a community.</h2>
+            <h2 id="studio-community-heading" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">Built with people who care about the work.</h2>
             <p className="text-sm leading-6 text-navy-deep-foreground/75">
-              Data Fellows is a community first. Members are not an on-demand workforce; anyone contributing to a paid project does so through clear, separately agreed terms and compensation.
+              Data Fellows is home to a global community of people working across data, AI and software. For each project, we bring in the skills it needs and agree on roles and compensation before work begins.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

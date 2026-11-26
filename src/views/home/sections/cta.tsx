@@ -17,7 +17,7 @@ const Cta = () => {
             Learn, build and grow with us.
           </h2>
           <p className="text-navy-deep-foreground/70">
-            Data Fellows is a community of people who learn, build and grow together through technology. Find your place in the community or start a conversation about collaborating.
+            Join a global community learning and building across data, AI and software. If you have a project to discuss, visit Data Fellows Studio.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -34,6 +34,15 @@ const Cta = () => {
             className="inline-flex items-center gap-2 border border-navy-deep-foreground/20 px-6 py-3 text-sm font-semibold text-navy-deep-foreground transition hover:bg-navy-deep-foreground/10"
           >
             Collaborate with us
+            <FiArrowUpRight className="h-4 w-4" />
+          </Link>
+          <Link
+            href={site.studioUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 border border-navy-deep-foreground/20 px-6 py-3 text-sm font-semibold text-navy-deep-foreground transition hover:bg-navy-deep-foreground/10"
+          >
+            Visit the Studio
             <FiArrowUpRight className="h-4 w-4" />
           </Link>
         </div>

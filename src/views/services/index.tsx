@@ -7,7 +7,7 @@ const areas = [
   {
     title: "Software and product development",
     description:
-      "Explore practical software, integrations and product experiments shaped by real workflows and user needs.",
+      "Software, integrations and products built around how people work.",
     examples: [
       { name: "HR Platform", href: "/work/hr-platform" },
       { name: "BizPilot AI", href: "/work/bizpilot" },
@@ -16,7 +16,7 @@ const areas = [
   {
     title: "Automation and systems integration",
     description:
-      "Workflow automation and integrations appear within specific documented projects. Each project page explains its origin, technical scope and current status.",
+      "We connect tools and automate repeated work when it helps solve a clear problem.",
     examples: [
       { name: "HR Platform", href: "/work/hr-platform" },
       { name: "Pi Ampersand", href: "/work/pi-ampersand" },
@@ -25,7 +25,7 @@ const areas = [
   {
     title: "Data engineering and analytics",
     description:
-      "Turn public and operational data into structured, documented systems that people can examine and use.",
+      "Data pipelines and analytics that help teams make better use of their information.",
     examples: [
       { name: "Ontario Infrastructure project", href: "/work/ont-communities" },
       { name: "Xetra ETL Pipeline", href: "/work/xetra-etl-pipeline" },
@@ -34,7 +34,7 @@ const areas = [
   {
     title: "Artificial intelligence and research",
     description:
-      "Study where AI can support existing work, test ideas and document what a prototype does and does not show.",
+      "AI tools and research for practical use, from early exploration to working applications.",
     examples: [
       { name: "Pi Ampersand", href: "/work/pi-ampersand" },
       { name: "PidginNuance", href: "/work/pidginnuance" },
@@ -59,10 +59,10 @@ const TechnologyPage = () => (
             id="technology-heading"
             className="mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-5xl"
           >
-            People learning, exploring and building with technology.
+            Software, data and AI work.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Software development remains part of Data Fellows&apos; identity. Our archive shows the products, research and independent technical projects people have explored across data, AI and software.
+            See work from Data Fellows, community collaborations and individual contributors across data, AI and software. Each project page explains who made it and where it stands.
           </p>
         </div>
       </section>
@@ -74,10 +74,10 @@ const TechnologyPage = () => (
               id="technology-areas-heading"
               className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
             >
-              Areas represented in the work
+              Areas of work
             </h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              The examples below include different origins and stages. Their presence does not imply an active product, client engagement or guaranteed participation opportunity.
+              Some projects are complete, some are ongoing and some are historical or independent work. Check each project page for its status and contributors.
             </p>
           </div>
           <div className="divide-y divide-border border-y border-border">
@@ -117,10 +117,10 @@ const TechnologyPage = () => (
         <div className="mx-auto grid max-w-6xl gap-8 border border-border bg-background px-6 py-8 md:grid-cols-2 lg:px-10">
           <div className="space-y-3">
             <h2 id="technology-context-heading" className="font-display text-xl font-semibold text-foreground">
-              Clear project context
+              Project history
             </h2>
             <p className="text-sm leading-6 text-muted-foreground">
-              Project pages identify whether work came from Data Fellows, a collaboration, an independent contributor or research. Historical products such as Inscend and BizPilot AI are documented as concluded explorations.
+              Project pages show who did the work and what happened. Inscend and BizPilot AI are included as past product explorations.
             </p>
             <Link href="/work" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
               Browse all projects
@@ -129,10 +129,10 @@ const TechnologyPage = () => (
           </div>
           <div className="space-y-3 border-t border-border pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
             <h2 className="font-display text-xl font-semibold text-foreground">
-              Build with the community
+              Work with Data Fellows
             </h2>
             <p className="text-sm leading-6 text-muted-foreground">
-              Members are not treated as an on-demand workforce. Any future project participation is discussed, agreed and compensated where appropriate.
+              Have a project to discuss? Visit the Studio to learn about our work and book a session.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link href="/community" className="inline-flex items-center gap-2 border border-foreground px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-foreground hover:text-background">
@@ -140,6 +140,9 @@ const TechnologyPage = () => (
               </Link>
               <Link href="/partners" className="inline-flex items-center gap-2 border border-border px-5 py-2.5 text-sm font-semibold text-foreground hover:border-foreground">
                 Collaboration opportunities
+              </Link>
+              <Link href="/studio" className="inline-flex items-center gap-2 border border-border px-5 py-2.5 text-sm font-semibold text-foreground hover:border-foreground">
+                Data Fellows Studio
               </Link>
             </div>
           </div>

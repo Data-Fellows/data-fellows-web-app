@@ -98,8 +98,7 @@ const TeamSection = () => {
             Meet the people who keep Data Fellows moving.
           </h2>
           <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-            Every leader in our ecosystem is grounded in community. They code,
-            teach, and build side by side with Fellows.
+            Meet the people who lead, advise and contribute to Data Fellows.
           </p>
           <Link
             href="/people"

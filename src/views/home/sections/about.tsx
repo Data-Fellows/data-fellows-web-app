@@ -76,7 +76,7 @@ const About = () => {
               Data Fellows is a global, community-led technology organization. What began as a community of people learning data together has grown into a network of 1,600+ professionals across 33+ countries.
             </p>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Our members learn, grow professionally, exchange knowledge and explore ideas together. The community has also supported technical collaboration and product experiments. Data Fellows continues to develop technology across data, AI and software while keeping the community at the centre of its identity.
+              Members take courses, share what they know, support one another and work on projects. Data Fellows also builds technology across data, AI and software.
             </p>
             <div className="border border-border bg-background px-5 py-4 text-sm text-muted-foreground">
               <strong className="block font-display text-foreground">
@@ -89,7 +89,7 @@ const About = () => {
               Why we exist
             </h3>
             <p className="text-sm text-muted-foreground">
-              We believe communities can play a significant role in how people learn, build technology and solve problems together. Data Fellows creates an environment where people can grow professionally, exchange knowledge, explore ideas and contribute to meaningful technological work.
+              People learn by asking questions, sharing what they know and working together. That belief has shaped Data Fellows since it began.
             </p>
             <div className="flex items-center gap-3 text-sm font-semibold text-foreground">
               <FiArrowRight className="h-4 w-4" />

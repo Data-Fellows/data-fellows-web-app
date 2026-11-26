@@ -33,7 +33,7 @@ const WorkPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="Work | Data Fellows"
-        description="Explore Data Fellows product experiments, community initiatives, independent engineering projects, research and open-source contributions across data, AI and software."
+        description="Explore software, data and AI projects from Data Fellows, community collaborations and independent contributors."
         path="/work"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -46,10 +46,10 @@ const WorkPage = () => {
               id="work-hero-heading"
               className="mx-auto mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              Technology takes many forms here.
+              Projects, products and technical work.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              This archive brings together Data Fellows product explorations, community initiatives, independent projects, research and open-source contributions. Each entry identifies who built it and the context in which it was created.
+              Browse work from Data Fellows, community collaborations and individual contributors. Each entry explains who made it and the context behind it.
             </p>
           </div>
         </section>
@@ -64,7 +64,7 @@ const WorkPage = () => {
                 id="work-list-heading"
                 className="font-display text-2xl font-semibold tracking-tight text-foreground"
               >
-                Experiments in product development
+                Product history
               </h2>
             </div>
             <div

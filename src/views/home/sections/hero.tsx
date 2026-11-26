@@ -65,7 +65,7 @@ export const Hero = () => {
                 variants={item}
                 className="mt-5 text-lg leading-relaxed text-muted-foreground"
               >
-                A global community of professionals, learners and builders advancing data, AI and software through learning, collaboration and innovation.
+                A global community of professionals, learners and builders working across data, AI and software.
               </motion.p>
 
               <motion.div

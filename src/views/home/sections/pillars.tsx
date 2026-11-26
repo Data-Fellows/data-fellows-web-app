@@ -18,7 +18,7 @@ const pillars = [
   {
     title: "Building",
     description:
-      "Software, data systems, AI applications and experiments shaped by the skills and curiosity of our community.",
+      "People in our community develop software, data systems, AI applications and research projects.",
     links: [
       { href: "/work", label: "Explore projects" },
       { href: site.studioUrl, label: "Open the Studio", external: true },
@@ -33,7 +33,7 @@ const pillars = [
   {
     title: "Impact",
     description:
-      "Expanding access to technology learning, professional growth and meaningful contributions across the ecosystem.",
+      "Expanding access to technology learning, supporting career growth and contributing to the wider technology sector.",
     links: [{ href: "/impact", label: "See our impact" }],
   },
 ];

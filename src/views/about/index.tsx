@@ -7,27 +7,27 @@ const values = [
   {
     title: "Community",
     description:
-      "We connect people across experience levels and disciplines so they can build relationships, exchange knowledge and grow together.",
+      "People with different skills meet, share what they know and support one another.",
   },
   {
     title: "Learning",
     description:
-      "We support practical education and professional development through learning initiatives, mentorship, workshops and peer support.",
+      "Scholarships, mentorship, workshops and peer support help members keep learning.",
   },
   {
     title: "Building",
     description:
-      "Members and contributors explore software, data systems, AI applications, research and experimental products.",
+      "Members and contributors work on software, data systems, AI applications, research and products.",
   },
   {
     title: "Collaboration",
     description:
-      "We bring people and organizations together around shared interests, technical projects and meaningful problems.",
+      "We connect people and organizations around shared interests, projects and research.",
   },
   {
     title: "Impact",
     description:
-      "We work to expand access to technology learning, professional growth and innovation across the wider ecosystem.",
+      "We help more people learn technology, grow their careers and contribute to the field.",
   },
 ];
 
@@ -36,7 +36,7 @@ const AboutUs = () => {
     <LandingPageLayout>
       <PageSeo
         title="About | Data Fellows"
-        description="Learn about Data Fellows, a global community-led technology organization founded in 2022 to advance learning, collaboration and innovation across data, AI and software."
+        description="Learn how Data Fellows grew from a data learning community into a global community building across data, AI and software."
         path="/about"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
