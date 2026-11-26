@@ -104,22 +104,28 @@ const PartnersPage = () => {
               id="partner-benefits-heading"
               className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
             >
-              What a new partnership can look like
+              Areas for future collaboration
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {[
-                "Access to talent that has shipped real products and pilots.",
-                "Rapid experimentation loops with Fellows and SMEs in-market.",
-                "A warm community channel to share opportunities and insights.",
-              ].map((benefit) => (
+                "Technology education and scholarships",
+                "Mentorship and professional development",
+                "Community events and technical workshops",
+                "Research and collaborative technology projects",
+                "Open-source initiatives",
+                "Community sponsorship and ecosystem support",
+              ].map((area) => (
                 <div
-                  key={benefit}
+                  key={area}
                   className="border border-border bg-muted/40 px-4 py-4 text-sm text-muted-foreground"
                 >
-                  {benefit}
+                  {area}
                 </div>
               ))}
             </div>
+            <p className="mt-5 max-w-3xl text-sm leading-6 text-muted-foreground">
+              These are possible ways to work together, not programs or commitments already in place. Any collaboration is discussed and agreed on individually.
+            </p>
           </div>
         </section>
       </div>

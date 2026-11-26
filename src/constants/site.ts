@@ -2,7 +2,7 @@ export const SITE_URL = "https://www.datafellowsai.com";
 export const SITE_NAME = "Data Fellows";
 export const DEFAULT_OG_IMAGE = "/images/data-community-hero.jpg";
 export const DEFAULT_DESCRIPTION =
-  "Data Fellows is an independent automation studio helping organizations solve recurring operational challenges through software, data and AI.";
+  "Data Fellows is a global, community-led technology organization connecting professionals, learners and builders across data, AI and software development.";
 
 // Centralized outbound destinations and public claims, so numbers and links
 // don't drift between pages -- extend this rather than hardcoding a new
@@ -11,12 +11,11 @@ export const site = {
   name: SITE_NAME,
   url: SITE_URL,
   description: DEFAULT_DESCRIPTION,
-  foundingYear: "2022",
+  foundingYear: "2022-08",
   email: "hello@datafellowsai.com",
   partnerEmail: "partners@datafellowsai.com",
-  // Where consulting/business enquiries from the /contact form are
-  // delivered -- kept distinct from the general `email` above per the
-  // brief's explicit requirement.
+  // Existing HubSpot enquiry routing. Kept in place while the public site
+  // shifts its primary journey to community participation.
   enquiryEmail: "info@datafellowsai.com",
   communityUrl: "https://bit.ly/m/datafellows",
   inscendUrl: "https://www.producthunt.com/products/inscend",

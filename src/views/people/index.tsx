@@ -171,7 +171,7 @@ const PeoplePage = () => {
     <LandingPageLayout>
       <PageSeo
         title="People | Data Fellows"
-        description="Meet the people behind Data Fellows: the founding team, community operations, and the advisors who guide go-to-market, brand, and partnerships."
+        description="Meet Data Fellows core contributors, community operations, technical contributors and strategic advisors."
         path="/people"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -187,17 +187,13 @@ const PeoplePage = () => {
               Meet <Highlight>the people</Highlight> behind the work.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              Every person here codes, teaches, or builds alongside Fellows.
-              The stories below are specific on purpose: how each person
-              joined, what they've built, and a little of what they're like
-              outside the work. More fills in as each person signs off on
-              their full story.
+              This page introduces people who have contributed to Data Fellows across its history. Their roles and project affiliations are shown in context; the wider community is not an employee or on-demand technical workforce.
             </p>
             <Link
-              href="/contact"
+              href="/community"
               className="mx-auto mt-6 inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
             >
-              Work With Us
+              Explore the community
               <FiArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -274,11 +270,11 @@ const PeoplePage = () => {
                 id="people-cta-heading"
                 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl"
               >
-                Want to build alongside this team?
+                Want to build alongside this community?
               </h2>
               <p className="text-sm text-navy-deep-foreground/70">
-                Join the community to meet people, or reach out directly if
-                you have a problem worth solving together.
+                Join the community to meet people and discover current
+                activities, projects and collaboration opportunities.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -289,10 +285,10 @@ const PeoplePage = () => {
                 Join the Community
               </Link>
               <Link
-                href="/contact"
+                href="/partners"
                 className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
               >
-                Work With Us
+                Explore Collaboration
                 <FiArrowUpRight className="h-4 w-4" />
               </Link>
             </div>

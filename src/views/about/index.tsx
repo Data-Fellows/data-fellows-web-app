@@ -5,19 +5,29 @@ import TeamSection from "./sections/team";
 
 const values = [
   {
-    title: "Learn in public",
+    title: "Community",
     description:
-      "We share works in progress, reflections, and data discoveries so others can build faster.",
+      "We connect people across experience levels and disciplines so they can build relationships, exchange knowledge and grow together.",
   },
   {
-    title: "Prototype with purpose",
+    title: "Learning",
     description:
-      "Every experiment, from mentorship to product pilots, solves a challenge real people face.",
+      "We support practical education and professional development through learning initiatives, mentorship, workshops and peer support.",
   },
   {
-    title: "Keep it human",
+    title: "Building",
     description:
-      "We translate technical ideas into everyday language so anyone can act on data.",
+      "Members and contributors explore software, data systems, AI applications, research and experimental products.",
+  },
+  {
+    title: "Collaboration",
+    description:
+      "We bring people and organizations together around shared interests, technical projects and meaningful problems.",
+  },
+  {
+    title: "Impact",
+    description:
+      "We work to expand access to technology learning, professional growth and innovation across the wider ecosystem.",
   },
 ];
 
@@ -26,7 +36,7 @@ const AboutUs = () => {
     <LandingPageLayout>
       <PageSeo
         title="About | Data Fellows"
-        description="Data Fellows is an independent automation studio that grew out of a community of data learners and builders. Here's who we are and what we value."
+        description="Learn about Data Fellows, a global community-led technology organization founded in 2022 to advance learning, collaboration and innovation across data, AI and software."
         path="/about"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -41,7 +51,7 @@ const AboutUs = () => {
               >
                 How we work together
               </h2>
-              <div className="grid gap-4 md:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {values.map(({ title, description }) => (
                   <div
                     key={title}

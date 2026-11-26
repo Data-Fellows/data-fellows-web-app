@@ -18,13 +18,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // /our-community renders the exact same content as /community -- two
-  // indexable URLs for identical content splits SEO ranking signals, so
-  // consolidate onto the canonical path. The old /services -> /products
-  // redirect is gone now that /services is a real "What We Do" page in
-  // its own right. /products is now /work, per the handoff's IA --
-  // redirected rather than kept as a second live page so the two don't
-  // split SEO signal the same way /our-community did.
+  // Keep legacy public entry points consolidated on their canonical routes.
   async redirects() {
     return [
       { source: "/our-community", destination: "/community", permanent: true },

@@ -1,19 +1,10 @@
-import Highlight from "@/components/custom/highlight";
-import { formatCompactStat, impactStats } from "@/constants/site";
+import { impactStats, site } from "@/constants/site";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-// Short labels for the tight hero card -- numbers are still derived from
-// impactStats (the canonical source) so they can't drift from the fuller
-// stat band shown later on the page.
-const stats = [
-  { label: "Members", value: formatCompactStat(impactStats[0]) },
-  { label: "Countries", value: formatCompactStat(impactStats[1]) },
-  { label: "Projects", value: formatCompactStat(impactStats[2]) },
-];
+const stats = impactStats.slice(0, 2);
 
 const container: Variants = {
   hidden: {},
@@ -26,7 +17,6 @@ const item: Variants = {
 };
 
 export const Hero = () => {
-  const router = useRouter();
   // Default to the SSR-safe "motion allowed" behavior and only switch to
   // the reduced-motion behavior after mount -- useReducedMotion() can
   // resolve synchronously to the real device preference on the client's
@@ -60,7 +50,7 @@ export const Hero = () => {
                 variants={item}
                 className="block font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground"
               >
-                Independent automation studio
+                A global community, building together since August 2022
               </motion.span>
 
               <motion.h1
@@ -68,34 +58,34 @@ export const Hero = () => {
                 id="hero-heading"
                 className="mt-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.08]"
               >
-                We solve <Highlight>recurring operational problems</Highlight> with software, data and AI.
+                Building technology through community.
               </motion.h1>
 
               <motion.p
                 variants={item}
                 className="mt-5 text-lg leading-relaxed text-muted-foreground"
               >
-                Data Fellows designs, builds, integrates and manages the
-                automation systems complex organizations run on, wherever
-                that kind of operational problem shows up.
+                A global community of professionals, learners and builders advancing data, AI and software through learning, collaboration and innovation.
               </motion.p>
 
               <motion.div
                 variants={item}
                 className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4"
               >
-                <button
-                  onClick={() => router.push("/book")}
-                  className="inline-flex items-center justify-center bg-foreground px-6 py-3 text-sm font-semibold text-background hover:bg-foreground/90"
+                <Link
+                  href={site.communityUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
                 >
-                  Book a Discovery Call
-                </button>
+                  Join the Community
+                </Link>
 
                 <Link
-                  href="/services"
+                  href="/work"
                   className="inline-flex items-center justify-center border border-foreground px-6 py-3 text-sm font-medium text-foreground hover:bg-foreground hover:text-background"
                 >
-                  Explore Our Services
+                  Explore Our Work
                 </Link>
               </motion.div>
 
@@ -103,13 +93,13 @@ export const Hero = () => {
                 variants={item}
                 className="mt-10 flex flex-wrap gap-6 border-t border-border pt-6"
               >
-                {stats.map((s) => (
-                  <div key={s.label} className="flex items-baseline gap-2">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="flex items-baseline gap-2">
                     <span className="font-display text-2xl font-semibold text-foreground">
-                      {s.value}
+                      {stat.value.toLocaleString()}{stat.suffix}
                     </span>
                     <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                      {s.label}
+                      {stat.label}
                     </span>
                   </div>
                 ))}
@@ -143,8 +133,7 @@ export const Hero = () => {
                     A global community of learners and builders
                   </p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Fellows learn together, test ideas, and ship real pilots
-                    across the ecosystem.
+                    People learn, develop professionally, and build technology together.
                   </p>
 
                   <div className="mt-4 flex items-center justify-between">
@@ -162,12 +151,14 @@ export const Hero = () => {
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => router.push("/contact")}
+                    <Link
+                      href={site.communityUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="bg-brand-blue-fill px-3 py-2 text-xs font-semibold text-brand-blue-foreground hover:bg-brand-blue-fill/90"
                     >
-                      Get Involved
-                    </button>
+                      Join us
+                    </Link>
                   </div>
                 </div>
               </div>

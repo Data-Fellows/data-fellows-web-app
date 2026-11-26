@@ -63,7 +63,7 @@ export const products: Product[] = [
     title: "Connecting data professionals with real opportunities.",
     goal: "Help data professionals get discovered for real opportunities, and give businesses a faster way to find vetted data talent for a scoped problem.",
     description:
-      "BizPilot AI grew from our work helping data professionals build experience and connect with meaningful opportunities. The platform explored how professionals could showcase their skills, discover projects and opportunities, and engage with businesses looking for data expertise.",
+      "BizPilot AI was a historical Data Fellows product exploration. It grew from work helping data professionals build experience and connect with meaningful opportunities, and explored how professionals could showcase their skills, discover projects and opportunities, and engage with businesses looking for data expertise. It is no longer active.",
     ctaLabel: "View our Product Hunt launch",
     ctaHref: site.productHuntUrl,
     slides: [
@@ -107,7 +107,7 @@ export const products: Product[] = [
     title: "AI-powered product and operating intelligence for ecommerce founders.",
     goal: "Give an independent ecommerce founder one place to see what needs attention each morning, with AI doing the investigation and the founder keeping the final call.",
     description:
-      "Inscend helped independent ecommerce founders investigate what affects their products, identify improvements, and prepare actions across their business. It's a past Data Fellows product initiative that explored how AI could reduce the operational work involved in running an online store.",
+      "Inscend was explored from November 2025 to November 2026 as a Data Fellows product initiative for independent ecommerce founders. It explored how AI could help founders investigate product signals, identify improvements and prepare actions. The product is concluded and is no longer active.",
     ctaLabel: "View our Product Hunt launch",
     ctaHref: site.inscendUrl,
     slides: [

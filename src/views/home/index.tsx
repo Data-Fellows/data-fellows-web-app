@@ -5,35 +5,31 @@ import React from "react";
 import Community from "./sections/community";
 import Cta from "./sections/cta";
 import Hero from "./sections/hero";
-import HowItWorks from "./sections/how-it-works";
 import Impact from "./sections/impact";
 import Partners from "./sections/partners";
-import Products from "./sections/products";
+import Pillars from "./sections/pillars";
 import Resources from "./sections/resources";
 import SelectedWork from "./sections/selected-work";
-import StudioCredibility from "./sections/studio-credibility";
 import WhoWeAre from "./sections/who-we-are";
 
 const Home: React.FC = () => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Data Fellows | Independent Automation Studio"
-        description="Data Fellows is an independent automation studio helping organizations solve recurring operational challenges through software, data and AI."
+        title="Data Fellows | Building Technology Through Community"
+        description="Data Fellows is a global, community-led technology organization connecting professionals, learners and builders across data, AI and software development."
         path="/"
       />
       <ImpactReportAnnouncement />
       <div className="space-y-24 md:space-y-28">
         <Hero />
-        <StudioCredibility />
+        <Pillars />
         <WhoWeAre />
-        <Impact />
-        <SelectedWork />
-        <Products />
         <Community />
+        <SelectedWork />
+        <Impact />
         <Partners />
         <Resources />
-        <HowItWorks />
         <Cta />
       </div>
     </LandingPageLayout>

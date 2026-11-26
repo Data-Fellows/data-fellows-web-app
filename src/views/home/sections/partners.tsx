@@ -1,4 +1,5 @@
 import { partnerCategories } from "@/constants/partners";
+import Link from "next/link";
 import { FiGlobe, FiGrid, FiHeart } from "react-icons/fi";
 import { PartnerLogoCarousel } from "../../shared/partner-logo-carousel";
 
@@ -65,6 +66,14 @@ Partners
               );
             }
           )}
+        </div>
+        <div className="text-center">
+          <Link
+            href="/partners"
+            className="inline-flex items-center justify-center border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
+          >
+            Explore collaboration opportunities
+          </Link>
         </div>
       </div>
     </section>
