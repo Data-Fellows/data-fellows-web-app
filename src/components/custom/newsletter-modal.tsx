@@ -1,4 +1,5 @@
 import { MouseEvent, useEffect, useState } from "react";
+import Link from "next/link";
 import { FiX } from "react-icons/fi";
 
 const MAILERLITE_SHARE_URL =
@@ -90,6 +91,16 @@ const NewsletterModal = ({ isOpen, onClose }: NewsletterModalProps) => {
             onLoad={() => setIsLoading(false)}
           />
         </div>
+        <p className="border-t border-border px-6 py-3 text-xs leading-5 text-muted-foreground">
+          This signup form is hosted by MailerLite. Read the Data Fellows{" "}
+          <Link href="/privacy" className="font-medium text-foreground underline underline-offset-4">
+            Privacy Notice
+          </Link>{" "}
+          and{" "}
+          <a href="https://www.mailerlite.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="font-medium text-foreground underline underline-offset-4">
+            MailerLite&apos;s Privacy Policy
+          </a>.
+        </p>
       </div>
     </div>
   );

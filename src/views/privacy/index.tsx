@@ -1,319 +1,151 @@
+import LegalSection from "@/components/custom/legal-section";
 import PageSeo from "@/components/seo/page-seo";
 import { site } from "@/constants/site";
 import LandingPageLayout from "@/layouts/landing-page";
-import { easeOut, motion } from "framer-motion";
 import Link from "next/link";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: easeOut },
-  },
-};
-
-// Bump by hand when the text below changes -- see the same note on
-// src/views/terms/index.tsx.
-const LAST_UPDATED = "November 24, 2026";
+const LAST_UPDATED = "November 26, 2026";
 
 export default function PrivacyPolicy() {
   return (
     <>
       <PageSeo
-        title="Privacy Policy | Data Fellows"
-        description="How Data Fellows collects, uses and protects information submitted through its website."
+        title="Privacy Notice | Data Fellows"
+        description="What Data Fellows collects through its website and activity tools, why it is used and how to make a privacy request."
         path="/privacy"
       />
-
       <LandingPageLayout>
-        <div className="min-h-screen bg-background">
-          <main className="pt-20">
-            <section className="relative py-16 px-4">
-              <div className="max-w-4xl mx-auto">
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeUp}
-                  className="text-center mb-12"
-                >
-                  <h1 className="font-display text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-6">
-                    Privacy Policy
-                  </h1>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    This describes how the Data Fellows website handles
-                    information you share with it.
-                  </p>
-                  <div className="font-mono text-xs uppercase tracking-wide text-muted-foreground mt-4">
-                    Last updated: {LAST_UPDATED}
-                  </div>
-                </motion.div>
-              </div>
-            </section>
+        <main className="min-h-screen bg-background pt-28 md:pt-32">
+          <section className="px-4 py-12 sm:px-6">
+            <div className="mx-auto max-w-4xl space-y-4 text-center">
+              <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                Privacy Notice
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+                Here is what happens to information you share with Data Fellows through this website.
+              </p>
+              <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                Last updated: {LAST_UPDATED}
+              </p>
+            </div>
+          </section>
 
-            <section className="py-16 px-4">
-              <div className="max-w-4xl mx-auto">
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeUp}
-                  className="prose prose-lg dark:prose-invert max-w-none"
-                >
-                  <div className="space-y-8">
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        1. Scope
-                      </h2>
-                      <p className="text-muted-foreground">
-                        This policy covers the public Data Fellows website
-                        (the &quot;Site&quot;) at {site.url} -- what we
-                        collect when you browse it or submit the contact
-                        form, and what we do with it. A paid client
-                        engagement is covered by that engagement&apos;s own
-                        signed agreement, which takes precedence over this
-                        page for anything it addresses.
-                      </p>
-                    </div>
+          <section className="px-4 py-10 sm:px-6">
+            <div className="mx-auto max-w-4xl space-y-8">
+              <LegalSection title="1. Who is responsible">
+                <p>
+                  Data Fellows Inc. is responsible for personal information collected through the public website at {site.url} and the public activity forms described below. This notice does not cover third-party websites or the separate Studio workspace at studio.datafellowsai.com. Review any privacy notice shown by those services before submitting information there.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        2. Information We Collect
-                      </h2>
-                      <div className="space-y-3 text-muted-foreground">
-                        <p>
-                          2.1. <strong className="text-foreground">
-                            Contact form submissions.
-                          </strong>{" "}
-                          The form on our{" "}
-                          <Link
-                            href="/contact"
-                            className="font-medium text-foreground underline underline-offset-4"
-                          >
-                            Contact page
-                          </Link>{" "}
-                          is provided directly by HubSpot. When you submit
-                          it, the information you provide (your name, work
-                          email, company, enquiry type, description of the
-                          problem, and anything optional you fill in) is
-                          sent to and stored by HubSpot, not in a database
-                          we operate ourselves, so our team can review and
-                          respond to it. HubSpot's own privacy policy
-                          governs that processing.
-                        </p>
-                        <p>
-                          2.2. <strong className="text-foreground">
-                            Booking a call.
-                          </strong>{" "}
-                          Our{" "}
-                          <Link
-                            href="/book"
-                            className="font-medium text-foreground underline underline-offset-4"
-                          >
-                            discovery-call scheduler
-                          </Link>{" "}
-                          is also provided by HubSpot. Picking a time shares
-                          whatever details you enter (name, email, and the
-                          time you select) with HubSpot the same way.
-                        </p>
-                        <p>
-                          2.3. <strong className="text-foreground">
-                            Newsletter signup.
-                          </strong>{" "}
-                          Our newsletter signup form is hosted directly by
-                          our third-party email provider (MailerLite).
-                          Whatever you submit there goes to MailerLite under
-                          their own privacy practices; we don&apos;t
-                          separately collect or store it ourselves.
-                        </p>
-                        <p>
-                          2.4. <strong className="text-foreground">
-                            Site analytics.
-                          </strong>{" "}
-                          When configured, we use Google Analytics (GA4) to
-                          understand aggregate traffic and which pages and
-                          links get used -- for example, which navigation
-                          links or call-to-action buttons get clicked, or
-                          that an Insights article was opened. These
-                          analytics events never include anything you type
-                          into a form -- only categorical information like a
-                          link's label or destination. Analytics collects
-                          nothing until that integration is configured.
-                        </p>
-                        <p>
-                          2.5. <strong className="text-foreground">
-                            Staff accounts.
-                          </strong>{" "}
-                          Data Fellows staff use authenticated accounts to
-                          publish content on the Site. This section
-                          doesn&apos;t apply to visitors of the public Site.
-                        </p>
-                      </div>
-                    </div>
+              <LegalSection title="2. Information you give us">
+                <p>
+                  <strong className="text-foreground">Contact and booking.</strong> The contact form and session scheduler are provided by HubSpot. Information you enter, such as your name, email address, meeting choice and message, is sent to HubSpot so Data Fellows can respond or prepare for the meeting.
+                </p>
+                <p>
+                  <strong className="text-foreground">Events and sessions.</strong> When you register through a form on this website, we collect your name and email address and store the registration in Supabase for event administration and updates. Some activities link to an external registration service; information submitted there is handled under that service&apos;s privacy notice.
+                </p>
+                <p>
+                  <strong className="text-foreground">Learning challenges.</strong> A challenge check-in collects your name, email address, the day you completed and an optional learning note. We store these details in Supabase to track progress and provide participation certificates. Your name and optional note appear on the challenge&apos;s public wall. Your email address is not shown on that wall.
+                </p>
+                <p>
+                  The challenge page saves the name and email address you enter in local storage in your browser so it can fill them in next time. This does not create a password-protected member account. You can remove the saved details by clearing site data for this website in your browser.
+                </p>
+                <p>
+                  <strong className="text-foreground">Newsletter.</strong> The newsletter form is hosted by MailerLite. Details you submit go to MailerLite and may also be available to Data Fellows through its newsletter account so we can manage subscriptions and send the newsletter.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        3. How We Use Information
-                      </h2>
-                      <div className="space-y-3 text-muted-foreground">
-                        <p>
-                          3.1. To review and respond to your enquiry or
-                          scheduled call.
-                        </p>
-                        <p>
-                          3.2. To protect the Site from abuse (HubSpot's own
-                          spam and bot protections on the contact form and
-                          scheduler).
-                        </p>
-                        <p>
-                          3.3. To understand, in aggregate, how the Site is
-                          used, so we can improve it.
-                        </p>
-                        <p>
-                          3.4. We do not sell your personal information, and
-                          we do not use it for advertising.
-                        </p>
-                      </div>
-                    </div>
+              <LegalSection title="3. Information collected when you visit">
+                <p>
+                  Our website hosting and security services may process technical information such as your IP address, browser and device details, requested pages, timestamps and error or security logs to deliver and protect the website.
+                </p>
+                <p>
+                  The site loads MailerLite&apos;s universal tracking script to support newsletter features and measure site activity. Google Analytics is enabled only when its measurement ID is configured. When enabled, it receives page-view and site-use information. Our custom analytics events record navigation, button and article clicks; they are not designed to include names, email addresses or text entered into forms.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        4. Who We Share It With
-                      </h2>
-                      <div className="space-y-3 text-muted-foreground">
-                        <p>
-                          4.1. Service providers who process it on our
-                          behalf: HubSpot for the contact form and
-                          discovery-call scheduler, MailerLite for the
-                          newsletter, and Google Analytics when configured.
-                        </p>
-                        <p>
-                          4.2. We may disclose information if required by
-                          law, or to protect the rights, safety, or
-                          property of Data Fellows or others.
-                        </p>
-                        <p>
-                          4.3. We don&apos;t otherwise share information you
-                          submit with third parties.
-                        </p>
-                      </div>
-                    </div>
+              <LegalSection title="4. Cookies and browser storage">
+                <p>
+                  The website uses browser storage to remember the name and email address entered for learning challenge check-ins. MailerLite, HubSpot and Google Analytics may use cookies or similar technologies for forms, measurement or site activity. Google Analytics loads only when it is enabled for the site.
+                </p>
+                <p>
+                  Your browser lets you clear stored information and manage cookies. Blocking cookies or scripts may affect embedded forms and other features. The website currently has no central cookie-preference panel, so browser settings are the available way to manage cookies here.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        5. How We Protect It
-                      </h2>
-                      <div className="space-y-3 text-muted-foreground">
-                        <p>
-                          5.1. Contact form and scheduler submissions are
-                          handled directly by HubSpot, under HubSpot&apos;s
-                          own security practices -- we don&apos;t operate a
-                          separate database of submissions for these.
-                        </p>
-                        <p>
-                          5.2. The Site is served over HTTPS.
-                        </p>
-                        <p>
-                          5.3. We don&apos;t hold any specific security or
-                          privacy certification today, and don&apos;t claim
-                          to.
-                        </p>
-                      </div>
-                    </div>
+              <LegalSection title="5. How we use information">
+                <p>
+                  We use information to respond to messages and booking requests, manage activity registrations, record challenge progress, issue certificates, display challenge contributions, send a newsletter when you subscribe, protect the site and understand how it is used.
+                </p>
+                <p>
+                  We do not sell personal information or use it to target advertising.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        6. Data Retention
-                      </h2>
-                      <p className="text-muted-foreground">
-                        Contact form and scheduler submissions are retained
-                        by HubSpot under its own retention practices, since
-                        we don&apos;t store a separate copy ourselves.
-                        Newsletter signups are likewise retained by
-                        MailerLite.
-                      </p>
-                    </div>
+              <LegalSection title="6. Who helps us process it">
+                <p>
+                  We use service providers to operate the website and its features: <a className="font-medium text-foreground underline underline-offset-4" href="https://vercel.com/legal/privacy-notice" target="_blank" rel="noopener noreferrer">Vercel</a> for hosting, <a className="font-medium text-foreground underline underline-offset-4" href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase</a> for event and challenge records, <a className="font-medium text-foreground underline underline-offset-4" href="https://legal.hubspot.com/privacy-policy" target="_blank" rel="noopener noreferrer">HubSpot</a> for contact forms and meeting bookings, <a className="font-medium text-foreground underline underline-offset-4" href="https://www.mailerlite.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">MailerLite</a> for newsletter features, and <a className="font-medium text-foreground underline underline-offset-4" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Analytics</a> when enabled. Their privacy notices explain their own practices.
+                </p>
+                <p>
+                  We may also disclose information when required by law or when reasonably necessary to protect people, Data Fellows or our systems. We do not otherwise share information for unrelated third-party marketing.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        7. Cookies
-                      </h2>
-                      <p className="text-muted-foreground">
-                        When Google Analytics is configured, it sets
-                        cookies to distinguish visitors and sessions. The
-                        Site does not currently show a cookie-consent
-                        banner before these are set; depending on where a
-                        visitor is located, that may need to change before
-                        analytics is enabled in production. We flag this
-                        rather than claim a consent mechanism that
-                        doesn&apos;t exist.
-                      </p>
-                    </div>
+              <LegalSection title="7. Where information is processed">
+                <p>
+                  Our service providers may store or process information outside Ontario or Canada, including in countries where they or their service providers operate. Privacy laws in those locations may differ from the laws where you live.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        8. Your Choices
-                      </h2>
-                      <div className="space-y-3 text-muted-foreground">
-                        <p>
-                          8.1. You can ask us what information we hold about
-                          you, or ask us to delete a contact-form or
-                          scheduler submission you made, by emailing us
-                          using the details below -- we&apos;ll action that
-                          directly in HubSpot.
-                        </p>
-                        <p>
-                          8.2. You can unsubscribe from our newsletter at
-                          any time using the link in any email, which is
-                          handled directly by MailerLite.
-                        </p>
-                      </div>
-                    </div>
+              <LegalSection title="8. How long we keep it">
+                <p>
+                  We keep information for as long as it is needed to respond to you, run the activity you joined, maintain participation records, protect the website, meet legal obligations or resolve disputes. Retention periods can differ by record and provider. You may ask us to review or delete information, subject to legal and operational recordkeeping requirements.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        9. Children&apos;s Privacy
-                      </h2>
-                      <p className="text-muted-foreground">
-                        The Site is intended for business use and isn&apos;t
-                        directed at children. We don&apos;t knowingly
-                        collect information from children.
-                      </p>
-                    </div>
+              <LegalSection title="9. How we protect it">
+                <p>
+                  We use administrative and technical safeguards intended to protect information from loss, misuse and unauthorized access. No website or online storage system can be guaranteed completely secure.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        10. Changes to This Policy
-                      </h2>
-                      <p className="text-muted-foreground">
-                        We may update this policy as the Site changes. The
-                        &quot;Last updated&quot; date above reflects the
-                        most recent change.
-                      </p>
-                    </div>
+              <LegalSection title="10. Your choices and privacy requests">
+                <p>
+                  You can unsubscribe from the newsletter using the link in a newsletter email. You can also ask to access, correct or delete personal information, or raise a concern about how it is handled. Email us at{" "}
+                  <a className="font-medium text-foreground underline underline-offset-4" href={`mailto:${site.email}`}>
+                    {site.email}
+                  </a>. We may ask for information to confirm your identity before responding. Your rights depend on the privacy laws that apply to you.
+                </p>
+                <p>
+                  If you submit a learning note for a public challenge wall and later want it removed, contact us using the same email address and identify the challenge and contribution.
+                </p>
+              </LegalSection>
 
-                    <div>
-                      <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-4">
-                        11. Contact
-                      </h2>
-                      <p className="text-muted-foreground">
-                        Questions about this policy, or a request about your
-                        information, can be sent to:
-                      </p>
-                      <div className="mt-4 p-4 bg-muted border border-border">
-                        <p className="text-foreground font-medium">
-                          Data Fellows
-                        </p>
-                        <p className="text-muted-foreground">
-                          Email: {site.email}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </section>
-          </main>
-        </div>
+              <LegalSection title="11. Young people">
+                <p>
+                  Data Fellows activities may be open to learners at different stages. Any age-specific participation details will be provided with the activity. If you are a parent or guardian with a concern about information submitted by a young person, contact us.
+                </p>
+              </LegalSection>
+
+              <LegalSection title="12. Changes and contact">
+                <p>
+                  We may update this notice when our website or information practices change. The date above shows when it was last revised.
+                </p>
+                <p>
+                  For a privacy question or request, contact Data Fellows Inc. at{" "}
+                  <a className="font-medium text-foreground underline underline-offset-4" href={`mailto:${site.email}`}>
+                    {site.email}
+                  </a>. See our{" "}
+                  <Link href="/terms" className="font-medium text-foreground underline underline-offset-4">
+                    Website Terms
+                  </Link>{" "}
+                  for rules about using the site.
+                </p>
+              </LegalSection>
+            </div>
+          </section>
+        </main>
       </LandingPageLayout>
     </>
   );

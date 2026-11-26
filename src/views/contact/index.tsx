@@ -107,6 +107,12 @@ const ContactPage = () => {
                 region={hubspot.formRegion}
                 fallbackEmail={site.enquiryEmail}
               />
+              <p className="text-xs leading-5 text-muted-foreground">
+                The form is provided by HubSpot. Information you submit is shared with HubSpot and Data Fellows so we can respond. See our{" "}
+                <Link href="/privacy" className="font-medium text-foreground underline underline-offset-4">
+                  Privacy Notice
+                </Link>.
+              </p>
             </div>
           </div>
         </section>
