@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { MouseEvent, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 import { FiCheckCircle, FiX } from "react-icons/fi";
 import { z } from "zod";
 
@@ -165,6 +166,13 @@ const SessionRegisterModal = ({ session, onClose }: SessionRegisterModalProps) =
                 <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>
               ) : null}
             </div>
+
+            <p className="text-xs leading-5 text-muted-foreground">
+              We use your name and email to manage this registration. Read our{" "}
+              <Link href="/privacy" className="font-medium text-foreground underline underline-offset-4">
+                Privacy Notice
+              </Link>.
+            </p>
 
             {mutation.isError ? (
               <p className="text-sm text-destructive">{(mutation.error as Error).message}</p>

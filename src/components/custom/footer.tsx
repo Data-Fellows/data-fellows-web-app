@@ -159,10 +159,10 @@ export const Footer = () => {
           <span>&copy; {year} Data Fellows Inc. All rights reserved.</span>
           <div className="flex items-center gap-4">
             <Link href="/terms" className="transition hover:text-foreground">
-              Terms
+              Website Terms
             </Link>
             <Link href="/privacy" className="transition hover:text-foreground">
-              Privacy
+              Privacy Notice
             </Link>
             <span className="text-foreground">Built by Data Fellows Inc.</span>
           </div>

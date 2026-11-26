@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiCheckCircle, FiClock } from "react-icons/fi";
+import Link from "next/link";
 import { z } from "zod";
 import { useMemberIdentity } from "../hooks/use-member-identity";
 
@@ -144,6 +145,13 @@ const CheckInTab = ({ challenge }: { challenge: ChallengeWithDays }) => {
           Log today&apos;s progress and tell the cohort what you learned.
         </p>
       </div>
+
+      <p className="border border-border bg-muted/40 px-4 py-3 text-xs leading-5 text-muted-foreground">
+        Your name and any note you leave will appear on this challenge&apos;s public wall. Your email is used to track progress and is not shown there. Please leave out private information. See our{" "}
+        <Link href="/privacy" className="font-medium text-foreground underline underline-offset-4">
+          Privacy Notice
+        </Link>.
+      </p>
 
       <input
         type="text"

@@ -2,6 +2,7 @@ import { HubSpotMeetingsEmbed } from "@/components/custom/hubspot-meetings-embed
 import PageSeo from "@/components/seo/page-seo";
 import { hubspot } from "@/constants/site";
 import LandingPageLayout from "@/layouts/landing-page";
+import Link from "next/link";
 
 const BookPage = () => {
   return (
@@ -35,6 +36,12 @@ const BookPage = () => {
               Pick a time
             </h2>
             <HubSpotMeetingsEmbed meetingUrl={hubspot.meetingsUrl} />
+            <p className="text-xs leading-5 text-muted-foreground">
+              HubSpot provides this scheduler. Booking details are shared with HubSpot and Data Fellows so we can arrange the session. See our{" "}
+              <Link href="/privacy" className="font-medium text-foreground underline underline-offset-4">
+                Privacy Notice
+              </Link>.
+            </p>
           </div>
         </section>
       </div>
