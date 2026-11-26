@@ -10,6 +10,7 @@ import Partners from "./sections/partners";
 import Pillars from "./sections/pillars";
 import Resources from "./sections/resources";
 import SelectedWork from "./sections/selected-work";
+import StudioSection from "./sections/studio";
 import WhoWeAre from "./sections/who-we-are";
 
 const Home: React.FC = () => {
@@ -27,6 +28,7 @@ const Home: React.FC = () => {
         <WhoWeAre />
         <Community />
         <SelectedWork />
+        <StudioSection />
         <Impact />
         <Partners />
         <Resources />

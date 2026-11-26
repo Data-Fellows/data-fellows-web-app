@@ -4,7 +4,7 @@
 
 - Working branch: `codex/community-led-transformation`.
 - Source reviewed: current public site and the Pages Router application in this repository.
-- No production database, deployment, main branch, or operational CRM/outbound settings were changed.
+- No production database, production deployment, main branch, or operational CRM/outbound settings were changed.
 - Existing route paths are retained. `/services` and `/approach` now explain technology development and community participation rather than commercial service packages.
 
 ## Audit findings
@@ -45,7 +45,9 @@ Typography remains Inter (body), Space Grotesk (display), and IBM Plex Mono (eye
 
 ## Updated information architecture
 
-Primary navigation: Home, Community, Programs (`/activities`), Projects (`/work`), Impact, About, Insights (`/resources`), plus the primary Join the Community CTA.
+Primary navigation: Home, Community, Programs (`/activities`), Projects (`/work`), Studio, Impact, About, Insights (`/resources`), plus Join the Community and Book a Session actions.
+
+The Studio is a dedicated page and route. It explains the Studio's role within Data Fellows, shows team professional experience (including PwC, Cohere and Andela) with a clear note that these are individual professional backgrounds rather than Data Fellows clients or sponsors, and links to `https://studio.datafellowsai.com`. Session booking and the existing HubSpot contact form are retained as routes for organizations and collaborators.
 
 Supporting routes remain available for Events/Activities, People, Partners, Contact, Careers, technical development principles, and legal information. The homepage now leads with community, then the five pillars, story, selected work, impact, partners, editorial resources, and a participation CTA.
 
@@ -58,11 +60,11 @@ The Community page describes who can join, ways to participate, and directs visi
 - Updated about and community copy to reflect the August 2022 founding and global network.
 - Updated Tobi Oladimeji's public title to “Product & Community Builder” and refreshed his bio using the supplied foundation. No other person's official title or responsibility was changed.
 - Reframed `/services` as “Technology development” and `/approach` as community learning/building principles while retaining both URLs. Automation and integrations remain visible as documented project capabilities, without presenting “automation studio” as Data Fellows' organizational identity.
-- Updated navigation, footer, homepage CTA, people, careers, contact, book, partner, activities and selected-work language to prioritize participation and collaboration.
+- Updated navigation, footer, homepage CTA, people, careers, contact, book, partner, activities and selected-work language to prioritize participation and collaboration. The header and footer keep both community joining and session booking visible.
 - Historical Inscend and BizPilot AI records remain in the project archive and are labeled concluded/inactive explorations.
 - Existing individual/member work remains distinguished from Data Fellows and collaborative work.
 
-Removed from the active page composition: service-package sales copy, commercial client journey, prominent discovery-call CTA, automation studio hero/footer position, and the homepage product carousel. The historical products and detailed archive remain accessible under Projects. Old, unreferenced service/approach constants and section source files remain in the repository for traceability; they are not used by the updated pages.
+Removed from the homepage and general company narrative: service-package sales copy, a client procurement journey, the old automation-studio hero/footer position, and the homepage product carousel. The dedicated Studio page keeps a clear route for scoped technical engagement, booking, and contact, while the historical products and detailed archive remain accessible under Projects. Old, unreferenced service/approach constants and section source files remain in the repository for traceability; they are not used by the updated pages.
 
 ## Preserved history and infrastructure
 
@@ -83,6 +85,6 @@ None beyond Tobi's requested title change. The community page groups historical 
 
 ## Verification status and outstanding items
 
-Implementation is on the separate branch and has not been merged or deployed. Build, type, lint, responsive, accessibility, forms/auth regression, link, metadata, performance and image checks are pending. Preview deployment and desktop/tablet/mobile screenshots are also pending.
+Implementation is on the separate branch and has not been merged or deployed to production. The production build and TypeScript check pass for the Studio-page revision. The branch preview requires Vercel sign-in before browser QA and desktop/tablet/mobile screenshots can be completed. Lint, responsive, accessibility, forms/auth regression, link, metadata, performance and image checks remain outstanding.
 
 Outstanding content review: reconcile the live impact-page metric values with the current source values and authoritative report/dashboard before changing metric data. Activity availability changes over time; the existing activity route/database remains the operational source. Confirm the existing community join destination and HubSpot/meeting routing in an authorized preview environment before launch; identifiers and endpoints were kept unchanged. No production changes were made.

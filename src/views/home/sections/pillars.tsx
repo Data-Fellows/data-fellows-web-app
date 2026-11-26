@@ -20,8 +20,8 @@ const pillars = [
     title: "Building",
     description:
       "Software, data systems, AI applications and experiments shaped by the skills and curiosity of our community.",
-    href: "/work",
-    link: "Explore projects",
+    href: "/studio",
+    link: "Explore the Studio",
   },
   {
     title: "Collaboration",

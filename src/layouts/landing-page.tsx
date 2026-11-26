@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/community", label: "Community" },
   { href: "/activities", label: "Programs" },
   { href: "/work", label: "Projects" },
+  { href: "/studio", label: "Studio" },
   { href: "/impact", label: "Impact" },
   { href: "/about", label: "About" },
   { href: "/resources", label: "Insights" },
@@ -69,9 +70,16 @@ function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent("cta_click", { label: "Join the Community", location: "header" })}
-            className="flex items-center gap-2 border border-brand-blue-fill bg-brand-blue-fill px-5 py-2.5 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
+            className="flex items-center gap-2 border border-brand-blue-fill bg-brand-blue-fill px-4 py-2.5 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
           >
             Join the Community
+          </Link>
+          <Link
+            href="/book"
+            onClick={() => trackEvent("cta_click", { label: "Book a Session", location: "header" })}
+            className="flex items-center gap-2 border border-border px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-foreground/50"
+          >
+            Book a Session
           </Link>
         </div>
 
@@ -134,18 +142,30 @@ function Navbar() {
             ))}
           </div>
 
-          <Link
-            href={site.communityUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              trackEvent("cta_click", { label: "Join the Community", location: "header_mobile" });
-              setIsOpen(false);
-            }}
-            className="flex w-full items-center justify-center bg-brand-blue-fill px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue-foreground"
-          >
-            Join the Community
-          </Link>
+          <div className="space-y-3">
+            <Link
+              href="/book"
+              onClick={() => {
+                trackEvent("cta_click", { label: "Book a Session", location: "header_mobile" });
+                setIsOpen(false);
+              }}
+              className="flex w-full items-center justify-center border border-background/40 px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wide text-background"
+            >
+              Book a Session
+            </Link>
+            <Link
+              href={site.communityUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackEvent("cta_click", { label: "Join the Community", location: "header_mobile" });
+                setIsOpen(false);
+              }}
+              className="flex w-full items-center justify-center bg-brand-blue-fill px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue-foreground"
+            >
+              Join the Community
+            </Link>
+          </div>
         </div>
       </div>
     </>

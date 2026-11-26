@@ -21,6 +21,7 @@ export const site = {
   inscendUrl: "https://www.producthunt.com/products/inscend",
   productHuntUrl: "https://www.producthunt.com/products/data-fellows",
   impactReportUrl: "/documents/data-fellows-impact-report-2026.pdf",
+  studioUrl: "https://studio.datafellowsai.com",
 } as const;
 
 // HubSpot portal/form/meeting IDs are not secrets -- they're the same

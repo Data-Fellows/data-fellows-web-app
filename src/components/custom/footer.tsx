@@ -13,6 +13,8 @@ const quickLinks = [
   { label: "Community", href: "/community" },
   { label: "Programs & events", href: "/activities" },
   { label: "Projects", href: "/work" },
+  { label: "Studio", href: "/studio" },
+  { label: "Book a Session", href: "/book" },
   { label: "Impact", href: "/impact" },
   { label: "About", href: "/about" },
   { label: "Insights", href: "/resources" },
@@ -103,6 +105,12 @@ export const Footer = () => {
             >
               <FiMail className="h-4 w-4" />
               Contact Us
+            </Link>
+            <Link
+              href="/book"
+              className="flex items-center gap-2 border border-border px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-foreground/40"
+            >
+              Book a Session
             </Link>
             <p className="pt-1 text-sm text-muted-foreground">{site.email}</p>
           </div>
