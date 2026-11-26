@@ -1,8 +1,7 @@
-import { communityRhythm } from "@/constants/community";
+import { site } from "@/constants/site";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { FiArrowRightCircle, FiUsers } from "react-icons/fi";
+import Link from "next/link";
+import { FiArrowRightCircle } from "react-icons/fi";
 
 const scholarshipStats = [
   { value: "900+", label: "DataCamp scholarships in 2025" },
@@ -21,9 +20,6 @@ const statAccentClasses = [
 ];
 
 const Community = () => {
-  const router = useRouter();
-  const [activeRhythm, setActiveRhythm] = useState<string | null>(null);
-
   return (
     <section
       id="community"
@@ -43,10 +39,7 @@ Community
               A community that keeps learning and building.
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              The heart of Data Fellows is its people. We partner with DataCamp,
-              Zummit Africa, and Vatebra Academy to offer quality training.
-              Members join mentorship sessions, group projects, and live events
-              that turn lessons into real experience.
+              Members take part in scholarships, workshops, peer support and community conversations. They share what they know and work on projects together.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               {scholarshipStats.map((stat, index) => {
@@ -66,58 +59,22 @@ Community
                 );
               })}
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {communityRhythm.map((item) => {
-                const isActive = activeRhythm === item.title;
-                return (
-                  <button
-                    key={item.title}
-                    type="button"
-                    aria-expanded={isActive}
-                    onClick={() =>
-                      setActiveRhythm((prev) =>
-                        prev === item.title ? null : item.title
-                      )
-                    }
-                    className={`border px-4 py-4 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
-                      isActive
-                        ? "border-foreground bg-background"
-                        : "border-border bg-background hover:border-foreground/40"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">
-                          {item.title}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {item.cadence}
-                        </p>
-                      </div>
-                      <span
-                        className={`font-mono text-xs font-semibold uppercase tracking-wide ${
-                          isActive ? "text-foreground" : "text-muted-foreground"
-                        }`}
-                      >
-                        {isActive ? "Open" : "Tap to read"}
-                      </span>
-                    </div>
-                    {isActive ? (
-                      <p className="mt-3 text-xs text-muted-foreground/90">
-                        {item.description}
-                      </p>
-                    ) : null}
-                  </button>
-                );
-              })}
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href={site.communityUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-brand-blue-fill bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
+              >
+                Join the Community
+              </Link>
+              <Link
+                href="/activities"
+                className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
+              >
+                Explore programs and events
+              </Link>
             </div>
-            <button
-              onClick={() => router.push("/community")}
-              className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
-            >
-              <FiUsers className="h-4 w-4" />
-              Join the Community
-            </button>
           </div>
 
           <div className="space-y-4 lg:col-span-6">
@@ -145,8 +102,7 @@ Community
               <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                 <FiArrowRightCircle className="h-5 w-5 text-foreground" />
                 <span>
-                  Ready to collaborate? Join the community and find a project
-                  squad today.
+                  Join a conversation, attend an event or start with a learning program.
                 </span>
               </div>
             </div>

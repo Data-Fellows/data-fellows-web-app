@@ -6,24 +6,24 @@ import { FiArrowUpRight } from "react-icons/fi";
 
 const principles = [
   {
-    title: "Senior people, direct work",
+    title: "Community at the centre",
     description:
-      "We're a small team working close to the problem, not layers of process between you and the client. If you join, you'll be doing the actual engineering, not managing a handoff.",
+      "Data Fellows brings people together to learn, develop professionally and explore technology across data, AI and software.",
   },
   {
-    title: "Real operational problems",
+    title: "Learn and build together",
     description:
-      "The work is scoping and building software, data and AI systems for organizations with genuine operational complexity.",
+      "Community activities may include learning initiatives, mentorship, workshops, technical projects and professional conversations.",
   },
   {
     title: "Grown from a community",
     description:
-      "Data Fellows started as a community of people learning data together in 2022, and that's still part of who we are. You'd be joining a studio with that history, not a cold start.",
+      "Data Fellows began in 2022 and has grown into a global community of 1,600+ professionals across 33+ countries.",
   },
   {
-    title: "Said plainly",
+    title: "Clear participation",
     description:
-      "We scope honestly with clients and we'd rather do the same with you: about the role, the stage we're at, and what to actually expect.",
+      "Community participation does not imply employment or project assignment. Opportunities and expectations are shared for each activity.",
   },
 ];
 
@@ -32,7 +32,7 @@ const CareersPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="Careers | Data Fellows"
-        description="Careers at Data Fellows: what it's like working at an independent automation studio grown from a community, and how to get in touch about open roles."
+        description="Explore Data Fellows community participation and current activity listings. No open employment roles are listed at this time."
         path="/careers"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -48,9 +48,7 @@ const CareersPage = () => {
               Build with us.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              Data Fellows is a small, senior-led studio solving recurring
-              operational problems with software, data and AI, grown out of a
-              community that's still part of how we work.
+              Data Fellows is a global, community-led technology organization. This page lists employment openings only when they have been confirmed and published.
             </p>
           </div>
         </section>
@@ -61,7 +59,7 @@ const CareersPage = () => {
               id="careers-principles-heading"
               className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
             >
-              What working here looks like.
+              How people take part.
             </h2>
             <div className="grid gap-6 md:grid-cols-2">
               {principles.map((item, index) => (
@@ -83,25 +81,22 @@ const CareersPage = () => {
         <section className="px-4 sm:px-6" aria-labelledby="careers-openings-heading">
           <div className="mx-auto max-w-6xl border border-dashed border-border bg-muted/40 px-6 py-12 text-center lg:px-12">
             <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Open Roles
+              Employment openings
             </span>
             <h2
               id="careers-openings-heading"
               className="mx-auto mt-4 max-w-2xl font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
             >
-              Nothing posted right now.
+              No open roles posted right now.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              We don't have an open role listed at the moment. If you think
-              there's a fit, as an engineer, a designer or something else,
-              tell us what you'd bring and we'll get back to you honestly
-              about whether it's a match.
+              For current community learning and participation opportunities, visit the activities page. Any employment opportunity will be posted here when available.
             </p>
             <Link
-              href="/contact"
+              href="/activities"
               className="mx-auto mt-6 inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
             >
-              Get in Touch
+              See current activities
               <FiArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -114,11 +109,10 @@ const CareersPage = () => {
                 id="careers-community-heading"
                 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl"
               >
-                Not ready to apply? Join the community first.
+                Get involved in the community.
               </h2>
               <p className="text-sm text-navy-deep-foreground/70">
-                Meet the people who work here, see what we're building, and
-                get a feel for Data Fellows before any role opens up.
+                Join a global network of people learning, building and growing together through technology.
               </p>
             </div>
             <Link

@@ -76,8 +76,7 @@ Insights
             Stories, guides, and highlights from Fellows.
           </h2>
           <p className="mx-auto max-w-2xl text-base text-muted-foreground">
-            Tap into the latest community-written spotlights plus the evergreen
-            guides and lessons powering our pilots.
+            Read community stories, practical guides and lessons across data, AI, software and professional development.
           </p>
         </div>
 
@@ -260,11 +259,10 @@ Insights
               Newsletter
             </span>
             <h3 className="text-2xl font-semibold text-foreground">
-              Join the Community & Growth operations newsletter.
+              Data Fellows newsletter.
             </h3>
             <p className="text-sm text-muted-foreground">
-              Every issue includes pilot recaps, hiring drops, and templates.
-              Subscribe to get the same notes shared during Sunday catch-ups.
+              Community stories, practical resources and notes from Data Fellows.
             </p>
             <p className="text-xs text-muted-foreground">
               Powered by MailerLite. Unsubscribe anytime.

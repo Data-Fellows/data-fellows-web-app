@@ -33,7 +33,7 @@ const WorkPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="Work | Data Fellows"
-        description="In-house products, individual professional experience, engineering demonstrations, community initiatives, and future client engagements from Data Fellows."
+        description="Explore software, data and AI projects from Data Fellows, community collaborations and independent contributors."
         path="/work"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -46,15 +46,10 @@ const WorkPage = () => {
               id="work-hero-heading"
               className="mx-auto mt-4 max-w-3xl font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              Five different kinds of work.
+              Projects, products and technical work.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              In-house products, individual professional experience,
-              engineering demonstrations, community initiatives, and
-              commercial client engagements aren't the same kind of work, so
-              we don't present them as if they were. As client engagements go
-              through a real scoping process and get permission to be shown
-              publicly, they'll be added below.
+              Browse work from Data Fellows, community collaborations and individual contributors. Each entry explains who made it and the context behind it.
             </p>
           </div>
         </section>
@@ -63,13 +58,13 @@ const WorkPage = () => {
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="space-y-2">
               <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                In-house products
+                Historical product explorations
               </span>
               <h2
                 id="work-list-heading"
                 className="font-display text-2xl font-semibold tracking-tight text-foreground"
               >
-                Our own product explorations
+                Product history
               </h2>
             </div>
             <div
@@ -151,7 +146,7 @@ const WorkPage = () => {
               <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
                 Independent projects, open-source tools and professional
                 background from across the team -- each one is a person&apos;s
-                own work, not a Data Fellows client engagement. See whose
+                own work, not automatically work owned by Data Fellows. See whose
                 professional background connects to which company on the{" "}
                 <Link href="/people" className="underline hover:text-foreground">
                   People page
@@ -203,7 +198,7 @@ const WorkPage = () => {
 
         <section className="px-4 sm:px-6" aria-labelledby="work-other-heading">
           <h2 id="work-other-heading" className="sr-only">
-            Community and client work
+            Community and collaboration
           </h2>
           <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
             <div className="space-y-3 border border-border bg-background p-6">
@@ -214,9 +209,7 @@ const WorkPage = () => {
                 What the Data Fellows community has built together
               </h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Learning sprints, mentorship circles and ecosystem pilots
-                across 1,600+ members in 33+ countries, documented in our
-                annual impact report rather than repeated here.
+                Learning initiatives, mentorship, community events and technical collaborations form part of Data Fellows&apos; history. The impact report documents these alongside the community&apos;s growth.
               </p>
               <div className="flex flex-wrap gap-x-5 gap-y-2">
                 <Link
@@ -238,16 +231,13 @@ const WorkPage = () => {
 
             <div className="space-y-3 border border-dashed border-border bg-muted/40 p-6">
               <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Commercial client engagements
+                External collaborations
               </span>
               <h2 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                None published yet
+                Attribution comes first
               </h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                We don't have a client engagement we can show publicly yet.
-                As that changes, with a real scoping process behind each one
-                and the client's permission to be named, engagements will
-                appear here rather than anywhere else on the site.
+                Projects involving organizations or community members are shown only when the relationship and permission to share are clear. This archive does not claim that individual projects were Data Fellows client work.
               </p>
             </div>
           </div>
@@ -260,18 +250,17 @@ const WorkPage = () => {
                 id="work-cta-heading"
                 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl"
               >
-                Have a similar problem?
+                Interested in building together?
               </h2>
               <p className="text-sm text-navy-deep-foreground/70">
-                Tell us what&apos;s happening and we&apos;ll tell you honestly
-                whether it&apos;s something we can help with.
+                Explore the community, projects and possible collaboration areas.
               </p>
             </div>
             <Link
-              href="/contact"
+              href="/community"
               className="inline-flex items-center gap-2 border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
             >
-              Discuss a Project
+              Get involved
               <FiArrowUpRight className="h-4 w-4" />
             </Link>
           </div>

@@ -5,19 +5,29 @@ import TeamSection from "./sections/team";
 
 const values = [
   {
-    title: "Learn in public",
+    title: "Community",
     description:
-      "We share works in progress, reflections, and data discoveries so others can build faster.",
+      "People with different skills meet, share what they know and support one another.",
   },
   {
-    title: "Prototype with purpose",
+    title: "Learning",
     description:
-      "Every experiment, from mentorship to product pilots, solves a challenge real people face.",
+      "Scholarships, mentorship, workshops and peer support help members keep learning.",
   },
   {
-    title: "Keep it human",
+    title: "Building",
     description:
-      "We translate technical ideas into everyday language so anyone can act on data.",
+      "Members and contributors work on software, data systems, AI applications, research and products.",
+  },
+  {
+    title: "Collaboration",
+    description:
+      "We connect people and organizations around shared interests, projects and research.",
+  },
+  {
+    title: "Impact",
+    description:
+      "We help more people learn technology, grow their careers and contribute to the field.",
   },
 ];
 
@@ -26,7 +36,7 @@ const AboutUs = () => {
     <LandingPageLayout>
       <PageSeo
         title="About | Data Fellows"
-        description="Data Fellows is an independent automation studio that grew out of a community of data learners and builders. Here's who we are and what we value."
+        description="Learn how Data Fellows grew from a data learning community into a global community building across data, AI and software."
         path="/about"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -41,7 +51,7 @@ const AboutUs = () => {
               >
                 How we work together
               </h2>
-              <div className="grid gap-4 md:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {values.map(({ title, description }) => (
                   <div
                     key={title}

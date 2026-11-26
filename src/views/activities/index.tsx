@@ -1,4 +1,5 @@
 import { activities, ActivityStatus } from "@/constants/activities";
+import { site } from "@/constants/site";
 import CommunityPulse from "@/components/custom/community-pulse";
 import SessionRegisterModal from "@/components/custom/session-register-modal";
 import PageSeo from "@/components/seo/page-seo";
@@ -260,8 +261,8 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
   return (
     <LandingPageLayout>
       <PageSeo
-        title="Activities | Data Fellows"
-        description="Challenges, recurring sessions, and community events at Data Fellows: join a cohort, check in daily, and track your progress."
+        title="Programs & Events | Data Fellows"
+        description="Explore current and past Data Fellows learning programs, scholarships, workshops, challenges and community events."
         path="/activities"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -272,20 +273,19 @@ const ActivitiesPage = ({ challenges, sessions }: ActivitiesPageProps) => {
           <div className="mx-auto max-w-6xl border border-border bg-muted/40 px-6 py-12 lg:px-12">
             <div className="space-y-6 text-center">
               <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Activities
+                Programs and events
               </span>
               <h1
                 id="activities-hero-heading"
                 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
-                Everything happening in the community right now.
+                Learn, connect and take part.
               </h1>
               <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
-                Challenges, events, and recurring sessions Fellows can join --
-                register below to take part.
+                Browse community learning, technical sessions, challenges and events. Each listing shows whether it is open, ongoing or concluded, with its participation details.
               </p>
               <Link
-                href="https://bit.ly/m/datafellows"
+                href={site.communityUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mx-auto inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"

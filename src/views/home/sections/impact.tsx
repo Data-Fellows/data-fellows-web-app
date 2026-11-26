@@ -20,14 +20,14 @@ Measured Impact
               id="impact-heading"
               className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              The proof is stronger than the pitch.
+              The reach of our community.
             </h2>
           </div>
           <Link
             href="/impact"
             className="inline-flex items-center gap-2 border border-foreground px-5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
           >
-            Open impact dashboard
+            Explore the impact dashboard
             <FiArrowRight className="h-4 w-4" />
           </Link>
         </div>

@@ -23,10 +23,6 @@ const quotes = [
 const stats = [
   { value: formatCompactStat(impactStats[0]), label: "Members" },
   { value: formatCompactStat(impactStats[1]), label: "Countries" },
-  {
-    value: formatCompactStat(impactStats[2]),
-    label: "Projects & business engagements",
-  },
 ];
 
 const statAccentClasses = [
@@ -46,26 +42,19 @@ const WhoWeAre = () => {
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
           <div className="space-y-6 lg:col-span-6">
             <span className="font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
-Where This Started
+            Our story
             </span>
             <h2
               id="who-we-are-heading"
               className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
             >
-              This started with a community.
+              A community of learners, now building technology together.
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Data Fellows began in 2022 with people learning data together.
-              Some of those relationships became long-term collaborations,
-              projects and a technical team.
+              Data Fellows began in August 2022 as a community of people learning data together. It has grown into a global network of 1,600+ professionals across 33+ countries.
             </p>
             <p className="text-base leading-relaxed text-muted-foreground">
-              The community still matters as we take on more difficult work.
-              Today it has grown to over {impactStats[0].value.toLocaleString()}
-              {impactStats[0].suffix} members across {impactStats[1].value}
-              {impactStats[1].suffix} countries, with {impactStats[2].value}
-              {impactStats[2].suffix} ecosystem projects and business
-              engagements along the way.
+              Along the way, members have learned together, supported one another&apos;s professional growth, collaborated on technical work and explored products and new ideas. Today, Data Fellows continues to put community at the centre while building across data, AI and software.
             </p>
             <div className="space-y-4">
               {quotes.map((item) => (
@@ -127,7 +116,7 @@ Where This Started
           </div>
         </div>
 
-        <div className="grid gap-px border border-border bg-border sm:grid-cols-3">
+        <div className="grid gap-px border border-border bg-border sm:grid-cols-2">
           {stats.map((stat, index) => {
             const accent = statAccentClasses[index % statAccentClasses.length];
             return (

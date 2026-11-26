@@ -2,8 +2,6 @@ import { site } from "@/constants/site";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  FiArrowUpRight,
-  FiCalendar,
   FiInstagram,
   FiLinkedin,
   FiMail,
@@ -12,19 +10,16 @@ import {
 } from "react-icons/fi";
 
 const quickLinks = [
-  { label: "Home", href: "/" },
-  { label: "Work", href: "/work" },
-  { label: "What We Do", href: "/services" },
-  { label: "Approach", href: "/approach" },
-  { label: "Contact", href: "/contact" },
   { label: "Community", href: "/community" },
-  { label: "Activities", href: "/activities" },
-  { label: "About", href: "/about" },
-  { label: "People", href: "/people" },
-  { label: "Careers", href: "/careers" },
-  { label: "Insights", href: "/resources" },
+  { label: "Programs & events", href: "/activities" },
+  { label: "Projects", href: "/work" },
+  { label: "Studio", href: "/studio" },
+  { label: "Book a Session", href: "/book" },
   { label: "Impact", href: "/impact" },
+  { label: "About", href: "/about" },
+  { label: "Insights", href: "/resources" },
   { label: "Partners", href: "/partners" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const partnerHighlights = [
@@ -78,9 +73,7 @@ export const Footer = () => {
             />
           </Link>
           <p className="text-sm text-muted-foreground">
-            An independent automation studio solving recurring operational
-            problems with software, data and AI, grown from a community of
-            data learners and builders that's still going strong.
+            A global community of 1,600+ people across 33+ countries, learning and building in data, AI and software.
           </p>
           <div className="flex items-center gap-3 text-foreground">
             {socialLinks.map(({ label, href, icon: Icon }) => (
@@ -99,12 +92,12 @@ export const Footer = () => {
 
           <div className="space-y-2">
             <Link
-              href="/book"
-              className="flex items-center gap-2 border border-foreground bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition hover:bg-foreground/90"
+              href={site.communityUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 border border-brand-blue-fill bg-brand-blue-fill px-4 py-2.5 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
             >
-              <FiCalendar className="h-4 w-4" />
-              Book a Discovery Call
-              <FiArrowUpRight className="ml-auto h-4 w-4" />
+              Join the Community
             </Link>
             <Link
               href="/contact"
@@ -112,6 +105,12 @@ export const Footer = () => {
             >
               <FiMail className="h-4 w-4" />
               Contact Us
+            </Link>
+            <Link
+              href="/book"
+              className="flex items-center gap-2 border border-border px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-foreground/40"
+            >
+              Book a Session
             </Link>
             <p className="pt-1 text-sm text-muted-foreground">{site.email}</p>
           </div>

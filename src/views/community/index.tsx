@@ -1,80 +1,34 @@
 import { CommunityLeadCard } from "@/components";
 import PageSeo from "@/components/seo/page-seo";
-import { communityRhythm } from "@/constants/community";
+import { site } from "@/constants/site";
 import LandingPageLayout from "@/layouts/landing-page";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import {
-  FiAward,
-  FiBookOpen,
-  FiCompass,
-  FiServer,
-  FiUsers,
-} from "react-icons/fi";
-
-type RhythmCardProps = {
-  title: string;
-  cadence: string;
-  description: string;
-};
-
-const RhythmCard = ({ title, cadence, description }: RhythmCardProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <button
-      type="button"
-      aria-expanded={isOpen}
-      onClick={() => setIsOpen((prev) => !prev)}
-      className={`border px-5 py-5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
-        isOpen
-          ? "border-foreground bg-muted/40"
-          : "border-border bg-muted/40 hover:border-foreground/40"
-      }`}
-    >
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold text-foreground">{title}</p>
-          <p className="text-xs text-muted-foreground">{cadence}</p>
-        </div>
-        <span
-          className={`font-mono text-xs font-semibold uppercase tracking-wide ${
-            isOpen ? "text-foreground" : "text-muted-foreground"
-          }`}
-        >
-          {isOpen ? "Close" : "Read"}
-        </span>
-      </div>
-      {isOpen ? (
-        <p className="mt-3 text-xs text-muted-foreground">{description}</p>
-      ) : null}
-    </button>
-  );
-};
+import { FiAward, FiBookOpen, FiCompass, FiUsers } from "react-icons/fi";
 
 const programs = [
   {
-    title: "Mentorship circles",
+    title: "Learning and scholarships",
     description:
-      "Small group coaching led by experienced Fellows to help you ship your next data project.",
-    icon: FiCompass,
-  },
-  {
-    title: "Learning sprints",
-    description:
-      "Partner-led training pathways from DataCamp Classroom, Zummit Africa, and Vatebra Academy.",
+      "DataCamp learning, scholarship opportunities and other practical ways to grow your skills. Check the current activity listings for availability.",
     icon: FiBookOpen,
   },
   {
-    title: "Products in public",
+    title: "Mentorship and professional development",
     description:
-      "Build alongside Fellows shipping their own pilot tools, the same way Inscend and other past community products got their start.",
-    icon: FiServer,
+      "Peer support, career conversations and mentorship activities that have helped members develop professionally.",
+    icon: FiCompass,
   },
   {
-    title: "Showcase nights",
+    title: "Workshops and community conversations",
     description:
-      "Celebrate Fellows shipping something new, from analytics dashboards to AI copilots.",
+      "Technical sessions, Sunday Catchups, fireside conversations and member stories. Current dates appear on the activities page.",
+    icon: FiUsers,
+  },
+  {
+    title: "Collaborative technology projects",
+    description:
+      "Explore software, data, AI and research work in the project archive. Each entry identifies its contributors and origin.",
     icon: FiAward,
   },
 ];
@@ -94,7 +48,7 @@ const communityLeadGroups: {
   {
     title: "Founding Data Science Leads",
     description:
-      "They guide experiments across AI, ML, and research-focused builds so Fellows can ship credible insights.",
+      "These contributors supported experiments across AI, machine learning and research-focused projects during earlier Data Fellows initiatives.",
     leads: [
       {
         name: "James Ogunsanya",
@@ -119,7 +73,7 @@ const communityLeadGroups: {
   {
     title: "Founding Data Analytics Leads",
     description:
-      "These Fellows turn business questions into playbooks, dashboards, and storytelling templates the community can reuse.",
+      "These contributors helped turn business questions into playbooks, dashboards and data storytelling resources for the community.",
     leads: [
       {
         name: "Tijani Ogbuade",
@@ -138,7 +92,7 @@ const communityLeadGroups: {
   {
     title: "Founding Data Engineering Leads",
     description:
-      "They keep our infrastructure, automations, and experimentation pipelines running smoothly.",
+      "These contributors supported infrastructure, automation and technical experimentation across Data Fellows initiatives.",
     leads: [
       {
         name: "Oyindamola Victor",
@@ -161,7 +115,7 @@ const CommunityPage = () => {
     <LandingPageLayout>
       <PageSeo
         title="Community | Data Fellows"
-        description="Join a global community of data fellows: recurring calls, mentorship, challenges, and real support as you build your data and AI skills."
+        description="Join Data Fellows, a global community of professionals, learners and builders who develop skills, collaborate and explore technology together."
         path="/community"
       />
       <div className="space-y-20 pt-28 md:space-y-24 md:pt-32">
@@ -173,18 +127,15 @@ const CommunityPage = () => {
                   The Data Fellows Community
                 </span>
                 <h1
-                  id="community-hero-heading"
                   className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
                 >
-                  Find people who build with data, and cheer you on.
+                  Find people to learn, build and grow with.
                 </h1>
                 <p className="text-base leading-relaxed text-muted-foreground">
-                  Whether you are a student experimenting, a professional
-                  levelling up, or a founder launching your first product,
-                  you&apos;ll meet people who share what they learn in public.
+                  Data Fellows welcomes aspiring and experienced professionals across data, AI, software, research and product development. Members share knowledge, learn together and explore ways to contribute.
                 </p>
                 <Link
-                  href="https://bit.ly/m/datafellows"
+                  href={site.communityUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 border border-foreground bg-foreground px-6 py-3 text-sm font-semibold text-background transition hover:bg-foreground/90"
@@ -203,7 +154,7 @@ const CommunityPage = () => {
                     priority
                   />
                   <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-4 py-3 font-mono text-xs text-muted-foreground backdrop-blur">
-                    1,600+ members across 33+ countries and counting.
+                    1,600+ members across 33+ countries.
                   </div>
                 </div>
               </div>
@@ -218,11 +169,10 @@ const CommunityPage = () => {
                 id="community-programs-heading"
                 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
-                Programs designed to keep you building.
+                Ways to take part.
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
-                We co-create every program with members and partners so the
-                learning never stops at theory.
+                Activities change over time. The current listings explain what is open, ongoing or concluded and how to participate.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
@@ -244,32 +194,22 @@ const CommunityPage = () => {
           </div>
         </section>
 
-        <section className="px-4 sm:px-6" aria-labelledby="community-rhythm-heading">
-          <div className="mx-auto max-w-6xl border border-border bg-background px-6 py-10">
-            <div className="space-y-6">
-              <h2
-                id="community-rhythm-heading"
-                className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
-              >
-                Our rhythm
+        <section className="px-4 sm:px-6" aria-labelledby="community-activities-heading">
+          <div className="mx-auto flex max-w-6xl flex-col gap-6 border border-border bg-navy-deep px-6 py-10 text-navy-deep-foreground sm:flex-row sm:items-center sm:justify-between lg:px-10">
+            <div className="max-w-2xl space-y-2">
+              <h2 id="community-activities-heading" className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+                See what is happening now.
               </h2>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {communityRhythm.map(({ title, cadence, description }) => (
-                  <RhythmCard
-                    key={title}
-                    title={title}
-                    cadence={cadence}
-                    description={description}
-                  />
-                ))}
-              </div>
-              <Link
-                href="/activities"
-                className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background"
-              >
-                See all challenges & events
-              </Link>
+              <p className="text-sm leading-6 text-navy-deep-foreground/75">
+                Program pages show current status and participation details, including recurring learning and community activities.
+              </p>
             </div>
+            <Link
+              href="/activities"
+              className="inline-flex items-center justify-center border border-brand-blue bg-brand-blue-fill px-6 py-3 text-sm font-semibold text-brand-blue-foreground transition hover:bg-brand-blue-fill/90"
+            >
+              Explore programs and events
+            </Link>
           </div>
         </section>
 
@@ -280,12 +220,10 @@ const CommunityPage = () => {
                 id="community-leads-heading"
                 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
               >
-                Meet our founding community leads.
+                Community contributors.
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground">
-                These are the Fellows who helped shape Data Fellows from day
-                one: hosting conversations, unblocking projects, and
-                cheering Fellows on across every discipline.
+                Members have helped host conversations, support learning and contribute across Data Fellows activities over the years. These roles describe community contributions, not employment.
               </p>
             </div>
             <div className="space-y-10">

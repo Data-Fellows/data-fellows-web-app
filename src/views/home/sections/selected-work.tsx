@@ -3,13 +3,9 @@ import { portfolioProjects } from "@/constants/portfolio";
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 
-// Four flagship projects: one Data Fellows product (Inscend) plus three
-// independently verified engineering projects from the team. See the
-// engineering-portfolio audit for why these four and not others -- the
-// fourth AI-infrastructure slot (pi-jev vs. pi-ampersand) is still pending
-// confirmation of an attribution question, so this uses the confirmed-safe
-// choice (pi-ampersand) rather than the stronger but unconfirmed one.
-const flagshipSlugs = ["ont-communities", "inscend", "hr-platform", "pi-ampersand"];
+// Feature active technical and research projects on the homepage. Historical
+// product experiments remain available in the full /work archive.
+const flagshipSlugs = ["ont-communities", "hr-platform", "pi-ampersand", "pidginnuance"];
 
 const flagships = flagshipSlugs
   .map((slug) => {
@@ -53,11 +49,10 @@ const SelectedWork = () => {
             id="selected-work-heading"
             className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
           >
-            Engineering that solves real problems.
+            Software, data and AI in practice.
           </h2>
           <p className="text-base leading-relaxed text-muted-foreground">
-            Explore selected systems, products and technical projects from
-            across our team.
+            Explore technical projects and experiments. Each entry shows whether it is a community initiative, an individual project, research or an open-source contribution.
           </p>
         </div>
 

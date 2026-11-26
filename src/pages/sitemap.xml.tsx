@@ -7,6 +7,7 @@ const STATIC_PATHS = [
   "/activities",
   "/community",
   "/work",
+  "/studio",
   "/work/bizpilot",
   "/work/inscend",
   "/work/ont-communities",
