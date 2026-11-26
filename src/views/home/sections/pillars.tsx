@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { site } from "@/constants/site";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const pillars = [
@@ -6,36 +7,34 @@ const pillars = [
     title: "Community",
     description:
       "A global network of professionals, learners, researchers and technology enthusiasts who share knowledge and support one another.",
-    href: "/community",
-    link: "Meet the community",
+    links: [{ href: "/community", label: "Meet the community" }],
   },
   {
     title: "Learning",
     description:
       "Practical learning through scholarships, peer support, workshops, mentorship and technical conversations.",
-    href: "/activities",
-    link: "Explore programs",
+    links: [{ href: "/activities", label: "Explore programs" }],
   },
   {
     title: "Building",
     description:
       "Software, data systems, AI applications and experiments shaped by the skills and curiosity of our community.",
-    href: "/studio",
-    link: "Explore the Studio",
+    links: [
+      { href: "/work", label: "Explore projects" },
+      { href: site.studioUrl, label: "Open the Studio", external: true },
+    ],
   },
   {
     title: "Collaboration",
     description:
       "People and organizations connecting around shared questions, projects, research and professional opportunities.",
-    href: "/partners",
-    link: "Find ways to collaborate",
+    links: [{ href: "/partners", label: "Find ways to collaborate" }],
   },
   {
     title: "Impact",
     description:
       "Expanding access to technology learning, professional growth and meaningful contributions across the ecosystem.",
-    href: "/impact",
-    link: "See our impact",
+    links: [{ href: "/impact", label: "See our impact" }],
   },
 ];
 
@@ -73,13 +72,20 @@ const Pillars = () => (
             <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">
               {pillar.description}
             </p>
-            <Link
-              href={pillar.href}
-              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-            >
-              {pillar.link}
-              <FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
-            </Link>
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+              {pillar.links.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+                >
+                  {link.label}
+                  <FiArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+              ))}
+            </div>
           </article>
         ))}
       </div>

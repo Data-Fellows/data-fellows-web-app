@@ -51,7 +51,7 @@ const WhoWeAre = () => {
               A community of learners, now building technology together.
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Data Fellows began in August 2022 as a community of people learning data together. It has grown into a global network of more than 1,600 professionals across 33 countries.
+              Data Fellows began in August 2022 as a community of people learning data together. It has grown into a global network of 1,600+ professionals across 33+ countries.
             </p>
             <p className="text-base leading-relaxed text-muted-foreground">
               Along the way, members have learned together, supported one another&apos;s professional growth, collaborated on technical work and explored products and new ideas. Today, Data Fellows continues to put community at the centre while building across data, AI and software.

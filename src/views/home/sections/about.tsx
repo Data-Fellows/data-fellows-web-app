@@ -73,7 +73,7 @@ const About = () => {
               Our story and <Highlight>why we build together.</Highlight>
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Data Fellows is a global, community-led technology organization. What began as a community of people learning data together has grown into a network of more than 1,600 professionals across 33 countries.
+              Data Fellows is a global, community-led technology organization. What began as a community of people learning data together has grown into a network of 1,600+ professionals across 33+ countries.
             </p>
             <p className="text-base leading-relaxed text-muted-foreground">
               Our members learn, grow professionally, exchange knowledge and explore ideas together. The community has also supported technical collaboration and product experiments. Data Fellows continues to develop technology across data, AI and software while keeping the community at the centre of its identity.

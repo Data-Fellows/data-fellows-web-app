@@ -18,7 +18,7 @@ const principles = [
   {
     title: "Grown from a community",
     description:
-      "Data Fellows began in 2022 and has grown into a global community of more than 1,600 professionals across 33 countries.",
+      "Data Fellows began in 2022 and has grown into a global community of 1,600+ professionals across 33+ countries.",
   },
   {
     title: "Clear participation",
